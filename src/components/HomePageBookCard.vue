@@ -31,7 +31,18 @@
 
         <div class="item3">
             <p class="item-label">GUEST</p>
-            <Input hint="Number of guest" :isFullWidth="true" type="number" />
+            <div class="content">
+                <p class="guest-number-p">
+                    {{
+                        this.guestNumber
+                    }}
+                    guest(s)
+                </p>
+                <div>
+                    <button v-on:click=handleGuestClick(1)>+</button>
+                    <button v-on:click=handleGuestClick(0)>-</button>
+                </div>
+            </div>
         </div>
        
         <div class="btn-div">
@@ -51,6 +62,21 @@ export default {
      components:{
         Input,
         Button,
+     },
+    data: function(){
+        return {
+            guestNumber:1,
+        }
+    },
+     methods:{
+         handleGuestClick(motive){
+             if(motive == 1){
+                 this.guestNumber += 1
+             }
+             else if(motive == 0 && this.guestNumber > 1){
+                this.guestNumber -= 1
+             }
+         }
      }
 }
 </script>
@@ -136,6 +162,50 @@ export default {
         }
         .item3{
             margin-bottom: 20px;
+
+           .content{
+               display:flex;
+               align-items:center;
+               flex-direction: row;
+
+                .guest-number-p{
+                width:60%;
+                height: 50px;
+                border:1px solid #C4C4C4;
+                display:flex;
+                align-items:center;
+                padding: 0 20px;
+                border-radius: 5px;
+                flex-direction: row;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                color: rgba(106, 106, 106, 0.7);
+
+                
+            }
+            button{
+                    height: 50px;
+                    width:50px;
+                    border-radius: 50%;
+                    border:1px solid #C4C4C4;
+                    font-size: 16px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    margin: 0 10px;
+
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14px;
+                    line-height: 17px;
+                    color: rgba(106, 106, 106, 0.7);
+                }
+
+            button:focus{
+                outline: none;
+            }
+           }
         }
 
         .btn-div{
