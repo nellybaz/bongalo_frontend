@@ -94,6 +94,7 @@ export default {
 
 
     .book-card {
+        margin-top: 18%;
         width: 100%;
         height: 580px;
         background: #FFFFFF;

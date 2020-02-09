@@ -42,7 +42,7 @@ export default {
     .jumbotron {
         width:100%;
         height: auto;
-        padding-bottom: 10%;
+        padding-bottom: 8%;
         background: url(../assets/images/jumbotron-bg.png);
 
         header{
