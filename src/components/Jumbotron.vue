@@ -41,7 +41,8 @@ export default {
 
     .jumbotron {
         width:100%;
-        height: 100vh;
+        height: auto;
+        padding-bottom: 10%;
         background: url(../assets/images/jumbotron-bg.png);
 
         header{
