@@ -313,8 +313,6 @@ export default {
         padding: 20px 80px;
         background: #fff;
 
-   
-
       .inner{
         width:100%;
         

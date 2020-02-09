@@ -53,9 +53,9 @@ export default {
             justify-content:flex-start;
             flex-direction: row;
 
-            img{
-                // border:1px solid green;
-            }
+            // img{
+            //     // border:1px solid green;
+            // }
             nav{
                 width:100%;
                 margin-right: 2%;

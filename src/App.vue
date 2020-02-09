@@ -12,7 +12,7 @@ export default {
   name:"main_app",
   components:{
     Footer,
-  },
+  }, 
   watch: {
       '$route':{
         handler: (to, from) => {
