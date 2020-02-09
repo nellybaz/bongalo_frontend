@@ -10,7 +10,7 @@ const routes = [
     name: 'home',
     component: Home,
     meta:{
-      title: 'Bongalo Travels'
+      title: 'Vacation Rentals, Homes, Experiences and Places - Bongalo'
     }
   },
   // {
@@ -24,7 +24,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode:'history',
 })
 
 export default router
