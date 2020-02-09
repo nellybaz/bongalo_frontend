@@ -79,6 +79,8 @@ export default {
             }
         }
 
+        
+
         .book-card-div{
             width: 35%;
             position: relative;
