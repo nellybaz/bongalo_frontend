@@ -80,7 +80,7 @@ export default {
         }
 
         .book-card-div{
-            width: 40%;
+            width: 43%;
             position: relative;
             top: 12%;
             left:7%;
