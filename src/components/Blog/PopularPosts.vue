@@ -2,14 +2,14 @@
   <div class="post">
     <h2>Popular Post</h2>
 
-     <section class="apartment-section">
+     <!-- <section class="apartment-section">
        <h3 class="h3">
           Places to stay in Kigali
         </h3>
         <div class="inner-content">
             <HorizontalCard v-for="item in posts" :key=item.id :posts=item></HorizontalCard>
         </div> 
-    </section>
+    </section> -->
 
   </div>
 </template>
@@ -60,7 +60,7 @@ export default {
 .post {
   width: 90%;
   margin-left: 5%;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .post h2 {
