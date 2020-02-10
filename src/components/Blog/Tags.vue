@@ -46,10 +46,10 @@ export default {};
 }
 li {
   color: #808080;
-  font-size: 12px; 
   font-size: 14px;
   line-height: 17px;
-  width: 100px;
+  margin-right: 50px;
+  width: auto;
   list-style: none;
 }
 
