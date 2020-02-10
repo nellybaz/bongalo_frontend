@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Login></Login>
     <router-view/>
     <Footer></Footer>
   </div>
@@ -7,11 +8,13 @@
 
 <script>
 import Footer from './components/Footer';
+import Login from './components/SignInModal';
 
 export default {
   name:"main_app",
   components:{
     Footer,
+    Login
   },
   watch: {
       '$route':{
