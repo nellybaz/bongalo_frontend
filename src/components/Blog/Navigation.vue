@@ -12,13 +12,9 @@
       <nav>
         <ul>
           <li>EN</li>
-
           <li>$ USD</li>
-
           <li>Blog</li>
-
           <li>Sign up</li>
-
           <li>Login</li>
         </ul>
       </nav>
