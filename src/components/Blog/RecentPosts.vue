@@ -12,15 +12,21 @@
             <br />destination
           </h2>
           <p>
-            Kigali which is Rwanda's capital is the safest and cleanest capital cities in Africa. The colorful 
-            environment, warmhearted people, attractive and beautiful culture with the amazing landscapes, 
-            makes it quite expedient for any adventurer.<br />
+            Kigali which is Rwanda's capital is the safest and cleanest capital cities in Africa. The colorful
+            environment, warmhearted people, attractive and beautiful culture with the amazing landscapes,
+            makes it quite expedient for any adventurer.
+            <br />
             <br />The country has beautiful neighbourhoods in Kigali like; Nyarutarama, Gacuriro and Kiyovu which are safe both
             for vacationers and those relocating to the country.
           </p>
         </div>
-      </div><br><br>
-       <div class="sec-1">
+        <div class="read-more">
+          <a href>Read More</a>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div class="sec-1">
         <div class="img1">
           <img src="../../assets/images/blog-img.png" alt />
         </div>
@@ -36,6 +42,9 @@
             <br />The country has beautiful neighbourhoods in Kigali like; Nyarutarama, Gacuriro and Kiyovu which are safe both for vacationers and those relocating to the country.
           </p>
         </div>
+        <div class="read-more">
+          <a href>Read More</a>
+        </div>
       </div>
     </section>
   </div>
@@ -48,16 +57,35 @@ export default {};
 
 
 <style scoped>
-img {
-  /* border: 1px solid red;/ */
-  margin-left: 10px;
+.read-more {
   width: 100%;
-  /* height: -100%; */
-  /* width: 250%;
-  height: 100%; */
+  height: 5vh;
+  margin-top: 290px;
+  padding: 20 40px;
+ 
+}
+
+.read-more a{
+    text-decoration: none;
+     border-radius: 5px;
+     margin-left: -29px;
+    /* border: 1px solid red; */
+    border: 1px solid #6A6A6A;
+    padding: 10px 40px;
+    color: #404040;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.recentPost {
+  margin-bottom: 15%;
+  margin-top: 8%;
+}
+
+img {
+  margin-left: 10px;
 }
 .recent-post-sec {
-  /* border: 1px solid green; */
   width: 100%;
   margin-top: 40px;
 }
@@ -71,15 +99,13 @@ img {
 
 .sec-1 {
   display: flex;
-  /* border: 1px solid red; */
-  width: 80%;
+  width: 85%;
   margin-left: 10%;
 }
 
 .cap-1 p {
   width: 613px;
   position: absolute;
-  /* border: 1px solid red; */
   margin-left: 55px;
   color: #6a6a6a;
   margin-top: 8px;
@@ -93,6 +119,8 @@ img {
   /* border: 1px solid red; */
   width: 479px;
   margin-left: 55px;
+  /* font-size: 20px; */
+  line-height: 35px;
   color: #404040;
 }
 </style>

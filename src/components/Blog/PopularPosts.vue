@@ -1,70 +1,68 @@
 <template>
-  <div class="post">
+  <section class="post">
     <h2>Popular Post</h2>
 
-     <!-- <section class="apartment-section">
-       <h3 class="h3">
-          Places to stay in Kigali
-        </h3>
-        <div class="inner-content">
-            <HorizontalCard v-for="item in posts" :key=item.id :posts=item></HorizontalCard>
-        </div> 
-    </section> -->
-
-  </div>
+    <div class="popular-posts">
+      <div class="post-img">
+        <img src="../../assets/images/p-post.png" alt />
+        <h3>Why Rwanda Should Be ...</h3>
+        <p>2 months ago</p>
+      </div>
+      <div class="post-img">
+        <img src="../../assets/images/p-post.png" alt />
+        <h3>Why Rwanda Should Be ...</h3>
+        <p>2 months ago</p>
+      </div>
+      <div class="post-img">
+        <img src="../../assets/images/p-post.png" alt />
+        <h3>Why Rwanda Should Be ...</h3>
+        <p>2 months ago</p>
+      </div>
+      <div class="post-img">
+        <img src="../../assets/images/p-post.png" alt />
+        <h3>Why Rwanda Should Be ...</h3>
+        <p>2 months ago</p>
+      </div>
+    </div>
+  </section>
 </template>
 
 
 <script>
-export default {
-  data: function() {
-    return {
-      posts: [
-        {
-          id: 1,
-          location: "Kicukiru, Kigali, kigali",
-          title: "Bella Apartments",
-          price: "$20",
-          image: "house1.png"
-        },
-        {
-          id: 2,
-          location: "Kicukiru, Kigali, kigali",
-          title: "Bella Apartments",
-          price: "$20",
-          image: "house2.png"
-        },
-        {
-          id: 3,
-          location: "Kicukiru, Kigali, kigali",
-          title: "Visit Rwanda",
-          price: "$20",
-          image: "house3.png"
-        },
-        {
-          id: 4,
-          location: "Kicukiru, Kigali, kigali",
-          title: "Attend Youth Connekt ..",
-          price: "$20",
-          image: "house1.png"
-        }
-      ]
-    };
-  }
-};
+export default {};
 </script>
 
 
 
 <style scoped>
+.post-img {
+  width: 25%;
+}
+.post-img h3 {
+  margin-left: 10%;
+}
+img {
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.popular-posts {
+  width: 100%;
+  display: flex;
+}
+
+.popular-posts p {
+  margin-top: 5px;
+  margin-left: 10%;
+}
 .post {
-  width: 90%;
-  margin-left: 5%;
-  /* border: 1px solid red; */
+  width: 100%;
+  margin-top: 40px;
 }
 
 .post h2 {
   color: #404040;
-  margin-top: 40px;
+  margin-left: 35px;
+  margin-bottom: 22px;
 }
 </style>

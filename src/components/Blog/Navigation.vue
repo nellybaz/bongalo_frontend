@@ -5,8 +5,8 @@
         <img src="../../assets/images/bongalo-logo.png" alt />
         <ul class="blg">Blog</ul>
       </div>
-
-      <input type="text" />
+        <Input hint="Type for anything to search for tag or topics" :isFullWidth="false" type="text" />
+      <!-- <input type="text" hint="Type for anything to search for tag or topics" type="text" /> -->
 
       <nav>
         <ul>
@@ -47,7 +47,7 @@ input {
   border: 1px solid #c4c4c4;
   height: 45px;
   width: 100%;
-  padding: 0 100px;
+  /* padding: 0 100px; */
   border-radius: 5px;
   margin-left: 100px;
 }
@@ -55,7 +55,7 @@ input {
 header {
   margin-top: 5px;
   height: 64px;
-  width: 100%;
+  /* width: 100%; */
   padding: 0 60px;
   display: flex;
   align-items: center;
