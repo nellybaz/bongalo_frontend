@@ -5,17 +5,12 @@
         <img src="../../assets/images/bongalo-logo.png" alt />
         <ul class="blg">Blog</ul>
       </div>
-       <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
 
-       <div class="search-div">
-           <i class="fa fa-search" aria-hidden="true"></i>
-            <input
-        placeholder="Type for anything to search for tag or topics"
-        type="text"
-      />
-       </div>
-     
- 
+      <div class="search-div">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input placeholder="Type for anything to search for tag or topics" type="text" />
+      </div>
+
       <nav>
         <ul>
           <li>EN</li>
@@ -40,7 +35,6 @@ export default {};
 
 
 <style lang='scss' scoped>
-
 .logo-blg {
   display: flex;
   justify-content: flex-start;
@@ -51,17 +45,9 @@ export default {};
   width: 20px;
   color: #404040;
   font-size: 14px;
+  // border:1px solid red;
+  margin-left: 10px;
 }
-
-// input {
-//   border: 1px solid #c4c4c4;
-//   height: 45px;
-//   width: 100%;
-//   border-radius: 5px;
-//   margin-left: 100px;
-//   padding: 0 20px;
-// }
-
 
 header {
   margin-top: 5px;
@@ -100,43 +86,46 @@ li {
   color: #404040;
   list-style: none;
 }
-.search-div{
-    width:100%;
-    border:1px solid #C4C4C4;
-    padding: 10px 15px;
-    border-radius:5px;
-    margin-left: 40px;
-    display: flex;
-    
-    align-items: center;
-    
-    i{
-        margin-right:  15px;
-        color: #C4C4C4;
-    }
 
-    input{
-        border:none;
-        height: 100%;
-        width:80%;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 14px;
-        line-height: 17px;
-        color: #6A6A6A;
-        font-family: 'Inter', sans-serif;
-    }
-    input::placeholder{
-        font-style: normal;
-        font-weight: normal;
-        font-size: 14px;
-        line-height: 17px;
-        color: #6A6A6A;
-        font-family: 'Inter', sans-serif;
-    }
+.search-div {
+  width: 100%;
+  border: 1px solid #c4c4c4;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-left: 40px;
+  margin-right: -20px;
+  // border: 1px solid red;
+  display: flex;
+  align-items: center;
 
-    input:focus{
-       outline: none;
-    }
+  i {
+    margin-right: 15px;
+    color: #686868;
+    font-size: 15px;
+  }
+
+  input {
+    border: none;
+    height: 100%;
+    width: 80%;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #6a6a6a;
+    font-family: "Inter", sans-serif;
+  }
+  input::placeholder {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #6a6a6a;
+    font-family: "Inter", sans-serif;
+  }
+
+  input:focus {
+    outline: none;
+  }
 }
 </style>

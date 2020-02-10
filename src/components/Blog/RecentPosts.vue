@@ -81,7 +81,7 @@ export default {};
 }
 
 img {
-  margin-left: 10px;
+  /* margin-left: 10px; */
 }
 .recent-post-sec {
   width: 100%;
