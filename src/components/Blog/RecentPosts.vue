@@ -62,19 +62,17 @@ export default {};
   height: 5vh;
   margin-top: 290px;
   padding: 20 40px;
- 
 }
 
-.read-more a{
-    text-decoration: none;
-     border-radius: 5px;
-     margin-left: -29px;
-    /* border: 1px solid red; */
-    border: 1px solid #6A6A6A;
-    padding: 10px 40px;
-    color: #404040;
-    font-weight: bold;
-    font-size: 14px;
+.read-more a {
+  text-decoration: none;
+  border-radius: 5px;
+  margin-left: -29px;
+  border: 1px solid #6a6a6a;
+  padding: 10px 40px;
+  color: #404040;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .recentPost {
@@ -87,7 +85,6 @@ img {
 }
 .recent-post-sec {
   width: 100%;
-  margin-top: 40px;
 }
 
 .post-heading {
@@ -116,10 +113,8 @@ img {
 }
 
 .cap-1 h2 {
-  /* border: 1px solid red; */
   width: 479px;
   margin-left: 55px;
-  /* font-size: 20px; */
   line-height: 35px;
   color: #404040;
 }
