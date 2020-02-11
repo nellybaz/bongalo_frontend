@@ -67,7 +67,7 @@ export default {
   margin-left: 3%;
   width: 94%;
   background: #fff;
-  height: 600px;
+  height: 650px;
   border-radius: 20px 20px 0 0;
   padding: 30px;
   margin-bottom: 5%;
