@@ -25,7 +25,6 @@
               }}
             </p>
           </div>
-
           <div class="read-more">
             <a href>Read More</a>
           </div>

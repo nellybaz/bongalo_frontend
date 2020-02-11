@@ -12,7 +12,7 @@
 import Navigation from "../components/Blog/Navigation";
 import Tags from "../components/Blog/Tags";
 import PopularPosts from "../components/Blog/PopularPosts";
-import RecentPosts from '../components/Blog/RecentPosts';
+import RecentPosts from "../components/Blog/RecentPosts";
 
 export default {
   name: "blog",
@@ -20,7 +20,7 @@ export default {
     Navigation,
     Tags,
     PopularPosts,
-    RecentPosts,
+    RecentPosts
   }
 };
 </script>

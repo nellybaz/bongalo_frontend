@@ -6,7 +6,7 @@
       <EventCard :events="events" label="Things to look out for"></EventCard>
     </section>
       
-
+    
     <section class="explore-section">
         <h3 class="h3">
           Explore Bongalo
@@ -40,12 +40,10 @@
        </div>
     </section>
 
-
     <section class="middle-banner-section">
         <p>List your property on Bongalo and open your doors to rental income.</p>
         <button>List</button>
     </section>
-
 
     <section class="powered-section">
       <h3 class="h3">Powered By</h3>
