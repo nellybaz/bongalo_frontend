@@ -45,6 +45,7 @@ export default {
     .event-card {
         position: relative;
         top:-60px;
+       
         // border:1px solid green;
         width:100%;
         background: #fff;
