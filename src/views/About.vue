@@ -3,6 +3,7 @@
       <!-- <Jumbotron></Jumbotron> -->
     <AboutHeader />
     <headCard />
+    <ListProperity />
   </div>
 </template>
 
@@ -10,14 +11,16 @@
 <script>
 import AboutHeader from "../components/About/AboutHeader"
 import HeadCard from '../components/About/HeadCard'
-import Jumbotron from '../components/Jumbotron'
+import ListProperity from '../components/About/ListProperity'
+// import Jumbotron from '../components/Jumbotron'
 
 export default {
   name: "about",
   components: {
     //   Jumbotron,
     AboutHeader,
-    HeadCard
+    HeadCard,
+    ListProperity,
   }
 };
 </script>
