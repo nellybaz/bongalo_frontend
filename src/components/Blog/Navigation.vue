@@ -3,7 +3,7 @@
     <header class="tm-header">
       <div class="logo-blg">
         <img src="../../assets/images/bongalo-logo.png" alt />
-        <ul class="blg">Blog</ul>
+        <ul v-if="isBlog" class="blg">Blog</ul>
       </div>
       <div class="search-div">
         <i class="fa fa-search" aria-hidden="true"></i>
@@ -24,7 +24,13 @@
 
 
 <script>
-export default {};
+export default {
+  props:{
+    isBlog:{
+      type:Boolean
+    }
+  }
+};
 </script>
 
 
@@ -82,6 +88,7 @@ li {
   margin-right: -20px;
   display: flex;
   align-items: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
   i {
     margin-right: 15px;
     color: #686868;
