@@ -59,6 +59,7 @@ export default {
   display: flex;
   align-items: center;
   color: #404040;
+  
 }
 .event-card {
   position: relative;
@@ -69,7 +70,7 @@ export default {
   background: #fff;
   height: 650px;
   border-radius: 20px 20px 0 0;
-  padding: 30px;
+  padding: 50px;
   margin-bottom: 5%;
   h3 {
     font-style: normal;
