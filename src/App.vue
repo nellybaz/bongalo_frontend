@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Login></Login>
+    <!-- <Login></Login> -->
     <router-view/>
     <Footer></Footer>
   </div>
@@ -14,7 +14,7 @@ export default {
   name:"main_app",
   components:{
     Footer,
-    Login
+    // Login
   },
   watch: {
       '$route':{

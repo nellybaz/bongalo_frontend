@@ -1,12 +1,18 @@
 <template>
   <div class="header">
     <header>
-      <img src="../../assets/images/bongalo-logo-white.png" alt />
+        <router-link to="/">
+            <img src="../../assets/images/bongalo-logo-white.png" alt />
+        </router-link>
       <nav>
         <ul>
           <li>EN</li>
           <li>$ USD</li>
-          <li>Blog</li>
+          <li>
+            <router-link to="/blog">
+                Blog
+            </router-link>
+          </li>
           <li>Sign up</li>
           <li>Login</li>
         </ul>
@@ -56,6 +62,11 @@ export default {
           width: 100px;
           color: #ffffff;
           list-style: none;
+
+          a{
+            text-decoration: none;
+            color: #ffffff;
+          }
         }
       }
     }

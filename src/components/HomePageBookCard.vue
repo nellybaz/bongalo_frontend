@@ -39,14 +39,18 @@
                     guest(s)
                 </p>
                 <div>
-                    <button v-on:click=handleGuestClick(1)>+</button>
-                    <button v-on:click=handleGuestClick(0)>-</button>
+                    <button v-on:click=handleGuestClick(1)>
+                       <i class="fas fa-plus"></i>
+                    </button>
+                    <button v-on:click=handleGuestClick(0)>
+                        <i class="fas fa-minus"></i>
+                    </button>
                 </div>
             </div>
         </div>
        
         <div class="btn-div">
-            <Button class="btn" label="Search" :isFullWidth="false"  ></Button>
+            <Button v-on:handleClick="this.handleSearchClick" class="btn" label="Search" :isFullWidth="false"  ></Button>
         </div>
     </div>
 </template>
@@ -69,6 +73,9 @@ export default {
         }
     },
      methods:{
+         handleSearchClick(){
+             this.$router.push("/search")
+         },
          handleGuestClick(motive){
              if(motive == 1){
                  this.guestNumber += 1
@@ -86,8 +93,35 @@ export default {
 
     @media only screen and (max-width: 900px){
         .book-card{
+            margin-top: 1%;
+            margin: 0 10% !important;
+            padding: 20px !important;
+            padding-bottom: 70px !important;
             h3{
                 display: none !important;
+            }
+
+            .item2{
+                grid-template-columns: 1fr !important;
+                // .inner{
+                //     // border:1px solid red;
+                // }
+                input{
+                    width:100%;
+                    background: #fff;
+                    margin-bottom: 15px;
+                }
+            }
+
+            .item3{
+                .guest-number-p{
+                width:50% !important;
+                }
+                button{
+                    // width: 40px !important;
+                    margin: 0px 5px !important;
+                    background: #fff;
+                }
             }
         }
     }
@@ -161,6 +195,7 @@ export default {
             .inner1, .inner2{
                 width:100%;
                 // border:1px solid green;
+            
             }
         }
         .item3{
@@ -192,7 +227,7 @@ export default {
                     height: 50px;
                     width:50px;
                     border-radius: 50%;
-                    border:1px solid #C4C4C4;
+                    border: 2px solid #3A85FC;
                     font-size: 16px;
                     font-weight: bold;
                     cursor: pointer;
@@ -202,7 +237,10 @@ export default {
                     font-weight: normal;
                     font-size: 14px;
                     line-height: 17px;
-                    color: rgba(106, 106, 106, 0.7);
+                    color: #3A85FC;
+                    i{
+                        color: #3A85FC;
+                    }
                 }
 
             button:focus{

@@ -3,13 +3,17 @@
     <header>
       <img src="../assets/images/bongalo-logo-white.png" alt />
 
-      <nav>
+      <nav v-if="!isMobile()">
         <ul>
           <li>EN</li>
 
           <li>$ USD</li>
 
-          <li>Blog</li>
+          <li>
+            <router-link to="/blog">
+              Blog
+            </router-link>
+          </li>
 
           <li>Sign up</li>
 
@@ -17,6 +21,11 @@
         </ul>
       </nav>
     </header>
+
+
+     <h3 v-if="isMobile()">
+            Travelling Africa, Trip for Business or Pleasure ? Book your stay with us.
+    </h3>
 
     <div class="book-card-div">
       <BookCard></BookCard>
@@ -27,21 +36,56 @@
 
 <script>
 import BookCard from "../components/HomePageBookCard";
+import { mapGetters } from 'vuex';
 
 export default {
   name: "jumbotron",
   components: {
     BookCard
+  },
+
+  methods:{
+    ...mapGetters(['isMobile'])
   }
 };
 </script>
 
 <style lang='scss' scoped>
+
+ @media only screen and (max-width: 900px){
+
+
+   .jumbotron {
+     padding: 0 0 20px 0 !important;
+
+      header {
+        padding: 0 30px !important;
+      }
+    .book-card-div {
+        width: 85% !important;
+        left: 0% !important;
+      }
+
+   }
+
+    
+ }
 .jumbotron {
   width: 100%;
   height: auto;
   padding-bottom: 8%;
   background: url(../assets/images/jumbotron-bg.png);
+
+  h3{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    padding: 0 30px;
+    margin: 10px 0 30px 0;
+    color: #FFFFFF;
+
+  }
 
   header {
     height: 64px;
@@ -72,6 +116,11 @@ export default {
           width: 100px;
           color: #ffffff;
           list-style: none;
+
+          a{
+            text-decoration: none;
+            color: #ffffff;
+          }
         }
       }
     }

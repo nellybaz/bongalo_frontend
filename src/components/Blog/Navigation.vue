@@ -2,7 +2,9 @@
   <div class="Blog-nav">
     <header class="tm-header">
       <div class="logo-blg">
-        <img src="../../assets/images/bongalo-logo.png" alt />
+        <router-link to="/">
+          <img src="../../assets/images/bongalo-logo.png" alt />
+        </router-link>
         <ul v-if="isBlog" class="blg">Blog</ul>
       </div>
       <div class="search-div">
@@ -13,7 +15,11 @@
         <ul>
           <li>EN</li>
           <li>$ USD</li>
-          <li>Blog</li>
+          <li>
+            <router-link to="/blog">
+              Blog
+            </router-link>
+          </li>
           <li>Sign up</li>
           <li>Login</li>
         </ul>
@@ -78,6 +84,11 @@ li {
   width: 100px;
   color: #404040;
   list-style: none;
+  
+  a{
+    text-decoration: none;
+    color: #404040;
+  }
 }
 .search-div {
   width: 100%;

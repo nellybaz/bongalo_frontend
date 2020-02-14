@@ -63,14 +63,13 @@ export default {
 }
 .event-card {
   position: relative;
-  top: -60px;
-  // border: 1px solid green;
+  top: -40px;
   margin-left: 3%;
   width: 94%;
   background: #fff;
   height: 650px;
   border-radius: 20px 20px 0 0;
-  padding: 50px;
+  padding: 3px 50px;
   margin-bottom: 5%;
   h3 {
     font-style: normal;
@@ -85,7 +84,7 @@ export default {
     margin-top: 40px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 32px;
+    grid-column-gap: 62px;
     color: #6a6a6a;
     font-size: 14px;
     font-style: normal;
@@ -138,6 +137,21 @@ export default {
   }
   .inner-content-div {
     width: 95%;
+    h2{
+      background: #FFFFFF;
+      box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
+      border-radius: 10px;
+      height: 65px;
+      border:none;
+      padding-left: 40px;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 20px;
+      text-align: justify;
+
+      color: #404040;
+    }
   }
 }
 </style>

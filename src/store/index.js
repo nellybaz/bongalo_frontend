@@ -8,6 +8,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
   },
+  getters:{
+    isMobile: (state) => (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+  },
   actions: {
   },
   mutations: {

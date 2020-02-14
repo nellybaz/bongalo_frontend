@@ -2,7 +2,7 @@
   <div class="about">
       <!-- <Jumbotron></Jumbotron> -->
     <AboutHeader />
-    <headCard />
+    <HeadCard />
     <section class="trending-section">
       <EventCard :events="events" label="What's Trending"></EventCard>
     </section>

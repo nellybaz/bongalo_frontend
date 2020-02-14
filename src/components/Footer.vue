@@ -7,7 +7,11 @@
                 <h4>About us</h4>
 
                 <ul>
-                    <li>Company</li>
+                    <li>
+                        <router-link to="/about">
+                            Company
+                        </router-link>
+                    </li>
                     <li>Team</li>
                     <li>Career</li>
                 </ul>
@@ -55,10 +59,26 @@ export default {
 
 
 <style lang='scss' scoped>
+
+
+@media only screen and (max-width: 900px){
+
+    .footer{
+        padding: 40px 10px !important;
+        height: auto !important;
+        .content{
+            margin-bottom: 40px;
+            height: auto !important;
+            grid-template-columns: 1fr 1fr !important;
+            grid-row-gap: 30px;
+        }
+    }
+
+}
     .footer {
         width:100%;
         height: 431px;
-        border-top:1px solid #F2F2F2;
+        border-top:1px solid #F6FAFF;;
         padding: 40px 80px;
 
         img{
@@ -95,6 +115,11 @@ export default {
                         font-size: 15px;
                         line-height: 30px;
                         color: #6A6A6A;
+
+                        a{
+                            text-decoration:  none;
+                            color: #6A6A6A;
+                        }
                     }
                 }
             }

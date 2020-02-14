@@ -1,5 +1,5 @@
 <template>
-        <button :class="{fullWidth: isFullWidth, halfWidth: !isFullWidth}"  class="main-button">{{ label }}</button>
+        <button v-on:click="$emit('handleClick')" :class="{fullWidth: isFullWidth, halfWidth: !isFullWidth}"  class="main-button">{{ label }}</button>
 </template>
 
 

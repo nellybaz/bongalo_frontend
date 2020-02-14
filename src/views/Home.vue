@@ -3,7 +3,9 @@
     <Jumbotron></Jumbotron>
 
     <section class="event-section">
-      <EventCard :events="events" label="Things to look out for"></EventCard>
+      <EventCard v-if="!isMobile()" :events="events" label="Things to look out for"></EventCard>
+      <MobileEventCard v-else :events="events" label="Things to look out for"></MobileEventCard>
+
     </section>
       
     
@@ -27,7 +29,8 @@
 
 
     <section class="experience-section">
-      <EventCard :events="events" label="Some amazing experiences"></EventCard>
+      <EventCard v-if="!isMobile()" :events="events" label="Some amazing experiences"></EventCard>
+      <MobileEventCard v-else :events="events" label="Some amazing experiences"></MobileEventCard>
     </section>
 
     
@@ -59,9 +62,11 @@
 <script>
 import Jumbotron from '../components/Jumbotron';
 import EventCard from '../components/EventCard';
+import MobileEventCard from '../components/MobileEventCard';
 import ExploreCard from '../components/ExploreCard';
 import HorizontalCard from '../components/HorizontalCard';
 import WhySectionCard from '../components/WhySectionCard';
+import { mapGetters } from 'vuex';
 
 
 export default {
@@ -71,7 +76,11 @@ export default {
     EventCard,
     ExploreCard,
     HorizontalCard,
-    WhySectionCard
+    WhySectionCard,
+    MobileEventCard
+  },
+  methods:{
+    ...mapGetters(['isMobile']),
   },
   data:function(){
     return {
@@ -246,6 +255,57 @@ export default {
 
 <style lang="scss" scoped>
 
+ @media only screen and (max-width: 900px){
+   .explore-section, .event-section, .experience-section, .apartment-section, .why-section, .powered-section{
+     padding: 20px !important;
+   }
+
+  .explore-section{
+    .inner-content{
+          grid-template-columns:1fr !important;
+          grid-row-gap: 20px;
+        }
+  }
+
+  .apartment-section{
+     .inner-content{
+          margin-top: 30px;
+          display: grid;
+          grid-template-columns:repeat(2, 1fr) !important;
+          grid-column-gap: 20px;
+          grid-row-gap: 70px !important;
+        }
+  }
+
+  .why-section{
+    .inner{
+        width:100%;
+        
+        display: grid;
+        grid-template-columns: 1fr !important;
+        grid-row-gap: 30px;
+      }
+  }
+
+  .powered-section{
+    height: auto !important;
+    .content{
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 20px;
+      grid-row-gap: 10px;
+      // border:1px solid red;
+      img{
+        width:100%;
+        max-height: 100px !important;;
+        // border:1px solid red;
+        object-fit: contain;
+      }
+    }
+  }
+
+ }
+
    .h3{
             font-style: normal;
             font-weight: bold;
@@ -366,10 +426,6 @@ export default {
       width:100%;
       padding: 0 80px;
       h3{
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        flex-direction: row;
         font-size: 35px;
       }
 
