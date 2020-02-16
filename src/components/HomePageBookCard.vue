@@ -188,7 +188,7 @@ export default {
             width:100%;
             // border:1px solid red;
             display: grid;
-            grid-column-gap: 10px;
+            grid-column-gap: 5px;
             grid-template-columns: 1fr 1fr;
 
 
@@ -197,7 +197,8 @@ export default {
                 // border:1px solid green;
 
                 input{
-                    width:92%;
+                    width:100%;
+                    padding: 0 5px;
                 }
             
             }
@@ -216,7 +217,7 @@ export default {
                 border:1px solid #C4C4C4;
                 display:flex;
                 align-items:center;
-                padding: 0 20px;
+                padding: 0 10px;
                 border-radius: 5px;
                 flex-direction: row;
                 font-style: normal;
