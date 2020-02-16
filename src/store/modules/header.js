@@ -1,5 +1,5 @@
 const state = {
-    showModal:1 // 1 is for login, 2 for register, and 0 for none
+    showModal: 0 // 1 is for login, 2 for register, and 0 for none
 }
 
 const getters = {

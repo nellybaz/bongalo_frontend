@@ -15,9 +15,9 @@
             </router-link>
           </li>
 
-          <li>Sign up</li>
+          <li v-on:click="handleSignin(2)">Sign up</li>
 
-          <li>Login</li>
+          <li v-on:click="handleSignin(1)">Login</li>
         </ul>
       </nav>
     </header>
@@ -36,7 +36,7 @@
 
 <script>
 import BookCard from "../components/HomePageBookCard";
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "jumbotron",
@@ -45,7 +45,12 @@ export default {
   },
 
   methods:{
-    ...mapGetters(['isMobile'])
+    ...mapGetters(['isMobile']),
+    ...mapActions(['setModalState']),
+
+    handleSignin(val){
+      this.setModalState(val)
+    }
   }
 };
 </script>
@@ -116,6 +121,7 @@ export default {
           width: 100px;
           color: #ffffff;
           list-style: none;
+          cursor: pointer;
 
           a{
             text-decoration: none;
@@ -127,7 +133,7 @@ export default {
   }
 
   .book-card-div {
-    width: 35%;
+    width: 30%;
     position: relative;
     top: 12%;
     left: 7%;

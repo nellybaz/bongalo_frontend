@@ -1,5 +1,5 @@
 <template>
-    <router-link to="/details">
+    <router-link to="/details" target="_blank">
         <div class='horizontal-card'>
             <div class="img-div">
                 <img :src="require(`../assets/images/${apartment.image}`)" alt="">

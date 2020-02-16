@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <!-- <Login></Login> -->
+    <Login></Login>
     <router-view/>
     <Footer></Footer>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Footer from './components/Footer';
 import Login from './components/SignInModal';
 
@@ -14,8 +15,9 @@ export default {
   name:"main_app",
   components:{
     Footer,
-    // Login
+    Login
   },
+  computed: mapGetters(['getModalState']),
   watch: {
       '$route':{
         handler: (to, from) => {

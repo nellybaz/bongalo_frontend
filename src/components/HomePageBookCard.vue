@@ -5,12 +5,12 @@
             Travelling Africa, Trip for Business or Pleasure ? Book your stay with us.
         </h3>
         
-        <br>
+        <!-- <br> -->
 
-        <div class="item0">
+        <!-- <div class="item0">
             <p class="item-label">WHERE</p>
             <Input hint="Anywhere" :isFullWidth="true" type="text" />
-        </div>
+        </div> -->
 
         <div class="item1">
             <p class="item-label">TYPE</p>
@@ -38,7 +38,7 @@
                     }}
                     guest(s)
                 </p>
-                <div>
+                <div class="btn-container">
                     <button v-on:click=handleGuestClick(1)>
                        <i class="fas fa-plus"></i>
                     </button>
@@ -135,7 +135,7 @@ export default {
         background: #FFFFFF;
         box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.06);
         border-radius: 5px;
-        padding: 40px;
+        padding: 40px 20px;
         padding-bottom: 70px;
 
         .card-date-input{
@@ -188,26 +188,30 @@ export default {
             width:100%;
             // border:1px solid red;
             display: grid;
-            grid-column-gap: 1px;
+            grid-column-gap: 10px;
             grid-template-columns: 1fr 1fr;
 
 
             .inner1, .inner2{
                 width:100%;
                 // border:1px solid green;
+
+                input{
+                    width:92%;
+                }
             
             }
         }
         .item3{
             margin-bottom: 20px;
+            // border:1px solid red;
 
            .content{
-               display:flex;
-               align-items:center;
-               flex-direction: row;
+               display: grid;
+               grid-template-columns: 6fr 3fr;
 
                 .guest-number-p{
-                width:60%;
+                width:95%;
                 height: 50px;
                 border:1px solid #C4C4C4;
                 display:flex;
@@ -223,7 +227,13 @@ export default {
 
                 
             }
-            button{
+            .btn-container{
+                width:100%;
+                // border:1px solid red;
+                display:flex;
+                justify-content:space-between;
+                flex-direction: row;
+                button{
                     height: 50px;
                     width:50px;
                     border-radius: 50%;
@@ -231,7 +241,7 @@ export default {
                     font-size: 16px;
                     font-weight: bold;
                     cursor: pointer;
-                    margin: 0 10px;
+                    // margin: 0 10px;
 
                     font-style: normal;
                     font-weight: normal;
@@ -242,6 +252,7 @@ export default {
                         color: #3A85FC;
                     }
                 }
+            }
 
             button:focus{
                 outline: none;

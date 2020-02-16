@@ -20,8 +20,9 @@
               Blog
             </router-link>
           </li>
-          <li>Sign up</li>
-          <li>Login</li>
+         <li v-on:click="handleSignin(2)">Sign up</li>
+
+          <li v-on:click="handleSignin(1)">Login</li>
         </ul>
       </nav>
     </header>
@@ -30,11 +31,21 @@
 
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 export default {
   props:{
     isBlog:{
       type:Boolean
     }
+  },
+
+  methods:{
+      ...mapGetters(['isMobile']),
+      ...mapActions(['setModalState']),
+
+      handleSignin(val){
+        this.setModalState(val)
+      }
   }
 };
 </script>
@@ -84,6 +95,7 @@ li {
   width: 100px;
   color: #404040;
   list-style: none;
+  cursor: pointer;
   
   a{
     text-decoration: none;

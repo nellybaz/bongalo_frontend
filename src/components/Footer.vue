@@ -44,6 +44,25 @@
                     <p>Payment Methods </p>
                     
                 </div>
+                <div class="payment-imgs">
+                    <div>
+                        <img src="../assets/images/pay1.png" alt="">
+                        <img src="../assets/images/pay2.png" alt="">
+                        <img src="../assets/images/pay3.png" alt="">
+                        <img src="../assets/images/pay4.png" alt="">
+                    </div>
+
+                    <div class="social-media">
+                        <p>
+                            Connect with us
+                        </p>
+
+                        <i class="fab fa-facebook-f"></i>
+                        <i class="fab fa-linkedin-in"></i>
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
             </div>
         </div>
         <p>Bongalo © 2019  | All Rights Reserved</p>
@@ -66,6 +85,7 @@ export default {
     .footer{
         padding: 40px 10px !important;
         height: auto !important;
+        background-color: #F6FAFF;
         .content{
             margin-bottom: 40px;
             height: auto !important;
@@ -80,6 +100,7 @@ export default {
         height: 431px;
         border-top:1px solid #F6FAFF;;
         padding: 40px 80px;
+        background-color: #F6FAFF;
 
         img{
             width: 106px;
@@ -151,6 +172,7 @@ export default {
 
                 .payment-text-sub-btn{
                     margin-top: 15px;
+                    // border:1px solid red;
                     width:100%;
                     // height: 50px;
                     float: left; 
@@ -181,6 +203,42 @@ export default {
                         line-height: 18px;
                         cursor: pointer;
 
+                    }
+                }
+
+                .payment-imgs{
+                    display: grid;
+                    grid-template-columns: 5fr 2fr;
+                    margin-top: 15%;
+                    width:100%;
+                    // border:1px solid red;
+                    // height: 190px;
+                    div{
+                        width:100%;
+                        // border:1px solid red;
+
+                        img{
+                        width: 54px;
+                        height: 25px;
+                        object-fit: cover;
+                        // border:1px solid red;
+                        }
+
+                    }
+
+                    .social-media{
+                        width:100%;
+
+                        p{
+                            margin: 15px 0;
+                        }
+
+                        i{
+                            margin-right: 15px;
+                            color: #3A85FC;
+                            font-size: 16px;
+                            cursor: pointer;
+                        }
                     }
                 }
             }
