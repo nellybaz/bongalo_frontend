@@ -34,6 +34,30 @@ const routes = [
     path: '/search',
     name: 'search',
     component: () => import(/* webpackChunkName: "detiails" */ '../views/Search.vue')
+  },
+  {
+    path: '/verify',
+    name: 'verify',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Verification.vue')
+  },
+
+  {
+    path: '/experience',
+    name: 'experience',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Experience.vue')
+  },
+
+  {
+    path: '/event-details',
+    name: 'event_details',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/EventDetails.vue')
+  },
+
+
+  {
+    path: '/blog-details',
+    name: 'blog_details',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/BlogDetails.vue')
   }
 
   

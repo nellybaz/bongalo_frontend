@@ -28,21 +28,7 @@ export default {
 
 
 <style scoped>
-@import url("https://rsms.me/inter/inter.css");
 
-html {
-  scroll-behavior: smooth;
-}
-* {
-  box-sizing: border-box;
-  margin: 0;
-}
-#app {
-  font-family: "Inter", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
-}
 </style>
 
 

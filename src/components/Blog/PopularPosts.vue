@@ -2,38 +2,35 @@
   <section class="post">
     <h2>Popular Post</h2>
     <div class="popular-posts">
-      <div class="post-img">
-        <img src="../../assets/images/p-post.png" alt />
-        <h3>Why Rwanda Should Be ...</h3>
-        <p>2 months ago</p>
-      </div>
-      <div class="post-img">
-        <img src="../../assets/images/p-post.png" alt />
-        <h3>Why Rwanda Should Be ...</h3>
-        <p>2 months ago</p>
-      </div>
-      <div class="post-img">
-        <img src="../../assets/images/p-post.png" alt />
-        <h3>Why Rwanda Should Be ...</h3>
-        <p>2 months ago</p>
-      </div>
-      <div class="post-img">
-        <img src="../../assets/images/p-post.png" alt />
-        <h3>Why Rwanda Should Be ...</h3>
-        <p>2 months ago</p>
-      </div>
+      <div v-for="item in popular" :key="item" class="post-img">
+        <router-link to="blog-details">
+          <img src="../../assets/images/p-post.png" alt />
+          <h3>Why Rwanda Should Be ...</h3>
+          <p>2 months ago</p>
+        </router-link>
+      </div> 
     </div>
   </section>
 </template>
 
 
 <script>
-export default {};
+export default {
+  data: function(){
+    return {
+      popular:"abcd"
+    }
+  }
+};
 </script>
 
 
 
 <style scoped>
+
+a{
+  text-decoration: none;
+}
 .post-img {
   width: 25%;
 }

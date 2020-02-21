@@ -2,22 +2,7 @@
     <div class='apartment_details'>
         <div v-if="!isImageShow" class="detials-content">
             <Navigation></Navigation>
-
-            <div class="image-div">
-                <img v-on:click="updateImageShow(1)" class="img1" src="../assets/images/house4.png" alt="">
-                <img v-on:click="updateImageShow(1)" class="img2" src="../assets/images/house5.png" alt="">
-                <img v-on:click="updateImageShow(1)" class="img3" src="../assets/images/house6.png" alt="">
-                
-                <div v-on:click="updateImageShow(1)" class="img4">
-                    <img src="../assets/images/house7.png" alt="">
-                    <router-link to="">
-                            <p v-on:click="updateImageShow(1)">
-                                View more photos
-                            </p>
-                    </router-link>
-                </div>
-
-            </div>
+            <ImageGrid v-on:updateImageShow=updateImageShowHandler :showMoreImages=true></ImageGrid>
 
             <div class="apartment-details-content">
             <div class="details-div">
@@ -42,7 +27,7 @@
                             </div>
 
                             <div class="country">
-                                <p>Country</p>
+                                <p>Nationality</p>
                                 <strong>Nigeria</strong>
                             </div>
 
@@ -62,7 +47,10 @@
                         </div>
 
                         <div class="rules">
-                            <p>No Smoking</p>
+                            <h3>House Rules</h3>
+                            <div>
+                                <p>No Smoking</p>
+                            </div>
                         </div>
 
                         <div class="desc">
@@ -229,7 +217,7 @@
         </div>
 
         <div v-else class="details-img-show">
-            <i v-on:click="updateImageShow(0)"  class="far fa-times-circle"></i>
+            <i v-on:click="updateImageShowHandler(0)"  class="far fa-times-circle"></i>
 
             <div class="img-showing-div">
                 <img class="img-big" src="../assets/images/house8.jpg" alt="">
@@ -264,17 +252,19 @@
 // document.getElementById("book-checkin").innerHTML = "Chech in";
 
 import Navigation from '../components/Blog/Navigation';
-// import vcalender from 'v-calendar';
+import ImageGrid from '../components/ImageGrid';
 import Button from '../components/Button';
+import { mapGetters } from 'vuex';
 
 export default {
      name:'apartment_details',
      components:{
          Navigation,
-         Button
+         Button,
+         ImageGrid
      },
      methods:{
-         updateImageShow(intent){
+         updateImageShowHandler(intent){
              if(intent == 1){
                  this.isImageShow = true;
              }
@@ -311,7 +301,9 @@ export default {
              borderItem:1,
              isImageShow: false,
          }
-     }
+     },
+
+     computed: mapGetters(['isSafari'])
 }
 </script>
 
@@ -335,8 +327,8 @@ export default {
             margin-top: 50px;
             width:100%;
             display: grid;
-            grid-template-columns: 5fr 2fr;
-            grid-gap: 40px;
+            grid-template-columns: 7fr 2fr;
+            grid-gap: 20px;
             // border:1px solid red;
 
             img{
@@ -350,7 +342,9 @@ export default {
             }
 
             .img-big{
-                max-width: 100%;
+                max-width: 90%;
+                height: 80vh;
+                // border:1px solid red;
             }
             
 
@@ -359,7 +353,7 @@ export default {
                 overflow-y: scroll;
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                grid-gap: 20px;
+                grid-gap: 5px;
             }
         }
     }
@@ -373,18 +367,12 @@ export default {
         }
 
         .image-div{
-            height: 500px;
-            // border:1px solid red;
+            height: 500px !important;
             display: grid;
             grid-template-columns: repeat(9, 1fr);
             grid-template-rows:1fr 1fr;
             grid-gap: 6px;
-            img{
-                width:100%;
-                height: 100%;
-                transition: all .4s ease-in-out; 
-                cursor: pointer;
-            }
+            
 
             img:hover{
                 transform: scale(1.02);
@@ -427,6 +415,23 @@ export default {
                     // width: 100px;
                     margin-right: 20px;
                     z-index: 9999;
+                }
+                
+            }
+
+            .img-item{
+                // border:1px solid red;
+                width:100%;
+                min-height: 100%;
+                object-fit: cover;
+                transition: all .4s ease-in-out; 
+                cursor: pointer;
+
+                img{
+                    transition: all .4s ease-in-out; 
+                    width:100%;
+                    height: 100%;
+                    // border:1px solid red;
                 }
             }
         }
@@ -473,10 +478,10 @@ export default {
         .content-div{
             // height: 400px;
             display: grid;
-            grid-template-columns: 9fr 4fr;
+            grid-template-columns: 8fr 4fr;
             grid-column-gap: 50px;
             .left{
-                padding: 30px 70px;
+                padding: 30px 120px;
                 border-top: 1px solid #F2F2F2;
                 h4{
                     font-style: normal;
@@ -560,16 +565,28 @@ export default {
                 }
 
                 .rules{
-                    width:100%;
-                    height: 50px;
                     margin-top: 50px;
-                    padding: 20px;
-                    display:flex;
-                    align-items:center;
-                    justify-content:flex-start;
-                    flex-direction: row;
-                    border-top: 1px solid #F2F2F2;
-                    border-bottom: 1px solid #F2F2F2;
+                    width:100%;
+                    
+                    h3{
+                        margin-bottom: 10px;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 17px;
+                        line-height: 24px;
+                        color: #404040;
+                    }
+
+                    div{
+                        height: 50px;
+                        padding: 20px;
+                        display:flex;
+                        align-items:center;
+                        justify-content:flex-start;
+                        flex-direction: row;
+                        border-top: 1px solid #F2F2F2;
+                        border-bottom: 1px solid #F2F2F2;
+                    }
 
 
                     p{
@@ -752,12 +769,12 @@ export default {
             .right{
                 width:100%;
                 height: auto;
-                // padding: 30px;
-                padding-right: 70px;
+                margin-top: 20px;
+                padding-right: 120px;
 
                 .content{
                     position: sticky;
-                    top: 5%;
+                    top: 9%;
                     height: auto;
                     width:100%;
                     padding: 20px;
@@ -862,6 +879,7 @@ export default {
                                     height: 40px;
                                     border: 1.5px solid #3A85FC;
                                     border-radius: 50%;
+                                    background: #fff;
                                     margin-right: 10px;
                                     font-size: 12px;
                                     font-weight: bold;
@@ -923,4 +941,9 @@ export default {
             }
         }
     }
+
+    .safari-img-fit{
+    min-height: 100%;
+    max-width: 100%;
+}
 </style>

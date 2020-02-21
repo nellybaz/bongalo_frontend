@@ -29,16 +29,16 @@
                 <h4>Contact</h4>
 
                 <ul>
-                    <li>KG 622 St Kigali</li>
+                    <li>KG 622 St, Kigali</li>
                     <li>+250 730078410</li>
-                    <li>info@bongalo.com</li>
+                    <li>info@bongalo.co</li>
                 </ul>
             </div>
 
             <div class="subscribe-section">
                 <p>Enter your email below to recieve updates on our Newletter</p>
 
-                <input type="text" />
+                <input type="text" placeholder="Enter your email"/>
                 <div class="payment-text-sub-btn">
                     <button>Subscribe</button>
                     <p>Payment Methods </p>
@@ -101,6 +101,7 @@ export default {
         border-top:1px solid #F6FAFF;;
         padding: 40px 80px;
         background-color: #F6FAFF;
+        margin-top: 60px;
 
         img{
             width: 106px;
@@ -166,7 +167,7 @@ export default {
 
                 input:focus{
                     outline-color: #3A85FC;
-                    outline-style: dotted;
+                    outline-style: solid;
                     outline-width: 2px;
                 }
 

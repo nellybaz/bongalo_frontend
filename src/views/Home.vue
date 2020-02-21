@@ -3,7 +3,7 @@
     <Jumbotron></Jumbotron>
 
     <section class="event-section">
-      <EventCard v-if="!isMobile()" :events="events" label="Things to look out for"></EventCard>
+      <EventCard v-if="!isMobile()" :events="events" label="Things to look out for" link="/event-details"></EventCard>
       <MobileEventCard v-else :events="events" label="Things to look out for"></MobileEventCard>
 
     </section>
@@ -29,7 +29,7 @@
 
 
     <section class="experience-section">
-      <EventCard v-if="!isMobile()" :events="events" label="Some amazing experiences"></EventCard>
+      <EventCard v-if="!isMobile()" :events="events" label="Some amazing experiences" link="/experience"></EventCard>
       <MobileEventCard v-else :events="events" label="Some amazing experiences"></MobileEventCard>
     </section>
 
@@ -421,12 +421,17 @@ export default {
     }
 
     .powered-section{
+      width:100%;
       height: 260px;
       margin-top: 60px;
       width:100%;
       padding: 0 80px;
       h3{
         font-size: 35px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-direction: row;
       }
 
       .content{

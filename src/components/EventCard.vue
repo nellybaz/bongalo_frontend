@@ -5,7 +5,7 @@
         </h3>
 
         <div class="inner-content">
-            <VerticalCard v-for="event in events" :key=event.id :event=event></VerticalCard>
+            <VerticalCard v-for="event in events" :key=event.id :event=event :link=link></VerticalCard>
         </div>
     </div>
 </template>
@@ -26,6 +26,11 @@ export default {
          label:{
              type:String,
              required:true
+         },
+
+         link:{
+            type:String,
+            required:true
          }
      },
      components:{

@@ -9,7 +9,7 @@
                         <br>
                         <br>
 
-                        <Button label="Login" :isFullWidth="true"/>
+                        <Button v-on:handleClick="handleButton" label="Login" :isFullWidth="true"/>
                         <!-- <br><br> -->
                         <strong v-on:click=goto(3)>
                             Forgot password ?
@@ -36,7 +36,11 @@
                         <br>
                         <br>
 
-                        <Button label="Sign up" :isFullWidth="true"/>
+                        <div class="terms-checkbox">
+                            <input type="checkbox" v-model="termsCheckBox">
+                            <p>I accept Bongalo's terms and condition</p>
+                        </div>
+                        <Button v-on:handleClick="handleButton" label="Sign up" :isFullWidth="true"/>
                         <!-- <br><br> -->
                         <strong>
                             <!-- Forgot password ? -->
@@ -107,12 +111,19 @@ export default {
 
          goto(intent){
              this.setModalState(intent);
+         },
+         handleButton(){
+            let data = {
+
+            }
+             this.$store.dispatch('register', data);
          }
      },
 
      data:function(){
          return {
-             showModal: true
+             showModal: true,
+             termsCheckBox:""
          }
      }, 
      computed: mapGetters(['getModalState'])
@@ -125,7 +136,7 @@ export default {
         display: none !important;
     }
     .login-modal {
-        position: absolute;
+        position: fixed;
         top: 0;
         z-index:9999999999;
         width:100%;
@@ -153,6 +164,21 @@ export default {
                 margin-bottom: 30px;
             }
 
+
+            .signup-div{
+                .terms-checkbox{
+                    // border:1px solid red;
+                    display:flex;
+                    align-items:center;
+                    justify-content:flex-start;
+                    flex-direction: row;
+
+                    input{
+                        margin-right: 10px;
+                        
+                    }
+                }
+            }
             .login-div, .signup-div, .forgot-password{
                 width:100%;
 

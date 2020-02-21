@@ -76,7 +76,7 @@ a{
 
             .title{
                 font-style: normal;
-                font-weight: bold;
+                // font-weight: bold;
                 font-size: 20px;
                 line-height: 24px;
                 display: flex;

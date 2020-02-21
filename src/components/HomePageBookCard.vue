@@ -39,12 +39,14 @@
                     guest(s)
                 </p>
                 <div class="btn-container">
+                     <button v-on:click=handleGuestClick(0)>
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    
                     <button v-on:click=handleGuestClick(1)>
                        <i class="fas fa-plus"></i>
                     </button>
-                    <button v-on:click=handleGuestClick(0)>
-                        <i class="fas fa-minus"></i>
-                    </button>
+                   
                 </div>
             </div>
         </div>
@@ -135,7 +137,7 @@ export default {
         background: #FFFFFF;
         box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.06);
         border-radius: 5px;
-        padding: 40px 20px;
+        padding: 40px 30px;
         padding-bottom: 70px;
 
         .card-date-input{
@@ -242,8 +244,7 @@ export default {
                     font-size: 16px;
                     font-weight: bold;
                     cursor: pointer;
-                    // margin: 0 10px;
-
+                    background: #fff;
                     font-style: normal;
                     font-weight: normal;
                     font-size: 14px;

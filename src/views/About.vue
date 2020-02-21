@@ -1,10 +1,9 @@
 <template>
   <div class="about">
-      <!-- <Jumbotron></Jumbotron> -->
     <AboutHeader />
     <HeadCard />
     <section class="trending-section">
-      <EventCard :events="events" label="What's Trending"></EventCard>
+      <EventCard :events="events" label="What's Trending" link="/experience"></EventCard>
     </section>
     <ListProperity />
   </div>

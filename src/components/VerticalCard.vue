@@ -1,5 +1,5 @@
 <template>
-    <router-link class='vertical-card' to="/details">
+    <router-link class='vertical-card' :to=link>
         <img :src="require(`../assets/images/${event.image}`)" alt="">
         <div class="vertical-card-info-section">
             <p class="location"><i class="fas fa-map-marker-alt"></i> {{event.location}}</p>
@@ -18,6 +18,10 @@ export default {
              type:Object,
              required:true,
          },
+         link:{
+             type:String,
+             required:true
+         }
      }
 }
 </script>

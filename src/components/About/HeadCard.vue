@@ -63,7 +63,7 @@ export default {
 }
 .event-card {
   position: relative;
-  top: -40px;
+  top: -20vh;
   margin-left: 3%;
   width: 94%;
   background: #fff;

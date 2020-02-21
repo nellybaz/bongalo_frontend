@@ -26,7 +26,9 @@
             </p>
           </div>
           <div class="read-more">
-            <a href>Read More</a>
+            <router-link to="/blog-details">
+              Read More
+            </router-link>
           </div>
         </div>
       </div>

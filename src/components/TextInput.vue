@@ -52,7 +52,7 @@ export default {
         input:focus{
                 outline-color: #3A85FC;
                 outline-width: 2px;
-                outline-style: dotted;
+                outline-style: solid;
 
             }
         ::-webkit-input-placeholder{
