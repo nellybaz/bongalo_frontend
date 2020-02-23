@@ -1,6 +1,6 @@
 <template>
     <div class='experience'>
-        <Navigation></Navigation>
+        <Navigation :showSearch="true"></Navigation>
         <ImageGrid></ImageGrid>
         <EventsInfo label="Tour with Visit Rwanda"></EventsInfo>
 

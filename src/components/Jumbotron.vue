@@ -5,7 +5,11 @@
 
       <nav v-if="!isMobile()">
         <ul>
-          <li>EN</li>
+          <li>
+            <router-link to="/profile">
+              EN
+            </router-link>
+          </li>
 
           <li>$ USD</li>
 

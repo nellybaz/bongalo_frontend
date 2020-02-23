@@ -1,6 +1,6 @@
 <template>
     <div class='verification'>
-        <Navigation></Navigation>
+        <Navigation :showSearch="true"></Navigation>
         <div class="content">
             <h3>
                 Hi Uchechukwu,

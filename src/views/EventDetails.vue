@@ -1,6 +1,6 @@
 <template>
     <div class='event-details'>
-        <Navigation></Navigation>
+        <Navigation :showSearch="true"></Navigation>
         <ImageGrid></ImageGrid>
         <EventsInfo label="Jidenna in the City"></EventsInfo>
 

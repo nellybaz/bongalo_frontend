@@ -7,7 +7,7 @@
         </router-link>
         <ul v-if="isBlog" class="blg">Blog</ul>
       </div>
-      <div class="search-div">
+      <div v-if="showSearch == true" class="search-div">
         <i class="fa fa-search" aria-hidden="true"></i>
         <input placeholder="Type for anything to search for tag or topics" type="text" />
       </div>
@@ -35,6 +35,9 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
   props:{
     isBlog:{
+      type:Boolean
+    },
+    showSearch:{
       type:Boolean
     }
   },

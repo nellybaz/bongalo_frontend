@@ -2,7 +2,45 @@
     <div v-if="getModalState != 0" class='login-modal'>
         <div class="modal-content">
             <i v-on:click=closeModal  class="far fa-times-circle"></i>
-                <div class="login-div" v-if="getModalState == 1">
+
+            <div v-if="isVerify" class="forgot-password">
+                    <h3>Verify</h3>
+
+                    <p>
+                        Enter the pin received on your email
+                    </p>
+
+                    <br>
+                    <Input hint="Enter PIN" type="text" :isFullWidth="true"/>
+                    <br>
+
+                      <Button label="Verify" :isFullWidth="true"/>
+                        <!-- <br><br> -->
+                        <strong>
+                            <!-- Forgot password ? -->
+                        </strong>
+
+                        <hr>
+                    
+                    <p>
+                       Didn't get a pin ?
+                        <span v-on:click=goto(1)>
+                            Resend
+                        </span>
+                    </p>
+
+                     <p>
+                       Go back to
+                        <span v-on:click=goto(1)>
+                            Login
+                        </span>
+                    </p>
+
+
+                </div>
+
+                
+                <div class="login-div" v-else-if="getModalState == 1">
                         <Input hint="Email address" type="email" :isFullWidth="true"/>
                         <br>
                         <Input hint="Password" type="password" :isFullWidth="true"/>
@@ -40,7 +78,7 @@
                             <input type="checkbox" v-model="termsCheckBox">
                             <p>I accept Bongalo's terms and condition</p>
                         </div>
-                        <Button v-on:handleClick="handleButton" label="Sign up" :isFullWidth="true"/>
+                        <Button v-on:handleClick="setVerify" label="Sign up" :isFullWidth="true"/>
                         <!-- <br><br> -->
                         <strong>
                             <!-- Forgot password ? -->
@@ -85,6 +123,9 @@
 
                 </div>
 
+
+            
+
         </div>
     </div>
 </template>
@@ -106,6 +147,7 @@ export default {
      methods:{
          ...mapActions(['setModalState']),
          closeModal(){
+             this.isVerify = false;
             this.setModalState(0);
          },
 
@@ -117,13 +159,18 @@ export default {
 
             }
              this.$store.dispatch('register', data);
+         },
+
+         setVerify(){
+             this.isVerify = true;
          }
      },
 
      data:function(){
          return {
              showModal: true,
-             termsCheckBox:""
+             termsCheckBox:"",
+             isVerify: false,
          }
      }, 
      computed: mapGetters(['getModalState'])

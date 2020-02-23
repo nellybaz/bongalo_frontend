@@ -13,16 +13,32 @@
                         </router-link>
                     </li>
                     <li>Team</li>
-                    <li>Career</li>
+                    <li>
+                        <router-link to="/career">
+                            Career
+                        </router-link>
+                    </li>
                 </ul>
             </div>
             <div class="content-item">
                 <h4>Links</h4>
 
                 <ul>
-                    <li>Blog</li>
-                    <li>Privacy Policy</li>
-                    <li>Terms and Conditions</li>
+                    <li>
+                        <router-link to="/blog">
+                            Blog
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/terms-condition">
+                           Privacy Policy
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/terms-condition">
+                            Terms and Conditions
+                        </router-link>
+                    </li>
                 </ul>
             </div>
             <div class="content-item">

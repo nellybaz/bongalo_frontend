@@ -1,7 +1,7 @@
 <template>
     <div class='apartment_details'>
         <div v-if="!isImageShow" class="detials-content">
-            <Navigation></Navigation>
+            <Navigation :showSearch="true"></Navigation>
             <ImageGrid v-on:updateImageShow=updateImageShowHandler :showMoreImages=true></ImageGrid>
 
             <div class="apartment-details-content">

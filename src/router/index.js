@@ -58,6 +58,30 @@ const routes = [
     path: '/blog-details',
     name: 'blog_details',
     component: () => import(/* webpackChunkName: "detiails" */ '../views/BlogDetails.vue')
+  },
+
+  {
+    path: '/terms-condition',
+    name: 'terms_condition',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/TermsCondition.vue')
+  },
+
+ {
+    path: '/career',
+    name: 'career',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Careers.vue')
+  },
+  
+  {
+    path: '/apply',
+    name: 'apply',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Apply.vue')
+  },
+
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Profile.vue')
   }
 
   

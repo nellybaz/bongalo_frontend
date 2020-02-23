@@ -1,6 +1,6 @@
 <template>
   <div class="blog-details">
-    <Navigation />
+    <Navigation :showSearch="true"/>
     <Tags />
     <PopularPosts />
 
