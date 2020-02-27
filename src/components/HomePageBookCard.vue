@@ -20,12 +20,34 @@
         <div class="item2">
            <div class="inner1">
                  <p class="item-label">CHECKIN</p>
-                <input class="card-date-input" type="date" >
+                <vc-date-picker
+                    v-model="checkin"
+                    :popover="{ placement: 'bottom', visibility: 'click' }"
+                    :min-date="new Date()"
+                    >
+                    <div class="date-picker">
+                        {{
+                            getDateFormat(checkin.toString())
+                        }}
+                    </div>
+                </vc-date-picker>
+
            </div>
 
            <div class="inner2">
                  <p class="item-label">CHECKOUT</p>
-               <input class="card-date-input" type="date" >
+                 <vc-date-picker
+                    v-model="checkout"
+                    :popover="{ placement: 'bottom', visibility: 'click' }"
+                    :min-date="new Date()"
+                    :disabled-dates="{ start:null, end:Date.now()}"
+                    >
+                    <div class="date-picker">
+                        {{
+                            getDateFormat(checkout.toString())
+                        }}
+                    </div>
+                </vc-date-picker>
            </div>
         </div>
 
@@ -63,6 +85,16 @@ import Input from '../components/TextInput';
 import Button from '../components/Button';
 
 
+import Vue from 'vue';
+import VCalendar from 'v-calendar';
+
+// Use v-calendar & v-date-picker components
+Vue.use(VCalendar, {
+  componentPrefix: 'vc',  // Use <vc-calendar /> instead of <v-calendar />
+
+});
+
+
 export default {
      name:'home_book_card',
      components:{
@@ -71,10 +103,43 @@ export default {
      },
     data: function(){
         return {
+            monthMap:{
+                "Jan":1,
+                "Feb":2,
+                "Mar":3,
+                "Apr":4,
+                "May":5,
+                "Jun":6,
+                "Jul":7,
+                "Aug":8,
+                "Sep":9,
+                "Oct":10,
+                "Nov":11,
+                "Dec":12
+            },
+            checkin:"",
+            checkout:"",
             guestNumber:1,
+            attributes: [
+                {
+                    key: 'today',
+                    highlight: true,
+                    dates: new Date()
+                }
+                ]
+            
         }
     },
      methods:{
+         getDateFormat(date){
+            if(date){
+                let splitted = date.split(" ")
+            
+                let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
+                return new_date
+            }
+            return ""
+         },
          handleSearchClick(){
              this.$router.push("/search")
          },
@@ -193,6 +258,22 @@ export default {
             grid-column-gap: 5px;
             grid-template-columns: 1fr 1fr;
 
+            .date-picker{
+                display:flex;
+                align-items:flex-start;
+                justify-content:center;
+                flex-direction: column;
+                height: 50px;
+                border: 1px solid #C4C4C4;
+                border-radius: 5px;
+                padding: 10px 10px; 
+
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                color: rgba(106, 106, 106, 0.7);
+            }
 
             .inner1, .inner2{
                 width:100%;

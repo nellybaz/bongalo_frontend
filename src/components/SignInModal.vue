@@ -3,38 +3,38 @@
         <div class="modal-content">
             <i v-on:click=closeModal  class="far fa-times-circle"></i>
 
-            <div v-if="isVerify" class="forgot-password">
-                    <h3>Verify</h3>
+                <div v-if="isVerify" class="forgot-password">
+                        <h3>Verify</h3>
 
-                    <p>
-                        Enter the pin received on your email
-                    </p>
+                        <p>
+                            Enter the pin received on your email
+                        </p>
 
-                    <br>
-                    <Input hint="Enter PIN" type="text" :isFullWidth="true"/>
-                    <br>
+                        <br>
+                        <Input hint="Enter PIN" type="text" :isFullWidth="true"/>
+                        <br>
 
-                      <Button label="Verify" :isFullWidth="true"/>
-                        <!-- <br><br> -->
-                        <strong>
-                            <!-- Forgot password ? -->
-                        </strong>
+                        <Button label="Verify" :isFullWidth="true"/>
+                            <!-- <br><br> -->
+                            <strong>
+                                <!-- Forgot password ? -->
+                            </strong>
 
-                        <hr>
-                    
-                    <p>
-                       Didn't get a pin ?
-                        <span v-on:click=goto(1)>
-                            Resend
-                        </span>
-                    </p>
+                            <hr>
+                        
+                        <p>
+                        Didn't get a pin ?
+                            <span v-on:click=goto(1)>
+                                Resend
+                            </span>
+                        </p>
 
-                     <p>
-                       Go back to
-                        <span v-on:click=goto(1)>
-                            Login
-                        </span>
-                    </p>
+                        <p>
+                        Go back to
+                            <span v-on:click=goto(1)>
+                                Login
+                            </span>
+                        </p>
 
 
                 </div>
@@ -156,12 +156,25 @@ export default {
          },
          handleButton(){
             let data = {
-
+                email:'email@email.com',
+                first_name:'Nelson',
+                last_name:'Bassey',
+                password:'passing',
             }
              this.$store.dispatch('register', data);
          },
 
          setVerify(){
+
+             let data = {
+                email:'email@klab5.com'+Date.now(),
+                first_name:'Nelson',
+                last_name:'Bassey',
+                password:'passing',
+                is_admin:false,
+            }
+             this.$store.dispatch('register', data);
+             
              this.isVerify = true;
          }
      },

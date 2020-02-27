@@ -11,7 +11,7 @@
         <i class="fa fa-search" aria-hidden="true"></i>
         <input placeholder="Type for anything to search for tag or topics" type="text" />
       </div>
-      <nav>
+      <!-- <nav>
         <ul>
           <li>EN</li>
           <li>$ USD</li>
@@ -24,15 +24,23 @@
 
           <li v-on:click="handleSignin(1)">Login</li>
         </ul>
-      </nav>
+      </nav> -->
+      <NavLink :isDark="true"></NavLink>
     </header>
   </div>
 </template>
 
 
 <script>
+
 import { mapGetters, mapActions } from 'vuex';
+import NavLink from '../../components/NavLink';
+
+
 export default {
+  components:{
+    NavLink
+  },
   props:{
     isBlog:{
       type:Boolean

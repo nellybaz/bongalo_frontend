@@ -20,7 +20,7 @@ export default {
      name:'event-card',
      props:{
          events:{
-             type:Object,
+             type:Array,
              required:true
          },
          label:{

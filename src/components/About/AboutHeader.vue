@@ -4,29 +4,21 @@
         <router-link to="/">
             <img src="../../assets/images/bongalo-logo-white.png" alt />
         </router-link>
-      <nav>
-        <ul>
-          <li>EN</li>
-          <li>$ USD</li>
-          <li>
-            <router-link to="/blog">
-                Blog
-            </router-link>
-          </li>
-          <li>Sign up</li>
-          <li>Login</li>
-        </ul>
-      </nav>
+     <NavLink :isDark="false"></NavLink>
     </header>
   </div>
 </template>
 
 
 <script>
+
+import NavLink from '../../components/NavLink';
+
 export default {
   //    name:'header',
-  //    components:{
-  //    }
+     components:{
+       NavLink,
+     }
 };
 </script>
 

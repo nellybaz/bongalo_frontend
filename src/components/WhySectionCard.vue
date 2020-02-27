@@ -22,7 +22,7 @@ export default {
      name:'why-card',
      props:{
          content:{
-             type:String,
+             type:Object,
              required:true
          }
      }

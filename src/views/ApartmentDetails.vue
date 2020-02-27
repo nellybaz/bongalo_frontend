@@ -148,8 +148,29 @@
                                 <label for="">Dates</label>
 
                                 <div class="dates">
-                                    <input id="book-checkin" type="date" placeholder="Check in"/>
-                                    <input id="book-checkout" type="date" placeholder="Check out"/>
+                                    <vc-date-picker
+                                        v-model="checkin"
+                                        :popover="{ placement: 'bottom', visibility: 'click' }"
+                                        :min-date="new Date()"
+                                        >
+                                        <div>
+                                            {{
+                                                getDateFormat(checkin.toString())
+                                            }}
+                                        </div>
+                                    </vc-date-picker>
+                                    <vc-date-picker
+                                        v-model="checkout"
+                                        :popover="{ placement: 'bottom', visibility: 'click' }"
+                                        :min-date="new Date()"
+                                        :disabled-dates="{ start:null, end:Date.now()}"
+                                        >
+                                        <div>
+                                            {{
+                                                getDateFormat(checkout.toString())
+                                            }}
+                                        </div>
+                                    </vc-date-picker>
                                 </div>
                                 <br>
                                 <div class="book-guest">
@@ -256,6 +277,16 @@ import ImageGrid from '../components/ImageGrid';
 import Button from '../components/Button';
 import { mapGetters } from 'vuex';
 
+import Vue from 'vue';
+import VCalendar from 'v-calendar';
+
+// Use v-calendar & v-date-picker components
+Vue.use(VCalendar, {
+  componentPrefix: 'vc',  // Use <vc-calendar /> instead of <v-calendar />
+
+});
+
+
 export default {
      name:'apartment_details',
      components:{
@@ -264,6 +295,15 @@ export default {
          ImageGrid
      },
      methods:{
+         getDateFormat(date){
+            if(date == "Checkin" || date == "Checkout"){
+               return date;
+            }
+            let splitted = date.split(" ")
+            
+            let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
+            return new_date
+         },
          updateImageShowHandler(intent){
              if(intent == 1){
                  this.isImageShow = true;
@@ -275,6 +315,22 @@ export default {
      },
      data: function(){
          return {
+              monthMap:{
+                "Jan":1,
+                "Feb":2,
+                "Mar":3,
+                "Apr":4,
+                "May":5,
+                "Jun":6,
+                "Jul":7,
+                "Aug":8,
+                "Sep":9,
+                "Oct":10,
+                "Nov":11,
+                "Dec":12
+            },
+             checkin:"Checkin",
+             checkout:"Checkout",
              reviews:[
                  {
                      id:1
@@ -834,7 +890,7 @@ export default {
                             display: grid;
                             grid-template-columns: 1fr 1fr;
 
-                            input{
+                            div{
                                 height: 100%;
                                 font-style: normal;
                                 font-weight: normal;
@@ -843,6 +899,11 @@ export default {
                                 padding: 0 10px;
                                 border:1px solid rgba(106, 106, 106, 0.3);
                                 color: rgba(64, 64, 64, 0.7);
+
+                                display:flex;
+                                align-items:flex-start;
+                                justify-content:center;
+                                flex-direction: column;
                             }
                         }
 

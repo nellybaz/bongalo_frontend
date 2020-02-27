@@ -2,28 +2,7 @@
   <div class="jumbotron">
     <header>
       <img src="../assets/images/bongalo-logo-white.png" alt />
-
-      <nav v-if="!isMobile()">
-        <ul>
-          <li>
-            <router-link to="/profile">
-              EN
-            </router-link>
-          </li>
-
-          <li>$ USD</li>
-
-          <li>
-            <router-link to="/blog">
-              Blog
-            </router-link>
-          </li>
-
-          <li v-on:click="handleSignin(2)">Sign up</li>
-
-          <li v-on:click="handleSignin(1)">Login</li>
-        </ul>
-      </nav>
+    <NavLink :isDark="false"></NavLink>
     </header>
 
 
@@ -41,11 +20,13 @@
 <script>
 import BookCard from "../components/HomePageBookCard";
 import { mapGetters, mapActions } from 'vuex';
+import NavLink from '../components/NavLink';
 
 export default {
   name: "jumbotron",
   components: {
-    BookCard
+    BookCard,
+    NavLink
   },
 
   methods:{
@@ -103,37 +84,6 @@ export default {
     align-items: center;
     justify-content: flex-start;
     flex-direction: row;
-
-    // img{
-    //     // border:1px solid green;
-    // }
-    nav {
-      width: 100%;
-      margin-right: 2%;
-
-      ul {
-        float: right;
-        width: 400px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        flex-direction: row;
-        li {
-          font-weight: 600;
-          font-size: 14px;
-          line-height: 17px;
-          width: 100px;
-          color: #ffffff;
-          list-style: none;
-          cursor: pointer;
-
-          a{
-            text-decoration: none;
-            color: #ffffff;
-          }
-        }
-      }
-    }
   }
 
   .book-card-div {
