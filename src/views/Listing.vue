@@ -1,33 +1,524 @@
 <template>
     <div class='listing'>
-        <div class="listing-header">
-           <img src="../assets/images/bongalo-logo.png" alt="bongalo-logo">
-            <br>
-            <br>
-           <p>Step 1: Start with the type of house you want to list</p>
+        <Navigation></Navigation>
+
+       
+        <div class="listing-content-wrapper">
+            <Paragraph :text="title_text()" size="20" weight="bold" color="#404040"></Paragraph>
+
+             <div class="progress-box-wrapper">
+                 <div :style="style()" class="box-paint">
+
+                 </div>
+
+                 <div v-if="step == 1" class="box-content">
+                     <div v-if="flow == 1" >
+                         <Paragraph text="What kind of place are you listing ?" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br><br>
+                         <Paragraph text="First let's narrow things down" size="16" weight="bold" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                         <Select :options="steps.one.listing_type" width="300px" model="Apartment"></Select>
+
+                         <br>
+                         <br>
+                         <br>
+
+                         <Paragraph text="What will guest have ?" size="16" weight="bold" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                         <br>
+                         <Radio :options="steps.one.what_guest_will_have"></Radio>
+
+                         <br><br><br>
+                         
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+
+                    <div v-if="flow == 2" >
+                         <Paragraph text="How many guest can your place accomodate ?" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br><br>
+                         <Paragraph text="Check that you have enough beds to acoomodate all your guests comfortably" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                         <Incrementer label="Guest"></Incrementer>
+
+                         <br>
+                         <br>
+                         <br>
+
+                         <Paragraph text="How many bedrooms can quest use ?" size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                         <br>
+                          <Select :options="steps.one.number_of_bedrooms" width="300px" model="3"></Select>
+                         
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                    <div v-if="flow == 3" >
+                         <Paragraph text="How many bathrooms ?" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br><br>
+                         <Paragraph text="Check that you have enough bathrooms to acoomodate all your guests comfortably" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                         <Incrementer label="Bathrooms"></Incrementer>
+
+                         <br>
+                         <br>
+                         <br>
+
+                         <!-- <Paragraph text="How many bedrooms can quest use ?" size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                         <br>
+                          <Select :options="steps.one.number_of_bedrooms" width="300px" model="3"></Select>
+                          -->
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                      <div v-if="flow == 4" >
+                         <Paragraph text="Where is your place located ?" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br><br>
+                        <Paragraph text="Guest will only get your exact location when they have made a reservation" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        
+                        <br>
+                        <Paragraph text="Country" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <Input class="input" hint="Country"/>
+                        <br>
+
+                        <Paragraph text="Street address" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <Input class="input" hint="KG 7 Ave"/>
+
+
+                        <br>
+                        <div class="state-city">
+                            
+                            <div>
+                                <Paragraph text="City" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                                <Input :isFullWidth="true" class="input" hint="City"/>
+                            </div>
+                            
+                            <div>
+                                <Paragraph text="Province" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                                <Input :isFullWidth="true" class="input" hint="Province"/>
+                            </div>
+                        </div>
+
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                     <div v-if="flow == 5" >
+                         <Paragraph text="What amenities do you offer?" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br><br>
+                        <Paragraph text="These are just the amenities that guest usually expect, you can add more after you have published " size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <br>
+
+                        <CheckBox class="checkbox-item" v-for="item in steps.one.amenities" :key="item.value" :item="item"/>
+                       
+
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+
+                     <div v-if="flow == 6" >
+                         <Paragraph text="What extras do you offer?" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br><br>
+                        <Paragraph text="These are just the extra amenities/spaces you can offer your guest" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <br>
+
+                        <CheckBox class="checkbox-item" v-for="item in steps.one.extras" :key="item.value" :item="item"/>
+                       
+
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+                     <div v-if="flow == 7">
+                          
+                         <h1>
+                             Great progress.. <br>
+                             Continue
+                         </h1>
+
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+                 </div>
+
+                 <div v-else-if="step == 2" class="box-content">
+                     <div v-if="flow == 1" >
+                         <Paragraph text="Add photos to your listing" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br>
+                        <Paragraph text="Photos help your guest imagine staying at your place. You can add minimum five and maximum ten photos" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <br>
+
+                        <input id="image_select" type="file" multiple @change="onFileChange">
+                        <label class="image_select_label" for="image_select">
+                            <div class="div">
+                               <div>
+                                    <p>Upload photos</p>
+                                    <small>or drag them in</small>
+                               </div>
+                            </div>
+                        </label>
+
+                        <div v-if="urls" class="preview">
+                            <img v-for="url in urls" :key="url" :src="url" />
+                        </div>
+
+                    
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                      <div v-if="flow == 2" >
+                         <Paragraph text="Describe your place to guests" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br/>
+                        <Paragraph text="Write a quick summary of your place. You can highlight what’s special about your space, the neighborhood, and how you’ll interact with guests." size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <br>
+
+                        <textarea class="textarea" cols="60" rows="10" placeholder="Describe the decor, light, what’s nearby etc..">
+                            
+                        </textarea>
+                    
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                     <div v-if="flow == 3" >
+                         <Paragraph text="Name your place" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br/>
+                        <Paragraph text="Attract guests with a listing title that highlights what makes your place special." size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <br>
+
+                        <input class="listing-name" type="text" placeholder="Best room in Arts Gallery, Kigali">
+                    
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+
+                     <div v-if="flow == 4" >
+                         <Paragraph text="Add your mobile number" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br>
+                        <br>
+                        <input class="listing-name" type="text" placeholder="Enter phone number">
+                        <br>
+                        <br>
+
+                        <Button :isFullWidth="false" v-on:handleClick="alert('SMS verification sent')" label="Verify Number" width="200px"></Button>
+                    
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                     <div v-if="flow == 5">
+                          
+                         <h1>
+                             Great progress.. <br>
+                             Continue
+                         </h1>
+
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+
+                 </div>
+
+                <div v-else-if="step == 3" class="box-content">
+                     <div v-if="flow == 1" >
+                         <Paragraph text="Successful hosting starts with an accurate calendar" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br>
+                        <Paragraph text="Guests will book available days instantly. Only get booked when you can host by keeping your calendar and availability settings up-to-date." size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+
+                        <Paragraph text="Canceling disrupts guests’ plans. If you cancel because your calendar is inaccurate, you’ll be charged a penalty fee and the dates won’t be available for anyone else to book." size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <br>
+
+
+                        <CheckBox class="checkbox-item" v-for="item in steps.three.update_calendar" :key="item.value" :item="item"/>
+                        
+
+                    
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                      <div v-if="flow == 2" >
+                         <Paragraph text="When can guest check in ?" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br>
+                        <br>
+
+                        <div class="checkin-div">
+                            <div>
+                                <Paragraph text="From" size="16" weight="normal" color="#404040"></Paragraph>
+                                <Select :options="steps.three.checkin_times" width="200px" model="Apartment"></Select>
+                            </div>
+                            <div>
+                                <Paragraph text="To" size="16" weight="normal" color="#404040"></Paragraph>
+                                <Select :options="steps.three.checkin_times" width="200px" model="Apartment"></Select>
+                            </div>
+                        </div>
+                        
+
+                         
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                  </div>
+
+             </div>
         </div>
-        <div class="progress-bar-wrapper">
-            <div :style="styles.bar_style" class="progress-bar"></div>
-        </div>
+
+         
     </div>
 </template>
 
 
 <script>
+
+import Navigation from '../components/Blog/Navigation';
+import Paragraph from '../components/Paragraph';
+import Select from '../components/Select';
+import Radio from '../components/Radio';
+import Button from '../components/Button';
+import Incrementer from '../components/Incrementer';
+import Input from '../components/TextInput';
+import CheckBox from '../components/CheckBox';
+
+
+//External imports
+import Vue from 'vue';
+import VCalendar from 'v-calendar';
+
+// Use v-calendar & v-date-picker components
+Vue.use(VCalendar, {
+  componentPrefix: 'vc',  // Use <vc-calendar /> instead of <v-calendar />
+
+});
+
+
 export default {
      name:'listing_page',
+     components:{
+         Navigation,
+         Paragraph,
+         Select,
+         Radio,
+         Button,
+         Incrementer,
+         Input,
+         CheckBox
+     },
      
      data: function(){
          return {
-             styles:{
-                 bar_style: "width:40%"
-             },
-             stage:0,
-             step: 0,
-             stages:{
-                 place_type:{
-                     
-                 }
+             urls:null,
+             total: 7,
+             checkout:"",
+             checkin:"",
+             monthMap:{
+                "Jan":1,
+                "Feb":2,
+                "Mar":3,
+                "Apr":4,
+                "May":5,
+                "Jun":6,
+                "Jul":7,
+                "Aug":8,
+                "Sep":9,
+                "Oct":10,
+                "Nov":11,
+                "Dec":12
+            },
+             flow_percentage: 0,
+
+            stepsText:{
+                "1":" Start with the basics",
+                "2":"Set the scene",
+                "3":"Get ready for guests"
+            },
+             step: 3,
+             flow: 1,
+             steps:{
+                one:{
+                    total:7,
+                    listing_type:[
+                        {
+                            text: 'Apartment',
+                            value: 'Apartment',
+                        },
+                        {
+                            text: 'Commercial',
+                            value: 'Commercial',
+                        },
+                        {
+                            text: 'House',
+                            value: 'House',
+                        }
+                    ],
+                    what_guest_will_have:[
+                        {
+                            text: 'Full place',
+                            desc: 'Guests have the whole place to themselves. This usually includes a bedroom, a bathroom, and a kitchen.',
+                        },
+                        {
+                            text: 'Private room',
+                            desc: 'Guests have their own private room for sleeping. Other areas could be shared.',
+                        },
+                        
+                    ],
+                    number_of_bedrooms:[
+                        {
+                            text: "1",
+                            value:"1"
+                        },
+                         {
+                            text: "2",
+                            value:"2"
+                        }
+                        ,
+                         {
+                            text: "3",
+                            value:"3"
+                        }
+                        ,
+                         {
+                            text: "4",
+                            value:"4"
+                        }
+                        ,
+                         {
+                            text: "5",
+                            value:"5"
+                        }
+                        ,
+                         {
+                            text: "6",
+                            value:"6"
+                        }
+                        ,
+                         {
+                            text: "7",
+                            value:"7"
+                        }
+                        ,
+                         {
+                            text: "8",
+                            value:"8"
+                        }
+                    ],
+
+                    amenities:[
+                        {
+                            value:"air_conditioner",
+                            text:"Air conditioner"
+                        },
+                        {
+                            value:"closet",
+                            text:"Closet/drawer"
+                        },
+                        {
+                            value:"iron",
+                            text:"Iron"
+                        },
+                        {
+                            value:"tv",
+                            text:"Tv"
+                        },
+                        {
+                            value:"wifi",
+                            text:"Wifi"
+                        },
+                         {
+                            value:"lock_bedroom",
+                            text:"Look on bedroom"
+                        },
+                         {
+                            value:"desk",
+                            text:"Desk/workspace"
+                        },
+                    ],
+                    extras:[
+                        {
+                            value:"gym",
+                            text:"Gym"
+                        },
+                        {
+                            value:"pool",
+                            text:"Swimming pool"
+                        },
+                        {
+                            value:"basketball",
+                            text:"Basket Ball Pitch"
+                        },
+                        {
+                            value:"washer",
+                            text:"Laundry Washer"
+                        },
+                    ]
+                },
+                three:{
+                    update_calendar:[
+                        {
+                            value:"yes",
+                            text: "Got it! I’ll keep my calendar up to date."
+                        }
+                    ],
+                    checkin_times:[
+                        {
+                            value:"9am",
+                            text: "9 AM"
+                        },
+                        {
+                            value:"10am",
+                            text: "10 AM"
+                        },
+                        {
+                            value:"11am",
+                            text: "11 AM"
+                        },
+                        {
+                            value:"12_noon",
+                            text: "12 NOON"
+                        },
+                    ]
+                }
 
              },
              title: "",
@@ -38,32 +529,206 @@ export default {
      },
 
      methods:{
+         getDateFormat(date){
+            if(date){
+                let splitted = date.split(" ")
+            
+                let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
+                return new_date
+            }
+            return ""
+         },
+          onFileChange(e) {
+            const files = e.target.files;
+            let tmpUrl = [];
+            for(let i=0; i < files.length; i++){
+                tmpUrl.push(URL.createObjectURL(files[i]))
+            }
 
+            this.urls = tmpUrl;
+            },
+         style(){
+             return "width:"+ this.flow_percentage +"%";
+         },
+         title_text(){
+             return "Step " + this.step +": " + this.stepsText[this.step]
+         },
+         processSteps(motive){
+             if(motive == 1){
+                this.flow += 1;
+                if(this.flow > this.total){
+                    this.step += 1;
+                    this.flow = 1;
+                    if(this.step == 2){
+                        this.total = 5;
+                    }
+                    if(this.step == 3){
+                        this.total = 3;
+                    }
+                }
+             }
+             else{
+                 this.flow -= 1;
+                // if(this.flow == 7){
+                //     this.step += 1;
+                // }
+             }
+
+
+             this.flow_percentage = (this.flow /this.total)*100;
+         }
+     },
+     created(){
+         this.flow_percentage = (this.flow/this.total) * 100;
      }
 }
 </script>
 
 
 <style lang='scss' scoped>
+
+    .input{
+        padding: 0 !important;
+        // border:1px solid red;
+    }
+
+
+    .preview{
+        // border:1px solid red;
+        width: 500px;
+        img{
+            max-width: 100%;
+        }
+    }
     .listing {
         width:100%;
-        height: 100vh;
 
-        .listing-header{
-            width:100%;
-            padding: 10px 30px;
-        }
+       .listing-content-wrapper{
+           margin-top: 80px;
+           width:100%;
+           padding: 0 20%;
 
-        .progress-bar-wrapper{
-            width:100%;
-            height: 15px;
-            // border:1px solid red;
-            background:#EDEFED;
-            .progress-bar{
-                height: 100%;
-                background-color: navy;
-                border-radius: 0 20px 20px 0;
-            }
-        }
+           .progress-box-wrapper{
+               border-radius: 10px 10px 0 0;
+               margin-top: 30px;
+               width:100%;
+               background: #E7EEF6;
+                overflow-y: scroll;
+               box-shadow: 0px 4px 70px rgba(104, 104, 104, 0.1);
+
+               .box-paint{
+                   border-radius: 10px 10px 0 0;
+                   height: 20px;
+                   background: #3A85FC;
+               }
+
+               .box-content{
+                    border-radius: 10px 10px 0 0;
+                    width:100%;
+                    position: relative;
+                    // height: 600px;
+                    top: -12px;
+                    background: #fff;
+                    padding: 0 20%;
+                  
+
+                   div{
+                    padding: 50px 0;
+                    width:100%;
+                    height: 100%;
+
+
+                    .action-section{
+                        width:100%;
+                        display:flex;
+                        align-items:center;
+                        justify-content:space-between;
+                        flex-direction: row;
+                    }
+                    
+                   }
+
+                   .state-city{
+                       div{
+                           padding: 0 !important;
+                       }
+                    //    border:1px solid red;
+                       padding: 0 !important;
+                       display: grid;
+                       grid-template-columns: 1fr 1fr;
+                       grid-gap: 20px;
+                   }
+
+                   .checkbox-item{
+                       padding: 10px;
+                   }
+
+                   #image_select{
+                       display: absolute;
+                       width: 0.1px;
+                       height: 0.1px;
+                   }
+
+                   .image_select_label{
+                       .div{
+                           width:100%;
+                           height: 250px;
+                           padding: 20px;
+                           border:1px dashed grey;
+                           div{
+                               background: rgba(196, 196, 196, 0.2);
+                                width:100%;
+                                height: 100%; 
+                                
+                                border-radius: 3px;
+                                cursor: pointer;
+                                display:flex;
+                                align-items:center;
+                                justify-content:center;
+                                flex-direction: column;
+
+                                p{
+                                    background-color: #3A85FC;
+                                    padding:10px 20px;
+                                    color: #fff;
+                                    border-radius: 3px;
+                                    margin-bottom: 10px;
+                                }
+                            }
+                       }
+
+                   }
+
+                   .textarea{
+                       border: 1px solid rgba(196, 196, 196, 0.7);
+                       border-radius: 3px;
+                       padding: 20px;
+                       color: rgb(107, 106, 106);
+                       font-size: 15px;                       
+                   }
+
+                   .listing-name{
+                        border: 1px solid rgba(196, 196, 196, 0.7);
+                        border-radius: 3px;
+                        height: 45px;
+                        color: rgb(107, 106, 106);
+                        padding: 10px 10px;
+                        width:100%;
+                        font-size: 15px;
+                   }
+
+                   .checkin-div{
+                       padding: 0;
+                       display: grid;
+                       grid-template-columns: 1fr 1fr;
+                       grid-gap: px;
+                       div{
+                           padding: 0;
+                       }
+                   }
+                   
+               }
+           }
+       }
     }
 </style>

@@ -8,7 +8,12 @@
             </router-link>
           </li>
 
-          <li>$ USD</li>
+          <li>
+              <router-link to="/become-a-host">
+              Become a host
+            </router-link>
+              
+            </li>
 
           <li>
             <router-link to="/blog">
