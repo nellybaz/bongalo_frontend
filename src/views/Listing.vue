@@ -373,7 +373,7 @@ export default {
                 "2":"Set the scene",
                 "3":"Get ready for guests"
             },
-             step: 3,
+             step: 1,
              flow: 1,
              steps:{
                 one:{
