@@ -275,7 +275,7 @@
                          </div>
                      </div>
 
-                      <div v-if="flow == 2" >
+                    <div v-if="flow == 2" >
                          <Paragraph text="When can guest check in ?" size="26" weight="bold" color="#404040"></Paragraph>
 
                         <br>
@@ -297,6 +297,75 @@
                          <div class="action-section">
                              <button v-on:click="processSteps(0)">Back</button>
                              <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                    </div>
+
+                    <div v-if="flow == 3" >
+                         <Paragraph text="How long can guest stay ?" size="26" weight="bold" color="#404040"></Paragraph>
+
+                        <br>
+                        <br>
+
+
+                        <Incrementer label="Nights min" :start="1" :stop="30"></Incrementer>
+                        <br>
+                        <Incrementer label="Nights max" :start="30" :stop="30"></Incrementer>
+                        
+                        
+
+                         
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                      <div v-if="flow == 4" >
+                         <Paragraph text="Update your calendar" size="16" weight="bold" color="#404040"></Paragraph>
+                         <Paragraph text="Select unavailable dates to block for this listing" size="16" weight="normal" color="#404040"></Paragraph>
+
+                        <br>
+                        <br>
+
+                        <vc-date-picker
+                            mode="range"
+                            :value="null"
+                            color="blue"
+                            is-dark
+                            is-inline
+                        />
+     
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                     <div v-if="flow == 5" >
+                         <Paragraph text="Price Your Space" size="16" weight="bold" color="#404040"></Paragraph>
+                         <Paragraph text="Increase your chances of getting booked" size="16" weight="normal" color="#404040"></Paragraph>
+
+                        <br>
+                        <br>
+
+                        <input class="listing-name" type="number" placeholder="$23">
+     
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                      <div v-if="flow == 6">
+                          
+                         <h1>
+                             You've come this far<br>
+                             Now upload your listing
+                         </h1>
+
+                         <div class="action-section">
+                             <button v-on:click="processSteps(0)">Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="window.alert('Uploading in progress')" label="Upload" width="120px"></Button>
                          </div>
                      </div>
 
@@ -557,21 +626,26 @@ export default {
              if(motive == 1){
                 this.flow += 1;
                 if(this.flow > this.total){
-                    this.step += 1;
+                    if(this.step < 3){
+                        this.step += 1;
+                    }
                     this.flow = 1;
                     if(this.step == 2){
                         this.total = 5;
                     }
                     if(this.step == 3){
-                        this.total = 3;
+                        this.total = 6;
                     }
                 }
              }
              else{
-                 this.flow -= 1;
-                // if(this.flow == 7){
-                //     this.step += 1;
-                // }
+                this.flow -= 1;
+                if(this.flow < 1){
+                    if(this.step > 1){
+                        this.step -= 1;
+                    }
+                    this.flow = 1; 
+                }
              }
 
 

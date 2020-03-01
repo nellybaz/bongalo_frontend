@@ -34,19 +34,34 @@ export default {
      },
      data:function (){
          return {
-             value: 4,
+             value: this.start ? this.start : 4,
          }
      },
      props: {
          label:{
              type: String,
              required:true,
+         },
+         start:{
+             type:Number,
+             required:false
+         },
+          stop:{
+             type:Number,
+             required:false
          }
      },
      methods:{
          handleGuestClick(motive){
              if(motive == 1){
-                 this.value += 1
+                 if(this.stop){
+                     if(this.value < this.stop){
+                         this.value += 1;
+                     }
+                 }
+                 else{
+                     this.value += 1
+                 }
              }
              else if(motive == 0 && this.value > 1){
                 this.value -= 1
@@ -87,6 +102,11 @@ export default {
                 border-radius: 50%;
                 border:1px solid grey;
                 font-weight: bold;
+                cursor: pointer;
+            }
+
+            button:focus{
+                outline: none;
             }
         }
         
