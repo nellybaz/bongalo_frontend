@@ -64,7 +64,9 @@ export default {
     left: 0;
     height: 15px;
     width: 15px;
-    background-color: #eee;
+    border:1px solid #3A85FC;
+    background-color: #fff;
+    border-radius: 3px;
   }
 
   /* On mouse-over, add a grey background color */
@@ -74,7 +76,7 @@ export default {
 
   /* When the checkbox is checked, add a blue background */
   .container input:checked ~ .checkmark {
-    background-color: #2196f3;
+    background-color: #3A85FC;
   }
 
   /* Create the checkmark/indicator (hidden when not checked) */

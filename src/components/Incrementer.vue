@@ -100,9 +100,14 @@ export default {
                 height: 30px;
                 margin-right: 15px;
                 border-radius: 50%;
-                border:1px solid grey;
+                border:2px solid #3A85FC;
                 font-weight: bold;
+                background: #fff;
                 cursor: pointer;
+
+                i{
+                    color: #3A85FC;
+                }
             }
 
             button:focus{

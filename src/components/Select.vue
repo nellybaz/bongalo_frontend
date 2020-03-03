@@ -1,5 +1,5 @@
 <template>
-    <select :style="style" class="select" v-model="model">
+    <select :style="style" v-on:change="$emit('selectChangeHandler', data)" class="select" v-model="data">
         <option v-for="item in options" :key="item.value" :value="item.value">
             {{
                 item.text
@@ -10,10 +10,13 @@
 
 
 <script>
+import { mapGetters } from 'vuex'; 
+
 export default {
      name:'',
      data: function(){
          return {
+             data:"",
              style: "width:" + this.width
          }
      },
@@ -29,6 +32,11 @@ export default {
          options:{
              type:Array,
              required:true
+         }
+     },
+     created(){
+         if(this.model){
+             this.data = this.model
          }
      }
 }

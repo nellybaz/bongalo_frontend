@@ -1,7 +1,7 @@
 <template>
    <div class="radio">
        <div v-for="item in options" :key="item.text" class="radio-item">
-            <input v-model="model" :value="item.text" id="1" class='radio' type="radio">
+            <input v-on:change="$emit('radioChangeHandler', model)" v-model="model" :value="item.value" id="1" class='radio' type="radio">
             <div>
                 <p class="title">
                     {{

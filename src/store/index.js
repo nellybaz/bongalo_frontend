@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import authentication from './modules/authentication.js';
+import listing from './modules/listing.js';
 import header from './modules/header.js';
 
 Vue.use(Vuex)
@@ -21,6 +22,7 @@ export default new Vuex.Store({
   },
   modules: {
     authentication,
-    header
+    header,
+    listing
   }
 })
