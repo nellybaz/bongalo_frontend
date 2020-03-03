@@ -41,7 +41,7 @@ export default {
             height: 50px;
             border: 1px solid #C4C4C4;
             border-radius: 5px;
-            padding: 10px 20px; 
+            padding: 10px 10px; 
 
             font-style: normal;
             font-weight: normal;
@@ -52,7 +52,7 @@ export default {
         input:focus{
                 outline-color: #3A85FC;
                 outline-width: 2px;
-                outline-style: dotted;
+                outline-style: solid;
 
             }
         ::-webkit-input-placeholder{

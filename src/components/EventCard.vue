@@ -5,7 +5,7 @@
         </h3>
 
         <div class="inner-content">
-            <VerticalCard v-for="event in events" :key=event.id :event=event></VerticalCard>
+            <VerticalCard v-for="event in events" :key=event.id :event=event :link=link></VerticalCard>
         </div>
     </div>
 </template>
@@ -20,12 +20,17 @@ export default {
      name:'event-card',
      props:{
          events:{
-             type:Object,
+             type:Array,
              required:true
          },
          label:{
              type:String,
              required:true
+         },
+
+         link:{
+            type:String,
+            required:true
          }
      },
      components:{
@@ -42,9 +47,32 @@ export default {
 
 
 <style lang='scss' scoped>
+
+@media only screen and (max-width: 900px){
+
+    .event-card {
+        position: relative;
+        top: 0 !important;
+        // margin-top: 20px;
+       
+        // border:1px solid green;
+        width:100%;
+        background: #fff;
+        height: auto !important;
+        border-radius: 0 !important;;
+        padding: 0px !important;
+
+        .inner-content{
+                grid-template-columns: repeat(1, 1fr) !important;
+
+            }
+    }
+}
+
     .event-card {
         position: relative;
         top:-60px;
+       
         // border:1px solid green;
         width:100%;
         background: #fff;

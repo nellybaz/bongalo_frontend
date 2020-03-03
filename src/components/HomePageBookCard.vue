@@ -5,12 +5,12 @@
             Travelling Africa, Trip for Business or Pleasure ? Book your stay with us.
         </h3>
         
-        <br>
+        <!-- <br> -->
 
-        <div class="item0">
+        <!-- <div class="item0">
             <p class="item-label">WHERE</p>
             <Input hint="Anywhere" :isFullWidth="true" type="text" />
-        </div>
+        </div> -->
 
         <div class="item1">
             <p class="item-label">TYPE</p>
@@ -20,12 +20,34 @@
         <div class="item2">
            <div class="inner1">
                  <p class="item-label">CHECKIN</p>
-                <input class="card-date-input" type="date" >
+                <vc-date-picker
+                    v-model="checkin"
+                    :popover="{ placement: 'bottom', visibility: 'click' }"
+                    :min-date="new Date()"
+                    >
+                    <div class="date-picker">
+                        {{
+                            getDateFormat(checkin.toString())
+                        }}
+                    </div>
+                </vc-date-picker>
+
            </div>
 
            <div class="inner2">
                  <p class="item-label">CHECKOUT</p>
-               <input class="card-date-input" type="date" >
+                 <vc-date-picker
+                    v-model="checkout"
+                    :popover="{ placement: 'bottom', visibility: 'click' }"
+                    :min-date="new Date()"
+                    :disabled-dates="{ start:null, end:Date.now()}"
+                    >
+                    <div class="date-picker">
+                        {{
+                            getDateFormat(checkout.toString())
+                        }}
+                    </div>
+                </vc-date-picker>
            </div>
         </div>
 
@@ -38,15 +60,21 @@
                     }}
                     guest(s)
                 </p>
-                <div>
-                    <button v-on:click=handleGuestClick(1)>+</button>
-                    <button v-on:click=handleGuestClick(0)>-</button>
+                <div class="btn-container">
+                     <button v-on:click=handleGuestClick(0)>
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    
+                    <button v-on:click=handleGuestClick(1)>
+                       <i class="fas fa-plus"></i>
+                    </button>
+                   
                 </div>
             </div>
         </div>
        
         <div class="btn-div">
-            <Button class="btn" label="Search" :isFullWidth="false"  ></Button>
+            <Button v-on:handleClick="this.handleSearchClick" class="btn" label="Search" :isFullWidth="false"  ></Button>
         </div>
     </div>
 </template>
@@ -57,6 +85,16 @@ import Input from '../components/TextInput';
 import Button from '../components/Button';
 
 
+import Vue from 'vue';
+import VCalendar from 'v-calendar';
+
+// Use v-calendar & v-date-picker components
+Vue.use(VCalendar, {
+  componentPrefix: 'vc',  // Use <vc-calendar /> instead of <v-calendar />
+
+});
+
+
 export default {
      name:'home_book_card',
      components:{
@@ -65,10 +103,46 @@ export default {
      },
     data: function(){
         return {
+            monthMap:{
+                "Jan":1,
+                "Feb":2,
+                "Mar":3,
+                "Apr":4,
+                "May":5,
+                "Jun":6,
+                "Jul":7,
+                "Aug":8,
+                "Sep":9,
+                "Oct":10,
+                "Nov":11,
+                "Dec":12
+            },
+            checkin:"",
+            checkout:"",
             guestNumber:1,
+            attributes: [
+                {
+                    key: 'today',
+                    highlight: true,
+                    dates: new Date()
+                }
+                ]
+            
         }
     },
      methods:{
+         getDateFormat(date){
+            if(date){
+                let splitted = date.split(" ")
+            
+                let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
+                return new_date
+            }
+            return ""
+         },
+         handleSearchClick(){
+             this.$router.push("/search")
+         },
          handleGuestClick(motive){
              if(motive == 1){
                  this.guestNumber += 1
@@ -86,8 +160,35 @@ export default {
 
     @media only screen and (max-width: 900px){
         .book-card{
+            margin-top: 1%;
+            margin: 0 10% !important;
+            padding: 20px !important;
+            padding-bottom: 70px !important;
             h3{
                 display: none !important;
+            }
+
+            .item2{
+                grid-template-columns: 1fr !important;
+                // .inner{
+                //     // border:1px solid red;
+                // }
+                input{
+                    width:100%;
+                    background: #fff;
+                    margin-bottom: 15px;
+                }
+            }
+
+            .item3{
+                .guest-number-p{
+                width:50% !important;
+                }
+                button{
+                    // width: 40px !important;
+                    margin: 0px 5px !important;
+                    background: #fff;
+                }
             }
         }
     }
@@ -101,7 +202,7 @@ export default {
         background: #FFFFFF;
         box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.06);
         border-radius: 5px;
-        padding: 40px;
+        padding: 40px 30px;
         padding-bottom: 70px;
 
         .card-date-input{
@@ -154,30 +255,52 @@ export default {
             width:100%;
             // border:1px solid red;
             display: grid;
-            grid-column-gap: 1px;
+            grid-column-gap: 5px;
             grid-template-columns: 1fr 1fr;
 
+            .date-picker{
+                display:flex;
+                align-items:flex-start;
+                justify-content:center;
+                flex-direction: column;
+                height: 50px;
+                border: 1px solid #C4C4C4;
+                border-radius: 5px;
+                padding: 10px 10px; 
+
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                color: rgba(106, 106, 106, 0.7);
+            }
 
             .inner1, .inner2{
                 width:100%;
                 // border:1px solid green;
+
+                input{
+                    width:100%;
+                    padding: 0 5px;
+                }
+            
             }
         }
         .item3{
             margin-bottom: 20px;
+            // border:1px solid red;
 
            .content{
-               display:flex;
-               align-items:center;
-               flex-direction: row;
+               display: grid;
+               grid-template-columns: 6fr 3fr;
 
                 .guest-number-p{
-                width:60%;
+                width:95%;
                 height: 50px;
                 border:1px solid #C4C4C4;
                 display:flex;
                 align-items:center;
-                padding: 0 20px;
+                padding: 0 10px;
                 border-radius: 5px;
                 flex-direction: row;
                 font-style: normal;
@@ -188,22 +311,31 @@ export default {
 
                 
             }
-            button{
+            .btn-container{
+                width:100%;
+                // border:1px solid red;
+                display:flex;
+                justify-content:space-between;
+                flex-direction: row;
+                button{
                     height: 50px;
                     width:50px;
                     border-radius: 50%;
-                    border:1px solid #C4C4C4;
+                    border: 2px solid #3A85FC;
                     font-size: 16px;
                     font-weight: bold;
                     cursor: pointer;
-                    margin: 0 10px;
-
+                    background: #fff;
                     font-style: normal;
                     font-weight: normal;
                     font-size: 14px;
                     line-height: 17px;
-                    color: rgba(106, 106, 106, 0.7);
+                    color: #3A85FC;
+                    i{
+                        color: #3A85FC;
+                    }
                 }
+            }
 
             button:focus{
                 outline: none;

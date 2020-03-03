@@ -1,18 +1,23 @@
 <template>
   <div id="app">
+    <Login></Login>
     <router-view/>
     <Footer></Footer>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Footer from './components/Footer';
+import Login from './components/SignInModal';
 
 export default {
   name:"main_app",
   components:{
     Footer,
+    Login
   },
+  computed: mapGetters(['getModalState']),
   watch: {
       '$route':{
         handler: (to, from) => {
@@ -42,6 +47,18 @@ html{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
 }
 
 </style>

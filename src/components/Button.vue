@@ -1,11 +1,16 @@
 <template>
-        <button :class="{fullWidth: isFullWidth, halfWidth: !isFullWidth}"  class="main-button">{{ label }}</button>
+        <button v-on:click="$emit('handleClick')" :style="style" :class="{fullWidth: isFullWidth, halfWidth: !isFullWidth}"  class="main-button">{{ label }}</button>
 </template>
 
 
 <script>
 export default {
      name:'main-button',
+     data: function(){
+         return {
+             style: "width:" + this.width,
+         }
+     },
      props:{
          label:{
              type:String,
@@ -15,6 +20,10 @@ export default {
          isFullWidth:{
              type:Boolean,
              required:true
+         },
+         width:{
+             type:String,
+             required:false
          }
      }
 }

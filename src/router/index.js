@@ -2,7 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
+
 Vue.use(VueRouter)
+
 
 const routes = [
   {
@@ -11,21 +13,92 @@ const routes = [
     component: Home,
     meta:{
       title: 'Vacation Rentals, Homes, Experiences and Places - Bongalo'
-    }
+    },
   },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
+  {
+    path: '/about', 
+    name:"about",
+    component: () =>  import(/* webpackChunkName: "about" */ '../views/About.vue'),
+  },
+  {
+    path: '/blog', 
+    name:"blog",
+    component: () =>  import(/* webpackChunkName: "blog" */ '../views/Blog.vue'),
+  },
+  {
+    path: '/details',
+    name: 'details',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/ApartmentDetails.vue')
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Search.vue')
+  },
+  {
+    path: '/verify',
+    name: 'verify',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Verification.vue')
+  },
+
+  {
+    path: '/experience',
+    name: 'experience',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Experience.vue')
+  },
+
+  {
+    path: '/event-details',
+    name: 'event_details',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/EventDetails.vue')
+  },
+
+
+  {
+    path: '/blog-details',
+    name: 'blog_details',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/BlogDetails.vue')
+  },
+
+  {
+    path: '/terms-condition',
+    name: 'terms_condition',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/TermsCondition.vue')
+  },
+
+ {
+    path: '/career',
+    name: 'career',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Careers.vue')
+  },
+  
+  {
+    path: '/apply',
+    name: 'apply',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Apply.vue')
+  },
+
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Profile.vue')
+  },
+
+  {
+    path: '/become-a-host',
+    name: 'listing',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Listing.vue')
+  }
+
+  
 ]
 
 const router = new VueRouter({
   routes,
   mode:'history',
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
 
 export default router

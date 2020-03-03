@@ -1,19 +1,21 @@
 <template>
-    <div class='horizontal-card'>
-        <div class="img-div">
-            <img :src="require(`../assets/images/${apartment.image}`)" alt="">
-        </div>
+    <router-link to="/details" target="_blank">
+        <div class='horizontal-card'>
+            <div class="img-div">
+                <img :src="require(`../assets/images/${apartment.image}`)" alt="">
+            </div>
 
-        <div class="details">
-             <p class="location"><i class="fas fa-map-marker-alt"></i> {{apartment.location}} 
-                <span>
-                    <i class="fas fa-bed"></i> 5 <i class="fas fa-shower"> 3 </i>
-                </span>
-             </p>
-            <p class="title"> {{apartment.title}} </p>
-            <p class="amount"> <span>{{apartment.price}}</span> / night</p>
+            <div class="details">
+                <p class="location"><i class="fas fa-map-marker-alt"></i> {{apartment.location}} 
+                    <span>
+                        <i class="fas fa-bed"></i> 5 <i class="fas fa-shower"> 3 </i>
+                    </span>
+                </p>
+                <p class="title"> {{apartment.title}} </p>
+                <p class="amount"> <span>{{apartment.price}}</span> / night</p>
+            </div>
         </div>
-    </div>
+    </router-link>
 </template>
 
 
@@ -31,6 +33,9 @@ export default {
 
 
 <style lang='scss' scoped>
+a{
+    text-decoration: none;
+}
     .horizontal-card {
         width:100%;
         height: 300px;
@@ -71,7 +76,7 @@ export default {
 
             .title{
                 font-style: normal;
-                font-weight: bold;
+                // font-weight: bold;
                 font-size: 20px;
                 line-height: 24px;
                 display: flex;
