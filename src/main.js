@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import firebase from 'firebase';
 
+
+const FIREBASE_API_KEY = process.env.VUE_APP_FIREBASE_API_KEY
+
 Vue.config.productionTip = false
 
 new Vue({
@@ -13,7 +16,7 @@ new Vue({
   created(){
       // Your web app's Firebase configuration
       var firebaseConfig = {
-        apiKey: "AIzaSyAonrLX4_9gbUm8_6iY-PDKr22Ss0F62SI",
+        apiKey: FIREBASE_API_KEY,
         authDomain: "alushare.firebaseapp.com",
         databaseURL: "https://alushare.firebaseio.com",
         projectId: "alushare",
