@@ -1,7 +1,7 @@
 <template>
    <div class="radio">
        <div v-for="item in options" :key="item.text" class="radio-item">
-            <input v-on:change="$emit('radioChangeHandler', model)" v-model="model" :value="item.value" id="1" class='radio' type="radio">
+            <input v-on:change="$emit('radioChangeHandler', {data:model, step:step})" v-model="model" :value="item.value" id="1" class='radio' type="radio">
             <div>
                 <p class="title">
                     {{
@@ -30,7 +30,10 @@ export default {
          }
      },
      props:{
-         
+         step:{
+             type:String,
+             required:true
+         },
          options:{
              type:Array,
              required:true

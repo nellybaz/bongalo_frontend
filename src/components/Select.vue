@@ -1,5 +1,5 @@
 <template>
-    <select :style="style" v-on:change="$emit('selectChangeHandler', data)" class="select" v-model="data">
+    <select :style="style" v-on:change="$emit('selectChangeHandler', {step:step, data:data})" class="select" v-model="data">
         <option v-for="item in options" :key="item.value" :value="item.value">
             {{
                 item.text
@@ -16,7 +16,7 @@ export default {
      name:'',
      data: function(){
          return {
-             data:"",
+             data: this.model ? this.model : "",
              style: "width:" + this.width
          }
      },
@@ -24,8 +24,12 @@ export default {
          model:{
              type:String,
              required:true
-         },
+         }, 
          width:{
+             type:String,
+             required:true
+         },
+         step:{
              type:String,
              required:true
          },
@@ -34,11 +38,11 @@ export default {
              required:true
          }
      },
-     created(){
-         if(this.model){
-             this.data = this.model
-         }
-     }
+     methods:{
+         ...mapGetters(['getListingState']),
+        
+     },
+     
 }
 </script>
 

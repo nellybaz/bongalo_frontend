@@ -1,6 +1,6 @@
 <template>
     <div class='textinput'>
-        <input :class="{fullWidth: isFullWidth, halfWidth: !isFullWidth}" :type=type :placeholder=hint>
+        <input @keyup="$emit('inputHandler', {data:model, step:step})" v-model="model" :class="{fullWidth: isFullWidth, halfWidth: !isFullWidth}" :type=type :placeholder=hint>
     </div>
 </template>
 
@@ -8,6 +8,11 @@
 <script>
 export default {
     name:'text_input',
+    data: function(){
+        return {
+            model:""
+        }
+    },
     props:{
         hint:{
             type:String,
@@ -18,6 +23,10 @@ export default {
             required: true
         },
         type:{
+            type:String,
+            required:true
+        },
+        step:{
             type:String,
             required:true
         }

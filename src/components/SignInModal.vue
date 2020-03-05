@@ -11,7 +11,7 @@
                         </p>
 
                         <br>
-                        <Input hint="Enter PIN" type="text" :isFullWidth="true"/>
+                        <Input hint="Enter PIN" step="" type="text" :isFullWidth="true"/>
                         <br>
 
                         <Button label="Verify" :isFullWidth="true"/>
@@ -41,9 +41,9 @@
 
                 
                 <div class="login-div" v-else-if="getModalState == 1">
-                        <Input hint="Email address" type="email" :isFullWidth="true"/>
+                        <Input hint="Email address" step="" type="email" :isFullWidth="true"/>
                         <br>
-                        <Input hint="Password" type="password" :isFullWidth="true"/>
+                        <Input hint="Password" step="" type="password" :isFullWidth="true"/>
                         <br>
                         <br>
 
@@ -54,6 +54,8 @@
                         </strong>
 
                         <hr>
+                        <SocialSignin @handleSocialSignup="handleSocialSignup"/>
+                        
                     
                     <p>
                         Don't have an account ? 
@@ -64,13 +66,13 @@
                 </div>
 
                 <div v-else-if="getModalState == 2" class="signup-div">
-                    <Input hint="Email address" type="email" :isFullWidth="true"/>
+                    <Input hint="Email address" step="" type="email" :isFullWidth="true"/>
                         <br>
-                        <Input hint="First name" type="text" :isFullWidth="true"/>
+                        <Input hint="First name" step="" type="text" :isFullWidth="true"/>
                         <br>
-                        <Input hint="Last name" type="text" :isFullWidth="true"/>
+                        <Input hint="Last name" step="" type="text" :isFullWidth="true"/>
                         <br>
-                        <Input hint="Creaate Password" type="password" :isFullWidth="true"/>
+                        <Input hint="Creaate Password" step="" type="password" :isFullWidth="true"/>
                         <br>
                         <br>
 
@@ -85,6 +87,8 @@
                         </strong>
 
                         <hr>
+
+                        <SocialSignin @handleSocialSignup="handleSocialSignup"/>
                     
                     <p>
                        Already have an account ? 
@@ -102,7 +106,7 @@
                     </p>
 
                     <br>
-                    <Input hint="Email address" type="email" :isFullWidth="true"/>
+                    <Input hint="Email address" step="" type="email" :isFullWidth="true"/>
                     <br>
 
                       <Button label="Send reset link" :isFullWidth="true"/>
@@ -136,16 +140,26 @@
 import { mapGetters, mapActions} from 'vuex';
 import Input from '../components/TextInput';
 import Button from '../components/Button';
+import SocialSignin from './SocialSignin';
 
 
 export default {
      name:'login-modal',
      components:{
          Input,
-         Button
+         Button,
+         SocialSignin
      },
      methods:{
          ...mapActions(['setModalState']),
+         handleSocialSignup(provider){
+             this.$store.dispatch('socialSignin', {provider:provider}).then(res => {
+                 window.console.log(res)
+                 if(res == 1){
+                     this.setModalState(0);
+                 }
+             })
+         },
          closeModal(){
              this.isVerify = false;
             this.setModalState(0);
@@ -192,6 +206,7 @@ export default {
 
 
 <style lang='scss' scoped>
+
     .hide{
         display: none !important;
     }

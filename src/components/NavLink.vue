@@ -8,10 +8,8 @@
             </router-link>
           </li>
 
-          <li>
-              <router-link to="/become-a-host">
+          <li @click="handleOpeningHostPage">
               Become a host
-            </router-link>
               
             </li>
 
@@ -21,14 +19,14 @@
             </router-link>
           </li>
 
-          <li v-if="!getToken" v-on:click="handleSignin(2)">Sign up</li>
+          <li v-if="!isLoggedIn" v-on:click="handleSignin(2)">Sign up</li>
           <li v-else v-on:click="$router.push('/profile')">
               Welcome {{
                   getFirstName
               }} 
           </li>
 
-          <li v-if="!getToken" v-on:click="handleSignin(1)">Login</li>
+          <li v-if="!isLoggedIn" v-on:click="handleSignin(1)">Login</li>
           <li v-else v-on:click="logout">Logout</li>
 
         </ul>
@@ -55,6 +53,16 @@ export default {
         ...mapGetters(['isMobile']),
         ...mapActions(['setModalState']),
 
+        handleOpeningHostPage(){
+            if(this.isLoggedIn){
+                this.$router.push("/become-a-host");
+                
+            }
+            else{
+                this.handleSignin(1)
+            }
+        },
+
         handleSignin(val){
         this.setModalState(val)
         },
@@ -65,7 +73,7 @@ export default {
     },
 
     computed:{
-        ...mapGetters(['getToken', 'getFirstName']),
+        ...mapGetters(['getToken', 'getFirstName', 'isLoggedIn']),
     }
 }
 </script>
