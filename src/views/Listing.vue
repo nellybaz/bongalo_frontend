@@ -17,7 +17,7 @@
 
                         <br><br>
                          <Paragraph text="First let's narrow things down" size="16" weight="bold" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                         <Select v-on:selectChangeHandler="handleApartmentType" :options="steps.one.listing_type" width="300px" model="Apartment"></Select>
+                         <Select v-on:selectChangeHandler="handleSelect" step="listing_type" :options="steps.one.listing_type" width="300px" :model="steps.one.apartmentTypeModel"></Select>
 
                          <br>
                          <br>
@@ -29,12 +29,12 @@
                              <Paragraph text="If that doesn’t sound like this property, change the property type." size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                          </div>
 
-<br>
-<br>
+                        <br>
+                        <br>
 
                          <Paragraph text="What will guest have ?" size="16" weight="bold" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                          <br>
-                         <Radio v-on:radioChangeHandler="handleWhatWillGuestHave" :options="steps.one.what_guest_will_have"></Radio>
+                         <Radio v-on:radioChangeHandler="handleRadio" step="what_guest_will_have" :options="steps.one.what_guest_will_have"></Radio>
 
                          <br><br><br>
                          
@@ -50,7 +50,7 @@
 
                         <br><br>
                          <Paragraph text="Check that you have enough beds to acoomodate all your guests comfortably" size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                         <Incrementer label="Guest"></Incrementer>
+                         <Incrementer @incrementerChangeHandler="handleIncrementer" step="number_of_guest" label="Guest"></Incrementer>
 
                          <br>
                          <br>
@@ -58,7 +58,7 @@
 
                          <Paragraph text="How many bedrooms can quest use ?" size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                          <br>
-                          <Select :options="steps.one.number_of_bedrooms" width="300px" model="3"></Select>
+                          <Select @selectChangeHandler="handleSelect" step="number_of_bedroom" :options="steps.one.number_of_bedrooms" width="300px" model="3"></Select>
                          
                          <div class="action-section">
                              <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
@@ -71,23 +71,18 @@
 
                         <br><br>
                          <Paragraph text="Check that you have enough bathrooms to acoomodate all your guests comfortably" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                         <Incrementer label="Bathrooms"></Incrementer>
+                         <Incrementer @incrementerChangeHandler="handleIncrementer" step="number_of_bathroom" label="Bathrooms"></Incrementer>
 
                          <br>
                          <br>
                          <br>
-
-                         <!-- <Paragraph text="How many bedrooms can quest use ?" size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                         <br>
-                          <Select :options="steps.one.number_of_bedrooms" width="300px" model="3"></Select>
-                          -->
                          <div class="action-section">
                              <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
                              <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
                          </div>
                      </div>
 
-                      <div v-if="flow == 4" >
+                    <div v-if="flow == 4" >
                          <Paragraph text="Where is your place located ?" size="26" weight="bold" color="#404040"></Paragraph>
 
                         <br><br>
@@ -95,11 +90,11 @@
                         
                         <br>
                         <Paragraph text="Country" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                        <Input class="input" hint="Country"/>
+                        <Input @inputHandler="handleInput" :isFullWidth="false" step="property_country" type="text" class="input" hint="Country"/>
                         <br>
 
                         <Paragraph text="Street address" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                        <Input class="input" hint="KG 7 Ave"/>
+                        <Input @inputHandler="handleInput" step="property_address" :isFullWidth="false" type="text" class="input" hint="KG 7 Ave"/>
 
 
                         <br>
@@ -107,12 +102,12 @@
                             
                             <div>
                                 <Paragraph text="City" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                                <Input :isFullWidth="true" class="input" hint="City"/>
+                                <Input @inputHandler="handleInput" step="property_city" type="text" :isFullWidth="true" class="input" hint="City"/>
                             </div>
                             
                             <div>
                                 <Paragraph text="Province" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                                <Input :isFullWidth="true" class="input" hint="Province"/>
+                                <Input @inputHandler="handleInput" step="property_province" type="text" :isFullWidth="true" class="input" hint="Province"/>
                             </div>
                         </div>
 
@@ -129,7 +124,7 @@
                         <Paragraph text="These are just the amenities that guest usually expect, you can add more after you have published " size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                         <br>
 
-                        <CheckBox class="checkbox-item" v-for="item in steps.one.amenities" :key="item.value" :item="item"/>
+                        <CheckBox @checkBoxHandler="handleCheckBox" step="amenities" class="checkbox-item" :model="steps.one.amenitiesValue" :item="steps.one.amenities"/>
                        
 
                          <div class="action-section">
@@ -146,7 +141,7 @@
                         <Paragraph text="These are just the extra amenities/spaces you can offer your guest" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                         <br>
 
-                        <CheckBox class="checkbox-item" v-for="item in steps.one.extras" :key="item.value" :item="item"/>
+                        <CheckBox @checkBoxHandler="handleCheckBox" step="extras" class="checkbox-item" :model="steps.one.extrasValue"  :item="steps.one.extras"/>
                        
 
                          <div class="action-section">
@@ -204,7 +199,7 @@
                         <Paragraph text="Write a quick summary of your place. You can highlight what’s special about your space, the neighborhood, and how you’ll interact with guests." size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                         <br>
 
-                        <textarea class="textarea" cols="60" rows="10" placeholder="Describe the decor, light, what’s nearby etc..">
+                        <textarea @change="handleInput({data:steps.two.description, step:'description'})" class="textarea" cols="60" rows="10" v-model="steps.two.description" placeholder="Describe the decor, light, what’s nearby etc..">
                             
                         </textarea>
                     
@@ -221,8 +216,9 @@
                         <Paragraph text="Attract guests with a listing title that highlights what makes your place special." size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                         <br>
 
-                        <input class="listing-name" type="text" placeholder="Best room in Arts Gallery, Kigali">
+                        <input @change="handleInput({data:steps.two.title, step:'title'})" v-model="steps.two.title" class="listing-name" type="text" placeholder="Best room in Arts Gallery, Kigali">
                     
+                        <!-- <Input :isFullWidth="true"  hint="Best room in Arts Gallery, Kigali/> -->
                          <div class="action-section">
                              <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
                              <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
@@ -235,7 +231,7 @@
 
                         <br>
                         <br>
-                        <input class="listing-name" type="text" placeholder="Enter phone number">
+                        <input @change="handleInput({data:steps.two.mobile_number, step:'mobile_number'})" v-model="steps.two.mobile_number" class="listing-name" type="text" placeholder="Enter phone number">
                         <br>
                         <br>
 
@@ -274,7 +270,7 @@
                         <br>
 
 
-                        <CheckBox class="checkbox-item" v-for="item in steps.three.update_calendar" :key="item.value" :item="item"/>
+                        <CheckBox @checkBoxHandler="handleCheckBox" step="will_update_calender_checkbox" class="checkbox-item" :item="steps.three.update_calendar"/>
                         
 
                     
@@ -293,11 +289,11 @@
                         <div class="checkin-div">
                             <div>
                                 <Paragraph text="From" size="16" weight="normal" color="#404040"></Paragraph>
-                                <Select :options="steps.three.checkin_times" width="200px" model="9am"></Select>
+                                <Select @selectChangeHandler="handleSelect" step="checkin" :options="steps.three.checkin_times" width="200px" model="9am"></Select>
                             </div>
                             <div>
                                 <Paragraph text="To" size="16" weight="normal" color="#404040"></Paragraph>
-                                <Select :options="steps.three.checkin_times" width="200px" model="11am"></Select>
+                                <Select @selectChangeHandler="handleSelect" step="checkout" :options="steps.three.checkin_times" width="200px" model="11am"></Select>
                             </div>
                         </div>
                         
@@ -316,9 +312,9 @@
                         <br>
 
 
-                        <Incrementer label="Nights min" :start="1" :stop="30"></Incrementer>
+                        <Incrementer @incrementerChangeHandler="handleIncrementer" step="min_nights" label="Nights min" :start="1" :stop="30"></Incrementer>
                         <br>
-                        <Incrementer label="Nights max" :start="30" :stop="30"></Incrementer>
+                        <Incrementer @incrementerChangeHandler="handleIncrementer" step="max_nights" label="Nights max" :start="30" :stop="30"></Incrementer>
                         
                         
 
@@ -357,7 +353,7 @@
                         <br>
                         <br>
 
-                        <input class="listing-name" type="number" placeholder="$23">
+                        <input @change="handleInput({step:'price', data:steps.three.price})" v-model="steps.three.price" class="listing-name" type="number" placeholder="$23">
      
                          <div class="action-section">
                              <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
@@ -404,7 +400,7 @@ import CheckBox from '../components/CheckBox';
 import Vue from 'vue';
 import VCalendar from 'v-calendar';
 
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 // Use v-calendar & v-date-picker components
 Vue.use(VCalendar, {
@@ -458,6 +454,7 @@ export default {
              flow: 1,
              steps:{
                 one:{
+                    apartmentTypeModel:"Apartment",
                     showCommercialText: false,
                     total:7,
                     listing_type:[
@@ -558,6 +555,8 @@ export default {
                             text:"Desk/workspace"
                         },
                     ],
+                    amenitiesValue:[],
+                    extrasValue:[],
                     extras:[
                         {
                             value:"gym",
@@ -577,7 +576,13 @@ export default {
                         },
                     ]
                 },
+                two:{
+                    title:"",
+                    description:"",
+                    mobile_number:"",
+                },
                 three:{
+                    price:"",
                     update_calendar:[
                         {
                             value:"yes",
@@ -613,28 +618,52 @@ export default {
      },
 
      methods:{
-         handleApartmentType(val){
-             if(val == "Commercial"){
-                 this.steps.one.showCommercialText = true;
-             }
-             else{
-                 this.steps.one.showCommercialText = false;
-             }
+         ...mapGetters(['getListingState']),
+         handleSelect(val){
+            let d = {
+                    key:val.step,
+                    value: val.data,
+                }
+                this.$store.dispatch('setValue', d);
 
+            if(val.data == "Commercial"){
+                this.steps.one.showCommercialText = true;
+            }
+            else{
+                this.steps.one.showCommercialText = false;
+            }
+         },
+
+         handleRadio(val){
              // Set the state
              let d = {
-                key:"listing_type",
-                value: val,
-             }
+                key:val.step,
+                value: val.data,
+            }
             this.$store.dispatch('setValue', d)
          },
 
-         handleWhatWillGuestHave(val){
-             // Set the state
+         handleCheckBox(val){
+            let d = {
+                    key:val.step,
+                    value: val.data,
+                }
+            this.$store.dispatch('setValue', d)
+         },
+
+         handleInput(val){
              let d = {
-                key:"what_guest_will_have",
-                value: val,
-             }
+                    key:val.step,
+                    value: val.data,
+                }
+            this.$store.dispatch('setValue', d)
+         },
+
+         handleIncrementer(val){
+             let d = {
+                key: val.step,
+                value: val.data,
+            }
             this.$store.dispatch('setValue', d)
          },
          getDateFormat(date){
@@ -648,12 +677,14 @@ export default {
          },
           onFileChange(e) {
             const files = e.target.files;
+            window.console.log(files);
             let tmpUrl = [];
             for(let i=0; i < files.length; i++){
                 tmpUrl.push(URL.createObjectURL(files[i]))
             }
 
             this.urls = tmpUrl;
+            this.$store.dispatch('uploadProperty', {images:files, info:this.getListingState()})
             },
          style(){
              return "width:"+ this.flow_percentage +"%";

@@ -1,10 +1,10 @@
 <template>
   <div class="checkbox">
-    <label class="container">
+    <label v-for="value in item" :key="value" class="container">
       {{
-          item.text
+          value.text
       }}
-      <input type="checkbox" :value="item.value"/>
+      <input @change="$emit('checkBoxHandler', {step:step, data:model})" type="checkbox" v-model="model" :value="value.value"/>
       <span class="checkmark"></span>
     </label>
   </div>
@@ -18,11 +18,20 @@ export default {
     item: {
       type: Object,
       required: true
-    }
+    },
+    model: {
+      type: Array,
+      required: true
+    },
+    step: {
+      type: String,
+      required: true
+    },
+    
   },
   data: function() {
     return {
-      model: []
+      // model: 
     };
   }
 };
@@ -38,7 +47,7 @@ export default {
     display: block;
     position: relative;
     padding-left: 35px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     cursor: pointer;
     font-size: 14px;
     color: rgba(64, 64, 64, 0.7);

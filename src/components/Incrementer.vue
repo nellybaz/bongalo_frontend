@@ -46,6 +46,10 @@ export default {
              type:Number,
              required:false
          },
+         step:{
+             type:String,
+             required:true
+         },
           stop:{
              type:Number,
              required:false
@@ -66,6 +70,8 @@ export default {
              else if(motive == 0 && this.value > 1){
                 this.value -= 1
              }
+
+             this.$emit('incrementerChangeHandler', {step:this.step, data:this.value})
          }
      }
 }

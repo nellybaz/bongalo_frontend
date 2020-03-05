@@ -5,12 +5,13 @@ const BASE_URL = process.env.VUE_APP_BASE_URL
 const URLS = {
     register: 'auth/register',
     login: '',
+    add_apartment: 'apartment/add'
 }
 
 const CONFIG = {
     header:{
         'Content-type':'application/json',
-        'Authorization':'Token '
+        'Authorization':'Token a0a0f13691e07795325ae1dd74da487117543464'
     }
 }
 
