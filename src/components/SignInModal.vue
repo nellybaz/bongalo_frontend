@@ -174,6 +174,8 @@ export default {
                 first_name:'Nelson',
                 last_name:'Bassey',
                 password:'passing',
+                is_active:false,
+                is_admin:false
             }
              this.$store.dispatch('register', data);
          },
@@ -186,6 +188,7 @@ export default {
                 last_name:'Bassey',
                 password:'passing',
                 is_admin:false,
+                is_active:false,
             }
              this.$store.dispatch('register', data);
              

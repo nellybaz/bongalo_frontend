@@ -4,10 +4,14 @@ import router from './router'
 import store from './store'
 import firebase from 'firebase';
 
+import Notifications from 'vue-notification'
+
 
 const FIREBASE_API_KEY = process.env.VUE_APP_FIREBASE_API_KEY
 
 Vue.config.productionTip = false
+
+Vue.use(Notifications)
 
 new Vue({
   router,

@@ -149,7 +149,23 @@
                              <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
                          </div>
                      </div>
-                     <div v-if="flow == 7">
+
+                    <div v-if="flow == 7" >
+                         <Paragraph text="What house rules do have ?" size="26" weight="bold" color="#404040"></Paragraph>
+                        <br><br>
+                        <Paragraph text="Guest will be informed before hand of these rules " size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <br>
+
+                        <CheckBox @checkBoxHandler="handleCheckBox" step="rules" class="checkbox-item" :model="steps.one.rulesValue" :item="steps.one.houseRules"/>
+                       
+
+                         <div class="action-section">
+                             <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
+                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
+                         </div>
+                     </div>
+
+                     <div v-if="flow == 8">
                           
                          <h1>
                              Great progress.. <br>
@@ -226,7 +242,7 @@
                      </div>
 
 
-                     <div v-if="flow == 4" >
+                     <!-- <div v-if="flow == 4" >
                          <Paragraph text="Add your mobile number" size="26" weight="bold" color="#404040"></Paragraph>
 
                         <br>
@@ -241,9 +257,9 @@
                              <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
                              <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
                          </div>
-                     </div>
+                     </div> -->
 
-                     <div v-if="flow == 5">
+                     <div v-if="flow == 4">
                           
                          <h1>
                              Great progress.. <br>
@@ -370,7 +386,7 @@
 
                          <div class="action-section">
                              <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
-                             <Button :isFullWidth="false"  v-on:handleClick="window.alert('Uploading in progress')" label="Upload" width="120px"></Button>
+                             <Button :isFullWidth="false"  v-on:handleClick="handlePropertyUpload" label="Upload" width="120px"></Button>
                          </div>
                      </div>
 
@@ -424,7 +440,7 @@ export default {
      
      data: function(){
          return {
-
+             files: [],
              urls:null,
              total: 7,
              checkout:"",
@@ -556,6 +572,29 @@ export default {
                         },
                     ],
                     amenitiesValue:[],
+                    rulesValue:[],
+                    houseRules:[
+                        {
+                            value:"No Smoking",
+                            text:"No Smoking",
+                        },
+                        {
+                            value:"No Eating",
+                            text:"No Eating",
+                        },
+                        {
+                            value:"No Kids",
+                            text:"No Kids",
+                        },
+                        {
+                            value:"No Party",
+                            text:"No Party",
+                        },
+                        {
+                            value:"No Pets",
+                            text:"No Pets",
+                        },
+                    ],
                     extrasValue:[],
                     extras:[
                         {
@@ -618,7 +657,7 @@ export default {
      },
 
      methods:{
-         ...mapGetters(['getListingState']),
+         ...mapGetters(['getListingState', 'getToken', 'getUuid']),
          handleSelect(val){
             let d = {
                     key:val.step,
@@ -675,16 +714,25 @@ export default {
             }
             return ""
          },
+         handlePropertyUpload(){
+             this.$store.dispatch('uploadProperty', {images:this.files, token:this.getToken(), uuid:this.getUuid(), info:this.getListingState()})
+             .then((res) => {
+                 if(res == 1){
+                     this.$router.push("/profile")
+                 }
+                 else{
+                     alert("failed to upload apartment")
+                 }
+             })
+         },
           onFileChange(e) {
-            const files = e.target.files;
-            window.console.log(files);
+            this.files = e.target.files;
             let tmpUrl = [];
-            for(let i=0; i < files.length; i++){
-                tmpUrl.push(URL.createObjectURL(files[i]))
+            for(let i=0; i < this.files.length; i++){
+                tmpUrl.push(URL.createObjectURL(this.files[i]))
             }
 
             this.urls = tmpUrl;
-            this.$store.dispatch('uploadProperty', {images:files, info:this.getListingState()})
             },
          style(){
              return "width:"+ this.flow_percentage +"%";
@@ -701,7 +749,7 @@ export default {
                     }
                     this.flow = 1;
                     if(this.step == 2){
-                        this.total = 5;
+                        this.total = 4;
                     }
                     if(this.step == 3){
                         this.total = 6;

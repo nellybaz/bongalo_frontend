@@ -32,8 +32,11 @@
             <div class="right">
                 <h2 id="dashboard">Profile</h2>
                 <div class="top">
-                    <div class="icon-div">
-
+                    <div :style="getProfileImage()" class="icon-div">
+                        <input @change="handleProfileSelect" :v-model="backgroundFile" id="p-pic" type="file">
+                            <label for="p-pic">
+                                <i class="fas fa-camera" title="Update profile image"></i>
+                            </label>
                     </div>
                 </div>
 
@@ -91,6 +94,22 @@ import Button from '../components/Button';
 
 export default {
      name:'',
+     data: function(){
+         return {
+             backgroundUrl:"https://freesvg.org/img/abstract-user-flat-3.png",
+             backgroundFile:null,
+         }
+     },
+     methods:{
+         handleProfileSelect(e){
+            //  window.console.log(e)
+             this.backgroundUrl = URL.createObjectURL(e.target.files[0]);
+             // TODO: Dispatch action to update profile picture 
+         },
+         getProfileImage(){
+             return "background-image:" +"url("+this.backgroundUrl+")";
+         }
+     },
      components:{
          Navigation,
          StyledInput,
@@ -216,10 +235,25 @@ export default {
                     margin-top: 30px;
                     width:100%;
                     .icon-div{
+                        border:2px solid black;
                         height: 100px;
                         width: 100px;
-                        background: #C4C4C4;
                         border-radius: 50%;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        input{
+                            width: 0.1px;
+                            height: 0.1px;
+                            position: absolute;
+                        }
+
+                        i{
+                            position: relative;
+                            top: 80%;
+                            left:80%;
+                            color: #3A85FC;
+                            cursor: pointer;
+                        }
                     }
                 }
 

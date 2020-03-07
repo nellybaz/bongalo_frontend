@@ -56,4 +56,8 @@ export default {
         opacity: 0.7;
 
     }
+
+    .select:focus{
+        outline: none;
+    }
 </style>

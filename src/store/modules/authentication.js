@@ -4,7 +4,6 @@ import firebase from 'firebase';
 
 const setRegisteredUserData = function(responseData, {commit}){
     //set window data
-
     if(responseData.data.isLogOut){
         window.localStorage.removeItem("token");
         window.localStorage.removeItem("uuid");
@@ -53,23 +52,36 @@ const actions = {
         if(data.provider == "google"){
             var provider = new firebase.auth.GoogleAuthProvider();
     
-            firebase.auth().signInWithPopup(provider).then(function(result) {
+            firebase.auth().signInWithPopup(provider).then( async function(result) {
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 var token = result.credential.accessToken;
                 // The signed-in user info.
                 var user = result.user;
-                window.console.log(user);
-                window.console.log(token);
                 const userData = {
-                    data:{
-                        uuid: "uuid",
-                        token: token,
+                        username:user.email,
                         email: user.email,
-                        first_name: user.displayName
-                    }
+                        first_name: user.displayName.split(" ")[0],
+                        last_name: user.displayName.split(" ")[1] || '',
+                        password: 'social',
+                        is_admin: false,
+                        is_active:true,
+                        isLogOut:false
                 }
-                setRegisteredUserData(userData, {commit});
-                resolve(1);
+
+                try {
+                    window.console.log(userData);
+                    var res =  await postReq('social_auth', userData);
+                    window.console.log(res);
+                    if (res.responseCode == 1){
+                        setRegisteredUserData(res, {commit});
+                        resolve(1);
+                    }
+                } catch (error) {
+                    window.console.log(error);
+                    reject(-1)
+                }
+                // setRegisteredUserData(userData, {commit});
+                // resolve(1);
                 // ...
               }).catch(function(error) {
                 // Handle Errors here.

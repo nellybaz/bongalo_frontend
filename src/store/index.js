@@ -3,6 +3,10 @@ import Vuex from 'vuex'
 import authentication from './modules/authentication.js';
 import listing from './modules/listing.js';
 import header from './modules/header.js';
+import apartment from './modules/apartment';
+
+// import createPersistedState from 'vuex-persistedstate'
+// import * as Cookies from 'js-cookie'
 
 Vue.use(Vuex)
 
@@ -23,6 +27,7 @@ export default new Vuex.Store({
   modules: {
     authentication,
     header,
-    listing
-  }
+    listing,
+    apartment
+  },
 })

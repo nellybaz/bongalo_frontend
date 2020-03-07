@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Login></Login>
+    <notifications position="top left" group="general" />
     <router-view/>
     <Footer></Footer>
   </div>
