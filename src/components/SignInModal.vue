@@ -47,7 +47,7 @@
                         <br>
                         <br>
 
-                        <Button v-on:handleClick="handleButton" label="Login" :isFullWidth="true"/>
+                        <Button v-on:handleClick="handleButton(2)" label="Login" :isFullWidth="true"/>
                         <!-- <br><br> -->
                         <strong v-on:click=goto(3)>
                             Forgot password ?
@@ -66,13 +66,13 @@
                 </div>
 
                 <div v-else-if="getModalState == 2" class="signup-div">
-                    <Input hint="Email address" step="" type="email" :isFullWidth="true"/>
+                    <Input @inputHandler="handleInput" hint="Email address" step="email" type="email" :isFullWidth="true"/>
                         <br>
-                        <Input hint="First name" step="" type="text" :isFullWidth="true"/>
+                        <Input @inputHandler="handleInput" hint="First name" step="first_name" type="text" :isFullWidth="true"/>
                         <br>
-                        <Input hint="Last name" step="" type="text" :isFullWidth="true"/>
+                        <Input @inputHandler="handleInput" hint="Last name" step="last_name" type="text" :isFullWidth="true"/>
                         <br>
-                        <Input hint="Creaate Password" step="" type="password" :isFullWidth="true"/>
+                        <Input @inputHandler="handleInput" hint="Creaate Password" step="password" type="password" :isFullWidth="true"/>
                         <br>
                         <br>
 
@@ -80,7 +80,7 @@
                             <input type="checkbox" v-model="termsCheckBox">
                             <p>I accept Bongalo's terms and condition</p>
                         </div>
-                        <Button v-on:handleClick="handleButton" label="Sign up" :isFullWidth="true"/>
+                        <Button v-on:handleClick="handleButton(1)" label="Sign up" :isFullWidth="true"/>
                         <!-- <br><br> -->
                         <strong>
                             <!-- Forgot password ? -->
@@ -155,6 +155,18 @@ export default {
              if(val.step == "pin_verify"){
                  this.pinModel = val.data
              }
+             if(val.step == "email"){
+                 this.email = val.data
+             }
+             if(val.step == "first_name"){
+                 this.first_name = val.data
+             }
+             if(val.step == "last_name"){
+                 this.last_name = val.data
+             }
+             if(val.step == "password"){
+                 this.password = val.data
+             }
          },
          ...mapActions(['setModalState']),
          handleSocialSignup(provider){
@@ -173,25 +185,36 @@ export default {
          goto(intent){
              this.setModalState(intent);
          },
-         handleButton(){
-            let data = {
-                email:'nelson.bassey111@gmail.com',
-                first_name:'Nelson',
-                last_name:'Bassey',
-                password:'passing',
-                is_active:false,
-                is_admin:false
-            }
-             this.$store.dispatch('register', data)
-             .then(res => {
-                   this.isVerify = true;
-             })
+         handleButton(intent){
+           if(intent == 1){
+                if(!this.termsCheckBox){
+                    this.$notify({
+                    group: 'general',
+                    title: 'Info !!',
+                    text: 'You need to accept the terms and condition before registering',
+                    type: 'error'
+                    });
+                }else{
+                    let data = {
+                    email:this.email,
+                    first_name:this.first_name,
+                    last_name:this.last_name,
+                    password:this.password,
+                    is_active:false,
+                    is_admin:false
+                }
+                    this.$store.dispatch('register', data)
+                    .then(res => {
+                        this.isVerify = true;
+                    })
+                }
+           }
          },
 
          verifyEmail(){
 
              let data = {
-                email:'nelson.bassey111@gmail.com',
+                email:this.email,
                 pin: this.pinModel
             }
              this.$store.dispatch('verifyEmail', data)
@@ -214,6 +237,10 @@ export default {
 
      data:function(){
          return {
+             email:'',
+             first_name:'',
+             last_name:'',
+             password:'',
              showModal: true,
              termsCheckBox:"",
              isVerify: false,
