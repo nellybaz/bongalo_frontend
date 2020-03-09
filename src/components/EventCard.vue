@@ -97,6 +97,7 @@ export default {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             grid-column-gap: 32px;
+            grid-row-gap: 40px;
         }
     }
 </style>

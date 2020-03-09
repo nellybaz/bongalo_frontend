@@ -14,7 +14,7 @@
 
         <div class="item1">
             <p class="item-label">TYPE</p>
-            <Input hint="Select" :isFullWidth="true" type="text" />
+            <Select @selectChangeHandler="handleSelect" step="bookingCardTypes" :options="apartment_types" width="100%" :model="choosenType"></Select>
         </div>
 
         <div class="item2">
@@ -27,7 +27,7 @@
                     >
                     <div class="date-picker">
                         {{
-                            getDateFormat(checkin.toString())
+                            getDateFormat(checkin.toString(), 1)
                         }}
                     </div>
                 </vc-date-picker>
@@ -39,12 +39,12 @@
                  <vc-date-picker
                     v-model="checkout"
                     :popover="{ placement: 'bottom', visibility: 'click' }"
-                    :min-date="new Date()"
+                    :min-date="checkin != 'dd/mm/yyyy' ? checkin : new Date()"
                     :disabled-dates="{ start:null, end:Date.now()}"
                     >
                     <div class="date-picker">
                         {{
-                            getDateFormat(checkout.toString())
+                            getDateFormat(checkout.toString(), 2)
                         }}
                     </div>
                 </vc-date-picker>
@@ -83,7 +83,7 @@
 <script>
 import Input from '../components/TextInput';
 import Button from '../components/Button';
-
+import Select from '../components/Select';
 
 import Vue from 'vue';
 import VCalendar from 'v-calendar';
@@ -98,11 +98,25 @@ Vue.use(VCalendar, {
 export default {
      name:'home_book_card',
      components:{
-        Input,
         Button,
+        Select,
      },
     data: function(){
         return {
+            apartment_types:[
+                {
+                    value:"all",
+                    text:"Any",
+                },
+                {
+                    value:"private_room",
+                    text:"Private Room",
+                },
+                {
+                    value:"full_house",
+                    text:"Full House",
+                }
+            ],
             monthMap:{
                 "Jan":1,
                 "Feb":2,
@@ -117,8 +131,9 @@ export default {
                 "Nov":11,
                 "Dec":12
             },
-            checkin:"",
-            checkout:"",
+            choosenType:"all",
+            checkin:"dd/mm/yyyy",
+            checkout:"dd/mm/yyyy",
             guestNumber:1,
             attributes: [
                 {
@@ -131,17 +146,56 @@ export default {
         }
     },
      methods:{
-         getDateFormat(date){
-            if(date){
-                let splitted = date.split(" ")
-            
-                let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
-                return new_date
-            }
-            return ""
+         handleSelect(val){
+             this.choosenType = val.data
+             window.console.log(val.data)
          },
+         getDateFormat(date, intent){
+            if(date == "dd/mm/yyyy"){
+                return date;
+            }
+            let splitted = date.split(" ")
+            
+            let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
+
+            return new_date
+        },
          handleSearchClick(){
-             this.$router.push("/search")
+             let urlToQuery = "apartment/search?type="+this.choosenType+"&guest="+this.guestNumber
+
+
+             if(this.checkin != "dd/mm/yyyy" && this.checkout == "dd/mm/yyyy"){
+                 // Checkout needed
+                 this.$notify({
+                    group: 'general',
+                    title: 'Missing Info',
+                    text: 'Checkout date is required !',
+                    type:'error'
+                    });
+             }
+
+             else if(this.checkout != "dd/mm/yyyy" && this.checkin == "dd/mm/yyyy"){
+                 // Checkin neeeed
+                 this.$notify({
+                    group: 'general',
+                    title: 'Missing Info',
+                    text: 'Checkin date is required !'
+                    });
+             }
+             else
+             {
+                 let searchUrl = "/search?type="+this.choosenType+"&guest="+this.guestNumber
+                 if(this.checkin != "dd/mm/yyyy"){
+                     searchUrl += "&checkin="+this.getDateFormat(this.checkin.toString(), 1)+"&checkout="+this.getDateFormat(this.checkout.toString(), 2)
+                     urlToQuery += "&checkin="+this.getDateFormat(this.checkin.toString(), 1)+"&checkout="+this.getDateFormat(this.checkout.toString(), 2)
+                 }
+                
+                this.$store.dispatch('searchApartment', {url:urlToQuery})
+                .then(res => {
+                    this.$router.push(searchUrl)
+                })
+             }
+             
          },
          handleGuestClick(motive){
              if(motive == 1){
@@ -206,7 +260,7 @@ export default {
         padding-bottom: 70px;
 
         .card-date-input{
-            height: 50px;
+            height: 40px;
             border: 1px solid #C4C4C4;
             border-radius: 5px;
             padding: 10px 20px; 
@@ -263,7 +317,7 @@ export default {
                 align-items:flex-start;
                 justify-content:center;
                 flex-direction: column;
-                height: 50px;
+                height: 40px;
                 border: 1px solid #C4C4C4;
                 border-radius: 5px;
                 padding: 10px 10px; 
@@ -296,7 +350,7 @@ export default {
 
                 .guest-number-p{
                 width:95%;
-                height: 50px;
+                height: 40px;
                 border:1px solid #C4C4C4;
                 display:flex;
                 align-items:center;
@@ -318,8 +372,8 @@ export default {
                 justify-content:space-between;
                 flex-direction: row;
                 button{
-                    height: 50px;
-                    width:50px;
+                    height: 40px;
+                    width:40px;
                     border-radius: 50%;
                     border: 2px solid #3A85FC;
                     font-size: 16px;

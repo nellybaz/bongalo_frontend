@@ -14,7 +14,7 @@
                 Places to stay in Kigali
             </h3>
             <div class="inner-content">
-                <HorizontalCard v-for="item in apartments" :key=item.id :apartment=item></HorizontalCard>
+                <HorizontalCard v-for="apartment in getSearchedApartment" :key=apartment.uuid :apartment=apartment></HorizontalCard>
             </div> 
         </section>
     </div>
@@ -24,6 +24,7 @@
 <script>
 import Navigation from "../components/Blog/Navigation";
 import HorizontalCard from '../components/HorizontalCard';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
      name:'search',
@@ -34,65 +35,70 @@ export default {
      },
      data: function(){
          return {
-             apartments:[
-                 {
-                     id:1,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Bella Apartments",
-                     price:"$20",
-                     image:"house1.png"
-                 },
-                 {
-                     id:2,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Bella Apartments",
-                     price:"$20",
-                     image:"house2.png"
-                 },
-                 {
-                     id:3,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Visit Rwanda",
-                     price:"$20",
-                     image:"house3.png"
-                 },
-                 {
-                     id:4,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Attend Youth Connekt ..",
-                     price:"$20",
-                     image:"house1.png"
-                 },
-                 {
-                     id:5,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Global Health Summit",
-                     price:"$20",
-                     image:"house2.png"
-                 },
-                 {
-                     id:6,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Bella Apartments",
-                     price:"$20",
-                     image:"house1.png"
-                 },
-                 {
-                     id:7,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Bella Apartments",
-                     price:"$20",
-                     image:"house2.png"
-                 },
-                 {
-                     id:8,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Visit Rwanda",
-                     price:"$20",
-                     image:"house3.png"
-                 },
-             ],
+             apartments:[],
+            //  [
+            //      {
+            //          id:1,
+            //          location:'Kicukiru, Kigali, kigali',
+            //          title:"Bella Apartments",
+            //          price:"$20",
+            //          image:"house1.png"
+            //      },
+            //      {
+            //          id:2,
+            //          location:'Kicukiru, Kigali, kigali',
+            //          title:"Bella Apartments",
+            //          price:"$20",
+            //          image:"house2.png"
+            //      },
+            //      {
+            //          id:3,
+            //          location:'Kicukiru, Kigali, kigali',
+            //          title:"Visit Rwanda",
+            //          price:"$20",
+            //          image:"house3.png"
+            //      },
+            //      {
+            //          id:4,
+            //          location:'Kicukiru, Kigali, kigali',
+            //          title:"Attend Youth Connekt ..",
+            //          price:"$20",
+            //          image:"house1.png"
+            //      },
+            //      {
+            //          id:5,
+            //          location:'Kicukiru, Kigali, kigali',
+            //          title:"Global Health Summit",
+            //          price:"$20",
+            //          image:"house2.png"
+            //      },
+            //      {
+            //          id:6,
+            //          location:'Kicukiru, Kigali, kigali',
+            //          title:"Bella Apartments",
+            //          price:"$20",
+            //          image:"house1.png"
+            //      },
+            //      {
+            //          id:7,
+            //          location:'Kicukiru, Kigali, kigali',
+            //          title:"Bella Apartments",
+            //          price:"$20",
+            //          image:"house2.png"
+            //      },
+            //      {
+            //          id:8,
+            //          location:'Kicukiru, Kigali, kigali',
+            //          title:"Visit Rwanda",
+            //          price:"$20",
+            //          image:"house3.png"
+            //      },
+            //  ],
          }
+     },
+     computed: mapGetters(['getSearchedApartment']),
+     created(){
+         
      }
 }
 </script>

@@ -17,29 +17,39 @@
                 </div>
                 <div class="content-div">
                     <div class="left">
-                        <h4>Bella Apartments</h4>
+                        <h4>
+                            {{
+                                apartment.title || $route.query.title
+                            }}
+                            
+                        </h4>
 
                         <div class="host-details">
-                            <img src="../assets/images/user1.png" alt="">
+                            <!-- <img src="../assets/images/user1.png" alt=""> -->
+                            <i class="fas fa-user-circle"></i>
                             <div class="name">
                                 <p>Host</p>
-                                <strong>Frank Doechukwu</strong>
+                                <strong>
+                                    {{
+                                        apartment.owner || $route.query.owner
+                                    }}
+                                </strong>
                             </div>
 
                             <div class="country">
                                 <p>Nationality</p>
-                                <strong>Nigeria</strong>
+                                <strong>Rwanda</strong>
                             </div>
 
-                        <strong class="contact-host">Contact Host</strong>
+                        <!-- <strong class="contact-host">Contact Host</strong> -->
                         </div>
 
                         <div class="more-info">
                             <div class="more-info-left">
-                                <p> <i class="fas fa-user-friends"></i> Sleeps: 6</p>
-                                <p> <i class="fas fa-door-open"></i> Bedrooms: 3</p>
-                                <p> <i class="fas fa-shower"></i> Bathrooms: 2</p>
-                                <p><i class="fas fa-moon"></i> Min Stay: 1 night</p>
+                                <p> <i class="fas fa-user-friends"></i> Sleeps: {{ apartment.available_rooms || $route.query.available_rooms }}</p>
+                                <p> <i class="fas fa-door-open"></i> Bedrooms: {{ apartment.available_rooms || $route.query.available_rooms }}</p>
+                                <p> <i class="fas fa-shower"></i> Bathrooms: {{ apartment.number_of_bathrooms || $route.query.number_of_bathrooms }}</p>
+                                <p><i class="fas fa-moon"></i> Min Stay: {{ apartment.min_nights || $route.query.min_nights }} night(s)</p>
                             </div>
 
                             <img src="../assets/images/map_placeholder.png" alt="">
@@ -49,15 +59,24 @@
                         <div class="rules">
                             <h3>House Rules</h3>
                             <div>
-                                <p>No Smoking</p>
+                                <p v-for="rule in rules" :key=rule>
+                                    {{
+                                        rule
+                                    }}
+                                </p>
                             </div>
                         </div>
 
                         <div class="desc">
-                            <h3>3 Beedrooms, 2 Bathrooms, 6 Sleeps</h3>
+                            <h3>
+                                {{apartment.available_rooms || $route.query.available_rooms }} Beedrooms, 
+                                {{apartment.number_of_bathrooms || $route.query.number_of_bathrooms}} Bathrooms, 
+                                {{apartment.available_rooms || $route.query.available_rooms}} Sleeps</h3>
 
                             <p>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum necessitatibus laudantium illo accusantium, dicta, quae sint rem illum atque, aperiam consequuntur perferendis. Quae, officia voluptate tenetur sit amet ut fugiat.
+                                {{
+                                    apartment.description || $route.query.description
+                                }}
                             </p>
                         </div>
 
@@ -65,18 +84,13 @@
                             <h4>Amenities</h4>
 
                             <div>
-                                <p> <i class="far fa-sun"></i> Air conditioning</p>
-
-                                <p> <i class="far fa-sun"></i>Dryer</p>
-
-                                <p> <i class="far fa-sun"></i> Cable TV</p>
-
-                                <p> <i class="far fa-sun"></i> Essentials</p>
+                                <p v-for="amenity in amenities" :key=amenity> 
+                                    <i class="far fa-sun"></i> {{capitalizeFirstLetter(amenity)}}</p>
                             </div>
                         </div>
 
 
-                        <div class="reviews">
+                        <div v-if="review.length > 0" class="reviews">
                             <h3>Reviews</h3>
                             <h4>
                                 267 <span>
@@ -118,21 +132,26 @@
                             <p>
                                 Checkin: 
                                 <span>
-                                    After 1:00PM
+                                    After {{ apartment.check_in}}
                                 </span>
                             </p>
                             <p>
                                 Checkout: 
                                 <span>
-                                    11 :00 AM
+                                    Before {{ apartment.check_out || $route.query.check_out}}
                                 </span>
                             </p>
 
                             <h4>
                                 Cacellations
                             </h4>
-
-                            <p>Cancel before 1:00 PM on Feb 16 and get a full refund, minus the first night and service fee.</p>
+                            <p>
+                                Free cancellation for 48 hours
+                            </p>
+                            <p v-if="checkin == 'Checkin'">
+                                After that, cancel up to 24 hours before check-in and get a full refund, minus the service fee.
+                            </p>
+                            <p v-if="checkin != 'Checkin'">Cancel after {{apartment.check_in || $route.query.check_in}} on {{checkin.toString().slice(0, 10)}} and get a 50% refund, minus the first night and service fee.</p>
 
                         </div>
                     </div>
@@ -140,7 +159,7 @@
                     <div class="right">
                         <div class="content">
                             <div class="info">
-                                <h4>$20 <span>/ night</span></h4>
+                                <h4>${{apartment.price || $route.query.price}} <span>/ night</span></h4>
                                 <small>Views: 204 times</small>
                             </div>
 
@@ -155,19 +174,19 @@
                                         >
                                         <div>
                                             {{
-                                                getDateFormat(checkin.toString())
+                                                getDateFormat(checkin.toString(), $route.query.checkin ? 3:1 )
                                             }}
                                         </div>
                                     </vc-date-picker>
                                     <vc-date-picker
                                         v-model="checkout"
                                         :popover="{ placement: 'bottom', visibility: 'click' }"
-                                        :min-date="new Date()"
+                                        :min-date="checkin != 'Checkin' ? checkin : new Date()"
                                         :disabled-dates="{ start:null, end:Date.now()}"
                                         >
                                         <div>
                                             {{
-                                                getDateFormat(checkout.toString())
+                                                getDateFormat(checkout.toString(), $route.query.checkin ? 3:2)
                                             }}
                                         </div>
                                     </vc-date-picker>
@@ -175,7 +194,7 @@
                                 <br>
                                 <div class="book-guest">
                                     <p>
-                                        1 Guest(s)
+                                        {{guestNumber}} Guest(s)
                                     </p>
 
                                     <div class="btns">
@@ -189,18 +208,20 @@
                                 </div>
                                 <!-- <br> -->
 
-                                <div class="price-info">
+                                <div v-if="checkout != 'Checkout'" class="price-info">
                                     <div class="per-night">
-                                        <p>$65 x 9 nights</p>
+                                        <p>${{apartment.price || $route.query.price}} x {{bookedNights}} nights</p>
                                         <p class="p">
-                                            $583
+                                            ${{
+                                                (apartment.price * bookedNights)
+                                            }}
                                         </p>
                                     </div>
 
                                     <div class="cleaning-fee">
                                         <p>Cleaning fee</p>
                                         <p class="p">
-                                            $38
+                                            ${{cleaningFee}}
                                         </p>
                                     </div>
 
@@ -208,14 +229,14 @@
                                     <div class="service-fee">
                                         <p>Service fee</p>
                                         <p class="p">
-                                            $53
+                                            ${{serviceFee}}
                                         </p>
                                     </div>
 
                                     <div class="total">
                                         <p>Total</p>
                                         <p class="p">
-                                            $647
+                                            ${{((apartment.price || $route.query.price) * bookedNights) + cleaningFee + serviceFee}}
                                         </p>
                                     </div>
                                 </div>
@@ -295,27 +316,59 @@ export default {
          ImageGrid
      },
      methods:{
-         getDateFormat(date){
-            if(date == "Checkin" || date == "Checkout"){
-               return date;
+        capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        },
+        getDateFormat(date, intent){
+        
+        if(date == "Checkin" || date == "Checkout"){
+            return date;
+        }
+        let splitted = date.split(" ")
+        
+        let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
+
+        
+        if(intent == 2){
+            let seconds = Math.abs(this.checkin - this.checkout)/1000;
+            let days = seconds / 86400
+            // window.console.log(days)
+            this.bookedNights = days
+        }
+
+        else if(intent == 3){
+            let new_checkin_d = new Date(this.checkin.split('/')[2],this.checkin.split('/')[1]-1,this.checkin.split('/')[0])
+            let new_checkout_d = new Date(this.checkout.split('/')[2], this.checkout.split('/')[1]-1, this.checkout.split('/')[0])
+
+            // window.console.log(new_checkin_d)
+            // window.console.log(new_checkout_d)
+            let seconds = Math.abs(new_checkin_d - new_checkout_d)/1000;
+            let days = seconds / 86400
+            // window.console.log(days)
+            this.bookedNights = days
+
+            return date;
+        }
+        return new_date
+        },
+        updateImageShowHandler(intent){
+            if(intent == 1){
+                this.isImageShow = true;
             }
-            let splitted = date.split(" ")
-            
-            let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
-            return new_date
-         },
-         updateImageShowHandler(intent){
-             if(intent == 1){
-                 this.isImageShow = true;
-             }
-             else{
-                 this.isImageShow = false;
-             }
-         }
+            else{
+                this.isImageShow = false;
+            }
+        }
      },
      data: function(){
          return {
-              monthMap:{
+             serviceFee: 13,
+             cleaningFee:20,
+             bookedNights: 0,
+             review:[],
+             apartment:{},
+             images:[],
+             monthMap:{
                 "Jan":1,
                 "Feb":2,
                 "Mar":3,
@@ -329,7 +382,8 @@ export default {
                 "Nov":11,
                 "Dec":12
             },
-             checkin:"Checkin",
+            guestNumber:1,
+             checkin: "Checkin",
              checkout:"Checkout",
              reviews:[
                  {
@@ -356,10 +410,27 @@ export default {
              ],
              borderItem:1,
              isImageShow: false,
+             amenities: [],
+             rules:[]
          }
      },
 
-     computed: mapGetters(['isSafari'])
+     computed: mapGetters(['isSafari', 'getApartmentImages', 'getCurrentApartment']),
+     created(){
+         window.console.log("created")
+        this.checkin = this.$route.query.checkin != null ? this.$route.query.checkin: this.checkin
+        this.checkout = this.$route.query.checkout != null ? this.$route.query.checkout: this.checkout
+        this.guestNumber = this.$route.query.guest != null ? this.$route.query.guest: this.guestNumber
+        this.apartment = this.getCurrentApartment
+        this.amenities = this.apartment.amenities ?  this.apartment.amenities.split(",") : this.$route.query.amenities.split(",")
+        this.rules = this.apartment.rules ? this.apartment.rules.split(",") : this.$route.query.rules.split(",")
+        this.$store.dispatch('fetchApartmentImages', {token:'', apartmentUuid:this.$route.query.apartment})
+        .then(res => {
+            if(res == 1){
+                this.images = this.getApartmentImages
+            }
+        })
+     }
 }
 </script>
 
@@ -537,6 +608,7 @@ export default {
             grid-template-columns: 8fr 4fr;
             grid-column-gap: 50px;
             .left{
+                width:100%;
                 padding: 30px 120px;
                 border-top: 1px solid #F2F2F2;
                 h4{
@@ -569,6 +641,11 @@ export default {
                         height: 60px;
                         border-radius: 50%;
                         object-fit: contain;
+                    }
+                    i{
+                        margin-right: 20px;
+                        font-size: 50px;
+                        color:#3A85FC
                     }
                     div{
                         margin-right: 40px;
@@ -634,12 +711,14 @@ export default {
                     }
 
                     div{
-                        height: 50px;
+                        width:100%;
+                        // height: 50px;
                         padding: 20px;
                         display:flex;
                         align-items:center;
                         justify-content:flex-start;
                         flex-direction: row;
+                        flex-wrap: wrap;
                         border-top: 1px solid #F2F2F2;
                         border-bottom: 1px solid #F2F2F2;
                     }
@@ -648,9 +727,11 @@ export default {
                     p{
                         padding: 7px;
                         border-radius: 5px;
+                        margin-right: 10px;
                         background: #F2F2F2;
                         font-style: normal;
                         font-weight: normal;
+                        margin-bottom: 10px;
                         font-size: 12px;
                         color: #6A6A6A;
                     }
@@ -660,6 +741,7 @@ export default {
                     margin-top: 30px;
                     width:100%;
                     h3{
+                        width:100%;
                         margin-bottom: 20px;
                         font-style: normal;
                         font-weight: bold;
@@ -669,6 +751,7 @@ export default {
                     }
 
                     p{
+                        width:100%;
                         font-style: normal;
                         font-size: 14px;
                         line-height: 24px;

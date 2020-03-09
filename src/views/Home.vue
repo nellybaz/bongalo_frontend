@@ -18,12 +18,12 @@
         </div>  
     </section>
 
-    <section class="apartment-section">
+    <section v-if="apartments.length > 0" class="apartment-section">
        <h3 class="h3">
           Places to stay in Kigali
         </h3>
         <div class="inner-content">
-            <HorizontalCard v-for="item in apartments" :key=item.id :apartment=item></HorizontalCard>
+            <HorizontalCard v-for="item in apartments" :key=item.uuid :apartment=item></HorizontalCard>
         </div> 
     </section>
 
@@ -66,7 +66,7 @@ import MobileEventCard from '../components/MobileEventCard';
 import ExploreCard from '../components/ExploreCard';
 import HorizontalCard from '../components/HorizontalCard';
 import WhySectionCard from '../components/WhySectionCard';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 
 export default {
@@ -80,7 +80,8 @@ export default {
     MobileEventCard
   },
   methods:{
-    ...mapGetters(['isMobile']),
+    ...mapGetters(['isMobile', 'getFeatured']),
+
   },
   data:function(){
     return {
@@ -144,64 +145,65 @@ export default {
         }
       ],
 
-      apartments:[
-                 {
-                     id:1,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Bella Apartments",
-                     price:"$20",
-                     image:"house1.png"
-                 },
-                 {
-                     id:2,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Bella Apartments",
-                     price:"$20",
-                     image:"house2.png"
-                 },
-                 {
-                     id:3,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Visit Rwanda",
-                     price:"$20",
-                     image:"house3.png"
-                 },
-                 {
-                     id:4,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Attend Youth Connekt ..",
-                     price:"$20",
-                     image:"house1.png"
-                 },
-                 {
-                     id:5,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Global Health Summit",
-                     price:"$20",
-                     image:"house2.png"
-                 },
-                 {
-                     id:6,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Bella Apartments",
-                     price:"$20",
-                     image:"house1.png"
-                 },
-                 {
-                     id:7,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Bella Apartments",
-                     price:"$20",
-                     image:"house2.png"
-                 },
-                 {
-                     id:8,
-                     location:'Kicukiru, Kigali, kigali',
-                     title:"Visit Rwanda",
-                     price:"$20",
-                     image:"house3.png"
-                 },
-             ],
+      apartments: [],
+      // [
+      //            {
+      //                id:1,
+      //                location:'Kicukiru, Kigali, kigali',
+      //                title:"Bella Apartments",
+      //                price:"$20",
+      //                image:"house1.png"
+      //            },
+      //            {
+      //                id:2,
+      //                location:'Kicukiru, Kigali, kigali',
+      //                title:"Bella Apartments",
+      //                price:"$20",
+      //                image:"house2.png"
+      //            },
+      //            {
+      //                id:3,
+      //                location:'Kicukiru, Kigali, kigali',
+      //                title:"Visit Rwanda",
+      //                price:"$20",
+      //                image:"house3.png"
+      //            },
+      //            {
+      //                id:4,
+      //                location:'Kicukiru, Kigali, kigali',
+      //                title:"Attend Youth Connekt ..",
+      //                price:"$20",
+      //                image:"house1.png"
+      //            },
+      //            {
+      //                id:5,
+      //                location:'Kicukiru, Kigali, kigali',
+      //                title:"Global Health Summit",
+      //                price:"$20",
+      //                image:"house2.png"
+      //            },
+      //            {
+      //                id:6,
+      //                location:'Kicukiru, Kigali, kigali',
+      //                title:"Bella Apartments",
+      //                price:"$20",
+      //                image:"house1.png"
+      //            },
+      //            {
+      //                id:7,
+      //                location:'Kicukiru, Kigali, kigali',
+      //                title:"Bella Apartments",
+      //                price:"$20",
+      //                image:"house2.png"
+      //            },
+      //            {
+      //                id:8,
+      //                location:'Kicukiru, Kigali, kigali',
+      //                title:"Visit Rwanda",
+      //                price:"$20",
+      //                image:"house3.png"
+      //            },
+      //        ],
 
 
       whyContent:[
@@ -249,6 +251,15 @@ export default {
         }
       ]
     }
+  },
+  created(){
+   this.$store.dispatch('getFeaturedApartments', {})
+   .then(res => {
+     if(res == 1){
+        this.apartments = this.getFeatured()
+        // this.apartments = 
+     }
+   })
   }
 }
 </script>
@@ -346,6 +357,7 @@ export default {
           display: grid;
           grid-template-columns:repeat(3, 1fr);
           grid-column-gap: 20px;
+          
         }
     }
 
@@ -360,7 +372,7 @@ export default {
           display: grid;
           grid-template-columns:repeat(4, 1fr);
           grid-column-gap: 20px;
-          grid-row-gap: 30px;
+          grid-row-gap: 55px;
         }
     }
 

@@ -1,38 +1,52 @@
-import { getReq, postReq } from '../../api_handler';
+import { getReq, postReq, putReq } from '../../api_handler';
 import firebase from 'firebase';
 
 
 const setRegisteredUserData = function(responseData, {commit}){
     //set window data
-
     if(responseData.data.isLogOut){
         window.localStorage.removeItem("token");
         window.localStorage.removeItem("uuid");
         window.localStorage.removeItem("first_name");
         window.localStorage.removeItem("email");
+        window.localStorage.removeItem("profile_image");
     }
     else{
-        window.localStorage.setItem("token", responseData.data['token']);
-        window.localStorage.setItem("uuid", responseData.data['uuid']);
-        window.localStorage.setItem("first_name", responseData.data['first_name']);
-        window.localStorage.setItem("email", responseData.data['email']);
+        responseData.data['token'] ? window.localStorage.setItem("token", responseData.data['token']) : "";
+        responseData.data['uuid'] ? window.localStorage.setItem("uuid", responseData.data['uuid']):"";
+        responseData.data['first_name'] ? window.localStorage.setItem("first_name", responseData.data['first_name']):"";
+        responseData.data['email'] ? window.localStorage.setItem("email", responseData.data['email']):"";
+
+        if(responseData.data['profile_image'] && responseData.data['profile_image'].length > 0){
+            window.localStorage.setItem("profile_image", responseData.data['profile_image']);
+        }
     }
     
 
     // set app data 
 
-    commit("setToken", responseData.data.token);
-    commit("setUuid", responseData.data.uuid);
-    commit("setFirstName", responseData.data.first_name);
-    commit("setEmail", responseData.data.email);
+    responseData.data.token ? commit("setToken", responseData.data.token):"";
+    responseData.data.uuid ? commit("setUuid", responseData.data.uuid):"";
+    responseData.data.first_name ? commit("setFirstName", responseData.data.first_name):"";
+    responseData.data.email ? commit("setEmail", responseData.data.email):"";
 
 }
+
+const uploadImage = async function (image, uuid){
+
+    let res = await firebase.storage().ref("property/images/--bongalo_img--" + uuid + "_" + Date.now()+"-bongalo_img-")
+    let snapshot = await res.put(image)
+    let downloadedUrl = await snapshot.ref.getDownloadURL()
+    return downloadedUrl
+} 
 
 const state = {
     token: window.localStorage.getItem("token") || null,
     uuid: window.localStorage.getItem("uuid") || null,
     firstName: window.localStorage.getItem("first_name") || null,
     email: window.localStorage.getItem("email") || null,
+    userPaymentNumber: null,
+    userInfo: null
 }
 
 
@@ -41,6 +55,8 @@ const getters = {
     getToken: (state) => state.token,
     getUuid: (state) => state.uuid,
     getFirstName: (state) => state.firstName,
+    getUserPaymentNumber:(state) => state.userPaymentNumber,
+    getUserInfo:(state) =>  state.userInfo
 }
 
 
@@ -48,28 +64,62 @@ const actions = {
     async isAuthenticated(){
         // firebase.auth.
     },
+    async updateImage({commit}, data){
+        return new Promise( async(resolve, reject) => {
+            // Data should have uuid, token and image object
+            let imageUrl = await uploadImage(data.imageObject, data.uuid)
+            let newData = {
+                ...data,
+                image: imageUrl,
+            }
+            try {
+                var res =  await postReq('update_image', newData);
+                window.console.log(newData);
+                if (res.responseCode == 1){
+                    window.localStorage.setItem("profile_image", imageUrl)
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error);
+                reject(0)
+            }
+        })
+    },
     async socialSignin({commit}, data){
       return new Promise((resolve, reject)=>{
         if(data.provider == "google"){
             var provider = new firebase.auth.GoogleAuthProvider();
     
-            firebase.auth().signInWithPopup(provider).then(function(result) {
+            firebase.auth().signInWithPopup(provider).then( async function(result) {
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 var token = result.credential.accessToken;
                 // The signed-in user info.
                 var user = result.user;
-                window.console.log(user);
-                window.console.log(token);
                 const userData = {
-                    data:{
-                        uuid: "uuid",
-                        token: token,
+                        username:user.email,
                         email: user.email,
-                        first_name: user.displayName
-                    }
+                        first_name: user.displayName.split(" ")[0],
+                        last_name: user.displayName.split(" ")[1] || '',
+                        password: 'social',
+                        is_admin: false,
+                        is_active:true,
+                        isLogOut:false
                 }
-                setRegisteredUserData(userData, {commit});
-                resolve(1);
+
+                try {
+                    window.console.log(userData);
+                    var res =  await postReq('social_auth', userData);
+                    window.console.log(res);
+                    if (res.responseCode == 1){
+                        setRegisteredUserData(res, {commit});
+                        resolve(1);
+                    }
+                } catch (error) {
+                    window.console.log(error);
+                    reject(-1)
+                }
+                // setRegisteredUserData(userData, {commit});
+                // resolve(1);
                 // ...
               }).catch(function(error) {
                 // Handle Errors here.
@@ -87,12 +137,11 @@ const actions = {
       })
     },
     async register({commit}, data){
-
         try {
             var res =  await postReq('register', data);
             window.console.log(res);
             if (res.responseCode == 1){
-                setRegisteredUserData(res, {commit});
+                firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
             }
         } catch (error) {
             window.console.log(error);
@@ -111,6 +160,106 @@ const actions = {
             }
         }
         setRegisteredUserData(logoutData, {commit});
+    },
+
+    async getPaymentMethod({commit}, data){
+
+        let dataToSend = {
+            ...data,
+            url:"auth/user/get-payment?user="+data.uuid
+        }
+        return new Promise( async (resolve, reject) => {
+            try {
+                var res =  await getReq('get_user_payment', dataToSend);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    commit('setUserPaymentNumber', res.data)
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error)
+                reject(0)
+            }
+        })
+    },
+
+    async addPaymentMethod({commit}, data){
+
+        let dataToSend = {
+            ...data,
+        }
+        return new Promise( async (resolve, reject) => {
+            try {
+                var res =  await postReq('add_user_payment', dataToSend);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    commit('setUserPaymentNumber', res.data)
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error)
+                reject(0)
+            }
+        })
+    },
+
+    async getUserInfo({commit}, data){
+        let dataToSend = {
+            ...data,
+            url:"auth/user/profile?user="+data.uuid
+        }
+        return new Promise( async (resolve, reject) => {
+            try {
+                window.console.log(dataToSend);
+                var res =  await getReq('get_user_info', dataToSend);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    commit('setUserInfo', res.data)
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error)
+                reject(0)
+            }
+        })
+    },
+
+    async updateUserInfo({commit}, data){
+
+        let dataToSend = {
+            ...data,
+        }
+        return new Promise( async (resolve, reject) => {
+            try {
+                var res =  await putReq('update_user_info', dataToSend);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    setRegisteredUserData({data:{...data, isLogOut:false}}, {commit})
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error)
+                reject(0)
+            }
+        })
+    },
+
+    async verifyEmail({commit}, data){
+
+        return new Promise( async (resolve, reject) => {
+            try {
+                var res =  await postReq('verify_email', data);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    setRegisteredUserData(res, {commit});
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error);
+                reject(0)
+            }
+        })
+
     }
 }
 
@@ -120,6 +269,8 @@ const mutations = {
     setUuid: (state, newUuid) => (state.uuid = newUuid),
     setFirstName: (state, newFirstName) => (state.firstName = newFirstName),
     setEmail: (state, newEmail) => (state.email = newEmail),
+    setUserPaymentNumber:(state, newPaymentNumber) => (state.userPaymentNumber = newPaymentNumber),
+    setUserInfo:(state, newUserInfo) => (state.userInfo = newUserInfo)
 
 }
 

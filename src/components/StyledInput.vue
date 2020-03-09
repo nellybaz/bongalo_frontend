@@ -5,8 +5,8 @@
                     label
                 }}
             </label> <br>
-            <input v-if="!isTextArea" :type="type" :placeholder="placeholder">
-            <textarea rows="10" v-else>
+            <input v-if="!isTextArea" @keyup="$emit('sendInput', model)" :type="type" v-model="model" :placeholder="placeholder">
+            <textarea rows="10" v-else v-model="model">
 
             </textarea>
 
@@ -17,6 +17,11 @@
 <script>
 export default {
      name:'',
+     data:function(){
+         return {
+             model:''
+         }
+     },
      props:{
          label:{
              type:String,
@@ -34,8 +39,18 @@ export default {
          isTextArea:{
              type:Boolean,
              required:false,
+         },
+         value:{
+             type:String,
+             required:false,
          }
 
+     },
+     created(){
+         if(this.value){
+             this.model = this.value
+         }
+         window.console.log('styled input created')
      }
 }
 </script>

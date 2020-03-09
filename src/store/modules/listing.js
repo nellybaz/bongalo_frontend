@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { getReq, postReq } from '../../api_handler';
+import { getReq, postReq, deleteReq, putReq } from '../../api_handler';
 
 
 const state = {
@@ -21,18 +21,19 @@ const state = {
     will_update_calender_checkbox:"",
     checkin:"",
     checkout:"",
-    min_nights:"",
-    max_nights:"",
+    min_nights:1,
+    max_nights:1,
     blocked_dates:[],
     price:0,
+    userListing:[]
 }
 
-const uploadImages = async function (images){
+const uploadImages = async function (images, uuid){
     const downloadedImages = [];
     for(let i=0; i < images.length; i++){
         const imageName = images[i].name;
         // const imageExt = imageName.slice(imageName.lastIndexOf('.'))
-        let res = await firebase.storage().ref("property/images/" + imageName)
+        let res = await firebase.storage().ref("property/images/--bongalo_img--" + uuid + "_" + Date.now()+"-bongalo_img-")
         let snapshot = await res.put(images[i])
         let downloadedUrl = await snapshot.ref.getDownloadURL()
         window.console.log(downloadedUrl)
@@ -47,6 +48,7 @@ const uploadImages = async function (images){
 const getters = {
     getListingType:(state) => state.listing_type,
     getListingState:(state) => state,
+    getUserListing:(state) => state.userListing
 }
 
 const actions = {
@@ -55,72 +57,127 @@ const actions = {
         window.console.log(data);
     },
 
-    
-
     async uploadProperty({commit}, data){
-        let imageUploadRes = await uploadImages(data.images)
-        
-        window.console.log("finished")
-        window.console.log(imageUploadRes)
-        window.console.log(data.info)
+        return new Promise(async (resolve, reject) =>{
+            let imageUploadRes = await uploadImages(data.images, data.uuid)
 
-        const dataToUpload = {
-            "owner":"b89e87f3-5f31-4d16-9a9f-26a6d9215df4",
-            "title":"New Apartments 44567",
-            "description":"best deals ever112",
-            "price":23,
-            "main_image":"image_url",
-            "available_rooms":4,
-            "number_of_bathrooms":2,
-            "max_guest_number":"4",
-            "is_active":true,
-            "is_verified":false,
-            "country":"Nigeria",
-            "type":"Commercial",
-            "discount":0.2,
-            "amenities":"Toiltet, Parking",
-            "location":"Kacyiru",
-            "rules":"Free house",
-            "unavailable_from": "2020-01-08",
-            "unavailable_to": "2020-02-08",
-            "check_in":"01:01",
-            "check_out":"01:06",
-            "min_nights":3,
-            "max_nights":10
-        }
-
-        // listing_type: "Apartment" >
-        // what_guest_will_have: ""
-        // number_of_guest: 0
-        // number_of_bedroom: 0
-        // number_of_bathroom: 0
-        // property_country: ""
-        // property_address: ""
-        // property_city: ""
-        // property_province: ""
-        // amenities: Array(0)
-        // extras: Array(0)
-        // photos: Array(0)
-        // description: ""
-        // title: ""
-        // mobile_number: ""
-        // will_update_calender_checkbox: ""
-        // checkin: ""
-        // checkout: ""
-        // min_nights: ""
-        // max_nights: ""
-        // blocked_dates: (...)
-        // price: (...)
-
-        try {
-            var res =  await postReq('add_apartment', dataToUpload);
-            window.console.log(res);
-            if (res.responseCode == 1){
-                window.console.log("uploaded success")
+            // Create amenties comma seperated string
+            let amenitiesToSend = ""
+            for(let x=0; x < data.info.amenities.length; x++){
+                amenitiesToSend += data.info.amenities[x]
+                if (x < data.info.amenities.length-1){
+                    amenitiesToSend += ","
+                }
             }
-        } catch (error) {
-            window.console.log(error)
+
+            let rulesToSend = ""
+            for(let x=0; x < data.info.rules.length; x++){
+                rulesToSend += data.info.rules[x]
+                if (x < data.info.rules.length-1){
+                    rulesToSend += ","
+                }
+            }
+            const dataToUpload = {
+                "owner":data.uuid,
+                "token":data.token,
+                "title":data.info.title,
+                "description":data.info.description,
+                "price":data.info.price,
+                "main_image":imageUploadRes[0],
+                "available_rooms":data.info.number_of_bedroom,
+                "number_of_bathrooms":data.info.number_of_bathroom,
+                "max_guest_number":data.info.number_of_guest,
+                "is_active":true,
+                "is_verified":false,
+                "country":data.info.property_country,
+                "type":data.info.listing_type,
+                "discount":0.2,
+                "amenities":amenitiesToSend,
+                "rules":rulesToSend,
+                "unavailable_from": "1020-01-08",
+                "unavailable_to": "1020-02-08",
+                "check_in":data.info.checkin,
+                "check_out":data.info.checkout,
+                "min_nights":data.info.min_nights,
+                "max_nights":data.info.max_nights,
+                "images": imageUploadRes.slice(1, imageUploadRes.length)
+            }
+    
+            try {
+                var res =  await postReq('add_apartment', dataToUpload);
+                window.console.log(res);
+                if (res.statusCode == 1){
+                    window.console.log("uploaded success")
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error)
+                reject(0)
+            }
+        })
+    },
+
+    async getUserListing({commit}, data){
+        // Data must have uuid, token
+        let dataToSend = {
+            ...data,
+            url:"apartment/show-listing?user="+data.uuid
         }
+        return new Promise( async (resolve, reject) => {
+            try {
+                var res =  await getReq('get_user_listing', dataToSend);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    // window.console.log(res)
+                    commit('setUserListing', res.data)
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error)
+                reject(0)
+            }
+        })
+    },
+
+    async deleteUserListing({commit}, data){
+        // Data must have uuid, token, apartment
+        let dataToSend = {
+            ...data,
+            url: 'apartment/show-listing?user=' +data.user+"&apartment="+data.apartment
+        }
+        return new Promise( async (resolve, reject) => {
+            try {
+                var res =  await deleteReq('delete_user_listing', dataToSend);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    // commit('setUserListing', res.data)
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error)
+                reject(0)
+            }
+        })
+    },
+
+    async updateUserListing({commit}, data){
+        // Data must have uuid, token, apartment
+        let dataToSend = {
+            ...data,
+        }
+        return new Promise( async (resolve, reject) => {
+            try {
+                var res =  await putReq('update_user_listing', dataToSend);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    // commit('setUserListing', res.data)
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error)
+                reject(0)
+            }
+        })
     }
 
     
@@ -128,6 +185,7 @@ const actions = {
 
 const mutations = {
     setValue:(state, newData) => (state[newData['key']] = newData['value']),
+    setUserListing:(state, newUserListing) => (state.userListing = newUserListing)
 }
 
 export default {

@@ -1,21 +1,21 @@
 <template>
-    <router-link to="/details" target="_blank">
-        <div class='horizontal-card'>
+    <!-- <router-link to="/details" target="_blank"> -->
+        <div @click="handleCardClick" class='horizontal-card'>
             <div class="img-div">
-                <img :src="require(`../assets/images/${apartment.image}`)" alt="">
+                <img :src="getThumbnail(apartment.main_image)" alt="">
             </div>
 
             <div class="details">
-                <p class="location"><i class="fas fa-map-marker-alt"></i> {{apartment.location}} 
+                <p class="location"><i class="fas fa-map-marker-alt"></i> {{apartment.country}} 
                     <span>
-                        <i class="fas fa-bed"></i> 5 <i class="fas fa-shower"> 3 </i>
+                        <i class="fas fa-bed"></i> {{apartment.available_rooms}} <i class="fas fa-shower"> {{apartment.number_of_bathrooms}} </i>
                     </span>
                 </p>
                 <p class="title"> {{apartment.title}} </p>
-                <p class="amount"> <span>{{apartment.price}}</span> / night</p>
+                <p class="amount"> <span>${{apartment.price}}</span> / night</p>
             </div>
         </div>
-    </router-link>
+    <!-- </router-link> -->
 </template>
 
 
@@ -26,6 +26,30 @@ export default {
          apartment:{
              type:Object,
              required:true
+         }
+     },
+
+     methods:{
+         handleCardClick(){
+             this.$store.dispatch('setCurrentApartment', {apartment: this.apartment})
+             .then(res => {
+                 this.$router.push({path:'/details?apartment='+this.apartment.uuid, query: {...this.apartment, ...this.$route.query}})
+             })
+             
+         },
+         getThumbnail(img){
+             try {
+                //  https://firebasestorage.googleapis.com/v0/b/alushare.appspot.com/o/property%2Fimages%2Fneldon1.jpg?alt=media&token=d955d9c1-482f-4a43-878a-802a3052809a
+                let split = img.split('--bongalo_img--')
+                let left = split[0] + "thumbnails%2F--bongalo_img--"
+                let right = split[1]
+                let rightsplit = right.split("-bongalo_img-")
+                let tmp = rightsplit[0] + "-bongalo_img-_200x200" + rightsplit[1]
+                let thumbnail = left + tmp
+                return img
+             } catch (error) {
+                return img
+             }
          }
      }
 }
