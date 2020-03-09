@@ -4,6 +4,30 @@
 
        
         <div class="listing-content-wrapper">
+            <modal name="no-image-modal" :height="500">
+                <div class="image-modal-wrapper">
+                    <h2>Profile image is required for listing properties</h2>
+
+                     <div class="image-modal">
+                    <input id="profile-imagee-input" class="image_select" type="file" multiple @change="onProfileChange">
+                        <label class="image_select_label" for="profile-imagee-input">
+                            <div class="div">
+                               <div>
+                                    <p>Upload Profile photo</p>
+                                    <small>or drag it in</small>
+                               </div>
+                            </div>
+                        </label>
+                        <div v-if="profile_img" class="preview">
+                            <img :src="profile_img_link" />
+                        </div>
+               </div>
+                    <button @click="$modal.hide('no-image-modal')">OK</button>
+                    
+                </div>
+              
+              
+            </modal>
             <Paragraph :text="title_text()" size="20" weight="bold" color="#404040"></Paragraph>
 
              <div class="progress-box-wrapper">
@@ -187,8 +211,8 @@
                         <Paragraph text="Photos help your guest imagine staying at your place. You can add minimum five and maximum ten photos" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                         <br>
 
-                        <input id="image_select" type="file" multiple @change="onFileChange">
-                        <label class="image_select_label" for="image_select">
+                        <input id="property-images-input" class="image_select" type="file" multiple @change="onFileChange">
+                        <label class="image_select_label" for="property-images-input">
                             <div class="div">
                                <div>
                                     <p>Upload photos</p>
@@ -440,6 +464,7 @@ export default {
      
      data: function(){
          return {
+             profile_img: null,
              files: [],
              urls:null,
              total: 7,
@@ -715,17 +740,35 @@ export default {
             return ""
          },
          handlePropertyUpload(){
-             this.$store.dispatch('uploadProperty', {images:this.files, token:this.getToken(), uuid:this.getUuid(), info:this.getListingState()})
-             .then((res) => {
-                 if(res == 1){
-                     this.$router.push("/profile")
-                 }
-                 else{
-                     alert("failed to upload apartment")
-                 }
-             })
+             if(window.localStorage.getItem("profile_image") || this.profile_img){
+                 //Upload image after listing sucess
+                    let data = {
+                        uuid: this.getUuid(),
+                        token: this.getToken(),
+                        imageObject: this.profile_img
+                        }
+                        this.$store.dispatch('updateImage', data)
+                        .then(res => {
+                            window.console.log(res)
+                            window.console.log("image uploaded suucess")
+                            
+                    })
+                 
+                this.$store.dispatch('uploadProperty', {images:this.files, token:this.getToken(), uuid:this.getUuid(), info:this.getListingState()})
+                .then((res) => {
+                    if(res == 1){
+                        this.$router.push("/profile")
+                    }
+                    else{
+                        alert("failed to upload apartment")
+                    }
+                })
+             }
+             else{
+                this.$modal.show('no-image-modal');
+             }
          },
-          onFileChange(e) {
+        onFileChange(e) {
             this.files = e.target.files;
             let tmpUrl = [];
             for(let i=0; i < this.files.length; i++){
@@ -733,7 +776,12 @@ export default {
             }
 
             this.urls = tmpUrl;
-            },
+        },
+
+        onProfileChange(e){
+            this.profile_img = e.target.files[0]
+            this.profile_img_link = URL.createObjectURL(e.target.files[0])
+        },
          style(){
              return "width:"+ this.flow_percentage +"%";
          },
@@ -799,6 +847,82 @@ export default {
            margin-top: 80px;
            width:100%;
            padding: 0 20%;
+
+            .image_select{
+                       display: absolute;
+                       width: 0.1px;
+                       height: 0.1px;
+                   }
+
+                   .image_select_label{
+                       .div{
+                           width:100%;
+                           height: 250px;
+                           padding: 20px;
+                           border:1px dashed grey;
+                           div{
+                               background: rgba(196, 196, 196, 0.2);
+                                width:100%;
+                                height: 100%; 
+                                
+                                border-radius: 3px;
+                                cursor: pointer;
+                                display:flex;
+                                align-items:center;
+                                justify-content:center;
+                                flex-direction: column;
+
+                                p{
+                                    background-color: #3A85FC;
+                                    padding:10px 20px;
+                                    color: #fff;
+                                    border-radius: 3px;
+                                    margin-bottom: 10px;
+                                }
+                            }
+                       }
+
+                   }
+
+
+            .image-modal-wrapper{
+                width:100%;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                flex-direction: column;
+                padding: 40px 20px;
+
+                button{
+                    border: none;
+                    background-color: #3A85FC;
+                    color:#fff;
+                    width: 120px;
+                    height: 30px;
+                    border-radius: 3px;
+                    cursor: pointer;
+                }
+            }
+
+           .image-modal{
+               width:100%;
+               display:flex;
+               align-items:center;
+               justify-content:center;
+               flex-direction: row;
+               padding: 30px;
+
+               .preview{
+                   width:40%;
+                   margin-left: 20px;
+
+                   img{
+                       width: 100%;
+                       height: 200px;
+                       object-fit: cover;
+                   }
+               }
+           }
 
            .progress-box-wrapper{
                border-radius: 10px 10px 0 0;
@@ -867,41 +991,7 @@ export default {
                        padding: 10px;
                    }
 
-                   #image_select{
-                       display: absolute;
-                       width: 0.1px;
-                       height: 0.1px;
-                   }
-
-                   .image_select_label{
-                       .div{
-                           width:100%;
-                           height: 250px;
-                           padding: 20px;
-                           border:1px dashed grey;
-                           div{
-                               background: rgba(196, 196, 196, 0.2);
-                                width:100%;
-                                height: 100%; 
-                                
-                                border-radius: 3px;
-                                cursor: pointer;
-                                display:flex;
-                                align-items:center;
-                                justify-content:center;
-                                flex-direction: column;
-
-                                p{
-                                    background-color: #3A85FC;
-                                    padding:10px 20px;
-                                    color: #fff;
-                                    border-radius: 3px;
-                                    margin-bottom: 10px;
-                                }
-                            }
-                       }
-
-                   }
+                  
 
                    .textarea{
                        border: 1px solid rgba(196, 196, 196, 0.7);

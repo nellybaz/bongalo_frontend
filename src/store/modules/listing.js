@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { getReq, postReq } from '../../api_handler';
+import { getReq, postReq, deleteReq, putReq } from '../../api_handler';
 
 
 const state = {
@@ -25,6 +25,7 @@ const state = {
     max_nights:1,
     blocked_dates:[],
     price:0,
+    userListing:[]
 }
 
 const uploadImages = async function (images, uuid){
@@ -47,6 +48,7 @@ const uploadImages = async function (images, uuid){
 const getters = {
     getListingType:(state) => state.listing_type,
     getListingState:(state) => state,
+    getUserListing:(state) => state.userListing
 }
 
 const actions = {
@@ -113,6 +115,69 @@ const actions = {
                 reject(0)
             }
         })
+    },
+
+    async getUserListing({commit}, data){
+        // Data must have uuid, token
+        let dataToSend = {
+            ...data,
+            url:"apartment/show-listing?user="+data.uuid
+        }
+        return new Promise( async (resolve, reject) => {
+            try {
+                var res =  await getReq('get_user_listing', dataToSend);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    // window.console.log(res)
+                    commit('setUserListing', res.data)
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error)
+                reject(0)
+            }
+        })
+    },
+
+    async deleteUserListing({commit}, data){
+        // Data must have uuid, token, apartment
+        let dataToSend = {
+            ...data,
+            url: 'apartment/show-listing?user=' +data.user+"&apartment="+data.apartment
+        }
+        return new Promise( async (resolve, reject) => {
+            try {
+                var res =  await deleteReq('delete_user_listing', dataToSend);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    // commit('setUserListing', res.data)
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error)
+                reject(0)
+            }
+        })
+    },
+
+    async updateUserListing({commit}, data){
+        // Data must have uuid, token, apartment
+        let dataToSend = {
+            ...data,
+        }
+        return new Promise( async (resolve, reject) => {
+            try {
+                var res =  await putReq('update_user_listing', dataToSend);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    // commit('setUserListing', res.data)
+                    resolve(1)
+                }
+            } catch (error) {
+                window.console.log(error)
+                reject(0)
+            }
+        })
     }
 
     
@@ -120,6 +185,7 @@ const actions = {
 
 const mutations = {
     setValue:(state, newData) => (state[newData['key']] = newData['value']),
+    setUserListing:(state, newUserListing) => (state.userListing = newUserListing)
 }
 
 export default {

@@ -11,10 +11,10 @@
                         </p>
 
                         <br>
-                        <Input hint="Enter PIN" step="" type="text" :isFullWidth="true"/>
+                        <Input @inputHandler="handleInput" step="pin_verify" hint="Enter PIN" type="text" :isFullWidth="true"/>
                         <br>
 
-                        <Button label="Verify" :isFullWidth="true"/>
+                        <Button @handleClick="verifyEmail" label="Verify" :isFullWidth="true"/>
                             <!-- <br><br> -->
                             <strong>
                                 <!-- Forgot password ? -->
@@ -59,7 +59,7 @@
                     
                     <p>
                         Don't have an account ? 
-                        <span v-on:click=goto(2)>
+                        <span v-on:click="goto(2)">
                             Register
                         </span>
                     </p>
@@ -80,7 +80,7 @@
                             <input type="checkbox" v-model="termsCheckBox">
                             <p>I accept Bongalo's terms and condition</p>
                         </div>
-                        <Button v-on:handleClick="setVerify" label="Sign up" :isFullWidth="true"/>
+                        <Button v-on:handleClick="handleButton" label="Sign up" :isFullWidth="true"/>
                         <!-- <br><br> -->
                         <strong>
                             <!-- Forgot password ? -->
@@ -151,6 +151,11 @@ export default {
          SocialSignin
      },
      methods:{
+         handleInput(val){
+             if(val.step == "pin_verify"){
+                 this.pinModel = val.data
+             }
+         },
          ...mapActions(['setModalState']),
          handleSocialSignup(provider){
              this.$store.dispatch('socialSignin', {provider:provider}).then(res => {
@@ -170,29 +175,40 @@ export default {
          },
          handleButton(){
             let data = {
-                email:'email@email.com',
+                email:'nelson.bassey111@gmail.com',
                 first_name:'Nelson',
                 last_name:'Bassey',
                 password:'passing',
                 is_active:false,
                 is_admin:false
             }
-             this.$store.dispatch('register', data);
+             this.$store.dispatch('register', data)
+             .then(res => {
+                   this.isVerify = true;
+             })
          },
 
-         setVerify(){
+         verifyEmail(){
 
              let data = {
-                email:'email@klab5.com'+Date.now(),
-                first_name:'Nelson',
-                last_name:'Bassey',
-                password:'passing',
-                is_admin:false,
-                is_active:false,
+                email:'nelson.bassey111@gmail.com',
+                pin: this.pinModel
             }
-             this.$store.dispatch('register', data);
+             this.$store.dispatch('verifyEmail', data)
+             .then(res => {
+                 if(res == 1){
+                    this.isVerify = false;
+                    this.setModalState(0);
+                    this.$notify({
+                    group: 'general',
+                    title: 'Congratulations !!',
+                    text: 'You are now a user of bongalo, have fun in your travels',
+                    type: 'success'
+                    });
+                 }
+             })
              
-             this.isVerify = true;
+           
          }
      },
 
@@ -201,6 +217,7 @@ export default {
              showModal: true,
              termsCheckBox:"",
              isVerify: false,
+             pinModel:''
          }
      }, 
      computed: mapGetters(['getModalState'])

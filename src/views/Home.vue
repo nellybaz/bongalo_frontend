@@ -357,6 +357,7 @@ export default {
           display: grid;
           grid-template-columns:repeat(3, 1fr);
           grid-column-gap: 20px;
+          
         }
     }
 
@@ -371,7 +372,7 @@ export default {
           display: grid;
           grid-template-columns:repeat(4, 1fr);
           grid-column-gap: 20px;
-          grid-row-gap: 30px;
+          grid-row-gap: 55px;
         }
     }
 

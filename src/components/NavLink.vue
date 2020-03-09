@@ -20,7 +20,8 @@
           </li>
 
           <li v-if="!isLoggedIn" v-on:click="handleSignin(2)">Sign up</li>
-          <li v-else v-on:click="$router.push('/profile')">
+          <li class="profile-li" v-else v-on:click="$router.push('/profile')">
+            <img :src="getProfile()">
               Welcome {{
                   getFirstName
               }} 
@@ -50,13 +51,25 @@ export default {
     },
 
     methods:{
+        getProfile(){
+            return window.localStorage.getItem("profile_image") ? window.localStorage.getItem("profile_image") : "https://freesvg.org/img/abstract-user-flat-3.png"
+        },
         ...mapGetters(['isMobile']),
         ...mapActions(['setModalState']),
 
         handleOpeningHostPage(){
-            if(this.isLoggedIn){
+            // if(!window.localStorage.getItem("profile_image")){
+            //     this.$notify({
+            //         group: 'general',
+            //         title: 'Profile Info',
+            //         text: 'Please upload your profile image before you start listing your property!'
+            //         });
+            //         this.$router.push("/profile");
+                    
+            // }
+            // else
+             if(this.isLoggedIn){
                 this.$router.push("/become-a-host");
-                
             }
             else{
                 this.handleSignin(1)
@@ -93,6 +106,21 @@ export default {
                 align-items: center;
                 justify-content: flex-end;
                 flex-direction: row;
+
+                .profile-li{
+                    // border:1px solid red;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    flex-direction: row;
+                    img{
+                        width:30px;
+                        height: 30px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                        margin-right: 5px;
+                    }
+                }
                 li {
                 font-weight: 600;
                 font-size: 14px;

@@ -9,7 +9,16 @@ const URLS = {
     social_auth: 'auth/social/auth',
     apartment_all: 'apartment/all',
     apartment_images: 'apartment/images/get?apartment=',
-    search_apartment: ''
+    search_apartment: '',
+    update_image: 'auth/user/update-profile-image',
+    get_user_listing:'',
+    delete_user_listing:'apartment/show-listing',
+    update_user_listing:'apartment/update-listing',
+    get_user_payment:'',
+    add_user_payment:'auth/user/update-payment',
+    get_user_info:'auth/user/profile',
+    update_user_info:'auth/update',
+    verify_email:'auth/verify-email'
 }
 
 
@@ -18,7 +27,7 @@ const getReq = async function(urlKey, data){
     const CONFIG = {
         headers:{
             'Content-Type':'application/json',
-            'Authorization':'Token a0a0f13691e07795325ae1dd74da487117543464'
+            'Authorization':'Token '+data.token
         }
     }
 
@@ -62,14 +71,64 @@ const postReq = async function(urlKey, data){
         .catch(err => {
             window.console.log(err);
             reject(0);
+        })   
+    })
+}
+
+const putReq = async function(urlKey, data){
+    const CONFIG = {
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':'Token ' + data.token
+        }
+    }
+    window.console.log(data);
+    return new Promise((resolve, reject) => {
+        let url = BASE_URL + URLS[urlKey]
+
+        axios.put(url, data, CONFIG)
+        .then(res => {
+            resolve(res.data);
         })
-        
-    
-       
+        .catch(err => {
+            window.console.log(err);
+            reject(0);
+        })   
+    })
+}
+
+
+const deleteReq = async function(urlKey, data){
+    const CONFIG = {
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':'Token ' + data.token
+        }
+    }
+    window.console.log(data);
+    return new Promise((resolve, reject) => {
+        let url = BASE_URL
+        if(data.url == null){
+            url += URLS[urlKey]
+        }
+        else{
+            url += data.url
+        }
+
+        axios.delete(url, CONFIG)
+        .then(res => {
+            resolve(res.data);
+        })
+        .catch(err => {
+            window.console.log(err);
+            reject(0);
+        })
     })
 }
 
 export{
     postReq,
-    getReq
+    getReq,
+    deleteReq,
+    putReq
 }
