@@ -749,8 +749,9 @@ export default {
             return ""
          },
          handlePropertyUpload(){
-             this.isUploading = true
+            
              if(window.localStorage.getItem("profile_image") || this.profile_img){
+                  this.isUploading = true
                  //Upload image after listing sucess
                     let data = {
                         uuid: this.getUuid(),
