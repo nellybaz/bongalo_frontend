@@ -159,7 +159,10 @@ const actions = {
                 isLogOut:true
             }
         }
-        setRegisteredUserData(logoutData, {commit});
+        return new Promise((resolve, reject) => {
+            setRegisteredUserData(logoutData, {commit});
+            resolve(1)
+        })
     },
 
     async getPaymentMethod({commit}, data){
