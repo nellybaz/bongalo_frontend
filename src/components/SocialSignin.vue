@@ -1,8 +1,13 @@
 <template>
     <div class="social-signin">
                             
-        <i @click="$emit('handleSocialSignup', 'google')" class="fab fa-google"></i> 
-        <i @click="$emit('handleSocialSignup', 'facebook')" class="fab fa-facebook"></i>
+        <p class="p">Or</p>
+        <!-- <i @click="$emit('handleSocialSignup', 'google')" class="fab fa-google"></i>  -->
+        <div @click="$emit('handleSocialSignup', 'google')" class="icon-wrapper">
+            <img class="icon" src="../assets/images/google.png" alt="sign in with google - bongalo">
+            <p>Contiue with Google</p>
+        </div>
+        <!-- <i @click="$emit('handleSocialSignup', 'facebook')" class="fab fa-facebook"></i> -->
     </div>
 </template>
 
@@ -21,7 +26,33 @@ export default {
         display:flex;
         align-items:center;
         justify-content:center;
-        flex-direction: row;
+        flex-direction: column;
+        .p{
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+
+        .icon-wrapper{
+            width:100%;
+            background: rgb(219, 218, 218);
+            padding: 10px 30px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction: row;
+            border-radius: 5px;
+            cursor: pointer;
+            .icon{
+            width: 30px;
+            height: 30px;
+            }
+            p{
+                color: #000;
+                margin-left: 30px;
+                font-size: 14px;
+            }
+        }
+        
         i{
             cursor: pointer;
             margin-right: 30px;
