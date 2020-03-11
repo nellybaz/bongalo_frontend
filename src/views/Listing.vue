@@ -403,14 +403,20 @@
 
                       <div v-if="flow == 6">
                           
-                         <h1>
+                         <h1 v-if="!isUploading">
                              You've come this far<br>
                              Now upload your listing
+                         </h1>
+                         <h1 v-else>
+                             Stay put <br>
+                             We are uploading your listing. 
+                             
                          </h1>
 
                          <div class="action-section">
                              <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
-                             <Button :isFullWidth="false"  v-on:handleClick="handlePropertyUpload" label="Upload" width="120px"></Button>
+                             <Button v-if="!isUploading" :isFullWidth="false"  v-on:handleClick="handlePropertyUpload" label="Upload" width="120px"></Button>
+                             <pulse-loader class="loader" v-else :loading="loading" color="#3A85FC" :size="size"></pulse-loader>
                          </div>
                      </div>
 
@@ -434,6 +440,7 @@ import Button from '../components/Button';
 import Incrementer from '../components/Incrementer';
 import Input from '../components/TextInput';
 import CheckBox from '../components/CheckBox';
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 
 //External imports
@@ -459,11 +466,13 @@ export default {
          Button,
          Incrementer,
          Input,
-         CheckBox
+         CheckBox,
+         PulseLoader
      },
      
      data: function(){
          return {
+             isUploading: false,
              profile_img: null,
              files: [],
              urls:null,
@@ -740,6 +749,7 @@ export default {
             return ""
          },
          handlePropertyUpload(){
+             this.isUploading = true
              if(window.localStorage.getItem("profile_image") || this.profile_img){
                  //Upload image after listing sucess
                     let data = {
@@ -760,8 +770,23 @@ export default {
                         this.$router.push("/profile")
                     }
                     else{
-                        alert("failed to upload apartment")
+                        this.isUploading = false
+                        this.$notify({
+                            group: 'general',
+                            title: 'Info !!',
+                            text: 'Error ocurred while uploading your apartment, please retry!',
+                            type:'error'
+                            });
                     }
+                })
+                .catch(err =>{
+                    this.isUploading = false
+                    this.$notify({
+                        group: 'general',
+                        title: 'Info !!',
+                        text: 'Error ocurred while uploading your apartment, please retry!',
+                        type:'error'
+                        });
                 })
              }
              else{
@@ -961,6 +986,9 @@ export default {
                         justify-content:space-between;
                         flex-direction: row;
 
+                        .loader{
+                            margin-left: 70%;
+                        }
                         .button{
                             border: none;
                             cursor: pointer;

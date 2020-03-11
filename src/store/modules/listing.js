@@ -29,20 +29,21 @@ const state = {
 }
 
 const uploadImages = async function (images, uuid){
-    const downloadedImages = [];
-    for(let i=0; i < images.length; i++){
+   try {
+        const downloadedImages = [];
+        for(let i=0; i < images.length; i++){
         const imageName = images[i].name;
         // const imageExt = imageName.slice(imageName.lastIndexOf('.'))
         let res = await firebase.storage().ref("property/images/--bongalo_img--" + uuid + "_" + Date.now()+"-bongalo_img-")
         let snapshot = await res.put(images[i])
         let downloadedUrl = await snapshot.ref.getDownloadURL()
-        window.console.log(downloadedUrl)
-        window.console.log("downloadedUrl above")
         downloadedImages.push(downloadedUrl);
     }
     return downloadedImages
-    // window.console.log(downloadedImages);
-    // return downloadedImages;
+   } catch (error) {
+       return 0;
+   }
+    
 }   
 
 const getters = {
@@ -60,6 +61,9 @@ const actions = {
     async uploadProperty({commit}, data){
         return new Promise(async (resolve, reject) =>{
             let imageUploadRes = await uploadImages(data.images, data.uuid)
+            if (imageUploadRes == 0){
+                resolve(0)
+            }
 
             // Create amenties comma seperated string
             let amenitiesToSend = ""
