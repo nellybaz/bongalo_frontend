@@ -4,7 +4,7 @@ import axios from 'axios';
 const BASE_URL = process.env.VUE_APP_BASE_URL
 const URLS = {
     register: 'auth/register',
-    login: '',
+    login: 'auth/login',
     add_apartment: 'apartment/add',
     social_auth: 'auth/social/auth',
     apartment_all: 'apartment/all',

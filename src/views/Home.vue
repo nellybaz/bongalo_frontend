@@ -45,7 +45,7 @@
 
     <section class="middle-banner-section">
         <p>List your property on Bongalo and open your doors to rental income.</p>
-        <button>List</button>
+        <button @click="handleOpeningHostPage">List</button>
     </section>
 
     <section class="powered-section">
@@ -80,7 +80,17 @@ export default {
     MobileEventCard
   },
   methods:{
-    ...mapGetters(['isMobile', 'getFeatured']),
+    ...mapGetters(['isMobile', 'getFeatured', 'isLoggedIn']),
+    ...mapActions(['setModalState']),
+    handleOpeningHostPage(){
+             if(this.isLoggedIn()){
+                this.$router.push("/become-a-host");
+            }
+            else{
+              this.$router.push({query:{"next":"become-a-host"}})
+              this.setModalState(1)
+            }
+        },
 
   },
   data:function(){
@@ -146,66 +156,6 @@ export default {
       ],
 
       apartments: [],
-      // [
-      //            {
-      //                id:1,
-      //                location:'Kicukiru, Kigali, kigali',
-      //                title:"Bella Apartments",
-      //                price:"$20",
-      //                image:"house1.png"
-      //            },
-      //            {
-      //                id:2,
-      //                location:'Kicukiru, Kigali, kigali',
-      //                title:"Bella Apartments",
-      //                price:"$20",
-      //                image:"house2.png"
-      //            },
-      //            {
-      //                id:3,
-      //                location:'Kicukiru, Kigali, kigali',
-      //                title:"Visit Rwanda",
-      //                price:"$20",
-      //                image:"house3.png"
-      //            },
-      //            {
-      //                id:4,
-      //                location:'Kicukiru, Kigali, kigali',
-      //                title:"Attend Youth Connekt ..",
-      //                price:"$20",
-      //                image:"house1.png"
-      //            },
-      //            {
-      //                id:5,
-      //                location:'Kicukiru, Kigali, kigali',
-      //                title:"Global Health Summit",
-      //                price:"$20",
-      //                image:"house2.png"
-      //            },
-      //            {
-      //                id:6,
-      //                location:'Kicukiru, Kigali, kigali',
-      //                title:"Bella Apartments",
-      //                price:"$20",
-      //                image:"house1.png"
-      //            },
-      //            {
-      //                id:7,
-      //                location:'Kicukiru, Kigali, kigali',
-      //                title:"Bella Apartments",
-      //                price:"$20",
-      //                image:"house2.png"
-      //            },
-      //            {
-      //                id:8,
-      //                location:'Kicukiru, Kigali, kigali',
-      //                title:"Visit Rwanda",
-      //                price:"$20",
-      //                image:"house3.png"
-      //            },
-      //        ],
-
-
       whyContent:[
               {
                 id:1,
@@ -257,7 +207,6 @@ export default {
    .then(res => {
      if(res == 1){
         this.apartments = this.getFeatured()
-        // this.apartments = 
      }
    })
   }

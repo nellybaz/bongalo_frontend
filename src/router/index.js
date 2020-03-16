@@ -2,6 +2,28 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
+const ifNotAuthenticated = (to, from, next) => {
+  if (!window.localStorage.getItem('token')) {
+    next()
+    return
+  }
+  next('/')
+}
+const ifLogout = (to, from, next) => {
+  if (window.localStorage.getItem('token')) {
+    next()
+    return
+  }
+  next('/')
+}
+
+const ifAuthenticated = (to, from, next) => {
+  if (window.localStorage.getItem('token')) {
+    next()
+    return
+  }
+  next('/')
+}
 
 Vue.use(VueRouter)
 
@@ -81,13 +103,15 @@ const routes = [
   {
     path: '/profile',
     name: 'profile',
-    component: () => import(/* webpackChunkName: "detiails" */ '../views/Profile.vue')
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Profile.vue'),
+    beforeEnter: ifAuthenticated,
   },
 
   {
     path: '/become-a-host',
     name: 'listing',
-    component: () => import(/* webpackChunkName: "detiails" */ '../views/Listing.vue')
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Listing.vue'),
+    beforeEnter: ifAuthenticated,
   }
 
   

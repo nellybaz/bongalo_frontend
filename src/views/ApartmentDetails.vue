@@ -186,7 +186,7 @@
                                         >
                                         <div>
                                             {{
-                                                getDateFormat(checkout.toString(), $route.query.checkin ? 3:2)
+                                                getDateFormat(checkout.toString(), $route.query.checkin ? 4:2)
                                             }}
                                         </div>
                                     </vc-date-picker>
@@ -321,33 +321,50 @@ export default {
         },
         getDateFormat(date, intent){
         
+        // window.console.log(date)
         if(date == "Checkin" || date == "Checkout"){
             return date;
+        }
+
+        if (this.$route.query.checkin){
+            // window.console.log(date)
+            if(date.includes("GMT")){
+                // window.console.log("new date")
+                let splitted = date.split(" ")
+        
+                let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
+                if(intent == 4){
+                    let seconds = Math.abs(this.checkin - this.checkout)/1000;
+                    let days = seconds / 86400
+                    // window.console.log(days)
+                    this.bookedNights = days
+                }
+
+                return new_date
+            }
+            else{
+                try {
+                    let new_checkin_d = new Date(this.checkin.split('/')[2],this.checkin.split('/')[1]-1,this.checkin.split('/')[0])
+                    let new_checkout_d = new Date(this.checkout.split('/')[2], this.checkout.split('/')[1]-1, this.checkout.split('/')[0])
+                    let seconds = Math.abs(new_checkin_d - new_checkout_d)/1000;
+                    let days = seconds / 86400
+                    // window.console.log(date)
+                    this.bookedNights = days
+                } catch (error) {
+                    window.console.log("catch error")
+                }
+            }        
+            return intent == 3 ? this.checkin : intent == 4 ? this.checkout:""
         }
         let splitted = date.split(" ")
         
         let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
-
         
         if(intent == 2){
             let seconds = Math.abs(this.checkin - this.checkout)/1000;
             let days = seconds / 86400
             // window.console.log(days)
             this.bookedNights = days
-        }
-
-        else if(intent == 3){
-            let new_checkin_d = new Date(this.checkin.split('/')[2],this.checkin.split('/')[1]-1,this.checkin.split('/')[0])
-            let new_checkout_d = new Date(this.checkout.split('/')[2], this.checkout.split('/')[1]-1, this.checkout.split('/')[0])
-
-            // window.console.log(new_checkin_d)
-            // window.console.log(new_checkout_d)
-            let seconds = Math.abs(new_checkin_d - new_checkout_d)/1000;
-            let days = seconds / 86400
-            // window.console.log(days)
-            this.bookedNights = days
-
-            return date;
         }
         return new_date
         },
@@ -424,6 +441,19 @@ export default {
         this.apartment = this.getCurrentApartment
         this.amenities = this.apartment.amenities ?  this.apartment.amenities.split(",") : this.$route.query.amenities.split(",")
         this.rules = this.apartment.rules ? this.apartment.rules.split(",") : this.$route.query.rules.split(",")
+
+
+        try {
+            let new_checkin_d = new Date(this.checkin.split('/')[2],this.checkin.split('/')[1]-1,this.checkin.split('/')[0])
+            let new_checkout_d = new Date(this.checkout.split('/')[2], this.checkout.split('/')[1]-1, this.checkout.split('/')[0])
+            let seconds = Math.abs(new_checkin_d - new_checkout_d)/1000;
+            let days = seconds / 86400
+            this.bookedNights = days
+            window.console.log(days)
+        } catch (error) {
+            window.console.log("catch error")
+        }
+
         this.$store.dispatch('fetchApartmentImages', {token:'', apartmentUuid:this.$route.query.apartment})
         .then(res => {
             if(res == 1){
