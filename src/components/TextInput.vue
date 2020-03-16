@@ -1,6 +1,7 @@
 <template>
-    <div class='textinput'>
+    <div @click="showOutline=true" @mouseleave="showOutline=false" class="textinput" :style="getClass()">
         <input @keyup="$emit('inputHandler', {data:model, step:step})" v-model="model" :class="{fullWidth: isFullWidth, halfWidth: !isFullWidth}" :type=type :placeholder=hint>
+        <i v-if="icon" :class="icon"></i>
     </div>
 </template>
 
@@ -10,10 +11,26 @@ export default {
     name:'text_input',
     data: function(){
         return {
-            model:""
+            showOutline: false,
+            model: this.value ? this.value  : '',
+            // getClass: ""
         }
     },
+    methods:{
+        getClass(){
+            return this.showOutline ? "border: 1px solid #3A85FC !important;" : ""
+        }
+    },
+
     props:{
+        value:{
+            type:String,
+            required: false
+        },
+        icon:{
+            required:false,
+            type:String,
+        },
         hint:{
             type:String,
             required:true
@@ -30,7 +47,12 @@ export default {
             type:String,
             required:true
         }
-    }
+    },
+    // created(){
+    //     if(this.value){
+    //         this.model = this.value
+    //     }
+    // }
 }
 </script>
 
@@ -46,24 +68,35 @@ export default {
 
     .textinput {
         width:100%;
+        display:flex;
+        align-items:center;
+        justify-content:flex-start;
+        flex-direction: row;
+        border: 1px solid #C4C4C4;
+        border-radius: 5px;
         input{
+            width:92%;
             height: 40px;
-            border: 1px solid #C4C4C4;
-            border-radius: 5px;
             padding: 10px 10px; 
-
+            border:none;
             font-style: normal;
             font-weight: normal;
             font-size: 14px;
             line-height: 17px;
             color: rgba(106, 106, 106, 0.7);
+            border-radius: 5px 0 0 5px;
+        }
+
+        i{
+            font-size: 20px !important;
+            padding: 0 10px;
+            color: #3A85FC;
         }
         input:focus{
-                outline-color: #3A85FC;
-                outline-width: 2px;
-                outline-style: solid;
-
+                outline: none;
             }
+
+    
         ::-webkit-input-placeholder{
             font-style: normal;
             font-weight: normal;
@@ -71,5 +104,8 @@ export default {
             line-height: 17px;
             color: rgba(106, 106, 106, 0.7);
         }
+    }
+    .border{
+        border: 1px solid #3A85FC !important;
     }
 </style>

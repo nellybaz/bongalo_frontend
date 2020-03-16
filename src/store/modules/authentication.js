@@ -257,12 +257,34 @@ const actions = {
                     setRegisteredUserData(res, {commit});
                     resolve(1)
                 }
+                else{
+                    reject(res.message)
+                }
             } catch (error) {
                 window.console.log(error);
                 reject(0)
             }
         })
 
+    },
+    async login({commit}, data){
+        return new Promise( async (resolve, reject) =>{
+            try {
+                var res =  await postReq('login', data);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    window.console.log(res);
+                    setRegisteredUserData(res, {commit});
+                    resolve(1)
+                }
+                else{
+                    reject(res.message)
+                }
+            } catch (error) {
+                window.console.log(error);
+                reject(res.message)
+            }
+        })
     }
 }
 

@@ -58,16 +58,6 @@ export default {
         ...mapActions(['setModalState']),
 
         handleOpeningHostPage(){
-            // if(!window.localStorage.getItem("profile_image")){
-            //     this.$notify({
-            //         group: 'general',
-            //         title: 'Profile Info',
-            //         text: 'Please upload your profile image before you start listing your property!'
-            //         });
-            //         this.$router.push("/profile");
-                    
-            // }
-            // else
              if(this.isLoggedIn){
                 this.$router.push("/become-a-host");
             }
