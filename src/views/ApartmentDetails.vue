@@ -12,7 +12,6 @@
                         <li>Amenities</li>
                         <li>Review</li>
                         <li>Other Info</li>
-
                     </ul>
                 </div>
                 <div class="content-div">
@@ -262,24 +261,16 @@
             <i v-on:click="updateImageShowHandler(0)"  class="far fa-times-circle"></i>
 
             <div class="img-showing-div">
-                <img class="img-big" src="../assets/images/house8.jpg" alt="">
-                <div>
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-                    <img class="img" src="../assets/images/house1.png" alt="">
-
+                <div class="img-big">
+                    <i @click="handleGalleryIndex(0)" class="fas fa-chevron-left"></i>
+                    <img :src="galleryCurrentImage" alt="">
+                    <i @click="handleGalleryIndex(1)" class="fas fa-chevron-right"></i>
+                </div>
+                <div class="img-side">
+                    <img v-for="(image, index) in getApartmentImages" 
+                    :key="image.image" class="img" 
+                    :class="{activeImage: galleryIndex==index}" 
+                    @click="handleImageChange(index)" :src="image.image" alt="">
                 </div>
             </div>
             
@@ -316,6 +307,25 @@ export default {
          ImageGrid
      },
      methods:{
+         handleImageChange(index){
+             this.galleryIndex = index
+             this.galleryCurrentImage = this.getApartmentImages[this.galleryIndex].image
+         },
+         handleGalleryIndex(intent){
+             if(intent == 1 && this.galleryIndex < this.getApartmentImages.length-1){
+                 this.galleryIndex += 1
+             }
+             else if (intent == 0 && this.galleryIndex > -1){
+                 this.galleryIndex -= 1
+             }
+             window.console.log(this.galleryIndex)
+             if(this.galleryIndex == -1){
+                 this.galleryCurrentImage = this.getCurrentApartment.main_image
+             }
+             else{
+                 this.galleryCurrentImage = this.getApartmentImages[this.galleryIndex].image
+             }
+         },
         capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         },
@@ -379,6 +389,8 @@ export default {
      },
      data: function(){
          return {
+             galleryIndex: -1,
+             galleryCurrentImage:"",
              serviceFee: 13,
              cleaningFee:20,
              bookedNights: 0,
@@ -439,6 +451,7 @@ export default {
         this.checkout = this.$route.query.checkout != null ? this.$route.query.checkout: this.checkout
         this.guestNumber = this.$route.query.guest != null ? this.$route.query.guest: this.guestNumber
         this.apartment = this.getCurrentApartment
+        this.galleryCurrentImage = this.getCurrentApartment.main_image
         this.amenities = this.apartment.amenities ?  this.apartment.amenities.split(",") : this.$route.query.amenities.split(",")
         this.rules = this.apartment.rules ? this.apartment.rules.split(",") : this.$route.query.rules.split(",")
 
@@ -467,6 +480,10 @@ export default {
 
 <style lang='scss' scoped>
 
+    .activeImage{
+        border:1px solid #3A85FC !important;
+        opacity: 0.3;
+    }
     .border_bottom{
         border-bottom: 4px solid #3A85FC;
     }
@@ -487,30 +504,41 @@ export default {
             grid-template-columns: 7fr 2fr;
             grid-gap: 20px;
             // border:1px solid red;
-
-            img{
-                object-fit: contain;
-                border-radius: 10px;
-                cursor: pointer;
-            }
             .img{
                 width:100%;
                 
             }
 
             .img-big{
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                flex-direction: row;
                 max-width: 90%;
                 height: 80vh;
-                // border:1px solid red;
+
+                img{
+                    width:90%;
+                    object-fit: cover;
+                }
             }
             
 
-            div{
+            .img-side{
                 height: 70vh;
                 overflow-y: scroll;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-gap: 5px;
+                border:1px solid black;
+                padding: 3px;
+                padding-left: 10px;
+
+                img{
+                    width:48%;
+                    // border:1px solid red;
+                    height: 100px;
+                    margin: 0 1% 3px 0;
+                    object-fit: cover;
+                    cursor: pointer;
+                }
             }
         }
     }
