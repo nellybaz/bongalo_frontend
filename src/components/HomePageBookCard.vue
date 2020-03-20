@@ -2,7 +2,7 @@
     <div class='book-card'>
 
         <h3>
-            Travelling Africa, Trip for Business or Pleasure ? Book your stay with us.
+            Travelling Africa, Trip for Business or Leisure? Book your stay with us.
         </h3>
         
         <!-- <br> -->
@@ -19,7 +19,7 @@
 
         <div class="item2">
            <div class="inner1">
-                 <p class="item-label">CHECKIN</p>
+                 <p class="item-label">ARRIVAL</p>
                 <vc-date-picker
                     v-model="checkin"
                     :popover="{ placement: 'bottom', visibility: 'click' }"
@@ -35,7 +35,7 @@
            </div>
 
            <div class="inner2">
-                 <p class="item-label">CHECKOUT</p>
+                 <p class="item-label">DEPARTURE</p>
                  <vc-date-picker
                     v-model="checkout"
                     :popover="{ placement: 'bottom', visibility: 'click' }"
@@ -256,7 +256,7 @@ export default {
         background: #FFFFFF;
         box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.06);
         border-radius: 5px;
-        padding: 40px 30px;
+        padding: 40px 20px;
         padding-bottom: 70px;
 
         .card-date-input{

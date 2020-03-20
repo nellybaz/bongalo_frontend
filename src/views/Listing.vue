@@ -28,6 +28,7 @@
               
               
             </modal>
+            
             <Paragraph :text="title_text()" size="20" weight="bold" color="#404040"></Paragraph>
 
              <div class="progress-box-wrapper">
@@ -42,6 +43,13 @@
                         <br><br>
                          <Paragraph text="First let's narrow things down" size="16" weight="bold" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                          <Select v-on:selectChangeHandler="handleSelect" step="listing_type" :options="steps.one.listing_type" width="300px" :model="steps.one.apartmentTypeModel"></Select>
+                        <br>
+                        <small class="listing-error" v-if="showErrors && checkIfShouldShowError('listing_type')">
+                            *{{
+                                errorList['listing_type']
+                            }}
+                            
+                         </small>
 
                          <br>
                          <br>
@@ -57,9 +65,16 @@
                         <br>
 
                          <Paragraph text="What will guest have ?" size="16" weight="bold" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                         <small class="listing-error" v-if="showErrors && checkIfShouldShowError('what_guest_will_have')">
+                            *{{
+                                errorList['what_guest_will_have']
+                            }}
+                            
+                         </small>
+                         <br>
                          <br>
                          <Radio v-on:radioChangeHandler="handleRadio" step="what_guest_will_have" :options="steps.one.what_guest_will_have"></Radio>
-
+                        
                          <br><br><br>
                          
                          <div class="action-section">
@@ -75,7 +90,12 @@
                         <br><br>
                          <Paragraph text="Check that you have enough beds to acoomodate all your guests comfortably" size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                          <Incrementer @incrementerChangeHandler="handleIncrementer" step="number_of_guest" label="Guest"></Incrementer>
-
+                        <small class="listing-error" v-if="showErrors && checkIfShouldShowError('number_of_guest')">
+                            *{{
+                                errorList['number_of_guest']
+                            }}
+                            
+                         </small>
                          <br>
                          <br>
                          <br>
@@ -83,7 +103,12 @@
                          <Paragraph text="How many bedrooms can quest use ?" size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                          <br>
                           <Select @selectChangeHandler="handleSelect" step="number_of_bedroom" :options="steps.one.number_of_bedrooms" width="300px" model="3"></Select>
-                         
+                         <br><small class="listing-error" v-if="showErrors && checkIfShouldShowError('number_of_bedroom')">
+                            *{{
+                                errorList['number_of_bedroom']
+                            }}
+                            
+                         </small>
                          <div class="action-section">
                              <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
                              <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
@@ -95,8 +120,14 @@
 
                         <br><br>
                          <Paragraph text="Check that you have enough bathrooms to acoomodate all your guests comfortably" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                         <Incrementer @incrementerChangeHandler="handleIncrementer" step="number_of_bathroom" label="Bathrooms"></Incrementer>
-
+                         <Incrementer @incrementerChangeHandler="handleIncrementer" step="number_of_bathroom" label="Bathrooms" :start=1></Incrementer>
+                        
+                        <br><small class="listing-error" v-if="showErrors && checkIfShouldShowError('number_of_bathroom')">
+                            *{{
+                                errorList['number_of_bathroom']
+                            }}
+                            
+                         </small>
                          <br>
                          <br>
                          <br>
@@ -114,12 +145,24 @@
                         
                         <br>
                         <Paragraph text="Country" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        
                         <Input @inputHandler="handleInput" :isFullWidth="false" step="property_country" type="text" class="input" hint="Country"/>
-                        <br>
+                        
+                        <small class="listing-error" v-if="showErrors && checkIfShouldShowError('property_country')">
+                            *{{
+                                errorList['property_country']
+                            }}
+                            
+                         </small><br>
 
                         <Paragraph text="Street address" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                         <Input @inputHandler="handleInput" step="property_address" :isFullWidth="false" type="text" class="input" hint="KG 7 Ave"/>
-
+                        <small class="listing-error" v-if="showErrors && checkIfShouldShowError('property_address')">
+                            *{{
+                                errorList['property_address']
+                            }}
+                            
+                         </small>
 
                         <br>
                         <div class="state-city">
@@ -127,6 +170,12 @@
                             <div>
                                 <Paragraph text="City" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                                 <Input @inputHandler="handleInput" step="property_city" type="text" :isFullWidth="true" class="input" hint="City"/>
+                                <small class="listing-error" v-if="showErrors && checkIfShouldShowError('property_city')">
+                                    *{{
+                                        errorList['property_city']
+                                    }}
+                                    
+                                </small>
                             </div>
                             
                             <div>
@@ -146,7 +195,14 @@
 
                         <br><br>
                         <Paragraph text="These are just the amenities that guest usually expect, you can add more after you have published " size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                        <br>
+                        
+                         <small class="listing-error" v-if="showErrors && checkIfShouldShowError('amenities')">
+                                    *{{
+                                        errorList['amenities']
+                                    }}
+                                    
+                                </small>
+                                <br>
 
                         <CheckBox @checkBoxHandler="handleCheckBox" step="amenities" class="checkbox-item" :model="steps.one.amenitiesValue" :item="steps.one.amenities"/>
                        
@@ -178,7 +234,14 @@
                          <Paragraph text="What house rules do have ?" size="26" weight="bold" color="#404040"></Paragraph>
                         <br><br>
                         <Paragraph text="Guest will be informed before hand of these rules " size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                        <br>
+                        
+                        <small class="listing-error" v-if="showErrors && checkIfShouldShowError('rules')">
+                                    *{{
+                                        errorList['rules']
+                                    }}
+                                    
+                                </small><br>
+
 
                         <CheckBox @checkBoxHandler="handleCheckBox" step="rules" class="checkbox-item" :model="steps.one.rulesValue" :item="steps.one.houseRules"/>
                        
@@ -237,6 +300,12 @@
 
                         <br/>
                         <Paragraph text="Write a quick summary of your place. You can highlight what’s special about your space, the neighborhood, and how you’ll interact with guests." size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <small class="listing-error" v-if="showErrors && checkIfShouldShowError('description')">
+                                    *{{
+                                        errorList['description']
+                                    }}
+                                    
+                                </small>
                         <br>
 
                         <textarea @change="handleInput({data:steps.two.description, step:'description'})" class="textarea" cols="60" rows="10" v-model="steps.two.description" placeholder="Describe the decor, light, what’s nearby etc..">
@@ -254,6 +323,12 @@
 
                         <br/>
                         <Paragraph text="Attract guests with a listing title that highlights what makes your place special." size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <small class="listing-error" v-if="showErrors && checkIfShouldShowError('title')">
+                                    *{{
+                                        errorList['title']
+                                    }}
+                                    
+                                </small>
                         <br>
 
                         <input @change="handleInput({data:steps.two.title, step:'title'})" v-model="steps.two.title" class="listing-name" type="text" placeholder="Best room in Arts Gallery, Kigali">
@@ -307,6 +382,12 @@
                         <Paragraph text="Guests will book available days instantly. Only get booked when you can host by keeping your calendar and availability settings up-to-date." size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
 
                         <Paragraph text="Canceling disrupts guests’ plans. If you cancel because your calendar is inaccurate, you’ll be charged a penalty fee and the dates won’t be available for anyone else to book." size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph>
+                        <small class="listing-error" v-if="showErrors && checkIfShouldShowError('will_update_calender_checkbox')">
+                                    *{{
+                                        errorList['will_update_calender_checkbox']
+                                    }}
+                                    
+                                </small>
                         <br>
 
 
@@ -329,11 +410,11 @@
                         <div class="checkin-div">
                             <div>
                                 <Paragraph text="From" size="16" weight="normal" color="#404040"></Paragraph>
-                                <Select @selectChangeHandler="handleSelect" step="checkin" :options="steps.three.checkin_times" width="200px" model="9am"></Select>
+                                <Select @selectChangeHandler="handleSelect" step="checkin" :options="steps.three.checkin_times" width="200px" model="Flexible"></Select>
                             </div>
                             <div>
                                 <Paragraph text="To" size="16" weight="normal" color="#404040"></Paragraph>
-                                <Select @selectChangeHandler="handleSelect" step="checkout" :options="steps.three.checkin_times" width="200px" model="11am"></Select>
+                                <Select @selectChangeHandler="handleSelect" step="checkout" :options="steps.three.checkin_times" width="200px" model="Flexible"></Select>
                             </div>
                         </div>
                         
@@ -390,6 +471,12 @@
                          <Paragraph text="Price Your Space" size="16" weight="bold" color="#404040"></Paragraph>
                          <Paragraph text="Increase your chances of getting booked" size="16" weight="normal" color="#404040"></Paragraph>
 
+                        <small class="listing-error" v-if="showErrors && checkIfShouldShowError('price')">
+                                    *{{
+                                        errorList['price']
+                                    }}
+                                    
+                                </small>
                         <br>
                         <br>
 
@@ -472,6 +559,71 @@ export default {
      
      data: function(){
          return {
+             errorsToShow:[],
+             showErrors: false,
+             errorList: {
+                'listing_type':"This field is required",
+                'what_guest_will_have': "You need to select what guest will have",
+                'number_of_guest': 'Number of guest required',
+                'number_of_bedroom':'Number of bedroom required',
+                'number_of_bathroom':'Number of bathroom required',
+                'property_country':"Country is required",
+                'property_address':"Address is required",
+                'property_city':"City is required",
+                'property_state':"",
+                'amenities':"Choose amenities",
+                'extras':"",
+                'photos':"Upload photos",
+                'description':"Write a description",
+                'title':"This field is required",
+                'mobile_number':"Enter mobile number",
+                'checkin':"",
+                'will_update_calender_checkbox': 'Agree to keep your calendar up to date',
+                'checkout':"",
+                'min_nights':0,
+                'max_nights':0,
+                'blocked_dates':[],
+                'price':"Please set a price",
+                'userListing':[]
+             },
+             stageItems:{
+                 "11": [
+                     "listing_type",
+                     "what_guest_will_have",
+                 ],
+                 '12':[
+                     "number_of_guest",
+                     "number_of_bedroom"
+                 ],
+                 "13":[
+                     "number_of_bathroom",
+                 ],
+                 "14":[
+                     "property_country",
+                     "property_address",
+                     "property_city",
+                     "property_province",
+                 ],
+                 "15":[
+                     "amenities",
+                 ],
+                //  "17": [
+                //      "rules"
+                //  ],
+                 "22":[
+                     "description"
+                 ],
+                 "23":[
+                     "title"
+                 ],
+                 "31":[
+                     "will_update_calender_checkbox"
+                 ],
+                 "35":[
+                     "price"
+                 ]
+                 
+             },
              isUploading: false,
              profile_img: null,
              files: [],
@@ -663,6 +815,10 @@ export default {
                         }
                     ],
                     checkin_times:[
+                         {
+                            value:"Flexible",
+                            text: "Flexible"
+                        },
                         {
                             value:"9am",
                             text: "9 AM"
@@ -691,6 +847,38 @@ export default {
      },
 
      methods:{
+         checkIfShouldShowError(errorKey){
+             let ans = false
+             window.console.log(this.errorsToShow)
+                for(let i =0; i < this.errorsToShow.length; i++){
+                    let error = this.errorsToShow[i]
+                    window.console.log(error)
+                    window.console.log(errorKey)
+                    if(error == errorKey){
+                        window.console.log('same here')
+                        ans = true
+                    }
+                }
+                window.console.log('reached here')
+                window.console.log(ans)
+                return ans
+         },
+         validate(stageCode){
+             let itemsInStage = this.stageItems[stageCode]
+             for (let i=0; i < itemsInStage.length; i++){
+                 let item = itemsInStage[i]
+                //  window.console.log(item)
+                 let stateValue = this.getListingState()
+                 let itemStateValue = stateValue[item]
+                //  window.console.log(itemStateValue)
+                if(itemStateValue == "" || itemStateValue == 0 || itemStateValue == []){
+                    this.errorsToShow.push(item)
+                }
+             }
+
+            // window.console.log(this.errorsToShow)
+            return this.errorsToShow.length <= 0
+         },
          ...mapGetters(['getListingState', 'getToken', 'getUuid']),
          handleSelect(val){
             let d = {
@@ -815,9 +1003,25 @@ export default {
              return "Step " + this.step +": " + this.stepsText[this.step]
          },
          processSteps(motive){
-             if(motive == 1){
-                this.flow += 1;
-                if(this.flow > this.total){
+            this.errorsToShow = []
+            this.showErrors = false
+            // window.console.log(this.errorsToShow)
+            if(motive == 1){
+                let stageValidationCode = this.step+""+this.flow
+                let validation = false
+                try {
+                    validation = this.validate(stageValidationCode)
+                } catch (error) {
+                    validation = true
+                }
+                window.console.log(stageValidationCode)
+                if(!validation){
+                this.showErrors = true
+                window.scrollTo(0,0)
+                }
+                else{
+                    this.flow += 1;
+                    if(this.flow > this.total){
                     if(this.step < 3){
                         this.step += 1;
                     }
@@ -828,6 +1032,7 @@ export default {
                     if(this.step == 3){
                         this.total = 6;
                     }
+                }
                 }
              }
              else{
@@ -842,6 +1047,7 @@ export default {
 
 
              this.flow_percentage = (this.flow /this.total)*100;
+             
          }
      },
      created(){
@@ -853,6 +1059,10 @@ export default {
 
 <style lang='scss' scoped>
 
+    .listing-error{
+        color: red;
+        font-size: 12px;
+    }
     .input{
         padding: 0 !important;
         // border:1px solid red;

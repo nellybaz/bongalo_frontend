@@ -10,7 +10,7 @@
             <!-- <Paragraph :text="value" size="16" weight="normal" color="rgba(64, 64, 64, 0.7)"></Paragraph> -->
             <p>
                 {{
-                    value
+                    getValue()
                 }}
             </p>
 
@@ -34,7 +34,7 @@ export default {
      },
      data:function (){
          return {
-             value: this.start ? this.start : 4,
+             value: 1,
          }
      },
      props: {
@@ -56,6 +56,9 @@ export default {
          }
      },
      methods:{
+         getValue(){
+             return this.start && this.value == 1 ? this.start : this.value
+         },
          handleGuestClick(motive){
              if(motive == 1){
                  if(this.stop){
@@ -73,7 +76,10 @@ export default {
 
              this.$emit('incrementerChangeHandler', {step:this.step, data:this.value})
          }
-     }
+     },
+    //  created(){
+    //     this.value = this.start ? this.start : 1;
+    //  }
 }
 </script>
 

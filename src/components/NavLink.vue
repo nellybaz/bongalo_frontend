@@ -9,7 +9,7 @@
           </li>
 
           <li @click="handleOpeningHostPage">
-              Become a host
+              List a property
               
             </li>
 
