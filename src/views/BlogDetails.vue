@@ -11,15 +11,15 @@
             <h4>Share</h4>
             <div class="social-media">
                 <i class="fab fa-facebook"></i>
-                <i class="fab fa-facebook"></i>
-                <i class="fab fa-facebook"></i>
-                <i class="fab fa-facebook"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-linkedin-in"></i>
 
 
             </div>
 
-            <p> <i class="fab fa-facebook"></i>Share via email</p>
-            <p> <i class="fab fa-facebook"></i>Copy link</p>
+            <p> <i class="fas fa-envelope"></i> Share via email</p>
+            <p><i class="fas fa-copy"></i> Copy link</p>
 
         </div>
 

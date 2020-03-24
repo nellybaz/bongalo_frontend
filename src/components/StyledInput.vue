@@ -5,8 +5,23 @@
                     label
                 }}
             </label> <br>
-            <input v-if="!isTextArea" @keyup="$emit('sendInput', model)" :type="type" v-model="model" :placeholder="placeholder">
-            <textarea rows="10" v-else v-model="model">
+            <input 
+                @click="showOutline=true" 
+                @mouseleave="showOutline=false" 
+                :style="getClass()" 
+                v-if="!isTextArea" 
+                @keyup="$emit('sendInput', model)" 
+                :type="type" 
+                v-model="model" 
+                :placeholder="placeholder">
+
+            <textarea 
+                @click="showOutline=true" 
+                @mouseleave="showOutline=false" 
+                :style="getClass()" 
+                rows="10" 
+                v-else 
+                v-model="model">
 
             </textarea>
 
@@ -19,8 +34,14 @@ export default {
      name:'',
      data:function(){
          return {
-             model:''
+             model:'',
+             showOutline:false,
          }
+     },
+     methods:{
+         getClass(){
+            return this.showOutline ? "border: 1px solid #3A85FC !important;" : ""
+        },
      },
      props:{
          label:{
