@@ -410,11 +410,11 @@
                         <div class="checkin-div">
                             <div>
                                 <Paragraph text="From" size="16" weight="normal" color="#404040"></Paragraph>
-                                <Select @selectChangeHandler="handleSelect" step="checkin" :options="steps.three.checkin_times" width="200px" model="Flexible"></Select>
+                                <Select @selectChangeHandler="handleSelect" step="checkin" :options="steps.three.checkin_times" width="200px" model="12:00 AM"></Select>
                             </div>
                             <div>
                                 <Paragraph text="To" size="16" weight="normal" color="#404040"></Paragraph>
-                                <Select @selectChangeHandler="handleSelect" step="checkout" :options="steps.three.checkin_times" width="200px" model="Flexible"></Select>
+                                <Select @selectChangeHandler="handleSelect" step="checkout" :options="steps.three.checkin_times" width="200px" model="12:00 AM"></Select>
                             </div>
                         </div>
                         
@@ -602,7 +602,7 @@ export default {
                      "property_country",
                      "property_address",
                      "property_city",
-                     "property_province",
+                    //  "property_province",
                  ],
                  "15":[
                      "amenities",
@@ -820,20 +820,24 @@ export default {
                             text: "Flexible"
                         },
                         {
+                            value:"12:00 AM",
+                            text: "12:00 AM"
+                        },
+                        {
                             value:"9am",
-                            text: "9 AM"
+                            text: "09:00 AM"
                         },
                         {
                             value:"10am",
-                            text: "10 AM"
+                            text: "10:00 AM"
                         },
                         {
                             value:"11am",
-                            text: "11 AM"
+                            text: "11:00 AM"
                         },
                         {
                             value:"12_noon",
-                            text: "12 NOON"
+                            text: "12:00 PM"
                         },
                     ]
                 }
@@ -1187,7 +1191,7 @@ export default {
                    div{
                     padding: 50px 0;
                     width:100%;
-                    height: 100%;
+                    // height: 100%;
 
 
                     .action-section{
@@ -1204,6 +1208,7 @@ export default {
                             border: none;
                             cursor: pointer;
                             color:#3A85FC;
+                            background-color: #fff;
                             font-weight: bold;
                             font-size: 16px;
 
@@ -1219,7 +1224,6 @@ export default {
                        div{
                            padding: 0 !important;
                        }
-                    //    border:1px solid red;
                        padding: 0 !important;
                        display: grid;
                        grid-template-columns: 1fr 1fr;
@@ -1233,6 +1237,7 @@ export default {
                   
 
                    .textarea{
+                       font-family: 'Inter', sans-serif;
                        border: 1px solid rgba(196, 196, 196, 0.7);
                        border-radius: 3px;
                        padding: 20px;
@@ -1240,6 +1245,7 @@ export default {
                        font-size: 15px;                       
                    }
                     ::-webkit-textarea-placeholder{
+                        font-family: 'Inter', sans-serif;
                         font-style: normal;
                         font-weight: normal;
                         font-size: 14px;

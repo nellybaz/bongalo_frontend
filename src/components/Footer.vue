@@ -54,7 +54,12 @@
             <div class="subscribe-section">
                 <p>Enter your email below to recieve updates on our Newletter</p>
 
-                <input type="text" placeholder="Enter your email"/>
+                <input
+                    @click="showOutline=true" 
+                    @mouseleave="showOutline=false" 
+                    :style="getClass()" 
+                    type="text" 
+                    placeholder="Enter your email"/>
                 <div class="payment-text-sub-btn">
                     <button>Subscribe</button>
                     <p>Payment Methods </p>
@@ -88,7 +93,18 @@
 
 <script>
 export default {
-     name:'app_footer'
+     name:'app_footer',
+     data: function(){
+        return {
+        showOutline: false,
+        }
+    },
+    methods:{
+        getClass(){
+            return this.showOutline ? "border: 1px solid #3A85FC !important;" : ""
+        },
+    }
+  
 }
 </script>
 
@@ -175,6 +191,7 @@ export default {
                 input{
                     border:1px solid #686868;
                     height: 45px;
+                    font-size: 14px;
                     width:100%;
                     padding: 0 20px;
                     border-radius: 5px;
@@ -182,9 +199,7 @@ export default {
                 }
 
                 input:focus{
-                    outline-color: #3A85FC;
-                    outline-style: solid;
-                    outline-width: 2px;
+                    outline:none
                 }
 
                 .payment-text-sub-btn{

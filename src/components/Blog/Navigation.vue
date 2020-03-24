@@ -7,24 +7,21 @@
         </router-link>
         <ul v-if="isBlog" class="blg">Blog</ul>
       </div>
-      <div v-if="showSearch == true" class="search-div">
+      
+      <div 
+        @click="showOutline=true" 
+        @mouseleave="showOutline=false" 
+        :style="getClass()" 
+        v-if="showSearch == true" 
+        class="search-div">
         <i class="fa fa-search" aria-hidden="true"></i>
-        <input placeholder="Type for anything to search for tag or topics" type="text" />
+        <input 
+          
+          placeholder="Type for anything to search for tag or topics" 
+          type="text" 
+          
+        />
       </div>
-      <!-- <nav>
-        <ul>
-          <li>EN</li>
-          <li>$ USD</li>
-          <li>
-            <router-link to="/blog">
-              Blog
-            </router-link>
-          </li>
-         <li v-on:click="handleSignin(2)">Sign up</li>
-
-          <li v-on:click="handleSignin(1)">Login</li>
-        </ul>
-      </nav> -->
       <NavLink :isDark="true"></NavLink>
     </header>
   </div>
@@ -49,8 +46,16 @@ export default {
       type:Boolean
     }
   },
+  data: function(){
+    return {
+      showOutline: false,
+    }
+  },
 
   methods:{
+    getClass(){
+            return this.showOutline ? "border: 1px solid #3A85FC !important;" : ""
+        },
       ...mapGetters(['isMobile']),
       ...mapActions(['setModalState']),
 

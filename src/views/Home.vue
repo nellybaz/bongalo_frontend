@@ -60,7 +60,25 @@
 </template>
 
 <script>
-import Jumbotron from '../components/Jumbotron';
+
+// [9:59 AM, 3/20/2020] Epafred: Here's a list; 
+
+// 1. Add icons for all Amenities >>
+// 2. Activate tags on the blog page to work
+// 3. Insert the various social media icons on the blog page >>
+// 4. Enable sharing of blog content to social media and ensure link captures a title and image of the particular blog posts(preview)
+// 5. Make every input field to have the same font family >>
+// 6. Make all input fields(forms) to carry the same border-colour on-mouse click >>
+// 7. Make the listing form to retain data as they're filled and proceeding
+// 8. Add user experience to the navigation on listing form. The user should feel an action is being performed. 
+// 9. Redesign the <Back button >>
+// 10. Make number of guest(s) value to be defualt 1
+// 11. Add State/Region to Province on the listing form. 
+// 12. Reduce form size of City and Province forms.  >>
+// 13
+// [10:02 AM, 3/20/2020] Epafred: 13. Put all time check-in and Checkout box. That is, from Flexible being default, to 12:00 am. Use the time format of 00:00 >>
+// 14. Remember to make all input fields to bear the same font family. Especially the description form. >>
+import Jumbotron from '../components/Jumbotron'; 
 import EventCard from '../components/EventCard';
 import MobileEventCard from '../components/MobileEventCard';
 import ExploreCard from '../components/ExploreCard';

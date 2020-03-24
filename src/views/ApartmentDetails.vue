@@ -1,7 +1,7 @@
 <template>
     <div class='apartment_details'>
         <div v-if="!isImageShow" class="detials-content">
-            <Navigation :showSearch="true"></Navigation>
+            <Navigation :showSearch="false"></Navigation>
             <ImageGrid v-on:updateImageShow=updateImageShowHandler :showMoreImages=true></ImageGrid>
 
             <div class="apartment-details-content">
@@ -84,7 +84,7 @@
 
                             <div>
                                 <p v-for="amenity in amenities" :key=amenity> 
-                                    <i class="far fa-sun"></i> {{capitalizeFirstLetter(amenity)}}</p>
+                                    <i :class="getAmenitiesIcon(amenity)"></i> {{capitalizeFirstLetter(amenity)}}</p>
                             </div>
                         </div>
 
@@ -307,6 +307,9 @@ export default {
          ImageGrid
      },
      methods:{
+         getAmenitiesIcon(value){
+             return this.amenitiesIcon[value]
+         },
          handleImageChange(index){
              this.galleryIndex = index
              this.galleryCurrentImage = this.getApartmentImages[this.galleryIndex].image
@@ -389,6 +392,15 @@ export default {
      },
      data: function(){
          return {
+             amenitiesIcon:{
+                 "air_conditioner": "fas fa-fan",
+                 "closet": "fas fa-copy",
+                 "iron": "fas fa-tram",
+                 "tv": "fas fa-tv",
+                 "wifi": "fas fa-wifi",
+                 "lock_bedroom": "fas fa-lock",
+                 "desk": "fas fa-book-reader"
+             },
              galleryIndex: -1,
              galleryCurrentImage:"",
              serviceFee: 13,
