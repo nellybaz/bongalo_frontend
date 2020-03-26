@@ -12,6 +12,7 @@
     "@google-cloud/storage": "^4.3.2",
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
+    "country-region-data": "^1.5.1",
     "express": "^4.17.1",
     "firebase": "^7.9.3",
     "js-cookie": "^2.2.1",

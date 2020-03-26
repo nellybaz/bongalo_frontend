@@ -38,6 +38,13 @@ export default {
              type:Array,
              required:true
          }
+     },
+     created(){
+         let dataInStore = this.$store.getters.getListingState[this.step];
+         window.console.log(dataInStore);
+         if(dataInStore || dataInStore.length > 1 ){
+             this.model = dataInStore;
+         }
      }
 }
 </script>

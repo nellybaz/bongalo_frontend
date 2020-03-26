@@ -78,7 +78,8 @@
                          <br><br><br>
                          
                          <div class="action-section">
-                             <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
+                             <div></div>
+                             <!-- <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button> -->
                              <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
                          </div>
                      </div>
@@ -146,7 +147,8 @@
                         <br>
                         <Paragraph text="Country" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                         
-                        <Input @inputHandler="handleInput" :isFullWidth="false" step="property_country" type="text" class="input" hint="Country"/>
+                       <Select @selectChangeHandler="handleSelect" step="property_country" :options="countries" width="100%" model=""></Select>
+                        <!-- <Input @inputHandler="handleInput" :isFullWidth="false" step="property_country" type="text" class="input" hint="Country"/> -->
                         
                         <small class="listing-error" v-if="showErrors && checkIfShouldShowError('property_country')">
                             *{{
@@ -165,11 +167,12 @@
                          </small>
 
                         <br>
-                        <div class="state-city">
+                        <div v-if="countryIsSelected" class="state-city">
                             
                             <div>
                                 <Paragraph text="City" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                                <Input @inputHandler="handleInput" step="property_city" type="text" :isFullWidth="true" class="input" hint="City"/>
+                                <Select @selectChangeHandler="handleSelect" step="property_city" :options="cities" width="100%" model=""></Select>
+                                <!-- <Input @inputHandler="handleInput" step="property_city" type="text" :isFullWidth="true" class="input" hint="City"/> -->
                                 <small class="listing-error" v-if="showErrors && checkIfShouldShowError('property_city')">
                                     *{{
                                         errorList['property_city']
@@ -178,10 +181,10 @@
                                 </small>
                             </div>
                             
-                            <div>
+                            <!-- <div>
                                 <Paragraph text="Province" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                                 <Input @inputHandler="handleInput" step="property_province" type="text" :isFullWidth="true" class="input" hint="Province"/>
-                            </div>
+                            </div> -->
                         </div>
 
                          <div class="action-section">
@@ -273,6 +276,12 @@
                         <br>
                         <Paragraph text="Photos help your guest imagine staying at your place. You can add minimum five and maximum ten photos" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                         <br>
+                         <small class="listing-error" v-if="showErrors && checkIfShouldShowError('photos')">
+                                    *{{
+                                        errorList['photos']
+                                    }}
+                                    
+                        </small><br>
 
                         <input id="property-images-input" class="image_select" type="file" multiple @change="onFileChange">
                         <label class="image_select_label" for="property-images-input">
@@ -410,11 +419,11 @@
                         <div class="checkin-div">
                             <div>
                                 <Paragraph text="From" size="16" weight="normal" color="#404040"></Paragraph>
-                                <Select @selectChangeHandler="handleSelect" step="checkin" :options="steps.three.checkin_times" width="200px" model="12:00 AM"></Select>
+                                <Select @selectChangeHandler="handleSelect" step="checkin" :options="steps.three.checkin_times" width="200px" model="Flexible"></Select>
                             </div>
                             <div>
                                 <Paragraph text="To" size="16" weight="normal" color="#404040"></Paragraph>
-                                <Select @selectChangeHandler="handleSelect" step="checkout" :options="steps.three.checkin_times" width="200px" model="12:00 AM"></Select>
+                                <Select @selectChangeHandler="handleSelect" step="checkout" :options="steps.three.checkin_times" width="200px" model="Flexible"></Select>
                             </div>
                         </div>
                         
@@ -528,6 +537,7 @@ import Incrementer from '../components/Incrementer';
 import Input from '../components/TextInput';
 import CheckBox from '../components/CheckBox';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+import countryData from 'country-region-data';
 
 
 //External imports
@@ -559,6 +569,9 @@ export default {
      
      data: function(){
          return {
+             countries:[],
+             countryIsSelected: false,
+             cities:[],
              errorsToShow:[],
              showErrors: false,
              errorList: {
@@ -573,7 +586,6 @@ export default {
                 'property_state':"",
                 'amenities':"Choose amenities",
                 'extras':"",
-                'photos':"Upload photos",
                 'description':"Write a description",
                 'title':"This field is required",
                 'mobile_number':"Enter mobile number",
@@ -584,7 +596,8 @@ export default {
                 'max_nights':0,
                 'blocked_dates':[],
                 'price':"Please set a price",
-                'userListing':[]
+                'userListing':[],
+                'photos': 'You need to upload at least one image'
              },
              stageItems:{
                  "11": [
@@ -610,6 +623,7 @@ export default {
                 //  "17": [
                 //      "rules"
                 //  ],
+                "21":["photos"],
                  "22":[
                      "description"
                  ],
@@ -820,25 +834,62 @@ export default {
                             text: "Flexible"
                         },
                         {
-                            value:"12:00 AM",
-                            text: "12:00 AM"
+                            value:"06:00 AM",
+                            text: "06:00 AM"
                         },
                         {
-                            value:"9am",
-                            text: "09:00 AM"
+                            value:"07:00 AM",
+                            text: "07:00 AM",
                         },
                         {
-                            value:"10am",
-                            text: "10:00 AM"
+                            value:"08:00 AM",
+                            text: "08:00 AM",
                         },
                         {
-                            value:"11am",
-                            text: "11:00 AM"
+                            value:"09:00 AM",
+                            text: "09:00 AM",
                         },
                         {
-                            value:"12_noon",
-                            text: "12:00 PM"
+                            value:"10:00 AM",
+                            text: "10:00 AM",
                         },
+                        {
+                            value:"11:00 AM",
+                            text: "11:00 AM",
+                        },
+                        {
+                            value:"12:00 PM",
+                            text: "12:00 PM",
+                        },
+                        {
+                            value:"01:00 PM",
+                            text: "01:00 PM"
+                        },
+                        {
+                            value:"02:00 PM",
+                            text: "02:00 PM"
+                        },
+                        {
+                            value:"03:00 PM",
+                            text: "03:00 PM"
+                        },
+                        {
+                            value:"04:00 PM",
+                            text: "04:00 PM"
+                        },
+                         {
+                            value:"05:00 PM",
+                            text: "05:00 PM"
+                        },
+                         {
+                            value:"06:00 PM",
+                            text: "06:00 PM"
+                        },
+                         {
+                            value:"07:00 PM",
+                            text: "07:00 PM"
+                        },
+
                     ]
                 }
 
@@ -853,28 +904,20 @@ export default {
      methods:{
          checkIfShouldShowError(errorKey){
              let ans = false
-             window.console.log(this.errorsToShow)
                 for(let i =0; i < this.errorsToShow.length; i++){
                     let error = this.errorsToShow[i]
-                    window.console.log(error)
-                    window.console.log(errorKey)
                     if(error == errorKey){
-                        window.console.log('same here')
                         ans = true
                     }
                 }
-                window.console.log('reached here')
-                window.console.log(ans)
                 return ans
          },
          validate(stageCode){
              let itemsInStage = this.stageItems[stageCode]
              for (let i=0; i < itemsInStage.length; i++){
                  let item = itemsInStage[i]
-                //  window.console.log(item)
                  let stateValue = this.getListingState()
                  let itemStateValue = stateValue[item]
-                //  window.console.log(itemStateValue)
                 if(itemStateValue == "" || itemStateValue == 0 || itemStateValue == []){
                     this.errorsToShow.push(item)
                 }
@@ -885,6 +928,25 @@ export default {
          },
          ...mapGetters(['getListingState', 'getToken', 'getUuid']),
          handleSelect(val){
+
+             // Get cities after country is selected
+             if(val.step == "property_country"){
+                 
+                 for(let i=0; i < countryData.length; i++){
+                     if(countryData[i]['countryName'] == val.data){
+                         this.cities = [];
+                         let selectedCities = countryData[i]['regions']
+                         for(let j=0; j<selectedCities.length; j++){
+                             this.cities.push({
+                                 'value': selectedCities[j]['name'],
+                                 'text': selectedCities[j]['name']
+                             })
+                         }
+                         this.countryIsSelected = true;
+                         break;
+                     }
+                 }
+             }
             let d = {
                     key:val.step,
                     value: val.data,
@@ -994,6 +1056,11 @@ export default {
             }
 
             this.urls = tmpUrl;
+            let d = {
+                key:"photos",
+                value: this.urls,
+            }
+            this.$store.dispatch('setValue', d)
         },
 
         onProfileChange(e){
@@ -1056,6 +1123,16 @@ export default {
      },
      created(){
          this.flow_percentage = (this.flow/this.total) * 100;
+        //  window.console.log(countryData);
+        for(let i=0; i<countryData.length; i++){
+            let country = countryData[i]
+            this.countries.push({
+                'value': country['countryName'],
+                'text': country['countryName']
+            })
+        }
+
+        // this.$store.dispatch('clearListingData');
      }
 }
 </script>

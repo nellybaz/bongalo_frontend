@@ -1,6 +1,6 @@
 <template>
   <div class="checkbox">
-    <label v-for="value in item" :key="value" class="container">
+    <label v-for="value in item" :key="value.text" class="container">
       {{
           value.text
       }}
@@ -16,13 +16,13 @@ export default {
   name: "checkbox",
   props: {
     item: {
-      type: Object,
-      required: true
-    },
-    model: {
       type: Array,
       required: true
     },
+    // model: {
+    //   type: Array,
+    //   required: true
+    // },
     step: {
       type: String,
       required: true
@@ -31,8 +31,15 @@ export default {
   },
   data: function() {
     return {
-      // model: 
+      model: ""
     };
+  },
+  created(){
+    let dataInStore = this.$store.getters.getListingState[this.step];
+         window.console.log(dataInStore);
+         if(dataInStore || dataInStore.length > 1 ){
+             this.model = dataInStore;
+         }
   }
 };
 </script>
