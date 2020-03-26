@@ -16,7 +16,7 @@ export default {
      name:'',
      data: function(){
          return {
-             data: this.model ? this.model : "",
+             data: "",
              style: "width:" + this.width
          }
      },
@@ -42,6 +42,13 @@ export default {
          ...mapGetters(['getListingState']),
         
      },
+     created(){
+         let dataInStore = this.$store.getters.getListingState[this.step];
+         window.console.log(dataInStore);
+         if(dataInStore || dataInStore.length > 1 ){
+             this.data = dataInStore;
+         }
+     }
      
 }
 </script>

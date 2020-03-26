@@ -48,11 +48,13 @@ export default {
             required:true
         }
     },
-    // created(){
-    //     if(this.value){
-    //         this.model = this.value
-    //     }
-    // }
+    created(){
+        let dataInStore = this.$store.getters.getListingState[this.step];
+         window.console.log(dataInStore);
+         if(dataInStore || dataInStore.length > 1 ){
+             this.model = dataInStore;
+         }
+    }
 }
 </script>
 

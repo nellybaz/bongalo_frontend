@@ -57,6 +57,12 @@ export default {
      },
      methods:{
          getValue(){
+             let dataInStore = this.$store.getters.getListingState[this.step];
+         window.console.log(dataInStore);
+         if(dataInStore || dataInStore.length > 1 ){
+             this.value = dataInStore;
+            return dataInStore;
+         }
              return this.start && this.value == 1 ? this.start : this.value
          },
          handleGuestClick(motive){

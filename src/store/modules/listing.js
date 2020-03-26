@@ -59,6 +59,36 @@ const actions = {
         window.console.log(data);
     },
 
+    async clearListingData({commit}){
+        let initialState = {
+            listing_type: "Apartment",
+            what_guest_will_have: "",
+            number_of_guest:1,
+            number_of_bedroom:0,
+            number_of_bathroom:1,
+            property_country:"",
+            property_address:"",
+            property_city:"",
+            property_province:"",
+            amenities:[],
+            extras:[],
+            rules:[],
+            photos:[],
+            description:"",
+            title:"",
+            mobile_number:"",
+            will_update_calender_checkbox:"",
+            checkin:"Flexible",
+            checkout:"Flexible",
+            min_nights:1,
+            max_nights:30,
+            blocked_dates:[],
+            price:0,
+            userListing:[]
+        }
+        commit('resetState', initialState)
+    },
+
     async uploadProperty({commit}, data){
         return new Promise(async (resolve, reject) =>{
             let imageUploadRes = await uploadImages(data.images, data.uuid)
@@ -190,6 +220,7 @@ const actions = {
 
 const mutations = {
     setValue:(state, newData) => (state[newData['key']] = newData['value']),
+    resetState:(state, newState) => (state = newState),
     setUserListing:(state, newUserListing) => (state.userListing = newUserListing)
 }
 
