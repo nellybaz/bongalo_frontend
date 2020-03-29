@@ -1,13 +1,21 @@
 <template>
   <section class="post">
-    <h2>Popular Post</h2>
+    <h2>Featured Post</h2>
     <div class="popular-posts">
-      <div v-for="item in popular" :key="item" class="post-img">
-        <router-link to="blog-details">
+      <div v-for="item in getPopular()" :key="item.uuid" class="post-img">
+        <a @click="gotoDetails(item.uuid)">
           <img src="../../assets/images/p-post.png" alt />
-          <h3>Why Rwanda Should Be ...</h3>
-          <p>2 months ago</p>
-        </router-link>
+          <h3>
+            {{
+              item.title
+            }}
+          </h3>
+          <p>
+            {{
+              getDate(item.created_at)
+             }}
+          </p>
+        </a>
       </div> 
     </div>
   </section>
@@ -15,12 +23,39 @@
 
 
 <script>
+import { mapGetters } from 'vuex';
+
+
 export default {
   data: function(){
     return {
-      popular:"abcd"
+      popular:"",
+      
     }
-  }
+  },
+
+  methods:{
+    gotoDetails(uuid){
+      this.$router.push({path: '/blog-details', query:{id:uuid}})
+
+    },
+    getDate(date){
+      return Date(date).substring(0,15)
+    },
+    
+    ...mapGetters(['getAllBlogPost']),
+    getPopular(){
+      let tmpPopular = [];
+      for(let i=0; i < this.getAllBlogPost().length; i++){
+        let post = this.getAllBlogPost()[i];
+        // window.console.log(post)
+          if(post.is_featured){
+            tmpPopular.push(post)
+          }
+      }
+      return tmpPopular.slice(0, 5)
+    },
+  },
 };
 </script>
 
