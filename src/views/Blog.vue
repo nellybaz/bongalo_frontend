@@ -2,8 +2,15 @@
   <div class="blog">
     <Navigation :showSearch="true"/>
     <Tags />
-    <PopularPosts />
-    <RecentPosts />
+    <div v-if="getAllBlogPost().length > 0">
+      <PopularPosts />
+      <RecentPosts />
+    </div>
+    <div v-else class="no-items-div">
+      <h2>
+        No active blog post
+      </h2>
+    </div>
   </div>
 </template>
 
@@ -13,6 +20,7 @@ import Navigation from "../components/Blog/Navigation";
 import Tags from "../components/Blog/Tags";
 import PopularPosts from "../components/Blog/PopularPosts";
 import RecentPosts from "../components/Blog/RecentPosts";
+import { mapGetters } from 'vuex';
 
 export default {
   name: "blog",
@@ -21,6 +29,9 @@ export default {
     Tags,
     PopularPosts,
     RecentPosts
+  },
+  methods:{
+    ...mapGetters(['getAllBlogPost'])
   },
   created(){
     this.$store.dispatch('getAllBlogPost')
@@ -31,7 +42,13 @@ export default {
 
 
 <style scoped>
-
+  .no-items-div{
+    padding-left: 20%;
+    display:flex; 
+    place-items:center; 
+    width:100%; 
+    height:200px
+  }
 </style>
 
 
