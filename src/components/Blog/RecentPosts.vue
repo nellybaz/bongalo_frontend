@@ -2,9 +2,9 @@
   <div class="recentPost">
     <section class="recent-post-sec">
       <h2 class="post-heading">Recent Post</h2>
-      <div v-for="item in blogs" :key="item.id" class="sec-1">
+      <div v-for="item in getPosts()" :key="item.id" class="sec-1">
         <div class="img1">
-          <img :src="require(`../../assets/images/${item.image}`)" alt />
+          <img :src="require(`../../assets/images/blog-img.png`)" alt />
         </div>
         <div class="cap-1">
           <div class="div-inner">
@@ -15,20 +15,20 @@
             </h2>
             <p>
               {{
-              item.text1
-              }}
+              item.body.substring(0, 1000)
+              }}...
             </p>
             <br />
-            <p>
+            <!-- <p>
               {{
               item.text2
               }}
-            </p>
+            </p> -->
           </div>
           <div class="read-more">
-            <router-link to="/blog-details">
+            <p @click="gotoBlogDetails(item.uuid)">
               Read More
-            </router-link>
+            </p>
           </div>
         </div>
       </div>
@@ -37,32 +37,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+
 export default {
   name: "recent_post",
   data: function() {
     return {
-      blogs: [
-        {
-          id: 1,
-          title: "Why Kigali should be your next destination 1",
-          image: "blog-img.png",
-          text1:
-            "Kigali which is Rwanda's capital is the safest and cleanest capital cities in Africa. The colorful environment, warmhearted people, attractive and beautiful culture with the amazing landscapes, makes it quite expedient for any adventurer.",
-          text2:
-            " The country has beautiful neighbourhoods in Kigali like; Nyarutarama, Gacuriro and Kiyovu which are safe both or vacationers and those relocating to the country."
-        },
-        {
-          id: 2,
-          title: "Why Kigali should be your next destination 2",
-          image: "blog-img.png",
-          text1:
-            "Kigali which is Rwanda's capital is the safest and cleanest capital cities in Africa. The colorful environment, warmhearted people, attractive and beautiful culture with the amazing landscapes, makes it quite expedient for any adventurer.",
-          text2:
-            " The country has beautiful neighbourhoods in Kigali like; Nyarutarama, Gacuriro and Kiyovu which are safe both for vacationers and those relocating to the country."
-        }
-      ]
+      blogs: []
     };
-  }
+  },
+  methods:{
+    getPosts(){
+      if(this.getAllBlogPost().length < 1){
+      this.$store.dispatch('getAllBlogPost')
+    }
+    
+    return this.getAllBlogPost()
+    },
+    gotoBlogDetails(uuid){
+      this.$router.push({path: "/blog-details/", query: {"id": uuid}})
+    },
+    ...mapGetters(['getAllBlogPost']),
+  },
+  
 };
 </script>
 
@@ -113,7 +111,7 @@ export default {
       width: 100%;
       display: flex;
       justify-content: flex-end;
-      a {
+      p {
         width: 200px;
         border: 1px solid #6a6a6a;
         height: 50px;
@@ -125,6 +123,7 @@ export default {
         color: #404040;
         font-weight: bold;
         font-size: 14px;
+        cursor: pointer;
       }
     }
   }

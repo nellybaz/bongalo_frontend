@@ -18,7 +18,8 @@ const URLS = {
     add_user_payment:'auth/user/update-payment',
     get_user_info:'auth/user/profile',
     update_user_info:'auth/update',
-    verify_email:'auth/verify-email'
+    verify_email:'auth/verify-email',
+    all_blog_post: 'blog/posts/all'
 }
 
 
@@ -46,8 +47,8 @@ const getReq = async function(urlKey, data){
             resolve(res.data);
         })
         .catch(err => {
-            window.console.log(err);
-            reject(0);
+            window.console.log(err.response);
+            reject(err.response);
         })
        
     })
@@ -70,7 +71,7 @@ const postReq = async function(urlKey, data){
         })
         .catch(err => {
             window.console.log(err);
-            reject(0);
+            reject(err.response);
         })   
     })
 }
@@ -92,7 +93,7 @@ const putReq = async function(urlKey, data){
         })
         .catch(err => {
             window.console.log(err);
-            reject(0);
+            reject(err.response);
         })   
     })
 }
@@ -121,7 +122,7 @@ const deleteReq = async function(urlKey, data){
         })
         .catch(err => {
             window.console.log(err);
-            reject(0);
+            reject(err.response);
         })
     })
 }

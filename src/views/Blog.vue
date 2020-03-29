@@ -21,6 +21,9 @@ export default {
     Tags,
     PopularPosts,
     RecentPosts
+  },
+  created(){
+    this.$store.dispatch('getAllBlogPost')
   }
 };
 </script>
