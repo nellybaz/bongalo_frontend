@@ -235,14 +235,16 @@
                                     <div class="total">
                                         <p>Total</p>
                                         <p class="p">
-                                            ${{((apartment.price || $route.query.price) * bookedNights) + cleaningFee + serviceFee}}
+                                            ${{
+                                                getTotal()
+                                            }}
                                         </p>
                                     </div>
                                 </div>
 
                                 <br>
                                 <br>
-                                <Button label="Reserve" :isFullWidth="true"></Button>
+                                <Button @handleClick="reserveButtonHandler()" label="Reserve" :isFullWidth="true"></Button>
 
                                 <br>
                                 <p class="small">
@@ -307,6 +309,23 @@ export default {
          ImageGrid
      },
      methods:{
+         getTotal(){
+             return ((this.apartment.price || this.$route.query.price) * this.bookedNights) + this.cleaningFee + this.serviceFee
+         },
+         reserveButtonHandler(){
+             if(this.getTotal() > 0){
+                 this.$router.push({
+                 path:'/payment',
+                 query:{
+                    'price': this.getTotal(),
+                    'guest': this.guestNumber,
+                    'checkin': this.checkin,
+                    'checkout': this.checkout ,
+                    'nights': this.bookedNights
+                 }
+             })
+             }
+         },
          getAmenitiesIcon(value){
              return this.amenitiesIcon[value]
          },

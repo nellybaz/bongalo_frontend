@@ -112,6 +112,13 @@ const routes = [
     name: 'listing',
     component: () => import(/* webpackChunkName: "detiails" */ '../views/Listing.vue'),
     beforeEnter: ifAuthenticated,
+  },
+
+  {
+    path: '/payment',
+    name: 'payment',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/Payment.vue'),
+    beforeEnter: ifAuthenticated,
   }
 
   

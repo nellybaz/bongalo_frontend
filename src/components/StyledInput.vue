@@ -71,7 +71,6 @@ export default {
          if(this.value){
              this.model = this.value
          }
-         window.console.log('styled input created')
      }
 }
 </script>
