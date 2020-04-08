@@ -119,6 +119,12 @@ const routes = [
     name: 'payment',
     component: () => import(/* webpackChunkName: "detiails" */ '../views/Payment.vue'),
     beforeEnter: ifAuthenticated,
+  },
+
+  {
+    path: '/reset-password',
+    name: 'reset_password',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/ResetPassword.vue'),
   }
 
   
