@@ -15,9 +15,33 @@
                     </a>
                 </h3>
 
+                 <h3 class="item-a">
+                    <a href="#account-registration">
+                        Account Registration
+                    </a>
+                </h3>
+
+                 <h3 class="item-a">
+                    <a href="#tc-content">
+                        Content
+                    </a>
+                </h3>
+
                 <h3 class="item-a">
                     <a href="#service-fee">
                         Service Fees
+                    </a>
+                </h3>
+
+                <h3 class="item-a">
+                    <a href="#tc-hosts-terms">
+                        Terms Specific for Hosts
+                    </a>
+                </h3>
+
+                <h3 class="item-a">
+                    <a href="#tc-guest-terms">
+                        Terms Specific for Guests
                     </a>
                 </h3>
 
@@ -127,7 +151,7 @@
     </p>
 </div>
 
-<div>
+<div id="account-registration">
     <h2>
         4. Account Registration
     </h2>
@@ -157,7 +181,7 @@
     </p>
 </div>
 
-<div>
+<div id="tc-content">
     <h2>
          5. Content
     </h2>
@@ -214,7 +238,7 @@
     </p>
 </div>
 
-<div>
+<div id="tc-hosts-terms">
     <h2>
         7. Terms specific for Hosts
     </h2>
@@ -272,7 +296,7 @@
 </div>
 
 
-<div>
+<div id="tc-guest-terms">
     <h2>
          8. Terms specific for Guests
     </h2>
@@ -653,7 +677,7 @@ export default {
             h1{
                 font-style: normal;
                 font-weight: bold;
-                font-size: 35px;
+                font-size: 30px;
                 line-height: 42px;
 
                 color: #404040;
@@ -676,36 +700,16 @@ export default {
             }
 
             }
-
-            select{
-                margin-top: 30px;
-                border: none;
-                padding: 0px;
-                border:1px solid grey;
-
-                font-style: normal;
-                font-weight: normal;
-                font-size: 16px;
-                line-height: 45px;
-                /* or 225% */
-
-                text-align: justify;
-
-                // color: #3A85FC;
-            }
-            select:focus{
-                outline: none;
-            }
             h2{
-                margin-top: 30px;;
+                margin-top: 10px;;
             }
 
             li, p{
                 width:90%;
-                margin-top: 50px;
+                margin-top: 10px;
                 font-style: normal;
                 font-weight: normal;
-                font-size: 16px;
+                font-size: 14px;
                 line-height: 24px;
                 /* or 175% */
 

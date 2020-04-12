@@ -59,7 +59,7 @@ const getters = {
     getUserInfo:(state) =>  state.userInfo
 }
 
-
+ 
 const actions = {
     async isAuthenticated(){
         // firebase.auth.
@@ -137,15 +137,17 @@ const actions = {
       })
     },
     async register({commit}, data){
-        try {
-            var res =  await postReq('register', data);
-            window.console.log(res);
-            if (res.responseCode == 1){
-                firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
+        return new Promise(async (resolve, reject) => {
+            try {
+                var res =  await postReq('register', data);
+                if (res.responseCode == 1){
+                    firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
+                    resolve(1)
+                }
+            } catch (error) {
+                reject(error)
             }
-        } catch (error) {
-            window.console.log(error);
-        }
+        })
         
     },
 
@@ -262,7 +264,7 @@ const actions = {
                 }
             } catch (error) {
                 window.console.log(error);
-                reject(0)
+                reject(error)
             }
         })
 
@@ -282,10 +284,61 @@ const actions = {
                 }
             } catch (error) {
                 window.console.log(error);
-                reject(res.message)
+                reject(error)
             }
         })
-    }
+    },
+
+    async resendVerificationPin({commit}, data){
+        return new Promise( async (resolve, reject) =>{
+            try {
+                var res =  await postReq('resend_pin', data);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    resolve(1)
+                }
+                else{
+                    reject(res.message)
+                }
+            } catch (error) {
+                reject(error)
+            }
+        })
+    },
+
+    async sendForgetPasswordLink({commit}, data){
+        return new Promise( async (resolve, reject) =>{
+            try {
+                var res =  await postReq('reset_password', data);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    resolve(res)
+                }
+                else{
+                    reject(res.message)
+                }
+            } catch (error) {
+                reject(error)
+            }
+        })
+    },
+
+    async resetPassword({commit}, data){
+        return new Promise( async (resolve, reject) =>{
+            try {
+                var res =  await putReq('forget_password_request', data);
+                window.console.log(res);
+                if (res.responseCode == 1){
+                    resolve(1)
+                }
+                else{
+                    reject(res.message)
+                }
+            } catch (error) {
+                reject(error)
+            }
+        })
+    },
 }
 
 

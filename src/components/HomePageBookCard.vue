@@ -74,7 +74,17 @@
         </div>
        
         <div class="btn-div">
-            <Button v-on:handleClick="this.handleSearchClick" class="btn" label="Search" :isFullWidth="false"  ></Button>
+            <Button 
+                v-if="!isBtnClicked"
+                v-on:handleClick="this.handleSearchClick" 
+                class="btn" 
+                label="Search" 
+                :isFullWidth="false"  />
+
+            <div class="loader-div" v-else>
+                <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
+            </div>
+            
         </div>
     </div>
 </template>
@@ -84,7 +94,7 @@
 import Input from '../components/TextInput';
 import Button from '../components/Button';
 import Select from '../components/Select';
-
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import Vue from 'vue';
 import VCalendar from 'v-calendar';
 
@@ -100,9 +110,11 @@ export default {
      components:{
         Button,
         Select,
+        PulseLoader
      },
     data: function(){
         return {
+            isBtnClicked: false,
             apartment_types:[
                 {
                     value:"all",
@@ -161,10 +173,11 @@ export default {
             return new_date
         },
          handleSearchClick(){
+             this.isBtnClicked = true;
              let urlToQuery = "apartment/search?type="+this.choosenType+"&guest="+this.guestNumber
 
-
              if(this.checkin != "dd/mm/yyyy" && this.checkout == "dd/mm/yyyy"){
+                 this.isBtnClicked  = false;
                  // Checkout needed
                  this.$notify({
                     group: 'general',
@@ -175,6 +188,7 @@ export default {
              }
 
              else if(this.checkout != "dd/mm/yyyy" && this.checkin == "dd/mm/yyyy"){
+                 this.isBtnClicked  = false;
                  // Checkin neeeed
                  this.$notify({
                     group: 'general',
@@ -213,6 +227,8 @@ export default {
 <style lang='scss' scoped>
 
     @media only screen and (max-width: 900px){
+       
+
         .book-card{
             margin-top: 1%;
             margin: 0 10% !important;
@@ -232,7 +248,7 @@ export default {
                     background: #fff;
                     margin-bottom: 15px;
                 }
-            }
+            } 
 
             .item3{
                 .guest-number-p{
@@ -246,6 +262,16 @@ export default {
             }
         }
     }
+
+     .loader-div {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-direction: row;
+            width: 80%;
+            // border:1px solid red;
+
+        }
 
 
     .book-card {

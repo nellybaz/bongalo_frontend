@@ -8,7 +8,7 @@
         </div>
     </router-link>
 </template>
-
+ 
 
 <script>
 export default {
@@ -37,9 +37,11 @@ export default {
     .vertical-card {
         text-decoration: none;
         cursor: pointer;
-        width:100%;
-        height: 400px;
+        float:left;
+        width:220px;
+        height: 450px;
         // border:1px solid red;
+        margin-right: 10px;
         img{
             width:100%;
             height: 70%;

@@ -19,9 +19,12 @@ const URLS = {
     get_user_info:'auth/user/profile',
     update_user_info:'auth/update',
     verify_email:'auth/verify-email',
-    all_blog_post: 'blog/posts/all'
+    all_blog_post: 'blog/posts/all',
+    resend_pin: 'auth/verification-pin/resend',
+    forget_password_request: 'auth/user/reset-password',
+    reset_password:'auth/user/reset-password',
 }
-
+ 
 
 
 const getReq = async function(urlKey, data){
