@@ -14,9 +14,9 @@
             </li>
 
           <li>
-            <router-link to="/blog">
+            <a href="/blog">
               Blog
-            </router-link>
+            </a>
           </li>
 
           <li v-if="!isLoggedIn" v-on:click="handleSignin(2)">Sign up</li>

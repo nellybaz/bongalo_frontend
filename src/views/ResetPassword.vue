@@ -4,9 +4,14 @@
         <div class="content">
             <h1>Reset your password</h1>
             <br>
+            <small style="color:red">
+                {{
+                    errorMessage
+                }}
+            </small>
             <br>
-            <StyledInput label='NEW PASSWORD' placeholder='Enter new password' type='text'/>
-            <StyledInput label='CONFIRM PASSWORD' placeholder='Confirm new password' type='text'/>
+            <StyledInput @sendInput="(val)=>{password = val}" label='NEW PASSWORD' placeholder='Enter new password' type='password'/>
+            <StyledInput @sendInput="(val)=>{password2 = val}" label='CONFIRM PASSWORD' placeholder='Confirm new password' type='password'/>
 
             <br>
             <Button @handleClick="handleReset" label="Reset" :isFullWidth='false'/>
@@ -31,8 +36,37 @@ export default {
          Navigation
      },
 
+    data:function(){
+        return {
+            password: '',
+            password2:'',
+            errorMessage:''
+        }
+    },
     methods:{
-         handleReset(){}
+         handleReset(){
+             this.errorMessage = ""
+             if(!this.password || !this.password2){
+                 this.errorMessage = "Both fields are required"
+             }
+             else{
+                 if(this.password != this.password2){
+                     this.errorMessage = "Both passwords must match"
+                 }
+                 else{
+                     window.console.log(this.$route)
+                     this.$store.dispatch('resetPassword',{
+                         'email': this.$route.query['email'],
+                         'token': this.$route.query['token'],
+                         'password': this.password
+                     })
+                     .then(res => {})
+                     .catch(err => {
+
+                     })
+                 }
+             }
+         }
      }
 }
 </script>

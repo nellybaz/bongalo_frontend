@@ -7,7 +7,7 @@
       <MobileEventCard v-else :events="events" label="Things to look out for"></MobileEventCard>
 
     </section>
-      
+       
     
     <section class="explore-section">
         <h3 class="h3">
@@ -148,6 +148,45 @@ export default {
                  },
                  {
                      id:5,
+                     location:'Kicukiru, Kigali, kigali',
+                     title:"Global Health Summit",
+                     amount_text:"Tickects from",
+                     price:"$20",
+                     image:"event1.png"
+                 },
+                   {
+                     id:6,
+                     location:'Kicukiru, Kigali, kigali',
+                     title:"Jidenna in the City",
+                     amount_text:"Tickects from",
+                     price:"$20",
+                     image:"event1.png"
+                 },
+                 {
+                     id:7,
+                     location:'Kicukiru, Kigali, kigali',
+                     title:"Visit the gorillas with Remarkable Rwanda",
+                     amount_text:"Tickects from",
+                     price:"$20",
+                     image:"event2.png"
+                 },
+                 {
+                     id:8,
+                     location:'Kicukiru, Kigali, kigali',
+                     title:"Visit Rwanda",
+                     amount_text:"Tickects from",
+                     price:"$20",
+                     image:"event2.png"
+                 },{
+                     id:9,
+                     location:'Kicukiru, Kigali, kigali',
+                     title:"Attend Youth Connekt ..",
+                     amount_text:"Tickects from",
+                     price:"$20",
+                     image:"event3.png"
+                 },
+                 {
+                     id:10,
                      location:'Kicukiru, Kigali, kigali',
                      title:"Global Health Summit",
                      amount_text:"Tickects from",
