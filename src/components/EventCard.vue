@@ -61,14 +61,16 @@ export default {
      }, 
      methods:{
          handleIcons(intent){
-             if(intent == 1){
-                 if(this.left > (-200 * this.length) ){
-                     this.left -= 200
+             let width = window.innerWidth * 0.172
+             if(intent == 1){ // Right arrow
+                
+                 if(this.left > (-(width+10) * this.length) ){
+                      this.left -= ((width+10)*this.length)
                  }
              }
              else{
                  if(this.left < 0){
-                     this.left += 200
+                     this.left += ((width+10)*this.length)
                  }
              }
          },
@@ -104,7 +106,7 @@ export default {
 
             }
     }
-}
+} 
 
     .event-card {
         position: relative;
@@ -116,6 +118,7 @@ export default {
         height: auto;
         border-radius: 20px 20px 0 0;
         padding: 30px 30px;
+        padding-bottom: 0;
 
         h3{
             font-style: normal;
@@ -137,7 +140,7 @@ export default {
             height: 450px;
 
             .icon-div{
-                border:1px solid black;
+                border:1px solid grey;
                 width: 50px;
                 height: 50px;
                 border-radius: 50%;
@@ -148,16 +151,33 @@ export default {
                 margin: 10px;
                 cursor: pointer;
                 position: absolute;
-                top: 35%;
+                top: 37%;
                 background: #fff;
+
+                 -webkit-transition: border .4s;
+                -moz-transition: border .4s;
+                -o-transition: border .4s;
+                transition: border .4s;
+                i{
+                    color: grey;
+                }
+
+               
+            }
+            .icon-div:hover{
+                i{
+                     color: #3A85FC;
+                }
+                border:2px solid #3A85FC;
+               
             }
             .icon-div-left{
-                left:2%;
+                left:-3%;
                 z-index: 1;
             }
 
              .icon-div-right{
-                right:2%;
+                right:-3%;
             }
             .images-content{
                 overflow: hidden;

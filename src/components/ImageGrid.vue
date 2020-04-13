@@ -67,6 +67,7 @@ export default {
                 width:100%;
                 height: 100%;
                 object-fit: cover;
+                // border-radius: 8px;
             }
             img:hover{
                 transform: scale(1.02);
@@ -125,6 +126,7 @@ export default {
                     transition: all .4s ease-in-out; 
                     width:100%;
                     height: 100%;
+                    // border-radius: 8px;
 
                 }
             }

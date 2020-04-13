@@ -38,17 +38,16 @@ export default {
         text-decoration: none;
         cursor: pointer;
         float:left;
-        width:220px;
-        height: 450px;
-        // border:1px solid red;
+        width:17.2vw;
+        height: 400px;
         margin-right: 10px;
         img{
             width:100%;
-            height: 70%;
+            height: 80%;
         }
         .vertical-card-info-section{
             width:100%;
-            margin-top: 20px;
+            margin-top: 5px;
             .location{
                 font-style: normal;
                 font-weight: normal;
@@ -65,7 +64,7 @@ export default {
                 font-weight: normal;
                 font-size: 16px;
                 line-height: 25px;
-                margin-top: 10px;
+                margin-top: 5px;
                 color: #404040;
 
             }
@@ -76,7 +75,7 @@ export default {
                 font-weight: normal;
                 font-size: 14px;
                 line-height: 19px;
-                margin-top: 10px;
+                margin-top: 5px;
                 color: #404040;
 
                 .price{
