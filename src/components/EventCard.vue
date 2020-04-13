@@ -61,7 +61,7 @@ export default {
      }, 
      methods:{
          handleIcons(intent){
-             let width = window.innerWidth * 0.172
+             let width = window.innerWidth * 0.167
              if(intent == 1){ // Right arrow
                 
                  if(this.left > (-(width+10) * this.length) ){
