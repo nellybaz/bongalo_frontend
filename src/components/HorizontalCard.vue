@@ -1,6 +1,6 @@
 <template>
     <!-- <router-link to="/details" target="_blank"> -->
-        <div @click="handleCardClick" class='horizontal-card'>
+        <div @click="handleCardClick" class='horizontal-card' :title="apartment.title">
             <div class="img-div">
                 <img :src="getThumbnail(apartment.main_image)" alt="">
             </div>
@@ -11,7 +11,7 @@
                         <i class="fas fa-bed"></i> {{apartment.available_rooms}} <i class="fas fa-shower"> {{apartment.number_of_bathrooms}} </i>
                     </span>
                 </p>
-                <p class="title"> {{apartment.title}} </p>
+                <p class="title"> {{apartment.title.substring(0, 25)}}... </p>
                 <p class="amount"> <span>${{apartment.price}}</span> / night</p>
             </div>
         </div>
@@ -101,8 +101,8 @@ a{
             .title{
                 font-style: normal;
                 // font-weight: bold;
-                font-size: 20px;
-                line-height: 24px;
+                font-size: 18px;
+                line-height: 20px;
                 display: flex;
                 align-items: center;
 

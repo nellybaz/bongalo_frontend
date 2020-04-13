@@ -12,7 +12,11 @@
                             Company
                         </router-link>
                     </li>
-                    <li>Team</li>
+                    <li>
+                         <router-link to="/about">
+                            Team
+                        </router-link>
+                    </li>
                     <li>
                         <router-link to="/career">
                             Career
@@ -53,12 +57,19 @@
 
             <div class="subscribe-section">
                 <p>Enter your email below to recieve updates on our Newletter</p>
+                <small style="color:red">
+                    {{
+                        emailErrorMessage
+                    }}
+                </small>
 
                 <input
                     @click="showOutline=true" 
                     @mouseleave="showOutline=false" 
+                    @keyup="checkEmail()"
                     :style="getClass()" 
                     type="text" 
+                    v-model="email"
                     placeholder="Enter your email"/>
                 <div class="payment-text-sub-btn">
                     <button>Subscribe</button>
@@ -80,6 +91,7 @@
 
                         <i class="fab fa-facebook-f"></i>
                         <i class="fab fa-linkedin-in"></i>
+                        <i class="fab fa-twitter"></i>
                         <i class="fab fa-instagram"></i>
                         <i class="fab fa-youtube"></i>
                     </div>
@@ -97,12 +109,24 @@ export default {
      data: function(){
         return {
         showOutline: false,
+        email:""
         }
     },
     methods:{
         getClass(){
             return this.showOutline ? "border: 1px solid #3A85FC !important;" : ""
         },
+        checkEmail(){
+            if(!this.email){
+                this.emailErrorMessage = ""
+            }
+            else if(!this.email.includes(".") || !this.email.includes("@")){
+                this.emailErrorMessage = "Email is not valid"
+            }
+            else{
+                this.emailErrorMessage = ""
+            }
+        }
     }
   
 }
@@ -240,7 +264,7 @@ export default {
 
                 .payment-imgs{
                     display: grid;
-                    grid-template-columns: 5fr 2fr;
+                    grid-template-columns: 5fr 3fr;
                     margin-top: 15%;
                     width:100%;
                     // border:1px solid red;
@@ -259,6 +283,7 @@ export default {
                     }
 
                     .social-media{
+                        // border:1px solid red;
                         width:100%;
 
                         p{
