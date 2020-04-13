@@ -121,7 +121,7 @@ export default {
             font-style: normal;
             font-weight: bold;
             font-size: 25px;
-            line-height: 30px;
+            line-height: 20px;
             display: flex;
             align-items: center;
 

@@ -1,6 +1,6 @@
 <template>
     <!-- <router-link to="/details" target="_blank"> -->
-        <div @click="handleCardClick" class='horizontal-card'>
+        <div @click="handleCardClick" class='horizontal-card' :title="apartment.title">
             <div class="img-div">
                 <img :src="getThumbnail(apartment.main_image)" alt="">
             </div>

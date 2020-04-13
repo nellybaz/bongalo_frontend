@@ -36,7 +36,7 @@
     
     <section class="why-section">
       <h3 class="h3">
-        Why you should stay with us
+        Why you should book with us
       </h3>
        <div class="inner">
           <WhySectionCard v-for="item in whyContent" :key="item.id" :content=item></WhySectionCard>
@@ -230,7 +230,7 @@ export default {
               {
                 id:3,
                 image:'why3.png',
-                title: 'Consultancy',
+                title: 'Support',
                 text:'We’re available to tell you the best neighbourhoods to live in Kigali. We’ve partnered with the preeminent guest houses, private homes and real estate agents in Kigali to provide you with the best vacation homes for your long or short stay in Rwanda.'
               }
           ],
