@@ -152,12 +152,13 @@ export default {
 
 }
     .footer {
+        // border:1px solid red;
         width:100%;
-        height: 431px;
+        height: auto;
         border-top:1px solid #F6FAFF;;
         padding: 40px 80px;
         background-color: #F6FAFF;
-        margin-top: 60px;
+        margin-top: 10px;
 
         img{
             width: 106px;
@@ -191,7 +192,7 @@ export default {
                         font-style: normal;
                         font-weight: normal;
                         font-size: 15px;
-                        line-height: 30px;
+                        line-height: 24px;
                         color: #6A6A6A;
 
                         a{

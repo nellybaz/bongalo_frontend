@@ -64,8 +64,7 @@ a{
         width:100%;
         height: 300px;
         cursor: pointer;
-        // display: grid;
-        // grid-template-rows: 4fr 1fr;
+
         .img-div{
             height: 70%;
 
@@ -73,14 +72,14 @@ a{
             width:100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 7px;
+            border-radius: 4px;
         }
         }
 
         .details{
             width:100%;
             height: 30%;
-            margin-top: 20px;
+            margin-top: 10px;
             .location{
                 font-style: normal;
                 font-weight: normal;
@@ -101,7 +100,7 @@ a{
             .title{
                 font-style: normal;
                 // font-weight: bold;
-                font-size: 18px;
+                font-size: 17px;
                 line-height: 20px;
                 display: flex;
                 align-items: center;
@@ -116,13 +115,13 @@ a{
                 font-weight: normal;
                 font-size: 14px;
                 line-height: 19px;
-                margin-top: 10px;
+                margin-top: 5px;
                 color: #404040;
 
                 span{
                     font-style: normal;
                     font-weight: bold;
-                    font-size: 20px;
+                    font-size: 16px;
                     color: #404040;
                 }
 

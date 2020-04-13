@@ -52,7 +52,11 @@
       <h3 class="h3">Powered By</h3>
 
       <div class="content">
-        <img v-for="item in powered" :key=item.id :src="require(`../assets/images/${item.image}`)" alt="">
+        <img 
+          v-for="item in powered" 
+          :key=item.id 
+          :src="require(`../assets/images/${item.image}`)" 
+          alt="">
       </div>
 
     </section>
@@ -218,20 +222,20 @@ export default {
                 id:1,
                 image:'why1.png',
                 title: 'Availability',
-                text:'We know how hard it can be finding a perfect home to rent, especially when moving to a new country; so we are available 24/7 for your inquiries about accommodation in Rwanda. We move families and individuals directly into their dream homes.'
+                text:'We know how hard it can be finding a perfect home to rent, especially when moving to a new country; so we are available 24/7 for your inquiries about the best places to stay. You’ll find the best places to stay on our platform without stress.'
               },
 
               {
                 id:2,
                 image:'why2.png',
                 title: 'Client Satisfaction',
-                text:'Whether you are on a budget, coming for a conference, seminar, vacation or relocating to Rwanda, we got you covered. Plus, you do not need your credit card to pay for your accommodation, all you need to do is send us your request and choose your payment method.'
+                text:'Whether you are on a budget or travelling for a; conference, seminar, vacation, we got you covered. Plus, you can pay easily with your mobile wallet from any country in Africa in addition to the other payment methods available on our system.'
               },
               {
                 id:3,
                 image:'why3.png',
                 title: 'Support',
-                text:'We’re available to tell you the best neighbourhoods to live in Kigali. We’ve partnered with the preeminent guest houses, private homes and real estate agents in Kigali to provide you with the best vacation homes for your long or short stay in Rwanda.'
+                text:'We’re available to support you as you book and set out on your trip across the continent. Our experienced support team ensures your experience stays awesome all the way on your trip and even beyond. Count on us for our 24/7 support service.'
               }
           ],
 
@@ -252,9 +256,13 @@ export default {
           id:4,
           image:'powered4.png',
         },
-                {
+        {
           id:5,
           image:'powered5.png',
+        },
+        {
+          id:6,
+          image:'ibm_cloud.png',
         }
       ]
     }
@@ -338,16 +346,17 @@ export default {
     width:100%;
 
     .event-section, .experience-section{
-
+      // border:1px solid red;
       background: #fff;
       width:100%;
-      padding: 20px 50px;
+      padding: 0px 50px;
+      height: 450px;
      
     }
 
 
 .experience-section{
-  margin-top: 70px;
+  margin-top:50px;
 }
 
 
@@ -356,7 +365,7 @@ export default {
       padding: 20px 80px;
       background: #fff;
 
-    // border:1px solid green;
+      // border:1px solid green;
 
         .inner-content{
           margin-top: 30px;
@@ -368,7 +377,8 @@ export default {
     }
 
     .apartment-section{
-      margin-top: 50px;
+      // border:1px solid red;
+      margin-top: 10px;
       width:100%;
       padding: 20px 80px;
       background: #fff;
@@ -377,14 +387,14 @@ export default {
           margin-top: 30px;
           display: grid;
           grid-template-columns:repeat(4, 1fr);
-          grid-column-gap: 20px;
-          grid-row-gap: 55px;
+          gap: 15px;
+          row-gap: 15px;
         }
     }
 
     .why-section{
         width:100%;
-        margin-top: 20px;
+        margin-top: 5px;
         width:100%;
         padding: 20px 80px;
         background: #fff;
@@ -441,7 +451,7 @@ export default {
     .powered-section{
       width:100%;
       height: 260px;
-      margin-top: 60px;
+      margin-top: 30px;
       width:100%;
       padding: 0 80px;
       h3{
@@ -453,12 +463,18 @@ export default {
       }
 
       .content{
-        // border:1px solid red;
+        margin-top: -20px;
         width:100%;
-        display:flex;
-        align-items:center;
-        justify-content:space-evenly;
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 55px;
+
+        img{
+          // border:1px solid red;
+          width:100%;
+          height: 200px;
+          object-fit: contain;
+        }
       }
     }
   }
