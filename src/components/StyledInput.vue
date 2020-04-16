@@ -86,8 +86,6 @@ export default {
                 padding:  0 10px;
                 border-radius: 3px;
                 z-index: 10;
-
-
                 font-style: normal;
                 font-weight: normal;
                 font-size: 14px;
