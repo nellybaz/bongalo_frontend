@@ -1,1182 +1,1231 @@
 <template>
-    <div class='apartment_details'>
-        <div v-if="!isImageShow" class="detials-content">
-            <Navigation :showSearch="false"></Navigation>
-            <ImageGrid v-on:updateImageShow=updateImageShowHandler :showMoreImages=true></ImageGrid>
+  <div class="apartment_details">
+    <div v-if="!isImageShow" class="detials-content">
+      <Navigation :showSearch="false"></Navigation>
+      <ImageGrid
+        v-on:updateImageShow="updateImageShowHandler"
+        :showMoreImages="true"
+      ></ImageGrid>
 
-            <div class="apartment-details-content">
-            <div class="details-div">
-                <div class="tap-div">
-                    <ul>
-                        <li :class="{border_bottom: borderItem==1}">Overview</li>
-                        <li>Amenities</li>
-                        <li>Review</li>
-                        <li>Other Info</li>
-                    </ul>
+      <div class="apartment-details-content">
+        <div class="details-div">
+          <div class="tap-div">
+            <ul>
+              <li :class="{ border_bottom: borderItem == 1 }">Overview</li>
+              <li>Amenities</li>
+              <li>Review</li>
+              <li>Other Info</li>
+            </ul>
+          </div>
+          <div class="content-div">
+            <div class="left">
+              <h4>
+                {{ apartment.title || $route.query.title }}
+              </h4>
+
+              <div class="host-details">
+                <!-- <img src="../assets/images/user1.png" alt=""> -->
+                <i class="fas fa-user-circle"></i>
+                <div class="name">
+                  <p>Host</p>
+                  <strong>
+                    {{ apartment.owner || $route.query.owner }}
+                  </strong>
                 </div>
-                <div class="content-div">
-                    <div class="left">
-                        <h4>
-                            {{
-                                apartment.title || $route.query.title
-                            }}
-                            
-                        </h4>
 
-                        <div class="host-details">
-                            <!-- <img src="../assets/images/user1.png" alt=""> -->
-                            <i class="fas fa-user-circle"></i>
-                            <div class="name">
-                                <p>Host</p>
-                                <strong>
-                                    {{
-                                        apartment.owner || $route.query.owner
-                                    }}
-                                </strong>
-                            </div>
+                <div class="country">
+                  <p>Nationality</p>
+                  <strong>Rwanda</strong>
+                </div>
 
-                            <div class="country">
-                                <p>Nationality</p>
-                                <strong>Rwanda</strong>
-                            </div>
+                <!-- <strong class="contact-host">Contact Host</strong> -->
+              </div>
 
-                        <!-- <strong class="contact-host">Contact Host</strong> -->
-                        </div>
+              <div class="more-info">
+                <div class="more-info-left">
+                  <p>
+                    <i class="fas fa-user-friends"></i> Sleeps:
+                    {{
+                      apartment.available_rooms || $route.query.available_rooms
+                    }}
+                  </p>
+                  <p>
+                    <i class="fas fa-door-open"></i> Bedrooms:
+                    {{
+                      apartment.available_rooms || $route.query.available_rooms
+                    }}
+                  </p>
+                  <p>
+                    <i class="fas fa-shower"></i> Bathrooms:
+                    {{
+                      apartment.number_of_bathrooms ||
+                        $route.query.number_of_bathrooms
+                    }}
+                  </p>
+                  <p>
+                    <i class="fas fa-moon"></i> Min Stay:
+                    {{ apartment.min_nights || $route.query.min_nights }}
+                    night(s)
+                  </p>
+                </div>
 
-                        <div class="more-info">
-                            <div class="more-info-left">
-                                <p> <i class="fas fa-user-friends"></i> Sleeps: {{ apartment.available_rooms || $route.query.available_rooms }}</p>
-                                <p> <i class="fas fa-door-open"></i> Bedrooms: {{ apartment.available_rooms || $route.query.available_rooms }}</p>
-                                <p> <i class="fas fa-shower"></i> Bathrooms: {{ apartment.number_of_bathrooms || $route.query.number_of_bathrooms }}</p>
-                                <p><i class="fas fa-moon"></i> Min Stay: {{ apartment.min_nights || $route.query.min_nights }} night(s)</p>
-                            </div>
+                <img src="../assets/images/map_placeholder.png" alt="" />
+              </div>
 
-                            <img src="../assets/images/map_placeholder.png" alt="">
+              <div class="rules">
+                <h3>House Rules</h3>
+                <div>
+                  <p v-for="rule in rules" :key="rule">
+                    {{ rule }}
+                  </p>
+                </div>
+              </div>
 
-                        </div>
+              <div class="desc">
+                <h3>
+                  {{
+                    apartment.available_rooms || $route.query.available_rooms
+                  }}
+                  Beedrooms,
+                  {{
+                    apartment.number_of_bathrooms ||
+                      $route.query.number_of_bathrooms
+                  }}
+                  Bathrooms,
+                  {{
+                    apartment.available_rooms || $route.query.available_rooms
+                  }}
+                  Sleeps
+                </h3>
 
-                        <div class="rules">
-                            <h3>House Rules</h3>
-                            <div>
-                                <p v-for="rule in rules" :key=rule>
-                                    {{
-                                        rule
-                                    }}
-                                </p>
-                            </div>
-                        </div>
+                <p>
+                  {{ apartment.description || $route.query.description }}
+                </p>
+              </div>
 
-                        <div class="desc">
-                            <h3>
-                                {{apartment.available_rooms || $route.query.available_rooms }} Beedrooms, 
-                                {{apartment.number_of_bathrooms || $route.query.number_of_bathrooms}} Bathrooms, 
-                                {{apartment.available_rooms || $route.query.available_rooms}} Sleeps</h3>
+              <div class="amenities">
+                <h4>Amenities</h4>
 
-                            <p>
-                                {{
-                                    apartment.description || $route.query.description
-                                }}
-                            </p>
-                        </div>
+                <div>
+                  <p v-for="amenity in amenities" :key="amenity">
+                    <i :class="getAmenitiesIcon(amenity)"></i>
+                    {{ capitalizeFirstLetter(amenity) }}
+                  </p>
+                </div>
+              </div>
 
-                        <div class="amenities">
-                            <h4>Amenities</h4>
+              <div v-if="review.length > 0" class="reviews">
+                <h3>Reviews</h3>
+                <h4>
+                  267
+                  <span>
+                    reviews
+                  </span>
+                </h4>
 
-                            <div>
-                                <p v-for="amenity in amenities" :key=amenity> 
-                                    <i :class="getAmenitiesIcon(amenity)"></i> {{capitalizeFirstLetter(amenity)}}</p>
-                            </div>
-                        </div>
+                <div
+                  class="review-div"
+                  v-for="review in reviews"
+                  :key="review.id"
+                >
+                  <div class="reviewer-info">
+                    <img
+                      src="https://a0.muscache.com/im/pictures/user/419727a1-6cfc-4431-8464-b5f67207e2ce.jpg?aki_policy=profile_large"
+                      alt=""
+                    />
 
+                    <div class="rv-info-right">
+                      <p class="rv-name">Cynthia</p>
+                      <p class="rv-date">February 2020</p>
+                    </div>
+                  </div>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Velit quam alias omnis eos dolores hic perferendis labore
+                    saepe, tempora maiores consequatur vel ratione quasi. Id
+                    inventore accusamus tempora. Aliquam, incidunt!
+                  </p>
+                  <router-link to="">
+                    Read more...
+                  </router-link>
+                </div>
 
-                        <div v-if="review.length > 0" class="reviews">
-                            <h3>Reviews</h3>
-                            <h4>
-                                267 <span>
-                                    reviews
-                                </span>
-                            </h4>
+                <div></div>
+              </div>
 
-                            <div class="review-div" v-for="review in reviews" :key="review.id">    
-                                <div class="reviewer-info">
-                                    <img src="https://a0.muscache.com/im/pictures/user/419727a1-6cfc-4431-8464-b5f67207e2ce.jpg?aki_policy=profile_large" alt="">
+              <div class="other-div">
+                <h3>
+                  Things to keep in mind
+                </h3>
 
-                                    <div class="rv-info-right">
-                                        <p class="rv-name">Cynthia</p>
-                                        <p class="rv-date">February 2020</p>
-                                        
-                                    </div>
+                <p>
+                  Checkin:
+                  <span> After {{ apartment.check_in }} </span>
+                </p>
+                <p>
+                  Checkout:
+                  <span>
+                    Before {{ apartment.check_out || $route.query.check_out }}
+                  </span>
+                </p>
 
-                                    
-                                </div>
-                                <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quam alias omnis eos dolores hic perferendis labore saepe, tempora maiores consequatur vel ratione quasi. Id inventore accusamus tempora. Aliquam, incidunt!
-                                </p>
-                                <router-link to="">
-                                    Read more...
-                                </router-link>
+                <h4>
+                  Cacellations
+                </h4>
+                <p>
+                  Free cancellation for 48 hours
+                </p>
+                <p v-if="checkin == 'Checkin'">
+                  After that, cancel up to 24 hours before check-in and get a
+                  full refund, minus the service fee.
+                </p>
+                <p v-if="checkin != 'Checkin'">
+                  Cancel after
+                  {{ apartment.check_in || $route.query.check_in }} on
+                  {{ checkin.toString().slice(0, 10) }} and get a 50% refund,
+                  minus the first night and service fee.
+                </p>
+              </div>
+            </div>
 
-                            </div>
+            <div class="right">
+              <div class="content">
+                <div class="info">
+                  <h4>
+                    ${{ apartment.price || $route.query.price }}
+                    <span>/ night</span>
+                  </h4>
+                  <small>Views: 204 times</small>
+                </div>
 
-                            <div>
+                <div class="book">
+                  <label for="">Dates</label>
 
-                            </div>
-                        </div>
+                  <div class="dates">
+                    <vc-date-picker
+                      v-model="checkin"
+                      :popover="{ placement: 'bottom', visibility: 'click' }"
+                      :min-date="new Date()"
+                    >
+                      <div>
+                        {{
+                          getDateFormat(
+                            checkin.toString(),
+                            $route.query.checkin ? 3 : 1
+                          )
+                        }}
+                      </div>
+                    </vc-date-picker>
+                    <vc-date-picker
+                      v-model="checkout"
+                      :popover="{ placement: 'bottom', visibility: 'click' }"
+                      :min-date="checkin != 'Checkin' ? checkin : new Date()"
+                      :disabled-dates="{ start: null, end: Date.now() }"
+                    >
+                      <div>
+                        {{
+                          getDateFormat(
+                            checkout.toString(),
+                            $route.query.checkin ? 4 : 2
+                          )
+                        }}
+                      </div>
+                    </vc-date-picker>
+                  </div>
+                  <br />
+                  <div class="book-guest">
+                    <p>{{ guestNumber }} Guest(s)</p>
 
-                        <div class="other-div">
-                            <h3>
-                                Things to keep in mind
-                            </h3>
+                    <div class="btns">
+                      <button>
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      <button>
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- <br> -->
 
-                            <p>
-                                Checkin: 
-                                <span>
-                                    After {{ apartment.check_in}}
-                                </span>
-                            </p>
-                            <p>
-                                Checkout: 
-                                <span>
-                                    Before {{ apartment.check_out || $route.query.check_out}}
-                                </span>
-                            </p>
-
-                            <h4>
-                                Cacellations
-                            </h4>
-                            <p>
-                                Free cancellation for 48 hours
-                            </p>
-                            <p v-if="checkin == 'Checkin'">
-                                After that, cancel up to 24 hours before check-in and get a full refund, minus the service fee.
-                            </p>
-                            <p v-if="checkin != 'Checkin'">Cancel after {{apartment.check_in || $route.query.check_in}} on {{checkin.toString().slice(0, 10)}} and get a 50% refund, minus the first night and service fee.</p>
-
-                        </div>
+                  <div v-if="checkout != 'Checkout'" class="price-info">
+                    <div class="per-night">
+                      <p>
+                        ${{ apartment.price || $route.query.price }} x
+                        {{ bookedNights }} nights
+                      </p>
+                      <p class="p">${{ apartment.price * bookedNights }}</p>
                     </div>
 
-                    <div class="right">
-                        <div class="content">
-                            <div class="info">
-                                <h4>${{apartment.price || $route.query.price}} <span>/ night</span></h4>
-                                <small>Views: 204 times</small>
-                            </div>
-
-                            <div class="book">
-                                <label for="">Dates</label>
-
-                                <div class="dates">
-                                    <vc-date-picker
-                                        v-model="checkin"
-                                        :popover="{ placement: 'bottom', visibility: 'click' }"
-                                        :min-date="new Date()"
-                                        >
-                                        <div>
-                                            {{
-                                                getDateFormat(checkin.toString(), $route.query.checkin ? 3:1 )
-                                            }}
-                                        </div>
-                                    </vc-date-picker>
-                                    <vc-date-picker
-                                        v-model="checkout"
-                                        :popover="{ placement: 'bottom', visibility: 'click' }"
-                                        :min-date="checkin != 'Checkin' ? checkin : new Date()"
-                                        :disabled-dates="{ start:null, end:Date.now()}"
-                                        >
-                                        <div>
-                                            {{
-                                                getDateFormat(checkout.toString(), $route.query.checkin ? 4:2)
-                                            }}
-                                        </div>
-                                    </vc-date-picker>
-                                </div>
-                                <br>
-                                <div class="book-guest">
-                                    <p>
-                                        {{guestNumber}} Guest(s)
-                                    </p>
-
-                                    <div class="btns">
-                                        <button>
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <button>
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- <br> -->
-
-                                <div v-if="checkout != 'Checkout'" class="price-info">
-                                    <div class="per-night">
-                                        <p>${{apartment.price || $route.query.price}} x {{bookedNights}} nights</p>
-                                        <p class="p">
-                                            ${{
-                                                (apartment.price * bookedNights)
-                                            }}
-                                        </p>
-                                    </div>
-
-                                    <div class="cleaning-fee">
-                                        <p>Cleaning fee</p>
-                                        <p class="p">
-                                            ${{cleaningFee}}
-                                        </p>
-                                    </div>
-
-
-                                    <div class="service-fee">
-                                        <p>Service fee</p>
-                                        <p class="p">
-                                            ${{serviceFee}}
-                                        </p>
-                                    </div>
-
-                                    <div class="total">
-                                        <p>Total</p>
-                                        <p class="p">
-                                            ${{
-                                                getTotal()
-                                            }}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <br>
-                                <br>
-                                <Button @handleClick="reserveButtonHandler()" label="Reserve" :isFullWidth="true"></Button>
-
-                                <br>
-                                <p class="small">
-                                    You won't be charged yet
-                                </p>
-                            </div>
-                        </div>
+                    <div class="cleaning-fee">
+                      <p>Cleaning fee</p>
+                      <p class="p">${{ cleaningFee }}</p>
                     </div>
 
-                </div>
-                </div>
-            </div>
-        </div>
+                    <div class="service-fee">
+                      <p>Service fee</p>
+                      <p class="p">${{ serviceFee }}</p>
+                    </div>
 
-        <div v-else class="details-img-show">
-            <i v-on:click="updateImageShowHandler(0)"  class="far fa-times-circle"></i>
+                    <div class="total">
+                      <p>Total</p>
+                      <p class="p">${{ getTotal() }}</p>
+                    </div>
+                  </div>
 
-            <div class="img-showing-div">
-                <div class="img-big">
-                    <i @click="handleGalleryIndex(0)" class="fas fa-chevron-left"></i>
-                    <img :src="galleryCurrentImage" alt="">
-                    <i @click="handleGalleryIndex(1)" class="fas fa-chevron-right"></i>
+                  <br />
+                  <br />
+                  <Button
+                    @handleClick="reserveButtonHandler()"
+                    label="Reserve"
+                    :isFullWidth="true"
+                  ></Button>
+
+                  <br />
+                  <p class="small">
+                    You won't be charged yet
+                  </p>
                 </div>
-                <div class="img-side">
-                    <img v-for="(image, index) in getApartmentImages" 
-                    :key="image.image" class="img" 
-                    :class="{activeImage: galleryIndex==index}" 
-                    @click="handleImageChange(index)" :src="image.image" alt="">
-                </div>
+              </div>
             </div>
-            
-           
+          </div>
         </div>
+      </div>
     </div>
+
+    <div v-else class="details-img-show">
+      <p style="color:white">
+        {{ Math.abs(galleryIndex) + 1 }}/{{ imagesArr.length }}
+      </p>
+      <i
+        v-on:click="updateImageShowHandler(0)"
+        class="far fa-times-circle icon_close"
+      ></i>
+
+      <div class="img-showing-div">
+        <div class="img-big">
+          <i @click="handleGalleryIndex(0)" class="fas fa-chevron-left"></i>
+          <img :src="galleryCurrentImage" alt="" />
+          <i @click="handleGalleryIndex(1)" class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-
 <script>
-
 // document.getElementById("book-checkin").innerHTML = "Chech in";
 
-import Navigation from '../components/Blog/Navigation';
-import ImageGrid from '../components/ImageGrid';
-import Button from '../components/Button';
-import { mapGetters } from 'vuex';
+import Navigation from "../components/Blog/Navigation";
+import ImageGrid from "../components/ImageGrid";
+import Button from "../components/Button";
+import { mapGetters } from "vuex";
 
-import Vue from 'vue';
-import VCalendar from 'v-calendar';
+import Vue from "vue";
+import VCalendar from "v-calendar";
 
 // Use v-calendar & v-date-picker components
 Vue.use(VCalendar, {
-  componentPrefix: 'vc',  // Use <vc-calendar /> instead of <v-calendar />
-
+  componentPrefix: "vc", // Use <vc-calendar /> instead of <v-calendar />
 });
 
-
 export default {
-     name:'apartment_details',
-     components:{
-         Navigation,
-         Button,
-         ImageGrid
-     },
-     methods:{
-         getTotal(){
-             return ((this.apartment.price || this.$route.query.price) * this.bookedNights) + this.cleaningFee + this.serviceFee
-         },
-         reserveButtonHandler(){
-             if(this.getTotal() > 0){
-                 this.$router.push({
-                 path:'/payment',
-                 query:{
-                    'price': this.getTotal(),
-                    'guest': this.guestNumber,
-                    'checkin': this.checkin,
-                    'checkout': this.checkout ,
-                    'nights': this.bookedNights
-                 }
-             })
-             }
-         },
-         getAmenitiesIcon(value){
-             return this.amenitiesIcon[value]
-         },
-         handleImageChange(index){
-             this.galleryIndex = index
-             this.galleryCurrentImage = this.getApartmentImages[this.galleryIndex].image
-         },
-         handleGalleryIndex(intent){
-             if(intent == 1 && this.galleryIndex < this.getApartmentImages.length-1){
-                 this.galleryIndex += 1
-             }
-             else if (intent == 0 && this.galleryIndex > -1){
-                 this.galleryIndex -= 1
-             }
-             window.console.log(this.galleryIndex)
-             if(this.galleryIndex == -1){
-                 this.galleryCurrentImage = this.getCurrentApartment.main_image
-             }
-             else{
-                 this.galleryCurrentImage = this.getApartmentImages[this.galleryIndex].image
-             }
-         },
-        capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        },
-        getDateFormat(date, intent){
-        
+  name: "apartment_details",
+  components: {
+    Navigation,
+    Button,
+    ImageGrid,
+  },
+  methods: {
+    getTotal() {
+      return (
+        (this.apartment.price || this.$route.query.price) * this.bookedNights +
+        this.cleaningFee +
+        this.serviceFee
+      );
+    },
+    reserveButtonHandler() {
+      if (this.getTotal() > 0) {
+        this.$router.push({
+          path: "/payment",
+          query: {
+            price: this.getTotal(),
+            guest: this.guestNumber,
+            checkin: this.checkin,
+            checkout: this.checkout,
+            nights: this.bookedNights,
+          },
+        });
+      }
+    },
+    getAmenitiesIcon(value) {
+      return this.amenitiesIcon[value];
+    },
+    handleImageChange(index) {
+      this.galleryIndex = index;
+      this.galleryCurrentImage = this.getApartmentImages[
+        this.galleryIndex
+      ].image;
+    },
+    handleGalleryIndex(intent) {
+      if (
+        intent == 1 &&
+        this.galleryIndex < this.imagesArr.length - 1
+      ) {
+        this.galleryIndex += 1;
+      } else if (intent == 0 && this.galleryIndex > 0) {
+        this.galleryIndex -= 1;
+      }
+      this.galleryCurrentImage = this.imagesArr[this.galleryIndex].image;
+    },
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    getDateFormat(date, intent) {
+      // window.console.log(date)
+      if (date == "Checkin" || date == "Checkout") {
+        return date;
+      }
+
+      if (this.$route.query.checkin) {
         // window.console.log(date)
-        if(date == "Checkin" || date == "Checkout"){
-            return date;
-        }
+        if (date.includes("GMT")) {
+          // window.console.log("new date")
+          let splitted = date.split(" ");
 
-        if (this.$route.query.checkin){
-            // window.console.log(date)
-            if(date.includes("GMT")){
-                // window.console.log("new date")
-                let splitted = date.split(" ")
-        
-                let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
-                if(intent == 4){
-                    let seconds = Math.abs(this.checkin - this.checkout)/1000;
-                    let days = seconds / 86400
-                    // window.console.log(days)
-                    this.bookedNights = days
-                }
-
-                return new_date
-            }
-            else{
-                try {
-                    let new_checkin_d = new Date(this.checkin.split('/')[2],this.checkin.split('/')[1]-1,this.checkin.split('/')[0])
-                    let new_checkout_d = new Date(this.checkout.split('/')[2], this.checkout.split('/')[1]-1, this.checkout.split('/')[0])
-                    let seconds = Math.abs(new_checkin_d - new_checkout_d)/1000;
-                    let days = seconds / 86400
-                    // window.console.log(date)
-                    this.bookedNights = days
-                } catch (error) {
-                    window.console.log("catch error")
-                }
-            }        
-            return intent == 3 ? this.checkin : intent == 4 ? this.checkout:""
-        }
-        let splitted = date.split(" ")
-        
-        let new_date = splitted[2] + "/" + this.monthMap[splitted[1]] + "/"  +splitted[3]
-        
-        if(intent == 2){
-            let seconds = Math.abs(this.checkin - this.checkout)/1000;
-            let days = seconds / 86400
+          let new_date =
+            splitted[2] + "/" + this.monthMap[splitted[1]] + "/" + splitted[3];
+          if (intent == 4) {
+            let seconds = Math.abs(this.checkin - this.checkout) / 1000;
+            let days = seconds / 86400;
             // window.console.log(days)
-            this.bookedNights = days
+            this.bookedNights = days;
+          }
+
+          return new_date;
+        } else {
+          try {
+            let new_checkin_d = new Date(
+              this.checkin.split("/")[2],
+              this.checkin.split("/")[1] - 1,
+              this.checkin.split("/")[0]
+            );
+            let new_checkout_d = new Date(
+              this.checkout.split("/")[2],
+              this.checkout.split("/")[1] - 1,
+              this.checkout.split("/")[0]
+            );
+            let seconds = Math.abs(new_checkin_d - new_checkout_d) / 1000;
+            let days = seconds / 86400;
+            // window.console.log(date)
+            this.bookedNights = days;
+          } catch (error) {
+            window.console.log("catch error");
+          }
         }
-        return new_date
+        return intent == 3 ? this.checkin : intent == 4 ? this.checkout : "";
+      }
+      let splitted = date.split(" ");
+
+      let new_date =
+        splitted[2] + "/" + this.monthMap[splitted[1]] + "/" + splitted[3];
+
+      if (intent == 2) {
+        let seconds = Math.abs(this.checkin - this.checkout) / 1000;
+        let days = seconds / 86400;
+        // window.console.log(days)
+        this.bookedNights = days;
+      }
+      return new_date;
+    },
+    updateImageShowHandler(intent) {
+      if (intent == 1) {
+        this.isImageShow = true;
+      } else {
+        this.isImageShow = false;
+      }
+    },
+  },
+  data: function() {
+    return {
+      imagesArr: [],
+      amenitiesIcon: {
+        air_conditioner: "fas fa-fan",
+        closet: "fas fa-copy",
+        iron: "fas fa-tram",
+        tv: "fas fa-tv",
+        wifi: "fas fa-wifi",
+        lock_bedroom: "fas fa-lock",
+        desk: "fas fa-book-reader",
+      },
+      galleryIndex: 0,
+      galleryCurrentImage: "",
+      serviceFee: 13,
+      cleaningFee: 20,
+      bookedNights: 0,
+      review: [],
+      apartment: {},
+      images: [],
+      monthMap: {
+        Jan: 1,
+        Feb: 2,
+        Mar: 3,
+        Apr: 4,
+        May: 5,
+        Jun: 6,
+        Jul: 7,
+        Aug: 8,
+        Sep: 9,
+        Oct: 10,
+        Nov: 11,
+        Dec: 12,
+      },
+      guestNumber: 1,
+      checkin: "Checkin",
+      checkout: "Checkout",
+      reviews: [
+        {
+          id: 1,
         },
-        updateImageShowHandler(intent){
-            if(intent == 1){
-                this.isImageShow = true;
-            }
-            else{
-                this.isImageShow = false;
-            }
+        {
+          id: 2,
+        },
+        {
+          id: 3,
+        },
+        {
+          id: 4,
+        },
+        {
+          id: 5,
+        },
+        {
+          id: 6,
+        },
+        {
+          id: 7,
+        },
+      ],
+      borderItem: 1,
+      isImageShow: false,
+      amenities: [],
+      rules: [],
+    };
+  },
+
+  computed: mapGetters([
+    "isSafari",
+    "getApartmentImages",
+    "getCurrentApartment",
+  ]),
+  created() {
+    // Create array for the images in full screen
+    this.imagesArr = this.getApartmentImages;
+    this.imagesArr.unshift({'image':this.getCurrentApartment.main_image});
+    // End
+
+    this.checkin =
+      this.$route.query.checkin != null
+        ? this.$route.query.checkin
+        : this.checkin;
+    this.checkout =
+      this.$route.query.checkout != null
+        ? this.$route.query.checkout
+        : this.checkout;
+    this.guestNumber =
+      this.$route.query.guest != null
+        ? this.$route.query.guest
+        : this.guestNumber;
+    this.apartment = this.getCurrentApartment;
+    this.galleryCurrentImage = this.getCurrentApartment.main_image;
+    this.amenities = this.apartment.amenities
+      ? this.apartment.amenities.split(",")
+      : this.$route.query.amenities.split(",");
+    this.rules = this.apartment.rules
+      ? this.apartment.rules.split(",")
+      : this.$route.query.rules.split(",");
+
+    try {
+      let new_checkin_d = new Date(
+        this.checkin.split("/")[2],
+        this.checkin.split("/")[1] - 1,
+        this.checkin.split("/")[0]
+      );
+      let new_checkout_d = new Date(
+        this.checkout.split("/")[2],
+        this.checkout.split("/")[1] - 1,
+        this.checkout.split("/")[0]
+      );
+      let seconds = Math.abs(new_checkin_d - new_checkout_d) / 1000;
+      let days = seconds / 86400;
+      this.bookedNights = days;
+      window.console.log(days);
+    } catch (error) {
+      window.console.log("catch error");
+    }
+
+    this.$store
+      .dispatch("fetchApartmentImages", {
+        token: "",
+        apartmentUuid: this.$route.query.apartment,
+      })
+      .then((res) => {
+        if (res == 1) {
+          this.images = this.getApartmentImages;
         }
-     },
-     data: function(){
-         return {
-             amenitiesIcon:{
-                 "air_conditioner": "fas fa-fan",
-                 "closet": "fas fa-copy",
-                 "iron": "fas fa-tram",
-                 "tv": "fas fa-tv",
-                 "wifi": "fas fa-wifi",
-                 "lock_bedroom": "fas fa-lock",
-                 "desk": "fas fa-book-reader"
-             },
-             galleryIndex: -1,
-             galleryCurrentImage:"",
-             serviceFee: 13,
-             cleaningFee:20,
-             bookedNights: 0,
-             review:[],
-             apartment:{},
-             images:[],
-             monthMap:{
-                "Jan":1,
-                "Feb":2,
-                "Mar":3,
-                "Apr":4,
-                "May":5,
-                "Jun":6,
-                "Jul":7,
-                "Aug":8,
-                "Sep":9,
-                "Oct":10,
-                "Nov":11,
-                "Dec":12
-            },
-            guestNumber:1,
-             checkin: "Checkin",
-             checkout:"Checkout",
-             reviews:[
-                 {
-                     id:1
-                 },
-                 {
-                     id:2
-                 },
-                 {
-                     id:3
-                 },
-                 {
-                     id:4
-                 },
-                 {
-                     id:5
-                 },
-                 {
-                     id:6
-                 },
-                 {
-                     id:7
-                 }
-             ],
-             borderItem:1,
-             isImageShow: false,
-             amenities: [],
-             rules:[]
-         }
-     },
-
-     computed: mapGetters(['isSafari', 'getApartmentImages', 'getCurrentApartment']),
-     created(){
-         window.console.log("created")
-        this.checkin = this.$route.query.checkin != null ? this.$route.query.checkin: this.checkin
-        this.checkout = this.$route.query.checkout != null ? this.$route.query.checkout: this.checkout
-        this.guestNumber = this.$route.query.guest != null ? this.$route.query.guest: this.guestNumber
-        this.apartment = this.getCurrentApartment
-        this.galleryCurrentImage = this.getCurrentApartment.main_image
-        this.amenities = this.apartment.amenities ?  this.apartment.amenities.split(",") : this.$route.query.amenities.split(",")
-        this.rules = this.apartment.rules ? this.apartment.rules.split(",") : this.$route.query.rules.split(",")
-
-
-        try {
-            let new_checkin_d = new Date(this.checkin.split('/')[2],this.checkin.split('/')[1]-1,this.checkin.split('/')[0])
-            let new_checkout_d = new Date(this.checkout.split('/')[2], this.checkout.split('/')[1]-1, this.checkout.split('/')[0])
-            let seconds = Math.abs(new_checkin_d - new_checkout_d)/1000;
-            let days = seconds / 86400
-            this.bookedNights = days
-            window.console.log(days)
-        } catch (error) {
-            window.console.log("catch error")
-        }
-
-        this.$store.dispatch('fetchApartmentImages', {token:'', apartmentUuid:this.$route.query.apartment})
-        .then(res => {
-            if(res == 1){
-                this.images = this.getApartmentImages
-            }
-        })
-     }
-}
+      });
+  },
+};
 </script>
 
+<style lang="scss" scoped>
+.activeImage {
+  border: 1px solid #3a85fc !important;
+  opacity: 0.3;
+}
+.border_bottom {
+  border-bottom: 4px solid #3a85fc;
+}
 
-<style lang='scss' scoped>
+.details-img-show {
+  background: #252f37;
+  width: 100%;
+  padding: 0px 20px;
+  height: 100vh;
+  //   border:1px solid red;
 
-    .activeImage{
-        border:1px solid #3A85FC !important;
-        opacity: 0.3;
+  i {
+    font-size: 20px;
+    color: #3a85fc;
+    cursor: pointer;
+  }
+
+  .icon_close {
+    float: right;
+  }
+
+  .img-showing-div {
+    width: 100%;
+
+    .img-big {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row;
+      max-width: 100%;
+      height: 100%;
+
+      img {
+        width: 90%;
+        height: 95vh;
+        object-fit: cover;
+      }
     }
-    .border_bottom{
-        border-bottom: 4px solid #3A85FC;
+
+    .img-side {
+      height: 70vh;
+      overflow-y: scroll;
+      border: 1px solid black;
+      padding: 3px;
+      padding-left: 10px;
+
+      img {
+        width: 48%;
+        // border:1px solid red;
+        height: 100px;
+        margin: 0 1% 3px 0;
+        object-fit: cover;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.apartment_details {
+  width: 100%;
+
+  .apartment-details-content {
+    // padding: 0 2%;
+    width: 100%;
+    // margin-bottom: 100px;
+  }
+
+  .image-div {
+    height: 500px !important;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 6px;
+
+    img:hover {
+      transform: scale(1.02);
     }
 
-    .details-img-show{
-        width:100%;
-        padding: 20px 50px;
-        i{
-            font-size: 44px;
-            color: #3A85FC;
-            cursor: pointer;
+    .img1 {
+      grid-column: 1/5;
+      grid-row: 1/-1;
+      // border:1px solid red;
+    }
+
+    .img2 {
+      grid-column: 5/7;
+      grid-row: 1/2;
+      // border:1px solid red;
+    }
+
+    .img3 {
+      grid-column: 5/7;
+      grid-row: 2/-1;
+      // border:1px solid red;
+    }
+
+    .img4 {
+      grid-column: 7/-1;
+      grid-row: 1/-1;
+      // img{
+      //     // display: none;
+      // }
+
+      p {
+        background: black;
+        color: white;
+        padding: 5px 15px;
+        font-size: 12px;
+        border-radius: 5px;
+        position: relative;
+        float: right;
+        bottom: 10%;
+        // width: 100px;
+        margin-right: 20px;
+        z-index: 9999;
+      }
+    }
+
+    .img-item {
+      // border:1px solid red;
+      width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      transition: all 0.4s ease-in-out;
+      cursor: pointer;
+
+      img {
+        transition: all 0.4s ease-in-out;
+        width: 100%;
+        height: 100%;
+        // border:1px solid red;
+      }
+    }
+  }
+
+  .details-div {
+    width: 100%;
+    padding: 0 0px;
+
+    .tap-div {
+      background: #fff;
+      box-shadow: 1px 2px 2px rgb(218, 217, 217);
+      z-index: 999;
+      padding: 0 70px;
+      height: 50px;
+      position: sticky;
+      top: 0;
+      ul {
+        height: 100%;
+        //  border:1px solid red;
+        padding: 0;
+        display: flex;
+        align-items: center;
+
+        li {
+          cursor: pointer;
+          height: 100%;
+          width: 80px;
+          list-style: none;
+          margin-right: 10px;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 14px;
+          line-height: 17px;
+          color: #6a6a6a;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: row;
+        }
+      }
+    }
+  }
+
+  .content-div {
+    // height: 400px;
+    display: grid;
+    grid-template-columns: 8fr 4fr;
+    grid-column-gap: 50px;
+    .left {
+      width: 100%;
+      padding: 30px 120px;
+      border-top: 1px solid #f2f2f2;
+      h4 {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 25px;
+        line-height: 24px;
+        color: #404040;
+      }
+
+      .host-details {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        .contact-host {
+          font-style: normal;
+          font-weight: bold;
+          font-size: 20px;
+          line-height: 24px;
+          color: #3a85fc;
+          margin-top: 18px;
         }
 
-        .img-showing-div{
-            margin-top: 50px;
-            width:100%;
-            display: grid;
-            grid-template-columns: 7fr 2fr;
-            grid-gap: 20px;
+        img {
+          margin-right: 20px;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          object-fit: contain;
+        }
+        i {
+          margin-right: 20px;
+          font-size: 50px;
+          color: #3a85fc;
+        }
+        div {
+          margin-right: 40px;
+          p {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 18px;
+            color: #404040;
+          }
+
+          strong {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 24px;
+            color: #404040;
+          }
+        }
+      }
+
+      .more-info {
+        margin-top: 30px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        // border:1px solid red;
+
+        .more-info-left {
+          p {
             // border:1px solid red;
-            .img{
-                width:100%;
-                
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 38px;
+            color: #404040;
+
+            i {
+              margin-right: 10px;
+              color: #404040;
             }
-
-            .img-big{
-                display:flex;
-                align-items:center;
-                justify-content:space-between;
-                flex-direction: row;
-                max-width: 90%;
-                height: 80vh;
-
-                img{
-                    width:90%;
-                    object-fit: cover;
-                }
-            }
-            
-
-            .img-side{
-                height: 70vh;
-                overflow-y: scroll;
-                border:1px solid black;
-                padding: 3px;
-                padding-left: 10px;
-
-                img{
-                    width:48%;
-                    // border:1px solid red;
-                    height: 100px;
-                    margin: 0 1% 3px 0;
-                    object-fit: cover;
-                    cursor: pointer;
-                }
-            }
-        }
-    }
-    .apartment_details {
-        width:100%;
-
-        .apartment-details-content{
-            // padding: 0 2%;
-            width:100%;
-            // margin-bottom: 100px;
+          }
         }
 
-        .image-div{
-            height: 500px !important;
+        img {
+          width: 100%;
+          height: 200px;
+        }
+      }
+
+      .rules {
+        margin-top: 50px;
+        width: 100%;
+
+        h3 {
+          margin-bottom: 10px;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 17px;
+          line-height: 24px;
+          color: #404040;
+        }
+
+        div {
+          width: 100%;
+          // height: 50px;
+          padding: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          flex-direction: row;
+          flex-wrap: wrap;
+          border-top: 1px solid #f2f2f2;
+          border-bottom: 1px solid #f2f2f2;
+        }
+
+        p {
+          padding: 7px;
+          border-radius: 5px;
+          margin-right: 10px;
+          background: #f2f2f2;
+          font-style: normal;
+          font-weight: normal;
+          margin-bottom: 10px;
+          font-size: 12px;
+          color: #6a6a6a;
+        }
+      }
+
+      .desc {
+        margin-top: 30px;
+        width: 100%;
+        h3 {
+          width: 100%;
+          margin-bottom: 20px;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 17px;
+          line-height: 24px;
+          color: #404040;
+        }
+
+        p {
+          width: 100%;
+          font-style: normal;
+          font-size: 14px;
+          line-height: 24px;
+          text-align: justify;
+          color: #404040;
+        }
+      }
+
+      .amenities {
+        margin-top: 30px;
+        padding: 25px 0;
+        border-top: 1px solid #f2f2f2;
+        width: 100%;
+
+        h4 {
+          font-style: normal;
+          font-weight: bold;
+          font-size: 17px;
+          line-height: 24px;
+          color: #404040;
+        }
+
+        div {
+          margin-top: 20px;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          p {
+            font-style: normal;
+            // font-weight: bold;
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 15px;
+            color: #404040;
+
+            i {
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+
+      .reviews {
+        width: 100%;
+        // border:1px solid red;
+
+        h3 {
+          margin: 20px 0;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 23px;
+          line-height: 24px;
+          color: #404040;
+        }
+
+        h4 {
+          font-size: 14px;
+          font-style: normal;
+          font-weight: bold;
+          line-height: 24px;
+          color: #404040;
+          span {
+            font-weight: normal;
+          }
+        }
+
+        .review-div {
+          width: 100%;
+          padding: 20px 0;
+          height: auto;
+          // margin-bottom: 20px;
+          border-bottom: 1px solid #ebebeb;
+
+          .reviewer-info {
             display: grid;
-            grid-template-columns: repeat(9, 1fr);
-            grid-template-rows:1fr 1fr;
-            grid-gap: 6px;
-            
-
-            img:hover{
-                transform: scale(1.02);
+            grid-template-columns: 1fr 12fr;
+            margin: 15px 0;
+            img {
+              height: 50px;
+              width: 50px;
+              border-radius: 50%;
             }
 
-            .img1{
-                grid-column: 1/5;
-                grid-row: 1/-1;
-                // border:1px solid red;
+            .rv-info-right {
+              .rv-name {
+                font-weight: bold;
+                font-style: normal;
+                font-size: 16px;
+                line-height: 28px;
+                color: #404040;
+              }
+              .rv-date {
+                font-style: normal;
+                font-weight: normal;
+                font-size: 15px;
+                color: #404040;
+              }
+            }
+          }
+          p,
+          a {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 28px;
+            color: #404040;
+            // font-family: Lato;
+          }
+          a {
+            color: #3a85fc;
+          }
+        }
+      }
+      .other-div {
+        width: 100%;
+        // border:1px solid red;
+
+        h3 {
+          margin: 20px 0;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 23px;
+          line-height: 24px;
+          color: #404040;
+        }
+
+        p {
+          font-size: 15px;
+          line-height: 28px;
+          color: #404040;
+
+          span {
+            font-weight: normal;
+          }
+        }
+
+        h4 {
+          margin: 20px 0;
+          margin-top: 50px;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 18px;
+          line-height: 16px;
+          color: #404040;
+        }
+      }
+    }
+
+    .right {
+      width: 100%;
+      height: auto;
+      margin-top: 20px;
+      padding-right: 120px;
+
+      .content {
+        position: sticky;
+        top: 9%;
+        height: auto;
+        width: 100%;
+        padding: 20px;
+        width: 100%;
+        border: 2px solid #f2f2f2;
+        border-radius: 3px;
+
+        .info {
+          width: 100%;
+          border-bottom: 1px solid #f2f2f2;
+          padding-bottom: 20px;
+
+          h4 {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 24px;
+            color: #404040;
+
+            span {
+              font-style: normal;
+              font-weight: normal;
+              font-size: 15px;
+              line-height: 18px;
+
+              color: #404040;
+            }
+          }
+          small {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 12px;
+            color: #404040;
+          }
+        }
+
+        .book {
+          width: 100%;
+          margin-top: 10px;
+          label {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 10px;
+            line-height: 12px;
+            color: #404040;
+          }
+
+          .dates {
+            width: 100%;
+            height: 50px;
+            margin-top: 3px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            div {
+              height: 100%;
+              font-style: normal;
+              font-weight: normal;
+              font-size: 14px;
+              line-height: 18px;
+              padding: 0 10px;
+              border: 1px solid rgba(106, 106, 106, 0.3);
+              color: rgba(64, 64, 64, 0.7);
+
+              display: flex;
+              align-items: flex-start;
+              justify-content: center;
+              flex-direction: column;
+            }
+          }
+
+          .book-guest {
+            align-items: center;
+            // border:1px solid red;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+
+            p {
+              font-style: normal;
+              font-size: 14px;
+              line-height: 12px;
+              color: #797878;
+              border: 1px solid #d4d4d4;
+              height: 50px;
+              padding: 0 10px;
+              display: flex;
+              align-items: center;
+              margin-right: 10px;
             }
 
-            .img2{
-                grid-column: 5/7;
-                grid-row: 1/2;
-                // border:1px solid red;
-            }
+            .btns {
+              // border:1px solid red;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              flex-direction: row;
 
-            .img3{
-                grid-column: 5/7;
-                grid-row: 2/-1;
-                // border:1px solid red;
-            }
-
-            .img4{
-                grid-column: 7/-1;
-                grid-row: 1/-1;
-                // img{
-                //     // display: none;
-                // }
-
-                p{
-                    background: black;
-                    color:white;
-                    padding: 5px 15px;
-                    font-size: 12px;
-                    border-radius: 5px;
-                    position: relative;
-                    float: right;
-                    bottom: 10%;
-                    // width: 100px;
-                    margin-right: 20px;
-                    z-index: 9999;
-                }
-                
-            }
-
-            .img-item{
-                // border:1px solid red;
-                width:100%;
-                min-height: 100%;
-                object-fit: cover;
-                transition: all .4s ease-in-out; 
+              button {
                 cursor: pointer;
-
-                img{
-                    transition: all .4s ease-in-out; 
-                    width:100%;
-                    height: 100%;
-                    // border:1px solid red;
-                }
-            }
-        }
-
-        .details-div{
-            width:100%;
-            padding: 0 0px;
-
-            .tap-div{
+                width: 40px;
+                height: 40px;
+                border: 1.5px solid #3a85fc;
+                border-radius: 50%;
                 background: #fff;
-                box-shadow: 1px 2px 2px rgb(218, 217, 217);
-                z-index: 999;
-                padding: 0 70px;
-                height: 50px;
-                position: sticky;
-                top: 0;
-                ul{
-                    height: 100%;
-                    //  border:1px solid red;
-                     padding: 0;
-                     display: flex;
-                     align-items: center;
-
-                     li{
-                        cursor: pointer;
-                        height: 100%;
-                        width:80px;
-                        list-style: none;
-                        margin-right: 10px;
-                        font-style: normal;
-                        font-weight: normal;
-                        font-size: 14px;
-                        line-height: 17px;
-                        color: #6A6A6A;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        flex-direction: row;
-                     }
+                margin-right: 10px;
+                font-size: 12px;
+                font-weight: bold;
+                color: #3a85fc;
+                i {
+                  color: #3a85fc;
                 }
+              }
+              button:focus {
+                outline: none;
+              }
             }
+          }
+
+          .price-info {
+            width: 100%;
+            margin-top: 20px;
+
+            div {
+              display: grid;
+              grid-template-columns: 3fr 1fr;
+              border-bottom: 1px solid #d4d4d4;
+              p {
+                font-style: normal;
+                font-size: 15px;
+                line-height: 24px;
+                text-align: justify;
+                color: #404040;
+                height: 30px;
+                margin-right: 10px;
+                margin-top: 10px;
+              }
+              .p {
+                text-align: right;
+              }
+            }
+            .total {
+              p {
+                font-weight: bold;
+                // font-family: 'Roboto'
+              }
+            }
+          }
+
+          .small {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 10px;
+            width: 100%;
+            line-height: 12px;
+            text-align: center;
+            color: #404040;
+            margin-top: 10px;
+          }
         }
-
-        .content-div{
-            // height: 400px;
-            display: grid;
-            grid-template-columns: 8fr 4fr;
-            grid-column-gap: 50px;
-            .left{
-                width:100%;
-                padding: 30px 120px;
-                border-top: 1px solid #F2F2F2;
-                h4{
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 25px;
-                    line-height: 24px;
-                    color: #404040;
-
-                }
-
-                .host-details{
-                    margin-top: 20px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-start;
-
-                    .contact-host{
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 20px;
-                        line-height: 24px;
-                        color: #3A85FC;
-                        margin-top: 18px;
-                    }
-
-                    img{
-                        margin-right: 20px;
-                        width: 60px;
-                        height: 60px;
-                        border-radius: 50%;
-                        object-fit: contain;
-                    }
-                    i{
-                        margin-right: 20px;
-                        font-size: 50px;
-                        color:#3A85FC
-                    }
-                    div{
-                        margin-right: 40px;
-                     p{
-                        font-style: normal;
-                        font-weight: normal;
-                        font-size: 15px;
-                        line-height: 18px;
-                        color: #404040;
-                    }
-
-                    strong{
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 20px;
-                        line-height: 24px;
-                        color: #404040;
-                    }
-                   }
-                }
-
-                .more-info{
-                    margin-top: 30px;
-                    width:100%;
-                    display: grid;
-                    grid-template-columns: 2fr 3fr;
-                    // border:1px solid red;
-
-                    .more-info-left{
-                        p{
-                        // border:1px solid red;
-                        font-style: normal;
-                        font-weight: normal;
-                        font-size: 15px;
-                        line-height: 38px;
-                        color: #404040;
-
-
-                        i{
-                            margin-right: 10px;
-                            color:#404040;
-                        }
-                    }
-                    }
-
-                    img{
-                        width:100%;
-                        height: 200px;
-                    }
-                }
-
-                .rules{
-                    margin-top: 50px;
-                    width:100%;
-                    
-                    h3{
-                        margin-bottom: 10px;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 17px;
-                        line-height: 24px;
-                        color: #404040;
-                    }
-
-                    div{
-                        width:100%;
-                        // height: 50px;
-                        padding: 20px;
-                        display:flex;
-                        align-items:center;
-                        justify-content:flex-start;
-                        flex-direction: row;
-                        flex-wrap: wrap;
-                        border-top: 1px solid #F2F2F2;
-                        border-bottom: 1px solid #F2F2F2;
-                    }
-
-
-                    p{
-                        padding: 7px;
-                        border-radius: 5px;
-                        margin-right: 10px;
-                        background: #F2F2F2;
-                        font-style: normal;
-                        font-weight: normal;
-                        margin-bottom: 10px;
-                        font-size: 12px;
-                        color: #6A6A6A;
-                    }
-                }
-
-                .desc{
-                    margin-top: 30px;
-                    width:100%;
-                    h3{
-                        width:100%;
-                        margin-bottom: 20px;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 17px;
-                        line-height: 24px;
-                        color: #404040;
-                    }
-
-                    p{
-                        width:100%;
-                        font-style: normal;
-                        font-size: 14px;
-                        line-height: 24px;
-                        text-align: justify;
-                        color: #404040;
-                    }
-                }
-
-                .amenities{
-                    margin-top: 30px;
-                    padding: 25px 0;
-                    border-top: 1px solid #F2F2F2;
-                    width:100%;
-
-                    h4{
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 17px;
-                        line-height: 24px;
-                        color: #404040;
-                    }
-
-                    div{
-                        margin-top: 20px;
-                        display: grid;
-                        grid-template-columns: repeat(3, 1fr);
-                        p{
-                        font-style: normal;
-                        // font-weight: bold;
-                        font-size: 16px;
-                        line-height: 24px;
-                        margin-bottom: 15px;
-                        color: #404040;
-
-                        i{
-                            margin-right: 10px;
-                        }
-                    }
-                    }
-                    
-
-                    
-                }
-
-                .reviews{
-                    width:100%;
-                    // border:1px solid red;
-
-                    h3{
-                        margin: 20px 0;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 23px;
-                        line-height: 24px;
-                        color: #404040;
-                    }
-
-                    h4{
-                        font-size: 14px;
-                        font-style: normal;
-                        font-weight: bold;
-                        line-height: 24px;
-                        color: #404040;
-                        span{
-                            font-weight: normal;
-                        }
-                    }
-
-                    .review-div{
-                        width:100%;
-                        padding: 20px 0; 
-                        height: auto;
-                        // margin-bottom: 20px;
-                        border-bottom:1px solid #EBEBEB;
-
-                        .reviewer-info{
-                            display: grid;
-                            grid-template-columns: 1fr 12fr;
-                            margin: 15px 0;
-                            img{
-                                height: 50px;
-                                width: 50px;
-                                border-radius: 50%;
-                            }
-
-                            .rv-info-right{
-                               
-                                .rv-name{
-                                    font-weight: bold;
-                                    font-style: normal;
-                                    font-size: 16px;
-                                    line-height: 28px;
-                                    color: #404040;
-                                }
-                                .rv-date{
-                                    font-style: normal;
-                                    font-weight: normal;
-                                    font-size: 15px;
-                                    color: #404040;
-                                }
-                            }
-                        }
-                        p, a{
-                            font-style: normal;
-                            font-weight: normal;
-                            font-size: 15px;
-                            line-height: 28px;
-                            color: #404040;
-                            // font-family: Lato;
-                        }
-                        a{
-                            color: #3A85FC;
-                        }
-                    }
-
-
-                }
-                .other-div{
-                        width:100%;
-                        // border:1px solid red;
-
-                        h3{
-                        margin: 20px 0;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 23px;
-                        line-height: 24px;
-                        color: #404040;
-                    }
-
-                    p{
-                        font-size: 15px;
-                        line-height: 28px;
-                        color: #404040;
-
-                        span{
-                            font-weight: normal;
-                        }
-                    }
-
-                    h4{
-                       
-                        margin: 20px 0;
-                         margin-top: 50px;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 18px;
-                        line-height: 16px;
-                        color: #404040;
-                    }
-                }
-            }
-
-            .right{
-                width:100%;
-                height: auto;
-                margin-top: 20px;
-                padding-right: 120px;
-
-                .content{
-                    position: sticky;
-                    top: 9%;
-                    height: auto;
-                    width:100%;
-                    padding: 20px;
-                    width:100%;
-                    border:2px solid #F2F2F2;
-                    border-radius: 3px;
-
-
-                    .info{
-                        width:100%;
-                        border-bottom: 1px solid #F2F2F2;
-                        padding-bottom: 20px;
-
-                        h4{
-                            font-style: normal;
-                            font-weight: bold;
-                            font-size: 20px;
-                            line-height: 24px;
-                            color: #404040;
-
-                            span{
-                                font-style: normal;
-                                font-weight: normal;
-                                font-size: 15px;
-                                line-height: 18px;
-
-                                color: #404040;
-                            }
-                        }
-                        small{
-                            font-style: normal;
-                            font-weight: 500;
-                            font-size: 10px;
-                            line-height: 12px;
-                            color: #404040;
-                        }
-
-                        
-
-                    }
-
-                    .book{
-                        width:100%;
-                        margin-top: 10px;
-                        label{
-                            font-style: normal;
-                            font-weight: bold;
-                            font-size: 10px;
-                            line-height: 12px;
-                            color: #404040;
-                        }
-
-                        .dates{
-                            width:100%;
-                            height: 50px;
-                            margin-top: 3px;
-                            display: grid;
-                            grid-template-columns: 1fr 1fr;
-
-                            div{
-                                height: 100%;
-                                font-style: normal;
-                                font-weight: normal;
-                                font-size: 14px;
-                                line-height: 18px;
-                                padding: 0 10px;
-                                border:1px solid rgba(106, 106, 106, 0.3);
-                                color: rgba(64, 64, 64, 0.7);
-
-                                display:flex;
-                                align-items:flex-start;
-                                justify-content:center;
-                                flex-direction: column;
-                            }
-                        }
-
-                        .book-guest{
-                            align-items: center;
-                            // border:1px solid red;
-                            display: grid;
-                            grid-template-columns: 2fr 1fr;
-
-                            p{
-                                    font-style: normal;
-                                    font-size: 14px;
-                                    line-height: 12px;
-                                    color: #797878;
-                                    border:1px solid #d4d4d4;;
-                                    height: 50px;
-                                    padding: 0 10px;
-                                    display: flex;
-                                    align-items: center;
-                                    margin-right: 10px;
-                                }
-
-                            .btns{
-                                // border:1px solid red;
-                                height: 100%;
-                                display:flex;
-                                align-items:center;
-                                justify-content:space-between;
-                                flex-direction: row;
-                                
-                                button{
-                                    cursor: pointer;
-                                    width: 40px;
-                                    height: 40px;
-                                    border: 1.5px solid #3A85FC;
-                                    border-radius: 50%;
-                                    background: #fff;
-                                    margin-right: 10px;
-                                    font-size: 12px;
-                                    font-weight: bold;
-                                    color: #3A85FC;
-                                    i{
-                                        color: #3A85FC;
-                                    }
-                                }
-                                button:focus{
-                                    outline: none;
-                                }
-                            }
-                        }
-
-                        .price-info{
-                            width:100%;
-                            margin-top: 20px;
-
-
-                            div{
-                                display: grid;
-                                grid-template-columns: 3fr 1fr;
-                                border-bottom:1px solid #d4d4d4;;
-                                p{
-                                    font-style: normal;
-                                    font-size: 15px;
-                                    line-height: 24px;
-                                    text-align: justify;
-                                    color: #404040;
-                                    height: 30px;
-                                    margin-right: 10px;
-                                    margin-top: 10px;
-
-                                }
-                                .p{
-                                    text-align: right;
-                                }
-                            }
-                            .total{
-                                p{
-                                    font-weight: bold;
-                                    // font-family: 'Roboto'
-                                }
-                            }
-                        }
-
-                        .small{
-                            font-style: normal;
-                            font-weight: bold;
-                            font-size: 10px;
-                            width:100%;
-                            line-height: 12px;
-                            text-align: center;
-                            color: #404040;
-                            margin-top: 10px;
-                        }
-                    }
-                }
-            }
-        }
+      }
     }
+  }
+}
 
-    .safari-img-fit{
-    min-height: 100%;
-    max-width: 100%;
+.safari-img-fit {
+  min-height: 100%;
+  max-width: 100%;
 }
 </style>
