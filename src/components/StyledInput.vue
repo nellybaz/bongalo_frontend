@@ -97,6 +97,7 @@ export default {
                 color: #3A85FC;
             }
             input{
+                font-family: 'Inter', sans-serif;
                 width:100%;
                 height: 45px;
                 border: 1px solid rgba(106, 106, 106, 0.5);
@@ -109,9 +110,10 @@ export default {
 
             input:focus{
                 outline: none;
-            }
+            } 
 
             textarea{
+                font-family: 'Inter', sans-serif;
                 width:100%;
                 border: 1px solid rgba(106, 106, 106, 0.5);
                 border-radius: 5px;
