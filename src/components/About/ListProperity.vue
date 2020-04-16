@@ -16,7 +16,6 @@ export default {};
   height: 500px;
   width: 100%;
   margin-top: 50px;
-  margin-bottom: 5%;
   background: url(../../assets/images/middle-banner.png);
   display: flex;
   align-items: center;

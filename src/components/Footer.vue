@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <img :src="require(`../assets/images/footer-logo.png`)" alt="" />
+    <img :src="require(`../assets/images/bongalo_left_icon.png`)" alt="" />
 
     <div class="content">
       <div class="content-item">
@@ -147,11 +147,11 @@ export default {
   border-top: 1px solid #f6faff;
   padding: 40px 80px;
   background-color: #f6faff;
-  margin-top: 10px;
+  // margin-top: 10px;
 
   img {
-    width: 106px;
-    height: 55px;
+    // width: 106px;
+    height: 30px;
   }
 
   .content {
