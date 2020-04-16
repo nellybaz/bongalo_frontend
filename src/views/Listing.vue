@@ -79,7 +79,6 @@
                          
                          <div class="action-section">
                              <div></div>
-                             <!-- <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button> -->
                              <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
                          </div>
                      </div>
@@ -148,7 +147,6 @@
                         <Paragraph text="Country" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                         
                        <Select @selectChangeHandler="handleSelect" step="property_country" :options="countries" width="100%" model=""></Select>
-                        <!-- <Input @inputHandler="handleInput" :isFullWidth="false" step="property_country" type="text" class="input" hint="Country"/> -->
                         
                         <small class="listing-error" v-if="showErrors && checkIfShouldShowError('property_country')">
                             *{{
@@ -172,7 +170,6 @@
                             <div>
                                 <Paragraph text="City" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
                                 <Select @selectChangeHandler="handleSelect" step="property_city" :options="cities" width="100%" model=""></Select>
-                                <!-- <Input @inputHandler="handleInput" step="property_city" type="text" :isFullWidth="true" class="input" hint="City"/> -->
                                 <small class="listing-error" v-if="showErrors && checkIfShouldShowError('property_city')">
                                     *{{
                                         errorList['property_city']
@@ -180,11 +177,6 @@
                                     
                                 </small>
                             </div>
-                            
-                            <!-- <div>
-                                <Paragraph text="Province" size="16" weight="" color="rgba(64, 64, 64, 0.7)"></Paragraph>
-                                <Input @inputHandler="handleInput" step="property_province" type="text" :isFullWidth="true" class="input" hint="Province"/>
-                            </div> -->
                         </div>
 
                          <div class="action-section">
@@ -342,31 +334,11 @@
 
                         <input @change="handleInput({data:steps.two.title, step:'title'})" v-model="steps.two.title" class="listing-name" type="text" placeholder="Best room in Arts Gallery, Kigali">
                     
-                        <!-- <Input :isFullWidth="true"  hint="Best room in Arts Gallery, Kigali/> -->
                          <div class="action-section">
                              <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
                              <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
                          </div>
                      </div>
-
-
-                     <!-- <div v-if="flow == 4" >
-                         <Paragraph text="Add your mobile number" size="26" weight="bold" color="#404040"></Paragraph>
-
-                        <br>
-                        <br>
-                        <input @change="handleInput({data:steps.two.mobile_number, step:'mobile_number'})" v-model="steps.two.mobile_number" class="listing-name" type="text" placeholder="Enter phone number">
-                        <br>
-                        <br>
-
-                        <Button :isFullWidth="false" v-on:handleClick="alert('SMS verification sent')" label="Verify Number" width="200px"></Button>
-                    
-                         <div class="action-section">
-                             <button class="button" v-on:click="processSteps(0)"> <i class="fas fa-chevron-left"></i> Back</button>
-                             <Button :isFullWidth="false"  v-on:handleClick="processSteps(1)" label="Next" width="120px"></Button>
-                         </div>
-                     </div> -->
-
                      <div v-if="flow == 4">
                           
                          <h1>
