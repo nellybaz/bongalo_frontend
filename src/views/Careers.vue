@@ -16,7 +16,7 @@
                     </p>
                </div>
                <div class="right">
-                   <img src="../assets/images/careers_img.png">
+                   <img src="../assets/images/careers_img.png" alt="bongalo-careers">
                </div>
            </div>
 

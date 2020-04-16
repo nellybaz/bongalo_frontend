@@ -40,7 +40,7 @@ import Navigation from '../components/Blog/Navigation';
 import ImageGrid from '../components/ImageGrid';
 import EventsInfo from '../components/EventsInfo';
 import Button from '../components/Button';
-import EventCard from '../components/EventCard';
+
 
 export default {
      name:'experience',
@@ -49,7 +49,6 @@ export default {
          EventsInfo,
          Button,
          Navigation,
-        //  EventCard
      },
      data: function(){
          return {

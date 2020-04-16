@@ -39,7 +39,12 @@
           <h2 id="dashboard">Profile</h2>
           <div class="top">
             <div :style="getProfileImage()" class="icon-div">
-              <input @change="handleProfileSelect" :v-model="backgroundFile" id="p-pic" type="file" />
+              <input
+                @change="handleProfileSelect"
+                :v-model="backgroundFile"
+                id="p-pic"
+                type="file"
+              />
               <label for="p-pic">
                 <i class="fas fa-camera" title="Update profile image"></i>
               </label>
@@ -47,30 +52,59 @@
           </div>
 
           <div class="mid">
-            <StyledInput @sendInput="handleFName" :value=" getUserInfo() != null ? getUserInfo().first_name: ''" type="text" placeholder="First name" label="FULL NAME" />
-            <StyledInput @sendInput="handleLName" :value="getUserInfo().last_name" type="text" placeholder="Last name" label="LAST NAME" />
+            <StyledInput
+              @sendInput="handleFName"
+              :value="getUserInfo() != null ? getUserInfo().first_name : ''"
+              type="text"
+              placeholder="First name"
+              label="FULL NAME"
+            />
+            <StyledInput
+              @sendInput="handleLName"
+              :value="getUserInfo().last_name"
+              type="text"
+              placeholder="Last name"
+              label="LAST NAME"
+            />
             <!-- <StyledInput type="text" placeholder="ichieuche@gmail.com" label="EMAIL ADDRESS" /> -->
             <!-- <StyledInput type="text" placeholder="Nigeria" label="NATIONALITY" /> -->
-            <StyledInput @sendInput="handlePhone" :value="getUserInfo().phone_number" type="text" placeholder="Enter phone" label="PHONE NUMBER" />
+            <StyledInput
+              @sendInput="handlePhone"
+              :value="getUserInfo().phone_number"
+              type="text"
+              placeholder="Enter phone"
+              label="PHONE NUMBER"
+            />
 
             <!-- <div class="file-select">
               <label for="select-below">UPLOAD VERIFICATION</label>
               <br />
               <br />
               <input type="file" id="select-below" />
-            </div> -->
+            </div>-->
           </div>
 
           <br />
           <div class="bottom">
-            <StyledInput @sendInput="handleDesc" :value="getUserInfo().description" :isTextArea="true" type="text" placeholder label="DESCRIPTION" />
+            <StyledInput
+              @sendInput="handleDesc"
+              :value="getUserInfo().description"
+              :isTextArea="true"
+              type="text"
+              placeholder
+              label="DESCRIPTION"
+            />
           </div>
 
           <br />
           <br />
           <br />
           <div class="btn-div">
-            <Button @handleClick="updateUser" :isFullWidth="false" label="UPDATE PROFILE" />
+            <Button
+              @handleClick="updateUser"
+              :isFullWidth="false"
+              label="UPDATE PROFILE"
+            />
           </div>
 
           <div id="favourite-section" class="fav-section">
@@ -81,156 +115,191 @@
         </div>
 
         <div v-else-if="showId == 2">
-            <h2>My Listings</h2>
-            <br>
-            <br>
+          <h2>My Listings</h2>
+          <br />
+          <br />
 
-            <div v-for="listing in getUserListing()" :key="listing.title" class="listing-card">
-                <img :src="listing.main_image" alt="">
-                <div>
-                    <input class="aprtment-title" type="text" :value="listing.title">
-                    <br>
-                <textarea v-model="listing.description" cols="60" rows="10">
-                    
-                </textarea>
-                    <br>
-                    <label >Price</label>
-                    <input class="aprtment-price" type="text" :value="listing.price">
-                    <br>
-                    <section>
-                        <button @click="addImages('uuid')">
-                        Update
-                    </button>
-                        <!-- <button @click="addImages('uuid')">
+          <div
+            v-for="listing in getUserListing()"
+            :key="listing.title"
+            class="listing-card"
+          >
+            <img :src="listing.main_image" alt />
+            <div>
+              <input
+                class="aprtment-title"
+                type="text"
+                :value="listing.title"
+              />
+              <br />
+              <textarea
+                v-model="listing.description"
+                cols="60"
+                rows="10"
+              ></textarea>
+              <br />
+              <label>Price</label>
+              <input
+                class="aprtment-price"
+                type="text"
+                :value="listing.price"
+              />
+              <br />
+              <section>
+                <button @click="addImages('uuid')">Update</button>
+                <!-- <button @click="addImages('uuid')">
                         Add more images
-                    </button> -->
-                     <button @click="deleteListing(listing.uuid)">
-                        Remove
-                    </button>
-                    </section>
-                </div>
+                </button>-->
+                <button @click="deleteListing(listing.uuid)">Remove</button>
+              </section>
             </div>
+          </div>
         </div>
 
         <div v-else-if="showId == 3">
-            <h2>Add payment method</h2>
+          <h2>Add payment method</h2>
 
-            <br><br>
-            <h3>Mobile Money Number</h3>
-            <br><br>
-            <strong>Current:</strong>
-            <p>
-              {{
-                paymentNumber
-              }}
-            </p>
-            <br>
-            <StyledInput @sendInput="handleInput" :value="paymentNumber" type="text" placeholder="Enter mobile money number" label="MOBILE MONEY NUMBER" />
-            <br>
-            <Button @handleClick="addPaymentNumber" :isFullWidth="false" label="Save"/>
+          <br />
+          <br />
+          <h3>Mobile Money Number</h3>
+          <br />
+          <br />
+          <strong>Current:</strong>
+          <p>{{ paymentNumber }}</p>
+          <br />
+          <StyledInput
+            @sendInput="handleInput"
+            :value="paymentNumber"
+            type="text"
+            placeholder="Enter mobile money number"
+            label="MOBILE MONEY NUMBER"
+          />
+          <br />
+          <Button
+            @handleClick="addPaymentNumber"
+            :isFullWidth="false"
+            label="Save"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
 
-
 <script>
 import Navigation from "../components/Blog/Navigation";
 import StyledInput from "../components/StyledInput";
 import Button from "../components/Button";
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "",
   data: function() {
     return {
-        user_description:'',
-        firstName:'',
-        lastName: '',
-        phoneNumber: '',
-        listing:{
-        paymentNumber: '',
-        title:'',
-        description:''
+      user_description: "",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      listing: {
+        paymentNumber: "",
+        title: "",
+        description: "",
       },
 
       showId: 1,
       backgroundUrl: "https://freesvg.org/img/abstract-user-flat-3.png",
-      backgroundFile: null
+      backgroundFile: null,
     };
   },
   methods: {
-    getUserValue(intent){
-      return "ne"
-        // if(intent == 1){
-        //   this.phoneNumber = this.getUserInfo().phone_number
-        //   return this.phoneNumber
-        // }
+    getUserValue(intent) {
+      return "ne";
+      // if(intent == 1){
+      //   this.phoneNumber = this.getUserInfo().phone_number
+      //   return this.phoneNumber
+      // }
     },
-    handleFName(val){
-      this.firstName = val
+    handleFName(val) {
+      this.firstName = val;
     },
-    handleLName(val){
-      this.lastName = val
+    handleLName(val) {
+      this.lastName = val;
     },
-    handleDesc(val){
-      this.user_description = val
+    handleDesc(val) {
+      this.user_description = val;
     },
-    handlePhone(val){
-      this.phoneNumber = val
+    handlePhone(val) {
+      this.phoneNumber = val;
     },
 
-    handleInput(val){
-      this.paymentNumber = val
+    handleInput(val) {
+      this.paymentNumber = val;
     },
-    updateUser(){
-      this.$store.dispatch('updateUserInfo', 
-      {
-      last_name:this.lastName, 
-      first_name:this.firstName, 
-      phone:this.phoneNumber, 
-      token:this.getToken(), 
-      user:this.getUuid(), 
-      description:this.user_description
-      })
-      .then(res => {
-        if(res == 1){
-           this.$notify({
-              group: 'general',
-              title: 'Payment Info',
-              text: 'User profile updated successfully!',
-              type:'success'
-              });
-        }
-      })
+    updateUser() {
+      this.$store
+        .dispatch("updateUserInfo", {
+          last_name: this.lastName,
+          first_name: this.firstName,
+          phone: this.phoneNumber,
+          token: this.getToken(),
+          user: this.getUuid(),
+          description: this.user_description,
+        })
+        .then((res) => {
+          if (res == 1) {
+            this.$notify({
+              group: "general",
+              title: "Payment Info",
+              text: "User profile updated successfully!",
+              type: "success",
+            });
+          }
+        });
     },
-    addPaymentNumber(){
-      this.$store.dispatch('addPaymentMethod', {user:this.getUuid(), momo_number:this.paymentNumber})
-      .then(res => {
-        if(res == 1){
-             this.$notify({
-                group: 'general',
-                title: 'Payment Info',
-                text: 'Payment Method updated successfully!',
-                type:'success'
-                });
+    addPaymentNumber() {
+      this.$store
+        .dispatch("addPaymentMethod", {
+          user: this.getUuid(),
+          momo_number: this.paymentNumber,
+        })
+        .then((res) => {
+          if (res == 1) {
+            this.$notify({
+              group: "general",
+              title: "Payment Info",
+              text: "Payment Method updated successfully!",
+              type: "success",
+            });
 
-            // this.addPaymentNumber = 
-        }
-      })
+            // this.addPaymentNumber =
+          }
+        });
     },
-    deleteListing(apartmentUuid){
-      window.console.log("delete clicked")
-      this.$store.dispatch('deleteUserListing', {user:this.getUuid(), token:this.getToken(), apartment:apartmentUuid})
-      .then(res => {
-        this.$store.dispatch('getUserListing',{uuid:this.getUuid(), token:this.getToken()})
-      })
+    deleteListing(apartmentUuid) {
+      window.console.log("delete clicked");
+      this.$store
+        .dispatch("deleteUserListing", {
+          user: this.getUuid(),
+          token: this.getToken(),
+          apartment: apartmentUuid,
+        })
+        .then((res) => {
+          this.$store.dispatch("getUserListing", {
+            uuid: this.getUuid(),
+            token: this.getToken(),
+          });
+        });
     },
-      ...mapGetters(['getUuid', 'getToken', 'getUserListing', 'getUserPaymentNumber', 'getUserInfo']),
-      addImages(uuid){
-          // Add images to this apartment
-      },
+    ...mapGetters([
+      "getUuid",
+      "getToken",
+      "getUserListing",
+      "getUserPaymentNumber",
+      "getUserInfo",
+    ]),
+    addImages(uuid) {
+      // Add images to this apartment
+    },
     handleWhatShows(intent) {
       this.showId = intent;
     },
@@ -239,63 +308,73 @@ export default {
       this.backgroundUrl = URL.createObjectURL(e.target.files[0]);
       // TODO: Dispatch action to update profile picture
 
-       // Data should have uuid, token and image object
+      // Data should have uuid, token and image object
       let data = {
-          uuid: this.getUuid(),
-          token: this.getToken(),
-          imageObject: e.target.files[0]
-      }
-      this.$store.dispatch('updateImage', data)
-      .then(res => {
-          this.$notify({
-            group: 'general',
-            title: 'Info !!',
-            text: 'Your image is uploaded successfully',
-            type: 'success'
-            });
-            window.location.reload()
-          
-      })
+        uuid: this.getUuid(),
+        token: this.getToken(),
+        imageObject: e.target.files[0],
+      };
+      this.$store.dispatch("updateImage", data).then((res) => {
+        this.$notify({
+          group: "general",
+          title: "Info !!",
+          text: "Your image is uploaded successfully",
+          type: "success",
+        });
+        window.location.reload();
+      });
     },
     getProfileImage() {
-      return window.localStorage.getItem("profile_image") ? "background-image:" +"url("+ window.localStorage.getItem("profile_image") + ")": "background-image:" + "url(" + this.backgroundUrl + ")";
-    }
+      return window.localStorage.getItem("profile_image")
+        ? "background-image:" +
+            "url(" +
+            window.localStorage.getItem("profile_image") +
+            ")"
+        : "background-image:" + "url(" + this.backgroundUrl + ")";
+    },
   },
   components: {
     Navigation,
     StyledInput,
-    Button
+    Button,
   },
 
-  created(){
-      this.$store.dispatch('getUserListing',{ uuid:this.getUuid(), token:this.getToken() })
-      this.$store.dispatch('getPaymentMethod', { uuid:this.getUuid(),  token:this.getToken()})
-      .then(res => {
-        if(res == 1){
-          this.paymentNumber = this.getUserPaymentNumber()
+  created() {
+    this.$store.dispatch("getUserListing", {
+      uuid: this.getUuid(),
+      token: this.getToken(),
+    });
+    this.$store
+      .dispatch("getPaymentMethod", {
+        uuid: this.getUuid(),
+        token: this.getToken(),
+      })
+      .then((res) => {
+        if (res == 1) {
+          this.paymentNumber = this.getUserPaymentNumber();
+        }
+      });
+
+    this.$store
+      .dispatch("getUserInfo", { uuid: this.getUuid(), token: this.getToken() })
+      .then((res) => {
+        if (res == 1) {
+          window.console.log(this.getUserInfo());
+          window.console.log("user info above");
+          this.firstName = this.getUserInfo().first_name;
+          this.lastName = this.getUserInfo().last_name;
+          this.user_description = this.getUserInfo().description;
+          this.phoneNumber = this.getUserInfo().phone_number;
         }
       })
-
-    this.$store.dispatch('getUserInfo', { uuid:this.getUuid(), token:this.getToken() })
-    .then(res => {
-      if (res == 1){
-        window.console.log(this.getUserInfo())
-        window.console.log("user info above")
-        this.firstName = this.getUserInfo().first_name
-        this.lastName = this.getUserInfo().last_name
-        this.user_description = this.getUserInfo().description
-        this.phoneNumber = this.getUserInfo().phone_number
-      }
-    })
-    .catch(err => {
-      window.console.log(err)
-    })
-  }
+      .catch((err) => {
+        window.console.log(err);
+      });
+  },
 };
 </script>
 
-
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .profile {
   width: 100%;
 
@@ -389,45 +468,44 @@ export default {
     }
 
     .right {
-        .listing-card{
-            margin-bottom: 20px;
-            width:100%;
-            height: 350px;
-            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
-            background-color: #F6FAFF;
-            border-radius: 5px;
-            display: grid;
-            grid-template-columns: 3fr 7fr;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            cursor: pointer;
+      .listing-card {
+        margin-bottom: 20px;
+        width: 100%;
+        height: 350px;
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
+        background-color: #f6faff;
+        border-radius: 5px;
+        display: grid;
+        grid-template-columns: 3fr 7fr;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        cursor: pointer;
 
-            img{
-                width:100%;
-                border-radius: 5px;
-                height: 100%;
-                object-fit: cover
-
-            }
-
-            div{
-                display:flex;
-                align-items:flex-start;
-                justify-content:flex-start;
-                flex-direction: column;
-                // border:1px solid red;
-                height: 100%;
-                padding: 20px;
-                p{
-                    color: #777777
-                }
-                .price-p{
-                    font-size: 20px;
-                    font-weight: bold
-                }
-            }
+        img {
+          width: 100%;
+          border-radius: 5px;
+          height: 100%;
+          object-fit: cover;
         }
+
+        div {
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;
+          flex-direction: column;
+          // border:1px solid red;
+          height: 100%;
+          padding: 20px;
+          p {
+            color: #777777;
+          }
+          .price-p {
+            font-size: 20px;
+            font-weight: bold;
+          }
+        }
+      }
       h2 {
         font-style: normal;
         font-weight: bold;

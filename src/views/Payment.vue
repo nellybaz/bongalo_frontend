@@ -55,7 +55,6 @@
            <small>You will receieve an email of the booking details plus contact of the house owner</small>
            <br>
            <br>
-           <!-- <i class="fas fa-clipboard-check"></i> -->
            <i class="far fa-check-circle"></i>
 
 

@@ -3,15 +3,24 @@
     <div class="inner-content">
       <div>
         <h2>Who are we</h2>
-        <p>Bongalo Rwanda is Rwanda’s premier company in accommodation, property management, and consultation. We are a passionate and diverse team of young people who understand the needs and wants of every traveller visiting Rwanda and looking for where to stay. Looking to book for a place to stay in Rwanda, that influence your comfort and price, we are here for just that. We know that your residential home or vacation home plays a vital role in your life; it is where you build memories. With Bongalo Rwanda, you can book rooms in apartments, and an entire apartment for either a long or short stay. We dedicate time to find the apartments and list on our platform, ensuring its authenticity and credibility. We get you the finest and luxurious homes at amazing prices.</p>
+        <p>
+          We are a passionate and diverse team of young people from across multiple African countries, who understand the needs and wants of every traveller across the continent, looking for where to stay. Our team is a prove of our travel experience as each team member has travelled an average of two countries in Africa. 
+          <br> <br>
+          We exist to grow together and cultivate Africa’s growing travel industry and experience, a place where people can find the best accommodation tailored to their needs, hosts profiles and shared interests
+          Looking to book for a place to stay that influence your comfort and price? We are here for just that. With Bongalo, you can book rooms in apartments, and an entire apartment for either a long or short stay. We dedicate time to verify all listings before approving it on our platform, ensuring its authenticity and credibility. We get you the finest, comfortable and affordable homes on your trips at amazing prices.
+        </p>
       </div>
       <div>
         <h2>Our Vision</h2>
-        <p>Our vision is to ensure every travellers across Africa finds a place to stay at affordable cost by</p>
+        <p>
+          Empower Africans to travel across the continent and beyond.
+        </p>
         <br />
         <div>
           <h2>Our Mission</h2>
-          <p>Contribute to the growth of Rwanda through our service delivery in the real estate</p>
+          <p>
+            Connect travellers to affordable, comfortable and most convenient accommodation options across Africa and beyond.
+          </p>
         </div>
       </div>
     </div>
@@ -21,16 +30,23 @@
     </div>
     <div class="inner-content2">
       <div class="inner-content-div">
-        <h2>Intergrity</h2>
-        <p>Our team will always provide you with authentic and carefully deliberated advice. We will ensure you are in the best auspicious position to make clear choices because your success is our main goal.</p>
+        <h2>Resilience</h2>
+        <p>
+          We are always of high-spirit.
+We stay strong no matter the situation. We fight till the very end. 
+        </p>
       </div>
       <div class="inner-content-div">
-        <h2>Proffesionalsim</h2>
-        <p>We are focused and passionate at what we do. We strive to provide a high level of personalized service, whether you want to rent a place for long or short stay.</p>
+        <h2>Team work</h2>
+        <p>
+          Many hands do more. Alone we go fast, but together we go far. We support each other. We work together across multiple boundaries satisfy users and help our company grow.
+        </p>
       </div>
       <div class="inner-content-div">
-        <h2>Expertise</h2>
-        <p>Apart from our professionalism and integrity, we have in-depth knowledge eye for potential opportunities and deals..</p>
+        <h2>Passion</h2>
+        <p>
+          We are focused and passionate at what we do. We strive to provide a high level of personalized service, whether you want to rent a place for a long or short stay
+        </p>
       </div>
     </div>
   </div>
@@ -70,7 +86,7 @@ export default {
   height: 650px;
   border-radius: 20px 20px 0 0;
   padding: 3px 50px;
-  margin-bottom: 5%;
+  margin-bottom: -80px;
   h3 {
     font-style: normal;
     font-weight: bold;
