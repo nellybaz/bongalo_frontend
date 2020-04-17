@@ -34,7 +34,7 @@ const routes = [
     name: 'home',
     component: Home,
     meta:{
-      title: 'Vacation Rentals, Homes, Experiences and Places - Bongalo'
+      title: 'Bongalo | Homes, vacation rentals: book rooms, entire apartments & more',
     },
   },
   {
