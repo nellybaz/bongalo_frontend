@@ -293,10 +293,7 @@
       <p style="color:white">
         {{ Math.abs(galleryIndex) + 1 }}/{{ imagesArr.length }}
       </p>
-      <i
-        v-on:click="updateImageShowHandler(0)"
-        class="far fa-times-circle icon_close"
-      ></i>
+      <span v-on:click="updateImageShowHandler(0)">X</span>
 
       <div class="img-showing-div">
         <div class="img-big">
@@ -310,7 +307,6 @@
 </template>
 
 <script>
-
 import Navigation from "../components/Blog/Navigation";
 import ImageGrid from "../components/ImageGrid";
 import Button from "../components/Button";
@@ -363,10 +359,7 @@ export default {
       ].image;
     },
     handleGalleryIndex(intent) {
-      if (
-        intent == 1 &&
-        this.galleryIndex < this.imagesArr.length - 1
-      ) {
+      if (intent == 1 && this.galleryIndex < this.imagesArr.length - 1) {
         this.galleryIndex += 1;
       } else if (intent == 0 && this.galleryIndex > 0) {
         this.galleryIndex -= 1;
@@ -508,11 +501,6 @@ export default {
     "getCurrentApartment",
   ]),
   created() {
-    // Create array for the images in full screen
-    this.imagesArr = this.getApartmentImages;
-    this.imagesArr.unshift({'image':this.getCurrentApartment.main_image});
-    // End
-
     this.checkin =
       this.$route.query.checkin != null
         ? this.$route.query.checkin
@@ -560,6 +548,13 @@ export default {
       .then((res) => {
         if (res == 1) {
           this.images = this.getApartmentImages;
+
+          // Create array for the images in full screen
+          this.imagesArr = this.getApartmentImages;
+          this.imagesArr.unshift({
+            image: this.getCurrentApartment.main_image,
+          });
+          // End
         }
       });
   },
@@ -576,7 +571,7 @@ export default {
 }
 
 .details-img-show {
-  background: #252f37;
+  background: #6b6b75;
   width: 100%;
   padding: 0px 20px;
   height: 100vh;
@@ -588,8 +583,14 @@ export default {
     cursor: pointer;
   }
 
-  .icon_close {
+  span {
     float: right;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    top: -20px;
   }
 
   .img-showing-div {
