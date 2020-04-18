@@ -26,7 +26,6 @@ const actions = {
                 resolve(1)
                 
             } catch (error) {
-                window.console.log(error);
                 reject(-1)
             }
         })
@@ -37,11 +36,9 @@ const actions = {
             try {
                 var res =  await getReq('apartment_images', {token:"", url:"apartment/images/get?apartment="+data.apartmentUuid});
                 commit('setApartmentImages', res.data)
-                // window.console.log(res)
                 resolve(1)
                 
             } catch (error) {
-                window.console.log(error);
                 reject(-1)
             }
         })
@@ -60,11 +57,9 @@ const actions = {
             try {
                 var res =  await getReq('search_apartment', {token:"", url:data.url});
                 commit('setSearchedApartment', res.results)
-                window.console.log(res)
                 resolve(1)
                 
             } catch (error) {
-                window.console.log(error);
                 reject(-1)
             }
         })

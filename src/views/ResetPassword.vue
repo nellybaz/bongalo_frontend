@@ -54,7 +54,6 @@ export default {
                      this.errorMessage = "Both passwords must match"
                  }
                  else{
-                     window.console.log(this.$route)
                      this.$store.dispatch('resetPassword',{
                          'email': this.$route.query['email'],
                          'token': this.$route.query['token'],

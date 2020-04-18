@@ -107,6 +107,7 @@ export default {
     return {
       showOutline: false,
       email: "",
+      emailErrorMessage:""
     };
   },
   methods: {

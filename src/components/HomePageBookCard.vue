@@ -160,7 +160,6 @@ export default {
      methods:{
          handleSelect(val){
              this.choosenType = val.data
-             window.console.log(val.data)
          },
          getDateFormat(date, intent){
             if(date == "dd/mm/yyyy"){

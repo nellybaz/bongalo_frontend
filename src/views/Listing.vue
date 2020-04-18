@@ -895,7 +895,6 @@ export default {
                 }
              }
 
-            // window.console.log(this.errorsToShow)
             return this.errorsToShow.length <= 0
          },
          ...mapGetters(['getListingState', 'getToken', 'getUuid']),
@@ -985,11 +984,6 @@ export default {
                         imageObject: this.profile_img
                         }
                         this.$store.dispatch('updateImage', data)
-                        .then(res => {
-                            window.console.log(res)
-                            window.console.log("image uploaded suucess")
-                            
-                    })
                  
                 this.$store.dispatch('uploadProperty', {images:this.files, token:this.getToken(), uuid:this.getUuid(), info:this.getListingState()})
                 .then((res) => {
@@ -1048,7 +1042,6 @@ export default {
          processSteps(motive){
             this.errorsToShow = []
             this.showErrors = false
-            // window.console.log(this.errorsToShow)
             if(motive == 1){
                 let stageValidationCode = this.step+""+this.flow
                 let validation = false
@@ -1057,7 +1050,6 @@ export default {
                 } catch (error) {
                     validation = true
                 }
-                window.console.log(stageValidationCode)
                 if(!validation){
                 this.showErrors = true
                 window.scrollTo(0,0)
@@ -1095,7 +1087,6 @@ export default {
      },
      created(){
          this.flow_percentage = (this.flow/this.total) * 100;
-        //  window.console.log(countryData);
         for(let i=0; i<countryData.length; i++){
             let country = countryData[i]
             this.countries.push({

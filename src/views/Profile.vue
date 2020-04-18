@@ -276,7 +276,6 @@ export default {
         });
     },
     deleteListing(apartmentUuid) {
-      window.console.log("delete clicked");
       this.$store
         .dispatch("deleteUserListing", {
           user: this.getUuid(),
@@ -304,7 +303,6 @@ export default {
       this.showId = intent;
     },
     handleProfileSelect(e) {
-      //  window.console.log(e)
       this.backgroundUrl = URL.createObjectURL(e.target.files[0]);
       // TODO: Dispatch action to update profile picture
 
@@ -359,17 +357,12 @@ export default {
       .dispatch("getUserInfo", { uuid: this.getUuid(), token: this.getToken() })
       .then((res) => {
         if (res == 1) {
-          window.console.log(this.getUserInfo());
-          window.console.log("user info above");
           this.firstName = this.getUserInfo().first_name;
           this.lastName = this.getUserInfo().last_name;
           this.user_description = this.getUserInfo().description;
           this.phoneNumber = this.getUserInfo().phone_number;
         }
       })
-      .catch((err) => {
-        window.console.log(err);
-      });
   },
 };
 </script>

@@ -44,9 +44,10 @@ export default {
      },
      created(){
          let dataInStore = this.$store.getters.getListingState[this.step];
-         window.console.log(dataInStore);
-         if(dataInStore || dataInStore.length > 1 ){
-             this.data = dataInStore;
+         if(dataInStore){
+             if(dataInStore.length > 1){
+                 this.data = dataInStore;
+             }
          }
      }
      

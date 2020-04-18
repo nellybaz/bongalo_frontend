@@ -125,7 +125,10 @@
         />
         <small v-if="lnameErrorMessage">{{lnameErrorMessage}}</small>
         <br />
+        <input type="email" class="hidden">
+        <input type="password" class="hidden">
         <Input
+        ref="emailAddressRef"
           @inputHandler="handleInput"
           icon="fas fa-envelope"
           hint="Email address"
@@ -136,6 +139,7 @@
         <small v-if="emailErrorMessage">{{emailErrorMessage}}</small>
         <br />
         <Input
+        ref="passwordRef"
           @inputHandler="handleInput"
           icon="fas fa-lock"
           hint="Create Password"
@@ -244,7 +248,6 @@ export default {
       .catch(err => {
         this.isButtonResendVerifyPinClicked = false;
         this.termsCheckBox = "Error occured. Please try again"
-        window.console.log(err);
       })
     },
     handleTermsLink() {
@@ -271,7 +274,6 @@ export default {
     ...mapActions(["setModalState"]),
     handleSocialSignup(provider) {
       this.$store.dispatch("socialSignin", { provider: provider }).then(res => {
-        window.console.log(res);
         if (res == 1) {
           this.setModalState(0);
         }
@@ -292,7 +294,6 @@ export default {
       this.last_name = "";
       this.password = "";
       this.setModalState(intent).then(res => {
-        window.console.log(this.$store.getters.getModalState)
       });
     },
     validateFields(intent) {
@@ -479,12 +480,16 @@ export default {
       signInError: ""
     };
   },
-  computed: mapGetters(["getModalState"])
+  computed: mapGetters(["getModalState"]),
 };
 </script>
 
 
 <style lang='scss' scoped>
+
+.hidden{
+  display: none;
+}
 
 .login-error{
     display:flex;

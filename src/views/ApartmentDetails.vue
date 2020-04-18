@@ -381,15 +381,12 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
     getDateFormat(date, intent) {
-      // window.console.log(date)
       if (date == "Checkin" || date == "Checkout") {
         return date;
       }
 
       if (this.$route.query.checkin) {
-        // window.console.log(date)
         if (date.includes("GMT")) {
-          // window.console.log("new date")
           let splitted = date.split(" ");
 
           let new_date =
@@ -397,7 +394,6 @@ export default {
           if (intent == 4) {
             let seconds = Math.abs(this.checkin - this.checkout) / 1000;
             let days = seconds / 86400;
-            // window.console.log(days)
             this.bookedNights = days;
           }
 
@@ -416,10 +412,9 @@ export default {
             );
             let seconds = Math.abs(new_checkin_d - new_checkout_d) / 1000;
             let days = seconds / 86400;
-            // window.console.log(date)
             this.bookedNights = days;
           } catch (error) {
-            window.console.log("catch error");
+            //pass
           }
         }
         return intent == 3 ? this.checkin : intent == 4 ? this.checkout : "";
@@ -432,7 +427,6 @@ export default {
       if (intent == 2) {
         let seconds = Math.abs(this.checkin - this.checkout) / 1000;
         let days = seconds / 86400;
-        // window.console.log(days)
         this.bookedNights = days;
       }
       return new_date;
@@ -558,9 +552,8 @@ export default {
       let seconds = Math.abs(new_checkin_d - new_checkout_d) / 1000;
       let days = seconds / 86400;
       this.bookedNights = days;
-      window.console.log(days);
     } catch (error) {
-      window.console.log("catch error");
+      //pass
     }
 
     this.$store

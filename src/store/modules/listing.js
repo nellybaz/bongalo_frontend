@@ -56,7 +56,6 @@ const getters = {
 const actions = {
     setValue({commit}, data){
         commit('setValue', data);
-        window.console.log(data);
     },
 
     async clearListingData({commit}){
@@ -140,13 +139,12 @@ const actions = {
     
             try {
                 var res =  await postReq('add_apartment', dataToUpload);
-                window.console.log(res);
+               
                 if (res.statusCode == 1){
-                    window.console.log("uploaded success")
                     resolve(1)
                 }
             } catch (error) {
-                window.console.log(error)
+                
                 reject(0)
             }
         })
@@ -161,14 +159,13 @@ const actions = {
         return new Promise( async (resolve, reject) => {
             try {
                 var res =  await getReq('get_user_listing', dataToSend);
-                window.console.log(res);
                 if (res.responseCode == 1){
-                    // window.console.log(res)
+                    // 
                     commit('setUserListing', res.data)
                     resolve(1)
                 }
             } catch (error) {
-                window.console.log(error)
+                
                 reject(0)
             }
         })
@@ -183,13 +180,12 @@ const actions = {
         return new Promise( async (resolve, reject) => {
             try {
                 var res =  await deleteReq('delete_user_listing', dataToSend);
-                window.console.log(res);
                 if (res.responseCode == 1){
                     // commit('setUserListing', res.data)
                     resolve(1)
                 }
             } catch (error) {
-                window.console.log(error)
+                
                 reject(0)
             }
         })
@@ -203,13 +199,12 @@ const actions = {
         return new Promise( async (resolve, reject) => {
             try {
                 var res =  await putReq('update_user_listing', dataToSend);
-                window.console.log(res);
                 if (res.responseCode == 1){
                     // commit('setUserListing', res.data)
                     resolve(1)
                 }
             } catch (error) {
-                window.console.log(error)
+                
                 reject(0)
             }
         })
