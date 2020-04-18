@@ -2,9 +2,9 @@
   <div class="Blog-nav">
     <header class="tm-header">
       <div class="logo-blg">
-        <router-link to="/">
+        <a href="/">
           <img src="../../assets/images/bongalo-logo.png" alt />
-        </router-link>
+        </a>
         <ul v-if="isBlog" class="blg">Blog</ul>
       </div>
       

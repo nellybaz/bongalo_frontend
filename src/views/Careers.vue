@@ -39,9 +39,9 @@
           <p class="location">
             Location - Rwanda
           </p>
-          <router-link to="/apply" class="action">
+          <a href="/apply" class="action">
             Apply here
-          </router-link>
+          </a>
         </div>
       </div>
 

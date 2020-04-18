@@ -3,9 +3,9 @@
     <nav v-if="!isMobile()">
       <ul>
         <li>
-          <router-link to="/">
+          <a href="/">
             EN
-          </router-link>
+          </a>
         </li>
 
         <li @click="handleOpeningHostPage">

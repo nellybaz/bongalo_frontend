@@ -24,7 +24,6 @@
               </h4>
 
               <div class="host-details">
-                <!-- <img src="../assets/images/user1.png" alt=""> -->
                 <i class="fas fa-user-circle"></i>
                 <div class="name">
                   <p>Host</p>
@@ -37,8 +36,6 @@
                   <p>Nationality</p>
                   <strong>Rwanda</strong>
                 </div>
-
-                <!-- <strong class="contact-host">Contact Host</strong> -->
               </div>
 
               <div class="more-info">
@@ -145,9 +142,9 @@
                     saepe, tempora maiores consequatur vel ratione quasi. Id
                     inventore accusamus tempora. Aliquam, incidunt!
                   </p>
-                  <router-link to="">
+                  <a href="#">
                     Read more...
-                  </router-link>
+                  </a>
                 </div>
 
                 <div></div>
@@ -313,7 +310,6 @@
 </template>
 
 <script>
-// document.getElementById("book-checkin").innerHTML = "Chech in";
 
 import Navigation from "../components/Blog/Navigation";
 import ImageGrid from "../components/ImageGrid";

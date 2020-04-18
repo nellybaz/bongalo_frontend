@@ -134,6 +134,7 @@
           hint="Email address"
           step="email"
           type="email"
+          value=""
           :isFullWidth="true"
         />
         <small v-if="emailErrorMessage">{{emailErrorMessage}}</small>
@@ -145,6 +146,7 @@
           hint="Create Password"
           step="password"
           type="password"
+          value = ""
           :isFullWidth="true"
         />
         <small v-if="passwordErrorMessage">{{passwordErrorMessage}}</small>
@@ -255,6 +257,7 @@ export default {
       this.$router.push("/terms-condition");
     },
     handleInput(val) {
+      window.console.log(this.$refs.emailAddressRef)
       if (val.step == "pin_verify") {
         this.pinModel = val.data;
       }
@@ -488,7 +491,10 @@ export default {
 <style lang='scss' scoped>
 
 .hidden{
-  display: none;
+height: 0.1px;
+width: 0.1px;
+position: absolute;
+top:-100000px;
 }
 
 .login-error{
