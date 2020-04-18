@@ -4,13 +4,6 @@
         <h3>
             Travelling Africa, Trip for Business or Leisure? Book your stay with us.
         </h3>
-        
-        <!-- <br> -->
-
-        <!-- <div class="item0">
-            <p class="item-label">WHERE</p>
-            <Input hint="Anywhere" :isFullWidth="true" type="text" />
-        </div> -->
 
         <div class="item1">
             <p class="item-label">TYPE</p>
@@ -160,7 +153,6 @@ export default {
      methods:{
          handleSelect(val){
              this.choosenType = val.data
-             window.console.log(val.data)
          },
          getDateFormat(date, intent){
             if(date == "dd/mm/yyyy"){

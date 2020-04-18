@@ -713,7 +713,7 @@ export default {
                 line-height: 24px;
                 /* or 175% */
 
-                text-align: justify;
+                text-align: left;
 
                 color: #404040;
             }

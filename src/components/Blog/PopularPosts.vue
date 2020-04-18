@@ -48,7 +48,6 @@ export default {
       let tmpPopular = [];
       for(let i=0; i < this.getAllBlogPost().length; i++){
         let post = this.getAllBlogPost()[i];
-        // window.console.log(post)
           if(post.is_featured){
             tmpPopular.push(post)
           }

@@ -1,9 +1,9 @@
 <template>
   <div class="header">
     <header>
-        <router-link to="/">
+        <a href="/">
             <img src="../../assets/images/bongalo-logo-white.png" alt />
-        </router-link>
+        </a>
      <NavLink :isDark="false"></NavLink>
     </header>
   </div>

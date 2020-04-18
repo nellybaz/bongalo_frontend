@@ -14,12 +14,10 @@ const actions = {
         return new Promise( async (resolve, reject) => {
             try {
                 var res =  await getReq('all_blog_post', {token:""});
-                // window.console.log(res.data)
                 commit('setAllBlogPost', res.data)
                 resolve(1)
                 
             } catch (error) {
-                window.console.log(error);
                 reject(error.data.message)
             }
         });

@@ -16,7 +16,7 @@ export default {
      name:'',
      data: function(){
          return {
-             data: "",
+             data: "any",
              style: "width:" + this.width
          }
      },
@@ -44,9 +44,10 @@ export default {
      },
      created(){
          let dataInStore = this.$store.getters.getListingState[this.step];
-         window.console.log(dataInStore);
-         if(dataInStore || dataInStore.length > 1 ){
-             this.data = dataInStore;
+         if(dataInStore){
+             if(dataInStore.length > 1){
+                 this.data = dataInStore;
+             }
          }
      }
      
@@ -57,10 +58,16 @@ export default {
 <style lang='scss' scoped>
     .select {
         border:1px solid #C4C4C4;
+        border-radius: 5px;
         height: 40px;
         font-size: 16px;
         color:#404040;
         opacity: 0.7;
+
+        /* for Firefox */
+        // -moz-appearance: none;
+        // /* for Chrome */
+        // -webkit-appearance: none;
 
     }
 

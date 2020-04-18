@@ -11,7 +11,7 @@
     <div class="details">
       <p class="location">
         <i class="fas fa-map-marker-alt"></i>
-        {{ apartment.country }}
+        {{ apartment.city }}
         <span>
           <i class="fas fa-bed"></i>
           {{ apartment.available_rooms }}

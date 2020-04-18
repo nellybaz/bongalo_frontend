@@ -44,13 +44,11 @@ const getReq = async function(urlKey, data){
             url += data.url
         }
         
-        window.console.log(url)
         axios.get(url, CONFIG)
         .then(res => {
             resolve(res.data);
         })
         .catch(err => {
-            window.console.log(err.response);
             reject(err.response);
         })
        
@@ -64,7 +62,6 @@ const postReq = async function(urlKey, data){
             'Authorization':'Token ' + data.token
         }
     }
-    window.console.log(data);
     return new Promise((resolve, reject) => {
         let url = BASE_URL + URLS[urlKey]
 
@@ -73,7 +70,6 @@ const postReq = async function(urlKey, data){
             resolve(res.data);
         })
         .catch(err => {
-            window.console.log(err);
             reject(err.response);
         })   
     })
@@ -86,7 +82,6 @@ const putReq = async function(urlKey, data){
             'Authorization':'Token ' + data.token
         }
     }
-    window.console.log(data);
     return new Promise((resolve, reject) => {
         let url = BASE_URL + URLS[urlKey]
 
@@ -95,7 +90,6 @@ const putReq = async function(urlKey, data){
             resolve(res.data);
         })
         .catch(err => {
-            window.console.log(err);
             reject(err.response);
         })   
     })
@@ -109,7 +103,6 @@ const deleteReq = async function(urlKey, data){
             'Authorization':'Token ' + data.token
         }
     }
-    window.console.log(data);
     return new Promise((resolve, reject) => {
         let url = BASE_URL
         if(data.url == null){
@@ -124,7 +117,6 @@ const deleteReq = async function(urlKey, data){
             resolve(res.data);
         })
         .catch(err => {
-            window.console.log(err);
             reject(err.response);
         })
     })
