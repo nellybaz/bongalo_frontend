@@ -1,9 +1,6 @@
 <template>
   <div class="apartment_details">
-    <div
-      v-if="!isImageShow && apartmentIsAvailable == 1"
-      class="detials-content"
-    >
+    <div v-if="!isImageShow" class="detials-content">
       <Navigation :showSearch="false"></Navigation>
       <ImageGrid
         v-on:updateImageShow="updateImageShowHandler"
@@ -291,12 +288,12 @@
         </div>
       </div>
     </div>
-    <div
+    <!-- <div
       v-else-if="!isImageShow && apartmentIsAvailable != 1"
       class="apd-loader-div"
     >
       <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
-    </div>
+    </div> -->
 
     <div v-else class="details-img-show">
       <p style="color:white">
@@ -320,7 +317,7 @@ import Navigation from "../components/Blog/Navigation";
 import ImageGrid from "../components/ImageGrid";
 import Button from "../components/Button";
 import { mapGetters } from "vuex";
-import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+// import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import Vue from "vue";
 import VCalendar from "v-calendar";
 
@@ -335,7 +332,7 @@ export default {
     Navigation,
     Button,
     ImageGrid,
-    PulseLoader,
+    // PulseLoader,
   },
   methods: {
     getTotal() {
@@ -518,28 +515,29 @@ export default {
         apartment: this.$route.query.uuid,
       })
       .then((res) => {
-        // Fetch images after apartment is fetched before updating the view
-        this.$store
-          .dispatch("fetchApartmentImages", {
-            token: "",
-            apartmentUuid: this.$route.query.apartment,
-          })
-          .then((res) => {
-            if (res == 1) {
-              this.apartmentIsAvailable = 1;
-              this.galleryCurrentImage = this.getCurrentApartment.main_image;
-
-              this.images = this.getApartmentImages;
-              this.imagesArr = this.getApartmentImages;
-              this.imagesArr.unshift({
-                image: this.getCurrentApartment.main_image,
-              });
-              // End
-            }
-          });
+        // pass
       })
       .catch((err) => {
         this.apartmentIsAvailable = -1;
+      });
+
+    this.$store
+      .dispatch("fetchApartmentImages", {
+        token: "",
+        apartmentUuid: this.$route.query.apartment,
+      })
+      .then((res) => {
+        if (res == 1) {
+          this.apartmentIsAvailable = 1;
+          this.galleryCurrentImage = this.getCurrentApartment.main_image;
+
+          this.images = this.getApartmentImages;
+          this.imagesArr = this.getApartmentImages;
+          this.imagesArr.unshift({
+            image: this.getCurrentApartment.main_image,
+          });
+          // End
+        }
       });
 
     this.checkin =
