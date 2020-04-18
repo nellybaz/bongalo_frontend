@@ -4,24 +4,24 @@
       <img
         v-on:click="$emit('updateImageShow', 1)"
         class="img1 img-item"
-        :src="apartment.main_image || $route.query.main_image"
+        :src="image1"
         alt=""
       />
       <img
         v-on:click="$emit('updateImageShow', 1)"
         class="img2 img-item"
-        :src="getImages(0)"
+        :src="image2"
         alt=""
       />
       <img
         v-on:click="$emit('updateImageShow', 1)"
         class="img3 img-item"
-        :src="getImages(1)"
+        :src="image3"
         alt=""
       />
 
       <div v-on:click="$emit('updateImageShow', 1)" class="img4 img-item">
-        <img :src="getImages(2)" alt="" />
+        <img :src="image4" alt="" @load="handleImageLoad(4)" />
         <p v-if="showMoreImages" v-on:click="$emit('updateImageShow', 1)">
           View more
         </p>
@@ -40,6 +40,12 @@ export default {
     },
   },
   methods: {
+    handleImageLoad(id) {
+      this.image1 = this.apartment.main_image || this.$route.query.main_image
+      this.image2 = this.getImages(2)
+      this.image3 = this.getImages(3)
+      this.image4 = this.getImages(4)
+    },
     getImages(index) {
       if (this.getApartmentImages.length - 1 >= index) {
         return this.getApartmentImages[index].image;
@@ -50,6 +56,10 @@ export default {
   },
   data: function() {
     return {
+      image1: require("../assets/images/no-image2.png"),
+      image2: require("../assets/images/no-image2.png"),
+      image3: require("../assets/images/no-image2.png"),
+      image4: require("../assets/images/no-image2.png"),
       apartment: {},
     };
   },
@@ -62,21 +72,18 @@ export default {
 
 <style lang="scss" scoped>
 .image_grid {
-  height: 500px;
+  height: 400px;
   width: 100%;
   .image-div {
-    height: 500px !important;
+    height: 400px !important;
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: 1fr 1fr;
     grid-gap: 6px;
 
     img {
-      // border:1px solid red;
       width: 100%;
-      height: 100%;
       object-fit: cover;
-      // border-radius: 8px;
     }
     img:hover {
       transform: scale(1.02);
@@ -85,27 +92,28 @@ export default {
     .img1 {
       grid-column: 1/5;
       grid-row: 1/-1;
-      // border:1px solid red;
+      height: 400px;
     }
 
     .img2 {
       grid-column: 5/7;
       grid-row: 1/2;
-      // border:1px solid red;
+      height: 200px;
     }
 
     .img3 {
       grid-column: 5/7;
       grid-row: 2/-1;
-      // border:1px solid red;
+      height: 200px;
     }
 
     .img4 {
       grid-column: 7/-1;
       grid-row: 1/-1;
-      // img{
-      //     // display: none;
-      // }
+      
+      img{
+        height: 400px;
+      }
 
       p {
         background: black;
@@ -125,7 +133,6 @@ export default {
     .img-item {
       // border:1px solid red;
       width: 100%;
-      min-height: 100%;
       object-fit: cover;
       transition: all 0.4s ease-in-out;
       cursor: pointer;
@@ -133,8 +140,6 @@ export default {
       img {
         transition: all 0.4s ease-in-out;
         width: 100%;
-        height: 100%;
-        // border-radius: 8px;
       }
     }
   }
