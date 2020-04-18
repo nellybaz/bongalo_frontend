@@ -80,6 +80,8 @@ export default {
   computed: mapGetters(["getApartmentImages", "getCurrentApartment"]),
   created() {
     this.apartment = this.getCurrentApartment;
+    this.handleImageLoad(1)
+    this.handleImageLoad(2)
   },
 };
 </script>
