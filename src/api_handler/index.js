@@ -23,6 +23,7 @@ const URLS = {
     resend_pin: 'auth/verification-pin/resend',
     forget_password_request: 'auth/user/reset-password',
     reset_password:'auth/user/reset-password',
+    apartment_get: '',
 }
  
 

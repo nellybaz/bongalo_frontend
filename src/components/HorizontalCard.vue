@@ -1,6 +1,7 @@
 <template>
-  <div
-    @click="handleCardClick"
+  <a
+    :href="makeUrl()"
+    target="_blank"
     class="horizontal-card"
     :title="apartment.title"
   >
@@ -29,7 +30,7 @@
         <span>${{ apartment.price }}</span> / night
       </p>
     </div>
-  </div>
+  </a>
 </template>
 
 <script>
@@ -43,15 +44,24 @@ export default {
   },
 
   methods: {
+    makeUrl() {
+      let url = "/details?apartment=" + this.apartment.uuid;
+      for (let key in this.apartment) {
+        url += "&" + key + "=" + this.apartment[key];
+      }
+      for (let key2 in this.$route.query) {
+        url += "&" + key2 + "=" + this.apartment[key2];
+      }
+      return url;
+    },
     handleCardClick() {
       this.$store
         .dispatch("setCurrentApartment", { apartment: this.apartment })
-        .then((res) => {
-          this.$router.push({
+      let route = this.$router.resolve({
             path: "/details?apartment=" + this.apartment.uuid,
             query: { ...this.apartment, ...this.$route.query },
           });
-        });
+      window.open(route.href, '_blank')
     },
     getThumbnail(img) {
       try {
