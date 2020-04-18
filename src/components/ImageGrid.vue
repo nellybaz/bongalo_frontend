@@ -21,7 +21,7 @@
       />
 
       <div v-on:click="$emit('updateImageShow', 1)" class="img4 img-item">
-        <img :src="image4" alt="" @load="handleImageLoad(4)" />
+        <img :src="image4" alt="" />
         <p v-if="showMoreImages" v-on:click="$emit('updateImageShow', 1)">
           View more
         </p>
@@ -41,10 +41,15 @@ export default {
   },
   methods: {
     handleImageLoad(id) {
-      this.image1 = this.apartment.main_image || this.$route.query.main_image
-      this.image2 = this.getImages(2)
-      this.image3 = this.getImages(3)
-      this.image4 = this.getImages(4)
+      if(id == 1){
+        this.image1 = this.getCurrentApartment.main_image
+      }
+      else{
+        this.image2 = this.getImages(2)
+        this.image3 = this.getImages(3)
+        this.image4 = this.getImages(4)
+      }
+      
     },
     getImages(index) {
       if (this.getApartmentImages.length - 1 >= index) {
@@ -62,6 +67,15 @@ export default {
       image4: require("../assets/images/no-image2.png"),
       apartment: {},
     };
+  },
+  watch: {
+    getApartmentImages: function(newValue, oldValue) {
+      this.handleImageLoad(2)
+    },
+    getCurrentApartment: function(newValue, oldValue) {
+      window.console.log(this.getCurrentApartment)
+      this.handleImageLoad(1)
+    }
   },
   computed: mapGetters(["getApartmentImages", "getCurrentApartment"]),
   created() {
