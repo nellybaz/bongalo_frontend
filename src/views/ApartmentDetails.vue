@@ -1,6 +1,6 @@
 <template>
   <div class="apartment_details">
-    <div v-if="!isImageShow" class="detials-content">
+    <div v-if="!isImageShow && apartmentIsAvailable == 1" class="detials-content">
       <Navigation :showSearch="false"></Navigation>
       <ImageGrid
         v-on:updateImageShow="updateImageShowHandler"
@@ -288,6 +288,9 @@
         </div>
       </div>
     </div>
+    <div v-else-if="!isImageShow && apartmentIsAvailable != 1" class="apd-loader-div">
+        <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
+    </div>
 
     <div v-else class="details-img-show">
       <p style="color:white">
@@ -311,7 +314,7 @@ import Navigation from "../components/Blog/Navigation";
 import ImageGrid from "../components/ImageGrid";
 import Button from "../components/Button";
 import { mapGetters } from "vuex";
-
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import Vue from "vue";
 import VCalendar from "v-calendar";
 
@@ -326,6 +329,7 @@ export default {
     Navigation,
     Button,
     ImageGrid,
+    PulseLoader
   },
   methods: {
     getTotal() {
@@ -430,6 +434,7 @@ export default {
   },
   data: function() {
     return {
+      apartmentIsAvailable: 0,
       imagesArr: [],
       amenitiesIcon: {
         air_conditioner: "fas fa-fan",
@@ -501,6 +506,19 @@ export default {
     "getCurrentApartment",
   ]),
   created() {
+    this.$store
+      .dispatch("getApartmentDetails", {
+        token: this.$store.getters.getToken,
+        apartment: this.$route.query.uuid,
+      })
+      .then((res) => {
+        this.apartmentIsAvailable = 1;
+        this.galleryCurrentImage = this.getCurrentApartment.main_image;
+      })
+      .catch((err) => {
+        this.apartmentIsAvailable = -1;
+      });
+
     this.checkin =
       this.$route.query.checkin != null
         ? this.$route.query.checkin
@@ -514,7 +532,6 @@ export default {
         ? this.$route.query.guest
         : this.guestNumber;
     this.apartment = this.getCurrentApartment;
-    this.galleryCurrentImage = this.getCurrentApartment.main_image;
     this.amenities = this.apartment.amenities
       ? this.apartment.amenities.split(",")
       : this.$route.query.amenities.split(",");
@@ -562,6 +579,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.apd-loader-div{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction: row;
+  
+  .loader{
+    font-size: 45px;
+  }
+}
 .activeImage {
   border: 1px solid #3a85fc !important;
   opacity: 0.3;
