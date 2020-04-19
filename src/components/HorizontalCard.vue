@@ -1,6 +1,6 @@
 <template>
-  <a
-    :href="makeUrl()"
+  <router-link
+    :to="makeUrl()"
     target="_blank"
     class="horizontal-card"
     :title="apartment.title"
@@ -30,7 +30,7 @@
         <span>${{ apartment.price }}</span> / night
       </p>
     </div>
-  </a>
+  </router-link>
 </template>
 
 <script>
