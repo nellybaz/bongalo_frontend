@@ -11,14 +11,20 @@
         <div class="details-div">
           <div class="tap-div">
             <ul>
-              <li :class="{ border_bottom: borderItem == 1 }">Overview</li>
-              <li>Amenities</li>
-              <li>Review</li>
-              <li>Other Info</li>
+              <li :class="{ border_bottom: borderItem == 1 }">
+                <a href="#overview">Overview</a>
+              </li>
+              <li :class="{ border_bottom: borderItem == 2 }">
+                <a href="#rules">Rules & Description</a>
+              </li>
+              <li :class="{ border_bottom: borderItem == 3 }">
+                <a href="#amenities">Amenities</a>
+              </li>
+              <li v-if="review.length > 0"><a href="#">Review</a></li>
             </ul>
           </div>
           <div class="content-div">
-            <div class="left">
+            <div class="left" id="overview">
               <h4>
                 {{ apartment.title || $route.query.title }}
               </h4>
@@ -69,7 +75,7 @@
                 <img src="../assets/images/map_placeholder.png" alt="" />
               </div>
 
-              <div class="rules">
+              <div id="rules" class="rules" ref="rulesRef">
                 <h3>House Rules</h3>
                 <div>
                   <p v-for="rule in rules" :key="rule">
@@ -100,7 +106,7 @@
                 </p>
               </div>
 
-              <div class="amenities">
+              <div id="amenities" class="amenities" ref="amenitiesDiv">
                 <h4>Amenities</h4>
 
                 <div>
@@ -229,6 +235,10 @@
                       </div>
                     </vc-date-picker>
                   </div>
+                  <small style="font-size:9px; color:red">
+                    {{ dateErrorMessage }}
+                  </small>
+                  <br />
                   <br />
                   <div class="book-guest">
                     <p>{{ guestNumber }} Guest(s)</p>
@@ -332,6 +342,23 @@ export default {
     PulseLoader,
   },
   methods: {
+    handleScroll(event) {
+      let windowScrollPosition = event.target.scrollingElement.scrollTop;
+      let amenitiesRef = this.$refs.amenitiesDiv;
+      let rulesRef = this.$refs.rulesRef;
+
+      if (windowScrollPosition <= rulesRef.offsetTop - 30) {
+        this.borderItem = 1;
+      }
+
+      if (windowScrollPosition >= rulesRef.offsetTop - 30) {
+        this.borderItem = 2;
+      }
+
+      if (windowScrollPosition >= amenitiesRef.offsetTop - 30) {
+        this.borderItem = 3;
+      }
+    },
     getTotal() {
       return (
         (this.apartment.price || this.$route.query.price) * this.bookedNights +
@@ -341,16 +368,25 @@ export default {
     },
     reserveButtonHandler() {
       if (this.getTotal() > 0) {
-        this.$router.push({
-          path: "/payment",
-          query: {
-            price: this.getTotal(),
-            guest: this.guestNumber,
-            checkin: this.checkin,
-            checkout: this.checkout,
-            nights: this.bookedNights,
-          },
-        });
+        this.dateErrorMessage = "";
+        if (window.localStorage.getItem("token")) {
+          this.$router.push({
+            path: "/payment",
+            query: {
+              price: this.getTotal(),
+              guest: this.guestNumber,
+              checkin: this.checkin,
+              checkout: this.checkout,
+              nights: this.bookedNights,
+            },
+          });
+        } else {
+          this.$store.dispatch("setModalState", 1);
+        }
+      } else if (this.checkin == "Checkin") {
+        this.dateErrorMessage = "Checkin reqired";
+      } else if (this.checkout == "Checkout") {
+        this.dateErrorMessage = "Checkout reqired";
       }
     },
     getAmenitiesIcon(value) {
@@ -432,8 +468,21 @@ export default {
       }
     },
   },
+  watch: {
+    checkout: function(newValue, oldValue) {
+      if (newValue != "Checkout") {
+        this.dateErrorMessage = "";
+      }
+    },
+    checkin: function(newValue, oldValue) {
+      if (newValue != "Checkin") {
+        this.dateErrorMessage = "";
+      }
+    },
+  },
   data: function() {
     return {
+      dateErrorMessage: "",
       apartmentIsAvailable: 0,
       imagesArr: [],
       amenitiesIcon: {
@@ -506,6 +555,8 @@ export default {
     "getCurrentApartment",
   ]),
   created() {
+    window.addEventListener("scroll", this.handleScroll);
+
     this.$store
       .dispatch("getApartmentDetails", {
         token: this.$store.getters.getToken,
@@ -575,6 +626,9 @@ export default {
       //pass
     }
   },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
+  },
 };
 </script>
 
@@ -595,7 +649,7 @@ export default {
   opacity: 0.3;
 }
 .border_bottom {
-  border-bottom: 4px solid #3a85fc;
+  border-bottom: 4px solid #3a85fc !important;
 }
 
 .details-img-show {
@@ -748,7 +802,6 @@ export default {
       top: 0;
       ul {
         height: 100%;
-        //  border:1px solid red;
         padding: 0;
         display: flex;
         align-items: center;
@@ -756,18 +809,23 @@ export default {
         li {
           cursor: pointer;
           height: 100%;
-          width: 80px;
+          width: auto;
           list-style: none;
-          margin-right: 10px;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 14px;
-          line-height: 17px;
-          color: #6a6a6a;
+          margin-right: 20px;
           display: flex;
           align-items: center;
           justify-content: center;
           flex-direction: row;
+          border-bottom: 4px solid transparent;
+
+          a {
+            text-decoration: none;
+            color: #6a6a6a;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 17px;
+          }
         }
       }
     }
