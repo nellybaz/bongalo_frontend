@@ -296,8 +296,7 @@ export default {
       this.first_name = "";
       this.last_name = "";
       this.password = "";
-      this.setModalState(intent).then(res => {
-      });
+      this.setModalState(intent)
     },
     validateFields(intent) {
       let res = true;
