@@ -198,7 +198,6 @@
                     ${{ apartment.price || $route.query.price }}
                     <span>/ night</span>
                   </h4>
-                  <!-- <small>Views: 204 times</small> -->
                 </div>
 
                 <div class="book">

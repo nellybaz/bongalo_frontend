@@ -88,6 +88,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "detiails" */ '../views/TermsCondition.vue')
   },
 
+  {
+    path: '/privacy-policy',
+    name: 'privacy_policy',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/PrivacyPolicy.vue')
+  },
  {
     path: '/career',
     name: 'career',
