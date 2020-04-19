@@ -50,7 +50,9 @@ export default {
         url += "&" + key + "=" + this.apartment[key];
       }
       for (let key2 in this.$route.query) {
-        url += "&" + key2 + "=" + this.apartment[key2];
+        if(!this.apartment[key2]){
+          url += "&" + key2 + "=" + this.$route.query[key2];
+        }
       }
       return url;
     },

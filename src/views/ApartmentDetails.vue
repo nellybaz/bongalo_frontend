@@ -243,10 +243,10 @@
                     <p>{{ guestNumber }} Guest(s)</p>
 
                     <div class="btns">
-                      <button>
+                      <button @click="handleGuest(0)">
                         <i class="fas fa-minus"></i>
                       </button>
-                      <button>
+                      <button @click="handleGuest(1)">
                         <i class="fas fa-plus"></i>
                       </button>
                     </div>
@@ -259,7 +259,7 @@
                         ${{ apartment.price || $route.query.price }} x
                         {{ bookedNights }} nights
                       </p>
-                      <p class="p">${{ apartment.price * bookedNights }}</p>
+                      <p class="p">${{ (apartment.price || $route.query.price) * bookedNights }}</p>
                     </div>
 
                     <div class="cleaning-fee">
@@ -340,7 +340,16 @@ export default {
     ImageGrid,
     PulseLoader,
   },
+  
   methods: {
+    handleGuest(intent){
+      if(intent == 0 && this.guestNumber > 1){
+        this.guestNumber -= 1;
+      }
+      else if(intent == 1 && this.guestNumber < (this.$route.query['max_guest_number'] || 10)) {
+        this.guestNumber += 1;
+      }
+    },
     handleScroll(event) {
       let windowScrollPosition = event.target.scrollingElement.scrollTop;
       let amenitiesRef = this.$refs.amenitiesDiv;
@@ -383,9 +392,9 @@ export default {
           this.$store.dispatch("setModalState", 1);
         }
       } else if (this.checkin == "Checkin") {
-        this.dateErrorMessage = "Checkin reqired";
+        this.dateErrorMessage = "Checkin required";
       } else if (this.checkout == "Checkout") {
-        this.dateErrorMessage = "Checkout reqired";
+        this.dateErrorMessage = "Checkout required";
       }
     },
     getAmenitiesIcon(value) {
@@ -597,7 +606,7 @@ export default {
         : this.checkout;
     this.guestNumber =
       this.$route.query.guest != null
-        ? this.$route.query.guest
+        ? parseInt(this.$route.query.guest)
         : this.guestNumber;
     this.apartment = this.getCurrentApartment;
     this.amenities = this.apartment.amenities
@@ -794,7 +803,7 @@ export default {
     .tap-div {
       background: #fff;
       box-shadow: 1px 2px 2px rgb(218, 217, 217);
-      z-index: 999;
+      z-index: 1;
       padding: 0 70px;
       height: 50px;
       position: sticky;
