@@ -288,13 +288,6 @@
         </div>
       </div>
     </div>
-    <!-- <div
-      v-else-if="!isImageShow && apartmentIsAvailable != 1"
-      class="apd-loader-div"
-    >
-      <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
-    </div> -->
-
     <div v-else class="details-img-show">
       <p style="color:white">
         {{ Math.abs(galleryIndex) + 1 }}/{{ imagesArr.length }}
@@ -309,6 +302,10 @@
         </div>
       </div>
     </div>
+
+    <div v-if="apartmentIsAvailable != 1" class="apd-loader-div">
+      <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
+    </div>
   </div>
 </template>
 
@@ -317,7 +314,7 @@ import Navigation from "../components/Blog/Navigation";
 import ImageGrid from "../components/ImageGrid";
 import Button from "../components/Button";
 import { mapGetters } from "vuex";
-// import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import Vue from "vue";
 import VCalendar from "v-calendar";
 
@@ -332,7 +329,7 @@ export default {
     Navigation,
     Button,
     ImageGrid,
-    // PulseLoader,
+    PulseLoader,
   },
   methods: {
     getTotal() {
