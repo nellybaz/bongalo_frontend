@@ -1,6 +1,6 @@
 <template>
     <div class='search'>
-        <Navigation :showSearch="true"></Navigation>
+        <Navigation :showSearch="false"></Navigation>
         <section class="filter">
             <p>Date</p>
             <p>Guest</p>

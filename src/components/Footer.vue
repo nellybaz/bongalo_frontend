@@ -34,7 +34,7 @@
             </a>
           </li>
           <li>
-            <a href="/terms-condition">
+            <a href="/privacy-policy">
               Privacy Policy
             </a>
           </li>
@@ -96,7 +96,7 @@
         </div>
       </div>
     </div>
-    <p>Bongalo © 2019 | All Rights Reserved</p>
+    <p>Bongalo © 2020 | All Rights Reserved</p>
   </div>
 </template>
 
