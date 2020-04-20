@@ -257,7 +257,6 @@ export default {
       this.$router.push("/terms-condition");
     },
     handleInput(val) {
-      window.console.log(this.$refs.emailAddressRef)
       if (val.step == "pin_verify") {
         this.pinModel = val.data;
       }

@@ -113,6 +113,12 @@ const routes = [
   },
 
   {
+    path: '/user',
+    name: 'user',
+    component: () => import(/* webpackChunkName: "detiails" */ '../views/User.vue'),
+  },
+
+  {
     path: '/become-a-host',
     name: 'listing',
     component: () => import(/* webpackChunkName: "detiails" */ '../views/Listing.vue'),

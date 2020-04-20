@@ -73,7 +73,6 @@ export default {
       this.handleImageLoad(2)
     },
     getCurrentApartment: function(newValue, oldValue) {
-      window.console.log(this.getCurrentApartment)
       this.handleImageLoad(1)
     }
   },
