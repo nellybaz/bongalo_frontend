@@ -25,7 +25,7 @@
           </div>
           <div class="content-div">
             <div class="left" id="overview">
-              <div class="host-details">
+              <div @click="getUserUrl()" class="host-details">
                 <div class="name">
                    <img v-if="
                     getCurrentApartment.owner_details &&
@@ -63,6 +63,14 @@
                <h4>
                 {{ apartment.title || $route.query.title }}
               </h4>
+              <small>
+                {{
+                  (apartment.city || $route.query.city)
+                }}, 
+                {{
+                  (apartment.country || $route.query.country)
+                }}
+              </small>
 
               <div class="more-info">
                 <div class="more-info-left">
@@ -187,12 +195,17 @@
 
                 <p>
                   Checkin:
-                  <span> After {{ apartment.check_in || $route.query.check_in }} </span>
+                  <span> 
+                    {{
+                      (apartment.check_in || $route.query.check_in) == "Flexible" ? "":"After"
+                    }}  {{ apartment.check_in || $route.query.check_in }} </span>
                 </p>
                 <p>
                   Checkout:
                   <span>
-                    Before {{ apartment.check_out || $route.query.check_out }}
+                     {{
+                      (apartment.check_out || $route.query.check_out) == "Flexible" ? "":"Before"
+                    }}  {{ apartment.check_out || $route.query.check_out }}
                   </span>
                 </p>
 
@@ -370,6 +383,9 @@ export default {
   },
 
   methods: {
+    getUserUrl(){
+      this.$router.push({path:"user/", query: {...this.getCurrentApartment.owner_details}})
+    },
     handleGuest(intent) {
       if (intent == 0 && this.guestNumber > 1) {
         this.guestNumber -= 1;
@@ -520,6 +536,7 @@ export default {
   },
   data: function() {
     return {
+      userUrl:"user/",
       dateErrorMessage: "",
       apartmentIsAvailable: 0,
       imagesArr: [],
@@ -601,7 +618,11 @@ export default {
         apartment: this.$route.query.uuid,
       })
       .then((res) => {
-        // pass
+        // this.userUrl += "?"
+        // var currentProp = this.getCurrentApartment.owner_details;
+        // for (let k in currentProp){
+        //   this.userUrl += k+"="+currentProp[k] + "&"
+        // }
       })
       .catch((err) => {
         this.apartmentIsAvailable = -1;
@@ -875,6 +896,9 @@ export default {
     grid-template-columns: 8fr 4fr;
     grid-column-gap: 50px;
     .left {
+      a{
+        text-decoration: none;
+      }
       width: 100%;
       padding: 30px 120px;
       border-top: 1px solid #f2f2f2;
@@ -1069,6 +1093,7 @@ export default {
 
             i {
               margin-right: 10px;
+              color:#3986FC;
             }
           }
         }
