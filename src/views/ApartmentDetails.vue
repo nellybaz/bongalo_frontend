@@ -25,12 +25,9 @@
           </div>
           <div class="content-div">
             <div class="left" id="overview">
-              <h4>
-                {{ apartment.title || $route.query.title }}
-              </h4>
-
               <div class="host-details">
-                 <img v-if="
+                <div class="name">
+                   <img v-if="
                     getCurrentApartment.owner_details &&
                       getCurrentApartment.owner_details.profile_image.length > 5
                   " :src="getCurrentApartment.owner_details.profile_image" alt="">
@@ -38,12 +35,12 @@
                   v-else
                   class="fas fa-user-circle"
                 ></i>
-               
-                <div class="name">
-                  <p>Host</p>
-                  <strong>
+                  <span>
+                    <p>Host</p>
+                  <strong style="text-decoration:underline;">
                     {{ apartment.owner || $route.query.owner }}
                   </strong>
+                  </span>
                 </div>
 
                 <div
@@ -54,14 +51,18 @@
                   "
                   class="country"
                 >
-                  <p>Nationality</p>
-                  <strong>
+                  <p>Nationality: <strong>
                     {{
                       getCurrentApartment.owner_details.resident_country || ""
                     }}
-                  </strong>
+                  </strong></p>
+                  
                 </div>
               </div>
+
+               <h4>
+                {{ apartment.title || $route.query.title }}
+              </h4>
 
               <div class="more-info">
                 <div class="more-info-left">
@@ -84,6 +85,10 @@
                         $route.query.number_of_bathrooms
                     }}
                   </p>
+                  
+                  
+                </div>
+                <div class="more-info-left second">
                   <p>
                     <i class="fas fa-moon"></i> Min Stay:
                     {{ apartment.min_nights || $route.query.min_nights }}
@@ -91,7 +96,7 @@
                   </p>
                 </div>
 
-                <img src="../assets/images/map_placeholder.png" alt="" />
+                <!-- <img src="../assets/images/map_placeholder.png" alt="" /> -->
               </div>
 
               <div id="rules" class="rules" ref="rulesRef">
@@ -882,10 +887,16 @@ export default {
       }
 
       .host-details {
-        margin-top: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
+        float: right;
+        margin-bottom: 30px;
+        cursor: pointer;
+
+        .name{
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          flex-direction: row;
+        }
 
         .contact-host {
           font-style: normal;
@@ -909,7 +920,6 @@ export default {
           color: #3a85fc;
         }
         div {
-          margin-right: 40px;
           p {
             font-style: normal;
             font-weight: normal;
@@ -921,7 +931,7 @@ export default {
           strong {
             font-style: normal;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 15px;
             line-height: 24px;
             color: #404040;
           }
@@ -931,22 +941,34 @@ export default {
       .more-info {
         margin-top: 30px;
         width: 100%;
-        display: grid;
-        grid-template-columns: 2fr 3fr;
+        // display: grid;
+        // grid-template-columns: 2fr 3fr;
         // border:1px solid red;
 
+        .second{
+          margin-top: 10px;
+        }
         .more-info-left {
+          display:flex;
+          align-items:center;
+          justify-content:flex-start;
+          flex-direction: row;
           p {
-            // border:1px solid red;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction: row;
+            margin-right: 20px;
             font-style: normal;
             font-weight: normal;
             font-size: 15px;
-            line-height: 38px;
+            // line-height: 38px;
             color: #404040;
 
             i {
               margin-right: 10px;
-              color: #404040;
+              color: #3986FC;
+              font-size: 14px;
             }
           }
         }
