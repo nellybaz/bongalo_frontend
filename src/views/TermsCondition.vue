@@ -4,7 +4,7 @@
 
         <div class="content">
             <h1>
-                Our Terms and Condition
+                Terms and Condition
             </h1>
 
 
@@ -685,12 +685,13 @@ export default {
             }
 
             .side-nav{
+                margin-bottom: 30px;
                 width:100%;
                 .item-a{
                 font-style: normal;
                 font-weight: normal;
                 font-size: 16px;
-                line-height: 45px;
+                line-height: 35px;
                 /* or 225% */
 
                 text-align: justify;
