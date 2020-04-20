@@ -23,6 +23,7 @@ const actions = {
             try {
                 var res =  await getReq('apartment_get', {token:data.token, url:"apartment/get?uuid="+data.apartment});
                 commit('setCurrentApartment', res.data)
+                window.console.log(res.data)
                 resolve(1)
                 
             } catch (error) {

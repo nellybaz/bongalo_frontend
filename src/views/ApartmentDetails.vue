@@ -30,7 +30,15 @@
               </h4>
 
               <div class="host-details">
-                <i class="fas fa-user-circle"></i>
+                 <img v-if="
+                    getCurrentApartment.owner_details &&
+                      getCurrentApartment.owner_details.profile_image.length > 5
+                  " :src="getCurrentApartment.owner_details.profile_image" alt="">
+                <i
+                  v-else
+                  class="fas fa-user-circle"
+                ></i>
+               
                 <div class="name">
                   <p>Host</p>
                   <strong>
@@ -38,9 +46,20 @@
                   </strong>
                 </div>
 
-                <div class="country">
+                <div
+                  v-if="
+                    getCurrentApartment.owner_details &&
+                      getCurrentApartment.owner_details.resident_country
+                        .length > 1
+                  "
+                  class="country"
+                >
                   <p>Nationality</p>
-                  <strong>Rwanda</strong>
+                  <strong>
+                    {{
+                      getCurrentApartment.owner_details.resident_country || ""
+                    }}
+                  </strong>
                 </div>
               </div>
 
@@ -163,7 +182,7 @@
 
                 <p>
                   Checkin:
-                  <span> After {{ apartment.check_in }} </span>
+                  <span> After {{ apartment.check_in || $route.query.check_in }} </span>
                 </p>
                 <p>
                   Checkout:
@@ -173,7 +192,7 @@
                 </p>
 
                 <h4>
-                  Cacellations
+                  Cancellations
                 </h4>
                 <p>
                   Free cancellation for 48 hours
@@ -259,7 +278,11 @@
                         ${{ apartment.price || $route.query.price }} x
                         {{ bookedNights }} nights
                       </p>
-                      <p class="p">${{ (apartment.price || $route.query.price) * bookedNights }}</p>
+                      <p class="p">
+                        ${{
+                          (apartment.price || $route.query.price) * bookedNights
+                        }}
+                      </p>
                     </div>
 
                     <div class="cleaning-fee">
@@ -340,13 +363,15 @@ export default {
     ImageGrid,
     PulseLoader,
   },
-  
+
   methods: {
-    handleGuest(intent){
-      if(intent == 0 && this.guestNumber > 1){
+    handleGuest(intent) {
+      if (intent == 0 && this.guestNumber > 1) {
         this.guestNumber -= 1;
-      }
-      else if(intent == 1 && this.guestNumber < (this.$route.query['max_guest_number'] || 10)) {
+      } else if (
+        intent == 1 &&
+        this.guestNumber < (this.$route.query["max_guest_number"] || 10)
+      ) {
         this.guestNumber += 1;
       }
     },
@@ -876,7 +901,7 @@ export default {
           width: 60px;
           height: 60px;
           border-radius: 50%;
-          object-fit: contain;
+          object-fit: cover;
         }
         i {
           margin-right: 20px;

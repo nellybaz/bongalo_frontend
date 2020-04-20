@@ -1,11 +1,33 @@
 <template>
-    <div class='search'>
+    <div class='search' @click="filterCodeHandler(0)">
         <Navigation :showSearch="false"></Navigation>
         <section class="filter">
-            <p>Date</p>
-            <p>Guest</p>
-            <p>Type</p>
-            <p>Price</p>
+            <p @click="filterCode=1">Guest</p>
+            <p @click="filterCode=2">Type</p>
+            <p @click="filterCode=3">Price</p>
+        </section>
+
+        <section class="filter-dropdown">
+            <div v-if="filterCode == 1" class="dropdown-item">
+                 <div class="btn-container">
+                     <button v-on:click=handleGuestClick(0)>
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <p>
+                        {{
+                            guestNumber
+                        }}
+                    </p>
+                    <button v-on:click=handleGuestClick(1)>
+                       <i class="fas fa-plus"></i>
+                    </button>
+                   
+                </div>
+
+                <button class="btn-save">
+                    Save
+                </button>
+            </div>
         </section>
 
 
@@ -33,78 +55,88 @@ export default {
          HorizontalCard
 
      },
+     methods:{
+         filterCodeHandler(intent){
+             if(intent == 0){
+                 this.filterCode = 0
+             }
+             else{
+                 this.filterCode = intent
+             }
+         },
+         handleGuestClick(intent){
+             if(intent == 1){
+                 this.guestNumber += 1
+             }
+             else{
+                 this.guestNumber -= 1
+             }
+         }
+     },
      data: function(){
          return {
+             filterCode: 0,
+             guestNumber:0,
              apartments:[],
-            //  [
-            //      {
-            //          id:1,
-            //          location:'Kicukiru, Kigali, kigali',
-            //          title:"Bella Apartments",
-            //          price:"$20",
-            //          image:"house1.png"
-            //      },
-            //      {
-            //          id:2,
-            //          location:'Kicukiru, Kigali, kigali',
-            //          title:"Bella Apartments",
-            //          price:"$20",
-            //          image:"house2.png"
-            //      },
-            //      {
-            //          id:3,
-            //          location:'Kicukiru, Kigali, kigali',
-            //          title:"Visit Rwanda",
-            //          price:"$20",
-            //          image:"house3.png"
-            //      },
-            //      {
-            //          id:4,
-            //          location:'Kicukiru, Kigali, kigali',
-            //          title:"Attend Youth Connekt ..",
-            //          price:"$20",
-            //          image:"house1.png"
-            //      },
-            //      {
-            //          id:5,
-            //          location:'Kicukiru, Kigali, kigali',
-            //          title:"Global Health Summit",
-            //          price:"$20",
-            //          image:"house2.png"
-            //      },
-            //      {
-            //          id:6,
-            //          location:'Kicukiru, Kigali, kigali',
-            //          title:"Bella Apartments",
-            //          price:"$20",
-            //          image:"house1.png"
-            //      },
-            //      {
-            //          id:7,
-            //          location:'Kicukiru, Kigali, kigali',
-            //          title:"Bella Apartments",
-            //          price:"$20",
-            //          image:"house2.png"
-            //      },
-            //      {
-            //          id:8,
-            //          location:'Kicukiru, Kigali, kigali',
-            //          title:"Visit Rwanda",
-            //          price:"$20",
-            //          image:"house3.png"
-            //      },
-            //  ],
+            
          }
      },
      computed: mapGetters(['getSearchedApartment']),
      created(){
-         
+         this.guestNumber = parseInt(this.$route.query['guest'])
      }
 }
 </script>
 
 
 <style lang='scss' scoped>
+
+.filter-dropdown{
+    .dropdown-item{
+        // border:1px solid red;
+        width: 200px;
+        position: relative;
+        left:193px;
+
+        .btn-save{
+            padding: 1em 2em;
+            float: right;
+            background: #000;
+            color: white;
+            border-radius: 5px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+        .btn-save:focus{
+            outline: none;
+        }
+    }
+
+    .btn-container{
+        border-radius: 3px;
+        box-shadow: 1px 1px 2px 2px rgb(209, 209, 209);
+        height: 50px;
+        display:flex;
+        align-items:center;
+        justify-content:space-evenly;
+        flex-direction: row;
+
+        button{
+            border-radius: 50%;
+            height: 40px;
+            width:40px;
+            border:2px solid #3a85fc;
+            cursor: pointer;
+
+            i{
+                color: #3a85fc;
+            }
+        }
+        button:focus{
+            outline: none;
+        }
+    }
+}
     .search {
         width:100%;
 
@@ -126,7 +158,7 @@ export default {
                 border-radius: 5px;
                 margin-right: 15px;
                 flex-direction: row;
-
+                cursor: pointer;
                 font-style: normal;
                 font-weight: normal;
                 font-size: 14px;

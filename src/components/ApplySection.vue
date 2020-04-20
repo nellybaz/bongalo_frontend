@@ -63,6 +63,7 @@ export default {
 <style lang="scss" scoped>
 .apply-section {
   margin-top: 50px;
+  margin-bottom: 30px;
   width: 50%;
 
   .btn-div{

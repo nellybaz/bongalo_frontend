@@ -4,7 +4,7 @@
 
     <div class="content">
       <h1>
-        Our Privacy Policy
+       Privacy Policy
       </h1>
 
       <div class="side-nav">
@@ -753,19 +753,19 @@ a:visited {
       font-style: normal;
       font-weight: bold;
       font-size: 30px;
-      line-height: 42px;
 
       color: #404040;
       margin-bottom: 30px;
     }
 
     .side-nav {
+      margin-bottom: 30px;
       width: 100%;
       .item-a {
         font-style: normal;
         font-weight: normal;
         font-size: 16px;
-        line-height: 45px;
+        line-height: 25px;
         /* or 225% */
 
         text-align: justify;
