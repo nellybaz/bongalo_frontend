@@ -133,7 +133,7 @@ const routes = [
   },
 
   {
-    path: '/reset-password',
+    path: '/user/reset-password-confirm/:message',
     name: 'reset_password',
     component: () => import(/* webpackChunkName: "detiails" */ '../views/ResetPassword.vue'),
   }

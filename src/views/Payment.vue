@@ -1,48 +1,11 @@
 <template>
     <div class='payment'>
-       <div v-if="isPaymentProcess">
-            <h1>Select payment method</h1>
-
-            <br>
-            <div class="payment-tab">
-                <div @click="paymentMethod = 1" class="payment-tab-item" :class="{active_tab: paymentMethod==1}">
-                Mobile Money
-                </div>
-                <div @click="paymentMethod = 2" class="payment-tab-item" :class="{active_tab: paymentMethod==2}">
-                    Card payment
-                </div>
-            </div>
-            <br>
-
-            <div class="payment-details">
-                <h2>Payment Details</h2>
-                <br>
-                <h3>
-                    ${{$route.query.price}}
-                </h3>
-                <p>
-                   {{$route.query.guest}} Guest(s) for {{$route.query.nights}} nights
-                </p>
-                
-            </div>
-
-            <br>
-            <div class="payment-details-section">
-                <div v-if="paymentMethod == 1">
-                    <StyledInput type="text" placeholder="Enter mobile money number" label="MOMO NUMBER"/>
-                </div>
-                <div v-else>
-                    <StyledInput type="text" placeholder="Enter full name" label="FULL NAME"/>
-                    <StyledInput type="text" placeholder="Enter Card number" label="CARD NUMBER"/>
-                    <StyledInput type="text" placeholder="Expiry date" label="EXPIRY DATE"/>
-                    <StyledInput type="text" placeholder="CVV" label="CVV"/>
-                    
-                </div>
-            </div>
-
-            <br>
-            <div class="payment-actions">
-                <Button @handleClick="paymentHandler()" label="PAY" :isFullWidth="true"></Button>
+       <div v-if="isLoading">
+           <h1>Confirming your payment, please wait!!</h1>
+           <br>
+           <br>
+            <div class="loader-div">
+                <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
             </div>
        </div>
 
@@ -71,16 +34,19 @@
 <script>
 import StyledInput from '../components/StyledInput';
 import Button from '../components/Button';
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 
 export default {
      name:'payment',
      components:{
-         StyledInput,
-         Button
+        //  StyledInput,
+        //  Button,
+          PulseLoader
      },
      data:function(){
          return {
+             isLoading:true,
              paymentMethod:2,
              isPaymentProcess: true
          }
@@ -89,12 +55,36 @@ export default {
          paymentHandler(){
              this.isPaymentProcess = false
          }
+     },
+     created(){
+         const data = {
+             token: this.$store.getters.getToken,
+             pay_token: this.$route.query['TransactionToken'],
+             user:  this.$store.getters.getUuid
+         }
+         this.$store.dispatch('confirmBooking', data)
+         .then((res) => {
+             window.console.log(res)
+             if(res['responseCode'] == 1){
+                 this.isLoading = false
+             }
+         })
+         .catch((err) =>{
+             window.console.log(err)
+         })
      }
 }
 </script>
 
 
 <style lang='scss' scoped>
+
+.loader-div{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction: row;
+}
     .active_tab{
         background-color: navy;
         color: #fff !important;

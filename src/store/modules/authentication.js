@@ -308,7 +308,7 @@ const actions = {
   async sendForgetPasswordLink({ commit }, data) {
     return new Promise(async (resolve, reject) => {
       try {
-        var res = await postReq("reset_password", data);
+        var res = await postReq("forget_password_request", data);
         if (res.responseCode == 1) {
           resolve(res);
         } else {
@@ -323,7 +323,7 @@ const actions = {
   async resetPassword({ commit }, data) {
     return new Promise(async (resolve, reject) => {
       try {
-        var res = await putReq("forget_password_request", data);
+        var res = await postReq("reset_password", data);
         if (res.responseCode == 1) {
           resolve(1);
         } else {

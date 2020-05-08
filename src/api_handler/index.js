@@ -2,6 +2,7 @@ import axios from 'axios';
 
 
 const BASE_URL = process.env.VUE_APP_BASE_URL
+const API_URL = BASE_URL + 'api/v1/'
 const URLS = {
     register: 'auth/register',
     login: 'auth/login',
@@ -22,8 +23,10 @@ const URLS = {
     all_blog_post: 'blog/posts/all',
     resend_pin: 'auth/verification-pin/resend',
     forget_password_request: 'auth/user/reset-password',
-    reset_password:'auth/user/reset-password',
+    reset_password:'user/reset-password-confirm',
     apartment_get: '',
+    book_apartment: 'apartment/book',
+    confirm_booking: 'payment/pay/confirm'
 }
  
 
@@ -37,7 +40,7 @@ const getReq = async function(urlKey, data){
     }
 
     return new Promise((resolve, reject) => {
-        let url = BASE_URL
+        let url = API_URL
         if(data.url == null){
             url += URLS[urlKey]
         }
@@ -57,15 +60,30 @@ const getReq = async function(urlKey, data){
 }
 
 const postReq = async function(urlKey, data){
-    const CONFIG = {
-        headers:{
-            'Content-Type':'application/json',
-            'Authorization':'Token ' + data.token
-        }
-    }
-    return new Promise((resolve, reject) => {
-        let url = BASE_URL + URLS[urlKey]
+    let url = "";
+    let CONFIG = {}
 
+    if(urlKey == "reset_password"){
+        CONFIG = {
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':'Token ' + data.tokenToSend
+            }
+        }
+        url = BASE_URL + URLS[urlKey] + '/' + data.message +"/"
+    }
+    else{
+        CONFIG = {
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':'Token ' + data.token
+            }
+        }
+        url = API_URL + URLS[urlKey]
+    }
+    
+    return new Promise((resolve, reject) => {
+        
         axios.post(url, data, CONFIG)
         .then(res => {
             resolve(res.data);
@@ -84,7 +102,7 @@ const putReq = async function(urlKey, data){
         }
     }
     return new Promise((resolve, reject) => {
-        let url = BASE_URL + URLS[urlKey]
+        let url = API_URL + URLS[urlKey]
 
         axios.put(url, data, CONFIG)
         .then(res => {
@@ -105,7 +123,7 @@ const deleteReq = async function(urlKey, data){
         }
     }
     return new Promise((resolve, reject) => {
-        let url = BASE_URL
+        let url = API_URL
         if(data.url == null){
             url += URLS[urlKey]
         }

@@ -76,6 +76,30 @@ const actions = {
                 reject(-1)
             }
         })
+    },
+
+    async bookApartment({commit}, data){
+        return new Promise( async (resolve, reject) => {
+            try {
+                let res = await postReq('book_apartment', data)
+                resolve(res)
+
+            } catch (error) {
+                reject(0)
+            }
+        });
+    },
+
+    async confirmBooking({commit}, data){
+        return new Promise( async (resolve, reject) => {
+            try {
+                let res = await postReq('confirm_booking', data)
+                resolve(res)
+
+            } catch (error) {
+                reject(0)
+            }
+        });
     }
 }
 

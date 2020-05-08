@@ -27,19 +27,21 @@
             <div class="left" id="overview">
               <div @click="getUserUrl()" class="host-details">
                 <div class="name">
-                   <img v-if="
-                    getCurrentApartment.owner_details &&
-                      getCurrentApartment.owner_details.profile_image.length > 5
-                  " :src="getCurrentApartment.owner_details.profile_image" alt="">
-                <i
-                  v-else
-                  class="fas fa-user-circle"
-                ></i>
+                  <img
+                    v-if="
+                      getCurrentApartment.owner_details &&
+                        getCurrentApartment.owner_details.profile_image.length >
+                          5
+                    "
+                    :src="getCurrentApartment.owner_details.profile_image"
+                    alt=""
+                  />
+                  <i v-else class="fas fa-user-circle"></i>
                   <span>
                     <p>Host</p>
-                  <strong style="text-decoration:underline;">
-                    {{ apartment.owner || $route.query.owner }}
-                  </strong>
+                    <strong style="text-decoration:underline;">
+                      {{ apartment.owner || $route.query.owner }}
+                    </strong>
                   </span>
                 </div>
 
@@ -51,25 +53,23 @@
                   "
                   class="country"
                 >
-                  <p>Nationality: <strong>
-                    {{
-                      getCurrentApartment.owner_details.resident_country || ""
-                    }}
-                  </strong></p>
-                  
+                  <p>
+                    Nationality:
+                    <strong>
+                      {{
+                        getCurrentApartment.owner_details.resident_country || ""
+                      }}
+                    </strong>
+                  </p>
                 </div>
               </div>
 
-               <h4>
+              <h4>
                 {{ apartment.title || $route.query.title }}
               </h4>
               <small>
-                {{
-                  (apartment.city || $route.query.city)
-                }}, 
-                {{
-                  (apartment.country || $route.query.country)
-                }}
+                {{ apartment.city || $route.query.city }},
+                {{ apartment.country || $route.query.country }}
               </small>
 
               <div class="more-info">
@@ -93,8 +93,6 @@
                         $route.query.number_of_bathrooms
                     }}
                   </p>
-                  
-                  
                 </div>
                 <div class="more-info-left second">
                   <p>
@@ -195,17 +193,26 @@
 
                 <p>
                   Checkin:
-                  <span> 
+                  <span>
                     {{
-                      (apartment.check_in || $route.query.check_in) == "Flexible" ? "":"After"
-                    }}  {{ apartment.check_in || $route.query.check_in }} </span>
+                      (apartment.check_in || $route.query.check_in) ==
+                      "Flexible"
+                        ? ""
+                        : "After"
+                    }}
+                    {{ apartment.check_in || $route.query.check_in }}
+                  </span>
                 </p>
                 <p>
                   Checkout:
                   <span>
-                     {{
-                      (apartment.check_out || $route.query.check_out) == "Flexible" ? "":"Before"
-                    }}  {{ apartment.check_out || $route.query.check_out }}
+                    {{
+                      (apartment.check_out || $route.query.check_out) ==
+                      "Flexible"
+                        ? ""
+                        : "Before"
+                    }}
+                    {{ apartment.check_out || $route.query.check_out }}
                   </span>
                 </p>
 
@@ -322,10 +329,19 @@
                   <br />
                   <br />
                   <Button
+                    v-if="!reserveButtonClicked"
                     @handleClick="reserveButtonHandler()"
                     label="Reserve"
                     :isFullWidth="true"
                   ></Button>
+
+                  <div class="loader-div" v-else>
+                    <pulse-loader
+                      class="loader"
+                      color="#3A85FC"
+                      size="10px"
+                    ></pulse-loader>
+                  </div>
 
                   <br />
                   <p class="small">
@@ -383,8 +399,11 @@ export default {
   },
 
   methods: {
-    getUserUrl(){
-      this.$router.push({path:"user/", query: {...this.getCurrentApartment.owner_details}})
+    getUserUrl() {
+      this.$router.push({
+        path: "user/",
+        query: { ...this.getCurrentApartment.owner_details },
+      });
     },
     handleGuest(intent) {
       if (intent == 0 && this.guestNumber > 1) {
@@ -420,19 +439,67 @@ export default {
         this.serviceFee
       );
     },
+    reverseString(str) {
+      let tmp = str.split("/");
+      // '23/12/2020' => [23, 12, 2020] => 2020/12/23
+
+      let newString = "";
+      for (let i = tmp.length - 1; i >= 0; i--) {
+        newString += tmp[i];
+        if (i != 0) {
+          newString += "/";
+        }
+      }
+
+      return newString;
+    },
     reserveButtonHandler() {
+      let checkoutReverse = this.reverseString(
+        this.getDateFormat(
+          this.checkout.toString(),
+          this.$route.query.checkin ? 4 : 2
+        )
+      );
+      let checkinReverse = this.reverseString(
+        this.getDateFormat(
+          this.checkin.toString(),
+          this.$route.query.checkin ? 3 : 1
+        )
+      );
       if (this.getTotal() > 0) {
+        this.reserveButtonClicked = true;
+        
         this.dateErrorMessage = "";
         if (window.localStorage.getItem("token")) {
-          this.$router.push({
-            path: "/payment",
-            query: {
-              price: this.getTotal(),
-              guest: this.guestNumber,
-              checkin: this.checkin,
-              checkout: this.checkout,
-              nights: this.bookedNights,
-            },
+          window.console.log(this.$route.query);
+          let data = {
+            token: this.$store.getters.getToken,
+            apartment_id: this.$route.query["uuid"],
+            // date_from: this.$route.query['checkin'] ||  checkinReverse,
+            // date_to: this.$route.query['checkout'] || checkoutReverse,
+            // check_in:this.$route.query['check_in'],
+            // check_out: this.$route.query['check_out'],
+            date_from: "2020-02-12",
+            date_to: "2020-02-14",
+            check_in: "03:45:00",
+            check_out: "19:00:00",
+            number_of_rooms: 1,
+            number_of_guest: this.guestNumber,
+            client: this.getUuid,
+          };
+
+          window.console.log(data);
+          this.$store.dispatch("bookApartment", data).then((res) => {
+            window.console.log(res);
+            try {
+              window.location.href = res["redirect_url"];
+            } catch (error) {
+              // alert('')
+              this.reserveButtonClicked = false;
+            }
+          })
+          .catch((err) => {
+            this.reserveButtonClicked = false;
           });
         } else {
           this.$store.dispatch("setModalState", 1);
@@ -536,7 +603,8 @@ export default {
   },
   data: function() {
     return {
-      userUrl:"user/",
+      reserveButtonClicked: false,
+      userUrl: "user/",
       dateErrorMessage: "",
       apartmentIsAvailable: 0,
       imagesArr: [],
@@ -608,6 +676,7 @@ export default {
     "isSafari",
     "getApartmentImages",
     "getCurrentApartment",
+    "getUuid",
   ]),
   created() {
     window.addEventListener("scroll", this.handleScroll);
@@ -692,7 +761,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.apd-loader-div {
+.apd-loader-div, .loader-div {
   width: 100%;
   display: flex;
   align-items: center;
@@ -896,7 +965,7 @@ export default {
     grid-template-columns: 8fr 4fr;
     grid-column-gap: 50px;
     .left {
-      a{
+      a {
         text-decoration: none;
       }
       width: 100%;
@@ -915,10 +984,10 @@ export default {
         margin-bottom: 30px;
         cursor: pointer;
 
-        .name{
-          display:flex;
-          align-items:center;
-          justify-content:center;
+        .name {
+          display: flex;
+          align-items: center;
+          justify-content: center;
           flex-direction: row;
         }
 
@@ -969,18 +1038,18 @@ export default {
         // grid-template-columns: 2fr 3fr;
         // border:1px solid red;
 
-        .second{
+        .second {
           margin-top: 10px;
         }
         .more-info-left {
-          display:flex;
-          align-items:center;
-          justify-content:flex-start;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
           flex-direction: row;
           p {
-            display:flex;
-            align-items:center;
-            justify-content:center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-direction: row;
             margin-right: 20px;
             font-style: normal;
@@ -991,7 +1060,7 @@ export default {
 
             i {
               margin-right: 10px;
-              color: #3986FC;
+              color: #3986fc;
               font-size: 14px;
             }
           }
@@ -1093,7 +1162,7 @@ export default {
 
             i {
               margin-right: 10px;
-              color:#3986FC;
+              color: #3986fc;
             }
           }
         }

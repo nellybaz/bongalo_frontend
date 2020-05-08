@@ -100,31 +100,33 @@
             <br />
             <br />
 
-            <Paragraph
-              text="What will guest have ?"
-              size="16"
-              weight="bold"
-              color="rgba(64, 64, 64, 0.7)"
-            ></Paragraph>
-            <small
-              class="listing-error"
-              v-if="
-                showErrors && checkIfShouldShowError('what_guest_will_have')
-              "
-            >
-              *{{ errorList["what_guest_will_have"] }}
-            </small>
-            <br />
-            <br />
-            <Radio
-              v-on:radioChangeHandler="handleRadio"
-              step="what_guest_will_have"
-              :options="steps.one.what_guest_will_have"
-            ></Radio>
+            <div v-if="showWhatWillGuestHave" style="padding: 0 !important;">
+              <Paragraph
+                text="What will guest have?"
+                size="16"
+                weight="bold"
+                color="rgba(64, 64, 64, 0.7)"
+              ></Paragraph>
+              <small
+                class="listing-error"
+                v-if="
+                  showErrors && checkIfShouldShowError('what_guest_will_have')
+                "
+              >
+                *{{ errorList["what_guest_will_have"] }}
+              </small>
+              <br />
+              <br />
+              <Radio
+                v-on:radioChangeHandler="handleRadio"
+                step="what_guest_will_have"
+                :options="steps.one.what_guest_will_have"
+              ></Radio>
+            </div>
 
             <br /><br /><br />
 
-            <div class="action-section">
+            <div class="action-section" v-if="showWhatWillGuestHave">
               <div></div>
               <Button
                 :isFullWidth="false"
@@ -150,7 +152,8 @@
               weight="normal"
               color="rgba(64, 64, 64, 0.7)"
             ></Paragraph>
-            <Incrementer
+            <div v-if="shouldShowGuestNumber" style="padding:0 !important">
+              <Incrementer
               @incrementerChangeHandler="handleIncrementer"
               step="number_of_guest"
               label="Guest"
@@ -161,12 +164,13 @@
             >
               *{{ errorList["number_of_guest"] }}
             </small>
+            </div>
             <br />
             <br />
             <br />
 
             <Paragraph
-              text="How many bedrooms can quest use ?"
+              text="How many total bedrooms available?"
               size="16"
               weight="normal"
               color="rgba(64, 64, 64, 0.7)"
@@ -507,8 +511,21 @@
               class="listing-error"
               v-if="showErrors && checkIfShouldShowError('photos')"
             >
-              *{{ errorList["photos"] }} </small
-            ><br />
+              *{{ errorList["photos"] }}
+            </small>
+            <small
+              class="listing-error"
+              v-else-if="showErrors && checkIfShouldShowError('photosMin')"
+            >
+              *{{ errorList["photosMin"] }}
+            </small>
+            <small
+              class="listing-error"
+              v-else-if="showErrors && checkIfShouldShowError('photosMax')"
+            >
+              *{{ errorList["photosMax"] }}
+            </small>
+            <br />
 
             <input
               id="property-images-input"
@@ -518,7 +535,7 @@
               @change="onFileChange"
             />
             <label class="image_select_label" for="property-images-input">
-              <div class="div">
+              <div class="div" @dragover.prevent @drop="onFileChange">
                 <div>
                   <p>Upload photos</p>
                   <small>or drag them in</small>
@@ -527,7 +544,10 @@
             </label>
 
             <div v-if="urls" class="preview">
-              <img v-for="url in urls" :key="url" :src="url" />
+              <div v-for="(url, index) in urls" :key="url" class="preview-item">
+                <em @click="removeImage(index)">remove</em>
+                <img :src="url" />
+              </div>
             </div>
 
             <div class="action-section">
@@ -614,6 +634,12 @@
               v-if="showErrors && checkIfShouldShowError('title')"
             >
               *{{ errorList["title"] }}
+            </small>
+            <small
+              class="listing-error"
+              v-else-if="showErrors && checkIfShouldShowError('titleLength')"
+            >
+              *{{ errorList["titleLength"] }}
             </small>
             <br />
 
@@ -965,6 +991,8 @@ export default {
 
   data: function() {
     return {
+      shouldShowGuestNumber:true,
+      showWhatWillGuestHave: false,
       countries: [],
       countryIsSelected: false,
       cities: [],
@@ -993,7 +1021,10 @@ export default {
         blocked_dates: [],
         price: "Please set a price",
         userListing: [],
-        photos: "You need to upload at least one image",
+        photos: "Photos are required",
+        photosMin: "You need a minimum of 6 photos",
+        photosMax: "You need a maximum of 25 photos",
+        titleLength: "Only 25 Characters are allowed",
       },
       stageItems: {
         "11": ["listing_type", "what_guest_will_have"],
@@ -1009,9 +1040,9 @@ export default {
         //  "17": [
         //      "rules"
         //  ],
-        "21": ["photos"],
+        "21": ["photos", "photosMin", "photosMax"],
         "22": ["description"],
-        "23": ["title"],
+        "23": ["title", "titleLength"],
         "31": ["will_update_calender_checkbox"],
         "35": ["price"],
       },
@@ -1053,15 +1084,15 @@ export default {
           listing_type: [
             {
               text: "Apartment",
-              value: "Apartment",
+              value: "A",
             },
             {
-              text: "Commercial",
-              value: "Commercial",
+              text: "Guest Lodge",
+              value: "C",
             },
             {
               text: "House",
-              value: "House",
+              value: "R",
             },
           ],
           what_guest_will_have: [
@@ -1080,35 +1111,35 @@ export default {
           ],
           number_of_bedrooms: [
             {
-              text: "1",
+              text: "1 bedroom",
               value: "1",
             },
             {
-              text: "2",
+              text: "2 bedrooms",
               value: "2",
             },
             {
-              text: "3",
+              text: "3 bedrooms",
               value: "3",
             },
             {
-              text: "4",
+              text: "4 bedrooms",
               value: "4",
             },
             {
-              text: "5",
+              text: "5 bedrooms",
               value: "5",
             },
             {
-              text: "6",
+              text: "6 bedrooms",
               value: "6",
             },
             {
-              text: "7",
+              text: "7 bedrooms",
               value: "7",
             },
             {
-              text: "8",
+              text: "8 bedrooms",
               value: "8",
             },
           ],
@@ -1287,10 +1318,28 @@ export default {
         let item = itemsInStage[i];
         let stateValue = this.getListingState();
         let itemStateValue = stateValue[item];
+
         if (
-          itemStateValue == "" ||
-          itemStateValue == 0 ||
-          itemStateValue == []
+          stateValue["title"] != null &&
+          item == "titleLength" &&
+          stateValue["title"].length > 25
+        ) {
+          this.errorsToShow.push(item);
+        } else if (
+          itemStateValue != null &&
+          (itemStateValue == "" || itemStateValue == 0 || itemStateValue == [])
+        ) {
+          this.errorsToShow.push(item);
+        } else if (
+          item == "photosMin" &&
+          this.urls != null &&
+          this.urls.length < 6
+        ) {
+          this.errorsToShow.push(item);
+        } else if (
+          item == "photosMax" &&
+          this.urls != null &&
+          this.urls.length > 25
         ) {
           this.errorsToShow.push(item);
         }
@@ -1300,6 +1349,39 @@ export default {
     },
     ...mapGetters(["getListingState", "getToken", "getUuid"]),
     handleSelect(val) {
+      // Handling what guest will have for the seperate listing types
+      if (val.step == "listing_type" && val.data == "C") {
+        this.shouldShowGuestNumber = false;
+        this.steps.one.what_guest_will_have = [
+          {
+            text: "Private Room",
+            value: "private_room",
+            desc: "Guests will have their own room, self contained",
+          },
+          {
+            text: "Shared room",
+            value: "shared_room",
+            desc: "Guests will have a shared room",
+          },
+        ];
+      } else {
+        this.steps.one.what_guest_will_have = [
+          {
+            text: "Full place",
+            value: "full_place",
+            desc:
+              "Guests have the whole place to themselves. This usually includes a bedroom, a bathroom, and a kitchen.",
+          },
+          {
+            text: "Private room",
+            value: "private_room",
+            desc:
+              "Guests have their own private room for sleeping. Other areas could be shared.",
+          },
+        ];
+      }
+
+      this.showWhatWillGuestHave = true;
       // Get cities after country is selected
       if (val.step == "property_country") {
         for (let i = 0; i < countryData.length; i++) {
@@ -1321,9 +1403,10 @@ export default {
         key: val.step,
         value: val.data,
       };
+
       this.$store.dispatch("setValue", d);
 
-      if (val.data == "Commercial") {
+      if (val.data == "C") {
         this.steps.one.showCommercialText = true;
       } else {
         this.steps.one.showCommercialText = false;
@@ -1418,14 +1501,30 @@ export default {
         this.$modal.show("no-image-modal");
       }
     },
+
+    removeImage(index) {
+      var existingPhotos = this.$store.getters.getListingState.photos;
+      existingPhotos.splice(index, 1);
+
+      this.urls = existingPhotos;
+
+      let d = {
+        key: "photos",
+        value: this.urls,
+      };
+      this.$store.dispatch("setValue", d);
+    },
     onFileChange(e) {
-      this.files = e.target.files;
+      e.stopPropagation();
+      e.preventDefault();
+      var existingPhotos = this.$store.getters.getListingState.photos;
+      this.files = e.target.files || e.dataTransfer.files;
       let tmpUrl = [];
       for (let i = 0; i < this.files.length; i++) {
         tmpUrl.push(URL.createObjectURL(this.files[i]));
       }
 
-      this.urls = tmpUrl;
+      this.urls = tmpUrl.concat(existingPhotos);
       let d = {
         key: "photos",
         value: this.urls,
@@ -1513,8 +1612,20 @@ export default {
 .preview {
   // border:1px solid red;
   width: 500px;
-  img {
-    max-width: 100%;
+  .preview-item {
+    height: auto;
+    padding: 0 !important;
+
+    em {
+      position: absolute;
+      padding: 0.5em;
+      background: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    img {
+      max-width: 100%;
+    }
   }
 }
 .listing {
@@ -1590,6 +1701,11 @@ export default {
       .preview {
         width: 40%;
         margin-left: 20px;
+        em {
+          // position: absolute;
+          top: 10px;
+          border: 1px solid red;
+        }
 
         img {
           width: 100%;
