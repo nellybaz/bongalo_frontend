@@ -2,7 +2,7 @@ import firebase from "firebase";
 import { getReq, postReq, deleteReq, putReq } from "../../api_handler";
 
 const state = {
-  listing_type: "Apartment",
+  listing_type: "",
   what_guest_will_have: "",
   number_of_guest: 1,
   number_of_bedroom: 0,
@@ -68,7 +68,7 @@ const actions = {
     let initialState = {
       listing_type: "Apartment",
       what_guest_will_have: "",
-      number_of_guest: 1,
+      number_of_guest: 4,
       number_of_bedroom: 0,
       number_of_bathroom: 1,
       property_country: "",

@@ -1,6 +1,6 @@
 <template>
     <div @click="showOutline=true" @mouseleave="showOutline=false" class="textinput" :style="getClass()">
-        <input @keyup="$emit('inputHandler', {data:model, step:step})" v-model="model" :class="{fullWidth: isFullWidth, halfWidth: !isFullWidth}" :type=type :placeholder=hint>
+        <input ref="inputRef" @keyup="$emit('inputHandler', {data:model, step:step})" v-model="model" :class="{fullWidth: isFullWidth, halfWidth: !isFullWidth}" :type=type :placeholder=hint>
         <i v-if="icon" :class="icon"></i>
     </div>
 </template>
@@ -18,6 +18,12 @@ export default {
     },
     methods:{
         getClass(){
+          var inputRef = this.$refs.inputRef
+            if(inputRef){
+                // inputRef.value = "ko"
+                 window.console.log(inputRef.value)
+            }
+            
             return this.showOutline ? "border: 1px solid #3A85FC !important;" : ""
         }
     },
@@ -54,6 +60,9 @@ export default {
              if(dataInStore.length > 1){
                  this.model = dataInStore;
              }
+         }else{
+             // For removing prefills for other uses other than listing
+            //  this.model = ""
          }
     }
 }
