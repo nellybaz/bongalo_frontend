@@ -1024,7 +1024,7 @@ export default {
         photos: "Photos are required",
         photosMin: "You need a minimum of 6 photos",
         photosMax: "You need a maximum of 25 photos",
-        titleLength: "Only 25 Characters are allowed",
+        titleLength: "Only 50 Characters are allowed",
       },
       stageItems: {
         "11": ["listing_type", "what_guest_will_have"],
@@ -1322,7 +1322,7 @@ export default {
         if (
           stateValue["title"] != null &&
           item == "titleLength" &&
-          stateValue["title"].length > 25
+          stateValue["title"].length > 50
         ) {
           this.errorsToShow.push(item);
         } else if (

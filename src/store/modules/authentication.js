@@ -309,12 +309,14 @@ const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         var res = await postReq("forget_password_request", data);
+        window.console.log(res);
         if (res.responseCode == 1) {
           resolve(res);
         } else {
           reject(res.message);
         }
       } catch (error) {
+        window.console.log(error);
         reject(error);
       }
     });

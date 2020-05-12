@@ -11,7 +11,6 @@
         <p>Enter the pin received on your email</p>
 
         <br />
-        <!-- <Input @inputHandler="handleInput" step="pin_verify" hint="Enter PIN" type="text" value="PIN" :isFullWidth="true"/> -->
         <div class="pin-div">
           <input
             @keyup="handleInput({data:pinModel, step:'pin_verify'})"
@@ -105,6 +104,8 @@
       </div>
 
       <div v-else-if="getModalState == 2" class="signup-div">
+         <!-- <input type="email" class="hiddens">
+        <input type="password" class="hiddens"> -->
         <Input
           @inputHandler="handleInput"
           icon="fas fa-user"
@@ -125,8 +126,6 @@
         />
         <small v-if="lnameErrorMessage">{{lnameErrorMessage}}</small>
         <br />
-        <input type="email" class="hidden">
-        <input type="password" class="hidden">
         <Input
         ref="emailAddressRef"
           @inputHandler="handleInput"
@@ -134,7 +133,6 @@
           hint="Email address"
           step="email"
           type="email"
-          value=""
           :isFullWidth="true"
         />
         <small v-if="emailErrorMessage">{{emailErrorMessage}}</small>
@@ -146,7 +144,6 @@
           hint="Create Password"
           step="password"
           type="password"
-          value = ""
           :isFullWidth="true"
         />
         <small v-if="passwordErrorMessage">{{passwordErrorMessage}}</small>
@@ -190,8 +187,9 @@
 
         <br />
          <small class="terms-small">{{emailErrorMessage}}</small>
+         <small class="success-mes">{{successMessage}}</small>
 
-        <Input 
+        <Input v-if="successMessage.length < 1" 
         @inputHandler="handleInput"
         hint="Email address" 
         icon="fas fa-envelope" 
@@ -201,18 +199,18 @@
         <br />
 
         <Button  
-        v-if="!isButtonClicked"
+        v-if="!isButtonClicked && successMessage.length < 1 "
         v-on:handleClick="handleButton(3)"
         label="Send reset link" 
         :isFullWidth="true" />
         
-        <div class="loader-div" v-else>
+        <div class="loader-div" v-else-if="isButtonClicked && successMessage.length < 1 ">
           <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
         </div>
 
         <hr />
 
-        <p>
+        <p v-if="successMessage.length < 1">
           Or cancel and head back to
           <span v-on:click="goto(1)">Login</span>
         </p>
@@ -228,6 +226,7 @@ import Input from "../components/TextInput";
 import Button from "../components/Button";
 import SocialSignin from "./SocialSignin";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+
 
 export default {
   name: "login-modal",
@@ -287,7 +286,15 @@ export default {
     },
 
     goto(intent) {
+
       this.termsCheckBoxError = ""
+      this.pinErrorMessage = ""
+      this.emailErrorMessage = ""
+      this.signInError = ""
+      this.fnameErrorMessage = ""
+      this.passwordErrorMessage = ""
+      this.lnameErrorMessage = ""
+      this.successMessage = ""
       this.pinErrorMessage = ""
       if(intent != 3){
         this.email = "";
@@ -413,12 +420,14 @@ export default {
             this.isButtonClicked = true
             this.$store.dispatch("sendForgetPasswordLink", {'email':this.email}).then(res => {
             this.isButtonClicked = false;
-            this.emailErrorMessage = res.message
+            this.successMessage = res.message
             
           })
           .catch(err => {
+             window.console.log(err)
             this.isButtonClicked = false;
-            this.signInError = err.message;
+            this.emailErrorMessage = err.data.email;
+            this.signInError = err.data.email;
           })
         }
       }
@@ -463,6 +472,7 @@ export default {
 
   data: function() {
     return {
+      successMessage:"",
       isButtonResendVerifyPinClicked:false,
       isButtonClicked: false,
       termsCheckBoxError: "",
@@ -487,6 +497,11 @@ export default {
 
 
 <style lang='scss' scoped>
+
+.success-mes{
+  color:green;
+  font-size: 14px !important;
+}
 
 .hidden{
 height: 0.1px;
