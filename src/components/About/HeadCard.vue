@@ -4,10 +4,23 @@
       <div>
         <h2>Who are we</h2>
         <p>
-          We are a passionate and diverse team of young people from across multiple African countries, who understand the needs and wants of every traveller across the continent, looking for where to stay. Our team is a prove of our travel experience as each team member has travelled an average of two countries in Africa. 
-          <br> <br>
-          We exist to grow together and cultivate Africa’s growing travel industry and experience, a place where people can find the best accommodation tailored to their needs, hosts profiles and shared interests
-          Looking to book for a place to stay that influence your comfort and price? We are here for just that. With Bongalo, you can book rooms in apartments, and an entire apartment for either a long or short stay. We dedicate time to verify all listings before approving it on our platform, ensuring its authenticity and credibility. We get you the finest, comfortable and affordable homes on your trips at amazing prices.
+          We are a passionate and diverse team of young people from across
+          multiple African countries, who understand the needs and wants of
+          every traveller across the continent, looking for where to stay. Our
+          team is a prove of our travel experience as each team member has
+          travelled an average of two countries in Africa.
+          <br />
+          <br />
+          We exist to grow together and cultivate Africa’s growing travel
+          industry and experience, a place where people can find the best
+          accommodation tailored to their needs, hosts profiles and shared
+          interests Looking to book for a place to stay that influence your
+          comfort and price? We are here for just that. With Bongalo, you can
+          book rooms in apartments, and an entire apartment for either a long or
+          short stay. We dedicate time to verify all listings before approving
+          it on our platform, ensuring its authenticity and credibility. We get
+          you the finest, comfortable and affordable homes on your trips at
+          amazing prices.
         </p>
       </div>
       <div>
@@ -19,7 +32,8 @@
         <div>
           <h2>Our Mission</h2>
           <p>
-            Connect travellers to affordable, comfortable and most convenient accommodation options across Africa and beyond.
+            Connect travellers to affordable, comfortable and most convenient
+            accommodation options across Africa and beyond.
           </p>
         </div>
       </div>
@@ -32,36 +46,38 @@
       <div class="inner-content-div">
         <h2>Resilience</h2>
         <p>
-          We are always of high-spirit.
-We stay strong no matter the situation. We fight till the very end. 
+          We are always of high-spirit. We stay strong no matter the situation.
+          We fight till the very end.
         </p>
       </div>
       <div class="inner-content-div">
         <h2>Team work</h2>
         <p>
-          Many hands do more. Alone we go fast, but together we go far. We support each other. We work together across multiple boundaries satisfy users and help our company grow.
+          Many hands do more. Alone we go fast, but together we go far. We
+          support each other. We work together across multiple boundaries
+          satisfy users and help our company grow.
         </p>
       </div>
       <div class="inner-content-div">
         <h2>Passion</h2>
         <p>
-          We are focused and passionate at what we do. We strive to provide a high level of personalized service, whether you want to rent a place for a long or short stay
+          We are focused and passionate at what we do. We strive to provide a
+          high level of personalized service, whether you want to rent a place
+          for a long or short stay
         </p>
       </div>
     </div>
   </div>
 </template>
 
-
 <script>
 export default {
   name: "event-card",
-  components: {}
+  components: {},
 };
 </script>
 
-
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .core-values h2 {
   width: 393px;
   height: 30px;
@@ -75,7 +91,6 @@ export default {
   display: flex;
   align-items: center;
   color: #404040;
-  
 }
 .event-card {
   position: relative;
@@ -153,19 +168,18 @@ export default {
   }
   .inner-content-div {
     width: 95%;
-    h2{
-      background: #FFFFFF;
+    h2 {
+      background: #ffffff;
       box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
       border-radius: 10px;
       height: 65px;
-      border:none;
+      border: none;
       padding-left: 40px;
       font-style: normal;
       font-weight: bold;
       font-size: 20px;
       line-height: 20px;
       text-align: justify;
-
       color: #404040;
     }
   }
