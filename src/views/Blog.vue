@@ -1,6 +1,6 @@
 <template>
   <div class="blog">
-    <Navigation :showSearch="true"/>
+    <Navigation :showSearch="true" />
     <Tags />
     <div v-if="getAllBlogPost().length > 0">
       <PopularPosts />
@@ -14,13 +14,12 @@
   </div>
 </template>
 
-
 <script>
 import Navigation from "../components/Blog/Navigation";
 import Tags from "../components/Blog/Tags";
 import PopularPosts from "../components/Blog/PopularPosts";
 import RecentPosts from "../components/Blog/RecentPosts";
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   name: "blog",
@@ -28,31 +27,24 @@ export default {
     Navigation,
     Tags,
     PopularPosts,
-    RecentPosts
+    RecentPosts,
   },
-  methods:{
-    ...mapGetters(['getAllBlogPost'])
+  methods: {
+    ...mapGetters(["getAllBlogPost"]),
   },
-  created(){
-    this.$store.dispatch('getAllBlogPost')
-  }
+  created() {
+    this.$store.dispatch("getAllBlogPost");
+  },
 };
 </script>
 
-
-
 <style scoped>
-  .no-items-div{
-    padding-left: 20%;
-    display:flex; 
-    place-items:center; 
-    width:100%; 
-    height:200px
-  }
+.no-items-div {
+  padding-left: 20%;
+  border: 1px solid red;
+  display: flex;
+  place-items: center;
+  width: 100%;
+  height: 200px;
+}
 </style>
-
-
-
-
-
-

@@ -310,14 +310,17 @@
                       </p>
                     </div>
 
-                    <div class="cleaning-fee">
+                    <!-- <div class="cleaning-fee">
                       <p>Cleaning fee</p>
                       <p class="p">${{ cleaningFee }}</p>
-                    </div>
+                    </div> -->
 
                     <div class="service-fee">
                       <p>Service fee</p>
-                      <p class="p">${{ serviceFee }}</p>
+                      <p class="p">${{ 
+                        (apartment.price || $route.query.price) * bookedNights /
+                        100 
+                        }}</p>
                     </div>
 
                     <div class="total">
@@ -432,13 +435,14 @@ export default {
         this.borderItem = 3;
       }
     },
+
     getTotal() {
       return (
         (this.apartment.price || this.$route.query.price) * this.bookedNights +
-        this.cleaningFee +
         this.serviceFee
       );
     },
+
     reverseString(str) {
       let tmp = str.split("/");
       // '23/12/2020' => [23, 12, 2020] => 2020/12/23
@@ -453,6 +457,7 @@ export default {
 
       return newString;
     },
+
     reserveButtonHandler() {
       let checkoutReverse = this.reverseString(
         this.getDateFormat(
@@ -460,15 +465,17 @@ export default {
           this.$route.query.checkin ? 4 : 2
         )
       );
+
       let checkinReverse = this.reverseString(
         this.getDateFormat(
           this.checkin.toString(),
           this.$route.query.checkin ? 3 : 1
         )
       );
+
       if (this.getTotal() > 0) {
         this.reserveButtonClicked = true;
-        
+
         this.dateErrorMessage = "";
         if (window.localStorage.getItem("token")) {
           window.console.log(this.$route.query);
@@ -489,18 +496,20 @@ export default {
           };
 
           window.console.log(data);
-          this.$store.dispatch("bookApartment", data).then((res) => {
-            window.console.log(res);
-            try {
-              window.location.href = res["redirect_url"];
-            } catch (error) {
-              // alert('')
+          this.$store
+            .dispatch("bookApartment", data)
+            .then((res) => {
+              window.console.log(res);
+              try {
+                window.location.href = res["redirect_url"];
+              } catch (error) {
+                // alert('')
+                this.reserveButtonClicked = false;
+              }
+            })
+            .catch((err) => {
               this.reserveButtonClicked = false;
-            }
-          })
-          .catch((err) => {
-            this.reserveButtonClicked = false;
-          });
+            });
         } else {
           this.$store.dispatch("setModalState", 1);
         }
@@ -619,8 +628,8 @@ export default {
       },
       galleryIndex: 0,
       galleryCurrentImage: "",
-      serviceFee: 13,
-      cleaningFee: 20,
+      serviceFee: 0,
+      // cleaningFee: 20,
       bookedNights: 0,
       review: [],
       apartment: {},
@@ -761,7 +770,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.apd-loader-div, .loader-div {
+.apd-loader-div,
+.loader-div {
   width: 100%;
   display: flex;
   align-items: center;

@@ -1083,8 +1083,8 @@ export default {
         "2": "Set the scene",
         "3": "Get ready for guests",
       },
-      step: 2,
-      flow: 1,
+      step: 1,
+      flow: 4,
       steps: {
         one: {
           apartmentTypeModel: "Apartment",
@@ -1356,6 +1356,7 @@ export default {
 
       return this.errorsToShow.length <= 0;
     },
+
     ...mapGetters(["getListingState", "getToken", "getUuid"]),
     handleSelect(val) {
       // Handling what guest will have for the seperate listing types
