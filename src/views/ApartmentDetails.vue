@@ -318,8 +318,7 @@
                     <div class="service-fee">
                       <p>Service fee</p>
                       <p class="p">${{ 
-                        (apartment.price || $route.query.price) * bookedNights /
-                        100 
+                        serviceFee 
                         }}</p>
                     </div>
 
