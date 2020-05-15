@@ -49,62 +49,86 @@
                 <i class="fas fa-camera" title="Update profile image"></i>
               </label>
             </div>
+
+            <button
+              class="p-primary"
+              v-if="!editProfileBtnClicked"
+              @click="editProfileBtnClicked = true"
+            >
+              Edit Profile
+            </button>
           </div>
 
-          <div class="mid">
-            <StyledInput
-              @sendInput="handleFName"
-              :value="getUserInfo() != null ? getUserInfo().first_name : ''"
-              type="text"
-              placeholder="First name"
-              label="FULL NAME"
-            />
-            <StyledInput
-              @sendInput="handleLName"
-              :value="getUserInfo().last_name"
-              type="text"
-              placeholder="Last name"
-              label="LAST NAME"
-            />
-            <!-- <StyledInput type="text" placeholder="ichieuche@gmail.com" label="EMAIL ADDRESS" /> -->
-            <!-- <StyledInput type="text" placeholder="Nigeria" label="NATIONALITY" /> -->
-            <StyledInput
-              @sendInput="handlePhone"
-              :value="getUserInfo().phone_number"
-              type="text"
-              placeholder="Enter phone"
-              label="PHONE NUMBER"
-            />
+          <div v-if="editProfileBtnClicked" class="update-div">
+            <div class="mid">
+              <StyledInput
+                @sendInput="handleFName"
+                :value="getUserInfo() != null ? getUserInfo().first_name : ''"
+                type="text"
+                placeholder="First name"
+                label="FULL NAME"
+              />
+              <StyledInput
+                @sendInput="handleLName"
+                :value="getUserInfo().last_name"
+                type="text"
+                placeholder="Last name"
+                label="LAST NAME"
+              />
+              <!-- <StyledInput type="text" placeholder="ichieuche@gmail.com" label="EMAIL ADDRESS" /> -->
+              <!-- <StyledInput type="text" placeholder="Nigeria" label="NATIONALITY" /> -->
+              <StyledInput
+                @sendInput="handlePhone"
+                :value="getUserInfo().phone_number"
+                type="text"
+                placeholder="Enter phone"
+                label="PHONE NUMBER"
+              />
 
-            <!-- <div class="file-select">
+              <!-- <div class="file-select">
               <label for="select-below">UPLOAD VERIFICATION</label>
               <br />
               <br />
               <input type="file" id="select-below" />
             </div>-->
-          </div>
+            </div>
 
-          <br />
-          <div class="bottom">
-            <StyledInput
-              @sendInput="handleDesc"
-              :value="getUserInfo().description"
-              :isTextArea="true"
-              type="text"
-              placeholder
-              label="DESCRIPTION"
-            />
-          </div>
+            <br />
+            <div class="bottom">
+              <StyledInput
+                @sendInput="handleDesc"
+                :value="getUserInfo().description"
+                :isTextArea="true"
+                type="text"
+                placeholder
+                label="DESCRIPTION"
+              />
+            </div>
 
-          <br />
-          <br />
-          <br />
-          <div class="btn-div">
-            <Button
-              @handleClick="updateUser"
-              :isFullWidth="false"
-              label="UPDATE PROFILE"
-            />
+            <br />
+            <br />
+            <br />
+            <div class="btn-div">
+              <Button
+                @handleClick="updateUser"
+                :isFullWidth="false"
+                label="UPDATE PROFILE"
+              />
+            </div>
+          </div>
+          <div v-else class="profile-show">
+            <p class="p-desc">
+              {{ getUserInfo().description }}
+            </p>
+
+            <p class="p-lives">
+              <i class="fas fa-home"></i>
+              Lives in {{ "Kgali, Rwanda" }}
+            </p>
+            <p class="p-work">
+              <i class="fas fa-briefcase"></i>
+              Lives in {{ "Software Engineer" }}
+            </p>
           </div>
 
           <div id="favourite-section" class="fav-section">
@@ -119,40 +143,52 @@
           <br />
           <br />
 
-          <div
-            v-for="listing in getUserListing()"
-            :key="listing.title"
-            class="listing-card"
-          >
-            <img :src="listing.main_image" alt />
-            <div>
-              <input
-                class="aprtment-title"
-                type="text"
-                :value="listing.title"
-              />
-              <br />
-              <textarea
-                v-model="listing.description"
-                cols="60"
-                rows="10"
-              ></textarea>
-              <br />
-              <label>Price</label>
-              <input
-                class="aprtment-price"
-                type="text"
-                :value="listing.price"
-              />
-              <br />
-              <section>
-                <button @click="addImages('uuid')">Update</button>
-                <!-- <button @click="addImages('uuid')">
-                        Add more images
-                </button>-->
-                <button @click="deleteListing(listing.uuid)">Remove</button>
-              </section>
+          <div v-if="getUserListing().length > 0" class="listing-card-holder">
+            <div
+              v-for="listing in getUserListing()"
+              :key="listing.title"
+              class="listing-card"
+            >
+              <img :src="listing.main_image" alt />
+              <div>
+                <h3>
+                  {{ listing.title }}
+
+                  <span>
+                    ${{ listing.price }}
+                  </span>
+                </h3>
+                <!-- <input
+                  class="aprtment-title"
+                  type="text"
+                  :value="listing.title"
+                />
+                <br />
+                <textarea
+                  v-model="listing.description"
+                  cols="60"
+                  rows="10"
+                ></textarea>
+                <br />
+                <label>Price</label>
+                <input
+                  class="aprtment-price"
+                  type="text"
+                  :value="listing.price"
+                /> -->
+                <br />
+                <section class="action-section">
+                  <button @click="addImages('uuid')" class="p-primary">
+                    Update
+                  </button>
+                  <button style="border:none; color:red; background:transparent" @click="deleteListing(listing.uuid)">Remove</button>
+                </section>
+              </div>
             </div>
+          </div>
+
+          <div v-else>
+            <h4>You have not yet listed any property</h4>
           </div>
         </div>
 
@@ -196,6 +232,7 @@ export default {
   name: "",
   data: function() {
     return {
+      editProfileBtnClicked: false,
       user_description: "",
       firstName: "",
       lastName: "",
@@ -253,6 +290,7 @@ export default {
               text: "User profile updated successfully!",
               type: "success",
             });
+            this.editProfileBtnClicked = false;
           }
         });
     },
@@ -298,6 +336,7 @@ export default {
     ]),
     addImages(uuid) {
       // Add images to this apartment
+      this.$router.push({path:"/become-a-host"})
     },
     handleWhatShows(intent) {
       this.showId = intent;
@@ -362,12 +401,35 @@ export default {
           this.user_description = this.getUserInfo().description;
           this.phoneNumber = this.getUserInfo().phone_number;
         }
-      })
+      });
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.p-primary {
+  margin-left: 30px;
+  background-color: #3a85fc;
+  color: white;
+  padding: 1em 1.5em;
+  border-radius: 5px;
+}
+.profile-show {
+  .p-desc {
+    color: grey;
+    margin: 10px;
+    margin-bottom: 30px;
+  }
+  .p-work,
+  .p-lives {
+    color: grey;
+    margin-top: 10px;
+    i {
+      margin-right: 15px;
+      font-size: 24px;
+    }
+  }
+}
 .profile {
   width: 100%;
 
@@ -461,35 +523,50 @@ export default {
     }
 
     .right {
+      .listing-card-holder{
+        display:flex;
+        align-items:center;
+        justify-content:flex-start;
+        flex-direction: row;
+        // border:1px solid red;
+      }
       .listing-card {
+        margin-right: 10px;
+        .action-section{
+
+          button{
+            margin:0 10px 0 0 !important;
+            padding: 0.9em 2.5em;
+            cursor: pointer;
+          }
+        }
         margin-bottom: 20px;
-        width: 100%;
+        width: 400px;
         height: 350px;
         box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
         background-color: #f6faff;
         border-radius: 5px;
-        display: grid;
-        grid-template-columns: 3fr 7fr;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
         cursor: pointer;
 
         img {
           width: 100%;
           border-radius: 5px;
-          height: 100%;
+          height: 50%;
           object-fit: cover;
         }
 
         div {
-          display: flex;
-          align-items: flex-start;
-          justify-content: flex-start;
-          flex-direction: column;
-          // border:1px solid red;
+
           height: 100%;
           padding: 20px;
+          h3 {
+            span {
+              background: #99bcf5;
+              color: #3a85fc;
+              padding: 0.1em 0.3em;
+              margin-left: 20px;
+            }
+          }
           p {
             color: #777777;
           }
@@ -511,6 +588,11 @@ export default {
       .top {
         margin-top: 30px;
         width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: row;
+
         .icon-div {
           border: 2px solid black;
           height: 100px;
@@ -542,6 +624,7 @@ export default {
 
       .bottom {
         width: 100%;
+        // border:1px solid red;
       }
 
       .fav-section {
