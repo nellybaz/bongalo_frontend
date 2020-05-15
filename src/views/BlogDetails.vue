@@ -1,7 +1,7 @@
 <template>
   <div class="blog-details">
     <Navigation :showSearch="true" />
-    <Tags />
+    <!-- <Tags /> -->
 
     <div class="details">
       <div class="left">
@@ -58,6 +58,7 @@
         <p>
           {{ getPostDetails()["body"] }}
         </p>
+        <input ref="hiddenText" type="text" hidden />
       </div>
     </div>
   </div>
@@ -101,10 +102,20 @@ export default {
         body: this.$route.query.body,
       };
     },
+
+    onClick() {
+      var ref = this.$refs["hiddenText"];
+      ref.value = window.location.href;
+      ref.style.display = "block";
+      ref.select();
+      document.execCommand("copy");
+      ref.style.display = "none";
+    },
   },
+
   components: {
     Navigation,
-    Tags,
+    // Tags,
     // PopularPosts,
   },
 };
@@ -151,7 +162,7 @@ a{
         font-weight: bold;
         font-size: 15px;
         line-height: 20px;
-        /* identical to box height, or 133% */
+        cursor: pointer;
         text-align: justify;
         color: #6a6a6a;
         margin-bottom: 10px;

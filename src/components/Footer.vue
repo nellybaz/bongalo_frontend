@@ -56,7 +56,7 @@
       </div>
 
       <div class="subscribe-section">
-        <p>Enter your email below to recieve updates on our Newletter</p>
+        <p>Enter your email below to recieve updates on our Newsletter</p>
         <small style="color:red">
           {{ emailErrorMessage }}
         </small>
