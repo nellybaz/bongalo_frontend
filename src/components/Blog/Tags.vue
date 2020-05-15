@@ -5,24 +5,39 @@
         <li>
           <strong>Tags:</strong>
         </li>
-        <li>Holiday Trip</li>
-        <li>Tourism</li>
-        <li>Food</li>
-        <li>Night Life</li>
-        <li>Coffee</li>
-        <li>Daylight Fun</li>
-        <li>Rwanda's Law</li>
+        <li @click="filterBlog('')" class="tag-item">All</li>
+        <li @click="filterBlog('tourism')" class="tag-item">Tourism</li>
+        <li @click="filterBlog('food')" class="tag-item">Food</li>
+        <li @click="filterBlog('coffee')" class="tag-item">Coffee</li>
       </ul>
     </nav>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+
+  methods:{
+    filterBlog(tag){
+      var newBlog = [];
+      var blogs = this.$store.getters.getAllBlogPost;
+      for(var item in blogs){
+        if(blogs[item]['tag'].includes(tag)){
+          newBlog.push(blogs[item]);
+        }
+      }
+      //  window.console.log(blogs)
+      window.console.log(newBlog)
+      this.$store.dispatch('setBlog', newBlog)
+
+    }
+  }
+
+};
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
 .tag {
   height: 64px;
   padding: 0 60px;
@@ -40,7 +55,12 @@ li {
   margin-right: 50px;
   width: auto;
   list-style: none;
+  
+  
 }
+.tag-item{
+    cursor: pointer;
+  }
 ul {
   display: flex;
   width: 100%;

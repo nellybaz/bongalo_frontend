@@ -4,7 +4,9 @@
       <h2 class="post-heading">Recent Post</h2>
       <div v-for="item in getPosts()" :key="item.id" class="sec-1">
         <div class="img1">
-          <img :src="require(`../../assets/images/blog-img.png`)" alt />
+          <a :href="getUrl(item)">
+            <img  :src="require(`../../assets/images/blog-img.png`)" alt />
+          </a>
         </div>
         <div class="cap-1">
           <div class="div-inner">
@@ -19,16 +21,15 @@
               }}...
             </p>
             <br />
-            <!-- <p>
-              {{
-              item.text2
-              }}
-            </p> -->
           </div>
           <div class="read-more">
-            <p @click="gotoBlogDetails(item.uuid)">
+
+            <a :href="getUrl(item)">
+<p>
               Read More
             </p>
+            </a>
+            
           </div>
         </div>
       </div>
@@ -48,6 +49,9 @@ export default {
     };
   },
   methods:{
+    getUrl(item){
+      return "/blog-details/?uid"+item.uuid+"&title="+item.title+"&body="+item.body
+    },
     getPosts(){
       if(this.getAllBlogPost().length < 1){
       this.$store.dispatch('getAllBlogPost')
@@ -66,6 +70,9 @@ export default {
 
 
 <style lang='scss' scoped>
+a{
+  text-decoration: none;
+}
 .recentPost {
   margin-bottom: 15%;
   margin-top: 8%;
@@ -87,6 +94,7 @@ export default {
   margin-left: 10%;
   .img1 {
     width: 100%;
+    cursor: pointer;
   }
   .cap-1 {
     width: 100%;

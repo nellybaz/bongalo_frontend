@@ -3,7 +3,7 @@
     <h2>Featured Post</h2>
     <div class="popular-posts">
       <div v-for="item in getPopular()" :key="item.uuid" class="post-img">
-        <a @click="gotoDetails(item.uuid)">
+        <a :href="getUrl(item)">
           <img src="../../assets/images/p-post.png" alt />
           <h3>
             {{
@@ -14,6 +14,11 @@
             {{
               getDate(item.created_at)
              }}
+          </p>
+          <p style="font-size:11px">
+            {{
+              item['tag']
+            }}
           </p>
         </a>
       </div> 
@@ -35,6 +40,11 @@ export default {
   },
 
   methods:{
+
+     getUrl(item){
+      return "/blog-details/?uid"+item.uuid+"&title="+item.title+"&body="+item.body
+    },
+
     gotoDetails(uuid){
       this.$router.push({path: '/blog-details', query:{id:uuid}})
 
@@ -43,11 +53,11 @@ export default {
       return Date(date).substring(0,15)
     },
     
-    ...mapGetters(['getAllBlogPost']),
+    ...mapGetters(['getAllBlogPost', 'getAllFeaturedPost', 'getAllRecentPost']),
     getPopular(){
       let tmpPopular = [];
-      for(let i=0; i < this.getAllBlogPost().length; i++){
-        let post = this.getAllBlogPost()[i];
+      for(let i=0; i < this.getAllFeaturedPost().length; i++){
+        let post = this.getAllFeaturedPost()[i];
           if(post.is_featured){
             tmpPopular.push(post)
           }
@@ -66,7 +76,7 @@ a{
   text-decoration: none;
 }
 .post-img {
-  width: 25%;
+  width: 25%;cursor: pointer;
 }
 
 .post-img h3 {

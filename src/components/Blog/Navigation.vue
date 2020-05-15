@@ -16,9 +16,10 @@
         class="search-div">
         <i class="fa fa-search" aria-hidden="true"></i>
         <input 
-          
+          @keyup="searchBlog"
           placeholder="Type for anything to search for tag or topics" 
           type="text" 
+          v-model="searchWord"
           
         />
       </div>
@@ -49,10 +50,23 @@ export default {
   data: function(){
     return {
       showOutline: false,
+      searchWord:'',
     }
   },
 
   methods:{
+    searchBlog(){
+      var newBlog = [];
+      var blogs = this.$store.getters.getAllBlogPost;
+      for(var item in blogs){
+        if(blogs[item]['title'].toLowerCase().includes(this.searchWord.toLowerCase()) 
+        || blogs[item]['body'].toLowerCase().includes(this.searchWord.toLowerCase())){
+          newBlog.push(blogs[item]);
+        }
+      }
+      this.$store.dispatch('setBlog', newBlog)
+
+    },
     getClass(){
             return this.showOutline ? "border: 1px solid #3A85FC !important;" : ""
         },
