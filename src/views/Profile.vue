@@ -3,40 +3,55 @@
     <Navigation :showSearch="false" />
     <div class="content">
       <div class="left">
-        <div class="d1 d">Profile</div>
+        <!-- <div class="d1 d">Profile
 
+        </div> -->
         <div class="d2 d" @click="handleWhatShows(1)">
           <a href="#">
             <div></div>
-            <p class="p-item">Dashboard</p>
-          </a>
-        </div>
-
-        <div class="d3 d">
-          <a href="#favourite-section">
-            <div></div>
-            <p class="p-item">Favourites</p>
+            <p class="p-item">Profile</p>
           </a>
         </div>
 
         <div class="d3 d" @click="handleWhatShows(2)">
           <a href="#">
             <div></div>
-            <p class="p-item">My Listings</p>
+            <p class="p-item">Listings</p>
           </a>
         </div>
 
-        <div class="d3 d" @click="handleWhatShows(3)">
+        <div class="d2 d" @click="handleWhatShows(3)">
           <a href="#">
             <div></div>
-            <p class="p-item">Add Payment method</p>
+            <p class="p-item">Verifications</p>
+          </a>
+        </div>
+
+        <div class="d3 d" @click="handleWhatShows(4)">
+          <a href="#favourite-section">
+            <div></div>
+            <p class="p-item">Security</p>
+          </a>
+        </div>
+
+        <div class="d3 d" @click="handleWhatShows(5)">
+          <a href="#">
+            <div></div>
+            <p class="p-item">Payout Methods</p>
+          </a>
+        </div>
+
+        <div class="d3 d" @click="handleWhatShows(6)">
+          <a href="#">
+            <div></div>
+            <p class="p-item">Reviews</p>
           </a>
         </div>
       </div>
 
       <div class="right">
         <div v-if="showId == 1">
-          <h2 id="dashboard">Profile</h2>
+          <h2 id="dashboard">Hi, I am Kanneh {{ name }}</h2>
           <div class="top">
             <div :style="getProfileImage()" class="icon-div">
               <input
@@ -51,7 +66,7 @@
             </div>
 
             <button
-              class="p-primary"
+              class="p-primary-edit-profile"
               v-if="!editProfileBtnClicked"
               @click="editProfileBtnClicked = true"
             >
@@ -60,6 +75,7 @@
           </div>
 
           <div v-if="editProfileBtnClicked" class="update-div">
+            <h3>Tell us the basics</h3>
             <div class="mid">
               <StyledInput
                 @sendInput="handleFName"
@@ -75,22 +91,6 @@
                 placeholder="Last name"
                 label="LAST NAME"
               />
-              <!-- <StyledInput type="text" placeholder="ichieuche@gmail.com" label="EMAIL ADDRESS" /> -->
-              <!-- <StyledInput type="text" placeholder="Nigeria" label="NATIONALITY" /> -->
-              <StyledInput
-                @sendInput="handlePhone"
-                :value="getUserInfo().phone_number"
-                type="text"
-                placeholder="Enter phone"
-                label="PHONE NUMBER"
-              />
-
-              <!-- <div class="file-select">
-              <label for="select-below">UPLOAD VERIFICATION</label>
-              <br />
-              <br />
-              <input type="file" id="select-below" />
-            </div>-->
             </div>
 
             <br />
@@ -104,23 +104,60 @@
                 label="DESCRIPTION"
               />
             </div>
+            <!-- <br /> -->
 
-            <br />
+            <h3>Where are you located?</h3>
+            <div class="mid">
+              <StyledInput
+                @sendInput="handleFName"
+                :value="getUserInfo() != null ? getUserInfo().first_name : ''"
+                type="text"
+                placeholder="City"
+                label="CITY, STATE"
+              />
+              <StyledInput
+                @sendInput="handleLName"
+                :value="getUserInfo().last_name"
+                type="text"
+                placeholder="Country"
+                label="NATIONALITY"
+              />
+            </div>
+
+            <h3>How can we contact you?</h3>
+            <div class="mid">
+              <StyledInput
+                @sendInput="handleFName"
+                :value="getUserInfo() != null ? getUserInfo().first_name : ''"
+                type="text"
+                placeholder="musas.kanneh@gmail.com"
+                label="EMAIL ADDRESS"
+              />
+              <StyledInput
+                @sendInput="handleLName"
+                :value="getUserInfo().last_name"
+                type="text"
+                placeholder="Last name"
+                label="PHONE NUMBER"
+              />
+            </div>
+
             <br />
             <br />
             <div class="btn-div">
               <Button
                 @handleClick="updateUser"
                 :isFullWidth="false"
-                label="UPDATE PROFILE"
+                label="Update Profile"
               />
             </div>
           </div>
+
           <div v-else class="profile-show">
             <p class="p-desc">
               {{ getUserInfo().description }}
             </p>
-
+            <hr />
             <p class="p-lives">
               <i class="fas fa-home"></i>
               Lives in {{ "Kgali, Rwanda" }}
@@ -130,17 +167,12 @@
               Lives in {{ "Software Engineer" }}
             </p>
           </div>
-
-          <div id="favourite-section" class="fav-section">
-            <h3>You dont have any favourite listings yet</h3>
-            <br />
-            <p class="hint">Places you save will appear hear</p>
-          </div>
         </div>
 
         <div v-else-if="showId == 2">
-          <h2>My Listings</h2>
+          <h2 class="title-listing">Listings</h2>
           <br />
+          <h3 class="special-hts">Here are your listings</h3>
           <br />
 
           <div v-if="getUserListing().length > 0" class="listing-card-holder">
@@ -150,38 +182,22 @@
               class="listing-card"
             >
               <img :src="listing.main_image" alt />
-              <div>
+              <div class="listing-title">
                 <h3>
                   {{ listing.title }}
-
-                  <span>
-                    ${{ listing.price }}
-                  </span>
+                  <span> ${{ listing.price }} </span>
                 </h3>
-                <!-- <input
-                  class="aprtment-title"
-                  type="text"
-                  :value="listing.title"
-                />
-                <br />
-                <textarea
-                  v-model="listing.description"
-                  cols="60"
-                  rows="10"
-                ></textarea>
-                <br />
-                <label>Price</label>
-                <input
-                  class="aprtment-price"
-                  type="text"
-                  :value="listing.price"
-                /> -->
                 <br />
                 <section class="action-section">
-                  <button @click="addImages('uuid')" class="p-primary">
+                  <button @click="addImages('uuid')" class="btn-update">
                     Update
                   </button>
-                  <button style="border:none; color:red; background:transparent" @click="deleteListing(listing.uuid)">Remove</button>
+                  <button
+                    @click="deleteListing(listing.uuid)"
+                    class="btn-remove"
+                  >
+                    Remove
+                  </button>
                 </section>
               </div>
             </div>
@@ -192,18 +208,81 @@
           </div>
         </div>
 
-        <div v-else-if="showId == 3">
-          <h2>Add payment method</h2>
+        <div v-else-if="showId == 3" class="verifications">
+          <div class="veri-sec-1">
+            <h2>Verifications</h2>
+            <p class="upload">UPLOAD VERFICATION</p>
+          </div>
 
+          <div class="veri-sec-1">
+            <div class="">
+              <P>You currently don’t have any verifications</P>
+            </div>
+            <div class="veri-sec-3">
+              <form action="/">
+                <input type="file" id="myfile" name="myfile" />
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div v-else-if="showId == 4" class="Security">
+          <h2>Security</h2>
           <br />
+          <h3>Change your password</h3>
+
+          <div class="mid">
+            <StyledInput
+              @sendInput="handleFName"
+              :value="getUserInfo() != null ? getUserInfo().first_name : ''"
+              type="text"
+              placeholder=""
+              label="OLD PASSWORD"
+            />
+            <br />
+            <StyledInput
+              @sendInput="handleLName"
+              :value="getUserInfo().last_name"
+              type="text"
+              placeholder=""
+              label="NEW PASSWORD"
+            />
+            <br />
+
+            <StyledInput
+              @sendInput="handleLName"
+              :value="getUserInfo().last_name"
+              type="text"
+              placeholder=""
+              label="CONFIRM PASSWORD"
+            />
+
+            <Button
+              @handleClick="updateUser"
+              :isFullWidth="false"
+              label="Update Profile"
+            />
+          </div>
+        </div>
+
+        <div v-else-if="showId == 5" class="payout-details">
+          <h2>Payout Methods</h2>
           <br />
-          <h3>Mobile Money Number</h3>
-          <br />
-          <br />
-          <strong>Current:</strong>
-          <p>{{ paymentNumber }}</p>
+          <h3>Bank</h3>
+          <p>Bank Name: <span>Bank of Kigali</span></p>
+          <p>
+            Accouunt Details: <span>Uchechukwu Onyeka - 88484848484848848</span>
+          </p>
+          <p>SWIFT Code: <span>JIDNIODN4</span></p>
+          <hr />
+          <h3>Mobile Wallet</h3>
+          <p>Account Name: <span>Uche Onyeka</span></p>
+          <p>Account Number: <span>+250 78 7229 723</span></p>
+          <!-- <strong>Current:</strong>
+          <p>{{ paymentNumber }}</p> -->
           <br />
           <StyledInput
+            class="num-placeholder"
             @sendInput="handleInput"
             :value="paymentNumber"
             type="text"
@@ -216,6 +295,26 @@
             :isFullWidth="false"
             label="Save"
           />
+        </div>
+
+        <div v-else-if="showId == 6" class="review">
+          <h2>Review</h2>
+          <br />
+          <div class="review-div">
+            <div><img src="" alt="Image" /></div>
+
+            <div class="rev-mid-sec">
+              <h3>Benjamin | February 2020</h3>
+              <span>start</span>
+            </div>
+            <span class="edit-review">Edit Review</span>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum
+            rutrum vel viverra leo. Etiam est sapien adipiscing maecenas eget.
+            Morbi nec molestie massa felis augue et orci. Dignissim sapien,
+            proin at felis urna, turpis ultrices.
+          </p>
         </div>
       </div>
     </div>
@@ -309,7 +408,7 @@ export default {
               type: "success",
             });
 
-            // this.addPaymentNumber =
+            // this.addPaymentNumber =I
           }
         });
     },
@@ -336,7 +435,7 @@ export default {
     ]),
     addImages(uuid) {
       // Add images to this apartment
-      this.$router.push({path:"/become-a-host"})
+      this.$router.push({ path: "/become-a-host" });
     },
     handleWhatShows(intent) {
       this.showId = intent;
@@ -407,26 +506,190 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.p-primary {
-  margin-left: 30px;
-  background-color: #3a85fc;
-  color: white;
-  padding: 1em 1.5em;
+.review {
+  width: 80%;
+  .edit-review {
+    margin-left: 200px;
+    border: 1px solid green;
+    font-size: 14px;
+    color: #3a85fc;
+  }
+
+  .rev-mid-sec {
+    border: 1px solid red;
+    h3 {
+      left: calc(50% - 102px / 2 - 109px);
+      font-weight: bold;
+      font-size: 18px;
+      align-items: center;
+      color: #404040;
+    }
+  }
+
+  img {
+    border: 1px solid red;
+    width: 50%;
+  }
+  .review-div {
+    width: 100%;
+    border: 1px solid red;
+    display: flex;
+  }
+  p {
+    margin-top: 20px;
+    width: 92%;
+    border: 1px solid red;
+    left: calc(50% - 603px / 2 + 59.5px);
+    font-size: 16px;
+    line-height: 25px;
+    color: #333333;
+  }
+}
+
+.verifications {
+  .veri-sec-1 {
+    border: 1px solid red;
+    display: flex;
+  }
+  .veri-sec-2 {
+    border: 1px solid red;
+    display: flex;
+  }
+
+  .veri-sec-3 {
+    border: transparent;
+    // input {
+    //   margin-left: 10%;
+    //   width: 122px;
+    //   height: 35px;
+    //   left: 814px;
+    //   top: 1621px;
+    //   background: #fdfdfd;
+    //   border: 1px solid rgba(0, 0, 0, 0.5);
+    //   box-sizing: border-box;
+    //   border-radius: 5px;
+    // }
+  }
+
+  .upload {
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 14px;
+    margin-left: 25%;
+    align-items: center;
+    color: #3a85fc;
+  }
+}
+
+.update-div {
+  width: 80%;
+  margin-bottom: 20px;
+
+  h3 {
+    font-weight: bold;
+    margin-top: 34px;
+    margin-bottom: 5px;
+    width: 100%;
+    font-size: 18px;
+    color: #404040;
+  }
+
+  .btn-div {
+    button {
+      padding: 13px 45px;
+      width: 35%;
+      height: 44px;
+      font-size: 15px;
+      background: #3a85fc;
+      border-radius: 5px;
+    }
+  }
+}
+
+.action-section {
+  .btn-update {
+    border: transparent;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    background: #3a85fc;
+    border-radius: 5px;
+  }
+  .btn-remove {
+    background: transparent;
+    border: transparent;
+    font-weight: bold;
+    color: red;
+  }
+}
+.special-hts {
+  color: #404040;
+  font-size: 18px;
+}
+
+.payout-details {
+  .num-placeholder {
+    width: 500px;
+  }
+
+  hr {
+    width: 500px;
+    margin-top: 15px;
+    border: 0.5px solid rgba(128, 128, 128, 0.26);
+  }
+  span {
+    margin-left: 10px;
+  }
+  p {
+    font-size: 14px;
+    line-height: 28px;
+    color: rgba(64, 64, 64, 0.75);
+  }
+  h3 {
+    margin-top: 18px;
+    font-size: 18px;
+    line-height: 22px;
+    color: rgba(64, 64, 64, 0.75);
+  }
+}
+.p-primary-edit-profile {
+  padding: 13px 45px;
+  border: transparent;
+  position: absolute;
+  height: 44px;
+  left: 600px;
+  color: #3a85fc;
+  font-weight: bold;
+  cursor: pointer;
+  background: rgba(58, 133, 252, 0.1);
   border-radius: 5px;
 }
 .profile-show {
+  hr {
+    width: 490px;
+    border: 1px solid rgba(51, 51, 51, 0.1);
+    margin-bottom: 30px;
+  }
   .p-desc {
     color: grey;
-    margin: 10px;
-    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    width: 500px;
+    font-size: 14px;
+    line-height: 18px;
+    color: rgba(51, 51, 51, 0.75);
   }
   .p-work,
   .p-lives {
     color: grey;
-    margin-top: 10px;
+    margin-top: 20px;
+    height: 18px;
+    left: 534px;
+    font-size: 14px;
+    color: rgba(51, 51, 51, 0.75);
     i {
       margin-right: 15px;
-      font-size: 24px;
+      font-size: 20px;
     }
   }
 }
@@ -454,19 +717,24 @@ export default {
     .left,
     .right {
       width: 100%;
+      h2 {
+        font-weight: bold;
+        font-size: 24px;
+        color: #404040;
+      }
     }
 
     .left {
       position: sticky;
       top: 20px;
-      height: 450px;
+      height: 470px;
       background: #ffffff;
       box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 
       .d {
         width: 100%;
-        border-bottom: 1px solid #3a85fc;
-        height: 80px;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.294);
+        height: 78px;
 
         .p-item {
           font-style: normal;
@@ -475,8 +743,7 @@ export default {
           line-height: 24px;
           display: flex;
           align-items: center;
-
-          color: #404040;
+          color: grey;
         }
       }
 
@@ -486,15 +753,13 @@ export default {
         justify-content: flex-start;
         flex-direction: row;
         padding: 0 30px;
-
         font-style: normal;
         font-weight: bold;
         font-size: 20px;
         line-height: 24px;
         display: flex;
         align-items: center;
-
-        color: #404040;
+        color: gray;
       }
 
       .d2,
@@ -509,8 +774,16 @@ export default {
           height: 40px;
           width: 40px;
           border-radius: 50%;
-          // border:1px solid red;
           margin-right: 20px;
+        }
+        i {
+          border: 1px solid red;
+          left: 9.71%;
+          right: 88.21%;
+          top: 10.35%;
+          bottom: 87.9%;
+
+          background: rgba(58, 133, 252, 0.05);
         }
 
         a {
@@ -523,19 +796,17 @@ export default {
     }
 
     .right {
-      .listing-card-holder{
-        display:flex;
-        align-items:center;
-        justify-content:flex-start;
+      .listing-card-holder {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
         flex-direction: row;
-        // border:1px solid red;
       }
       .listing-card {
         margin-right: 10px;
-        .action-section{
-
-          button{
-            margin:0 10px 0 0 !important;
+        .action-section {
+          button {
+            margin: 0 10px 0 0 !important;
             padding: 0.9em 2.5em;
             cursor: pointer;
           }
@@ -544,27 +815,31 @@ export default {
         width: 400px;
         height: 350px;
         box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
-        background-color: #f6faff;
+        background-color: #ffffff;
         border-radius: 5px;
         cursor: pointer;
 
         img {
           width: 100%;
           border-radius: 5px;
-          height: 50%;
+          height: 60%;
           object-fit: cover;
         }
 
         div {
-
           height: 100%;
           padding: 20px;
           h3 {
+            font-size: 18px;
+            color: #404040;
             span {
-              background: #99bcf5;
+              margin-left: 10px;
+              padding: 0.1em 0.2em;
               color: #3a85fc;
-              padding: 0.1em 0.3em;
-              margin-left: 20px;
+              padding: 0.2em 1em;
+              font-size: 14px;
+              background: rgba(58, 133, 252, 0.1);
+              border-radius: 1px;
             }
           }
           p {
@@ -579,9 +854,8 @@ export default {
       h2 {
         font-style: normal;
         font-weight: bold;
-        font-size: 35px;
+        font-size: 24px;
         line-height: 42px;
-
         color: #404040;
       }
 
@@ -619,12 +893,12 @@ export default {
       .mid {
         display: grid;
         grid-gap: 40px;
+        width: 100%;
         grid-template-columns: 1fr 1fr;
       }
 
       .bottom {
         width: 100%;
-        // border:1px solid red;
       }
 
       .fav-section {

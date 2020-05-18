@@ -1466,12 +1466,12 @@ export default {
       return "";
     },
     handlePropertyUpload() {
-      this.urls =  this.mainUrl + this.urls;
+      this.urls = this.mainUrl + this.urls;
       let d = {
         key: "photos",
         value: this.urls,
       };
-      
+
       this.$store.dispatch("setValue", d);
 
       if (window.localStorage.getItem("profile_image") || this.profile_img) {

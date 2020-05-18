@@ -9,7 +9,6 @@
 export default {};
 </script>
 
-
 <style lang="scss" scoped>
 .middle-banner-section {
   width: 100%;
@@ -21,6 +20,7 @@ export default {};
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
   p {
     font-style: normal;
     font-weight: normal;
@@ -30,6 +30,7 @@ export default {};
     color: #ffffff;
     width: 464px;
   }
+
   button {
     border: none;
     height: 50px;
