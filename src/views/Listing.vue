@@ -1084,6 +1084,7 @@ export default {
         "3": "Get ready for guests",
       },
       step: 1,
+
       flow: 1,
       steps: {
         one: {

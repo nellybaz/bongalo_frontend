@@ -4,46 +4,81 @@
     <div class="content">
       <div class="left">
         <!-- <div class="d1 d">Profile
-
         </div> -->
         <div class="d2 d" @click="handleWhatShows(1)">
           <a href="#">
-            <div></div>
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
             <p class="p-item">Profile</p>
           </a>
         </div>
 
         <div class="d3 d" @click="handleWhatShows(2)">
           <a href="#">
-            <div></div>
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
             <p class="p-item">Listings</p>
           </a>
         </div>
 
         <div class="d2 d" @click="handleWhatShows(3)">
           <a href="#">
-            <div></div>
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
             <p class="p-item">Verifications</p>
           </a>
         </div>
 
         <div class="d3 d" @click="handleWhatShows(4)">
           <a href="#favourite-section">
-            <div></div>
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
             <p class="p-item">Security</p>
           </a>
         </div>
 
         <div class="d3 d" @click="handleWhatShows(5)">
           <a href="#">
-            <div></div>
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
             <p class="p-item">Payout Methods</p>
           </a>
         </div>
 
         <div class="d3 d" @click="handleWhatShows(6)">
           <a href="#">
-            <div></div>
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
             <p class="p-item">Reviews</p>
           </a>
         </div>
@@ -127,13 +162,6 @@
             <h3>How can we contact you?</h3>
             <div class="mid">
               <StyledInput
-                @sendInput="handleFName"
-                :value="getUserInfo() != null ? getUserInfo().first_name : ''"
-                type="text"
-                placeholder="musas.kanneh@gmail.com"
-                label="EMAIL ADDRESS"
-              />
-              <StyledInput
                 @sendInput="handleLName"
                 :value="getUserInfo().last_name"
                 type="text"
@@ -204,8 +232,19 @@
           </div>
 
           <div v-else>
-            <h4>You have not yet listed any property</h4>
+            <h4 class="add-listing">
+              You haven't added any listing. Add a listing to update a Payout
+              Method
+            </h4>
+            <img src="../assets/images/pic.png" alt="bongalo-careers" />
           </div>
+
+          <Button
+            style="width:20%; margin:0 110px; height:40px"
+            @handleClick="handleOpeningHostPage"
+            :isFullWidth="false"
+            label="Add a Listing"
+          />
         </div>
 
         <div v-else-if="showId == 3" class="verifications">
@@ -219,9 +258,9 @@
               <P>You currently don’t have any verifications</P>
             </div>
             <div class="veri-sec-3">
-              <form action="/">
-                <input type="file" id="myfile" name="myfile" />
-              </form>
+              <label for="upload-photo">Choose file</label>
+              <input type="file" name="photo" id="upload-photo" />
+              <span>No file selected.</span>
             </div>
           </div>
         </div>
@@ -239,6 +278,7 @@
               placeholder=""
               label="OLD PASSWORD"
             />
+
             <br />
             <StyledInput
               @sendInput="handleLName"
@@ -260,7 +300,8 @@
             <Button
               @handleClick="updateUser"
               :isFullWidth="false"
-              label="Update Profile"
+              style="margin-top:20px; height:45px"
+              label="Update Password"
             />
           </div>
         </div>
@@ -269,46 +310,163 @@
           <h2>Payout Methods</h2>
           <br />
           <h3>Bank</h3>
+
           <p>Bank Name: <span>Bank of Kigali</span></p>
           <p>
             Accouunt Details: <span>Uchechukwu Onyeka - 88484848484848848</span>
           </p>
           <p>SWIFT Code: <span>JIDNIODN4</span></p>
           <hr />
-          <h3>Mobile Wallet</h3>
-          <p>Account Name: <span>Uche Onyeka</span></p>
-          <p>Account Number: <span>+250 78 7229 723</span></p>
-          <!-- <strong>Current:</strong>
-          <p>{{ paymentNumber }}</p> -->
           <br />
-          <StyledInput
-            class="num-placeholder"
-            @sendInput="handleInput"
-            :value="paymentNumber"
-            type="text"
-            placeholder="Enter mobile money number"
-            label="MOBILE MONEY NUMBER"
+          <h3>Mobile Wallet</h3>
+          <img
+            style="width:10%; margin:10px 0px"
+            src="../assets/images/mtn.png"
+            alt="bongalo-careers"
           />
+          <p>
+            Account Name: <span>{{ paymentName }}</span>
+          </p>
+          <p>
+            Account Number: <span>{{ paymentNumber }}</span>
+          </p>
+          <br />
+
           <br />
           <Button
             @handleClick="addPaymentNumber"
             :isFullWidth="false"
             label="Save"
+            style="width:25%; margin-top:20px0"
+          />
+          <br /><br />
+          <hr />
+          <br />
+
+          <div class="payout-bank-sec">
+            <p class="p-bank" @click="showBankPayoutMethod = true">
+              Bank
+            </p>
+            <p @click="showBankPayoutMethod = false">
+              Mobile Money
+            </p>
+          </div>
+
+          <div>
+            <div v-if="showBankPayoutMethod" class="mid-payout">
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="handleInput"
+                :value="paymentNumber"
+                type="text"
+                placeholder="Enter your Mobile Number"
+                label="BANK NAME"
+              />
+
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="handleInput"
+                :value="paymentName"
+                type="text"
+                placeholder="Enter your Account Name"
+                label="ACCOUNT NAME"
+              />
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="handleInput"
+                :value="paymentNumber"
+                type="text"
+                placeholder="Enter your Mobile Number"
+                label="ACCOUNT NUMBER"
+              />
+
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="handleInput"
+                :value="paymentName"
+                type="text"
+                placeholder="Enter your Account Name"
+                label="SWIFT CODE"
+              />
+            </div>
+
+            <div v-else class="mid-payout">
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="handleInput"
+                :value="paymentNumber"
+                type="text"
+                placeholder="Enter your Mobile Number"
+                label="MOBILE NUMBER"
+              />
+
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="handleInput"
+                :value="paymentName"
+                type="text"
+                placeholder="Enter your Account Name"
+                label="ACCOUNT NAME"
+              />
+            </div>
+          </div>
+
+          <br /><br />
+          <Button
+            @handleClick="addPaymentNumber"
+            :isFullWidth="false"
+            label="Update Payout Method"
+            style=""
           />
         </div>
 
         <div v-else-if="showId == 6" class="review">
           <h2>Review</h2>
           <br />
-          <div class="review-div">
-            <div><img src="" alt="Image" /></div>
 
-            <div class="rev-mid-sec">
-              <h3>Benjamin | February 2020</h3>
-              <span>start</span>
-            </div>
-            <span class="edit-review">Edit Review</span>
+          <div class="rev-title">
+            <div><p>Reviews about you</p></div>
+            <div><p class="p-review">Reviews you’ve left</p></div>
           </div>
+          <hr />
+          <br />
+          <a href="#">
+            <div class="rev-div"></div>
+            <p>
+              <strong>Benjamin</strong> |
+              <span class="rev-date">February 2020</span>
+              <br />
+              <span
+                ><i class="fas fa-star" title="Update profile image"></i>
+                <i class="fas fa-star" title="Update profile image"></i>
+                <i class="fas fa-star" title="Update profile image"></i
+                ><i class="fas fa-star" title="Update profile image"></i>
+              </span>
+            </p>
+          </a>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum
+            rutrum vel viverra leo. Etiam est sapien adipiscing maecenas eget.
+            Morbi nec molestie massa felis augue et orci. Dignissim sapien,
+            proin at felis urna, turpis ultrices.
+          </p>
+          <br />
+          <hr />
+          <br />
+          <a href="#">
+            <div class="rev-div"></div>
+            <p>
+              <strong>Benjamin</strong> |
+              <span class="rev-date">February 2020</span>
+              <br />
+              <span
+                ><i class="fas fa-star" title="Update profile image"></i>
+                <i class="fas fa-star" title="Update profile image"></i>
+                <i class="fas fa-star" title="Update profile image"></i
+                ><i class="fas fa-star" title="Update profile image"></i>
+              </span>
+            </p>
+          </a>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum
             rutrum vel viverra leo. Etiam est sapien adipiscing maecenas eget.
@@ -316,6 +474,7 @@
             proin at felis urna, turpis ultrices.
           </p>
         </div>
+        <!-- Review part two -->
       </div>
     </div>
   </div>
@@ -326,12 +485,16 @@ import Navigation from "../components/Blog/Navigation";
 import StyledInput from "../components/StyledInput";
 import Button from "../components/Button";
 import { mapActions, mapGetters } from "vuex";
+import Select from "../components/Select";
+// import Listing from "../components/views/Listing";
 
 export default {
   name: "",
   data: function() {
     return {
       editProfileBtnClicked: false,
+      showBankPayoutMethod: true,
+      Select,
       user_description: "",
       firstName: "",
       lastName: "",
@@ -393,6 +556,11 @@ export default {
           }
         });
     },
+
+    // switchPaymentMethod(){
+
+    // },
+
     addPaymentNumber() {
       this.$store
         .dispatch("addPaymentMethod", {
@@ -460,6 +628,7 @@ export default {
         window.location.reload();
       });
     },
+
     getProfileImage() {
       return window.localStorage.getItem("profile_image")
         ? "background-image:" +
@@ -468,7 +637,22 @@ export default {
             ")"
         : "background-image:" + "url(" + this.backgroundUrl + ")";
     },
+
+    ...mapGetters(["isMobile", "getFeatured", "isLoggedIn"]),
+    ...mapActions(["setModalState"]),
+    handleOpeningHostPage() {
+      if (this.isLoggedIn()) {
+        this.$router.push("/become-a-host");
+      } else {
+        this.$router.push({ query: { next: "become-a-host" } });
+        this.setModalState(1);
+      }
+    },
+    makePoweredByImageClass(index) {
+      return "powered_img_";
+    },
   },
+
   components: {
     Navigation,
     StyledInput,
@@ -506,77 +690,124 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// reviews ==================================*
 .review {
   width: 80%;
+  hr {
+    border: 0.5px solid rgba(51, 51, 51, 0.1);
+  }
+  .rev-date {
+    color: #404040;
+    font-size: 15px;
+  }
+  i {
+    color: #3a85fc;
+    letter-spacing: 5px;
+    font-size: 12px;
+  }
+
+  strong {
+    height: 24px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    align-items: center;
+    color: #404040;
+  }
+
+  .rev-title {
+    width: 100%;
+    display: flex;
+    p {
+      font-size: 18px;
+      line-height: 22px;
+      color: #333333;
+    }
+    .p-review {
+      margin-bottom: -205px;
+      margin-left: 100px;
+      font-size: 18px;
+      line-height: 22px;
+      color: #333333;
+    }
+  }
+
   .edit-review {
     margin-left: 200px;
-    border: 1px solid green;
     font-size: 14px;
     color: #3a85fc;
   }
 
-  .rev-mid-sec {
-    border: 1px solid red;
-    h3 {
-      left: calc(50% - 102px / 2 - 109px);
-      font-weight: bold;
-      font-size: 18px;
-      align-items: center;
-      color: #404040;
-    }
+  .rev-div {
+    background: rgba(196, 196, 196, 0.2);
+    height: 40px;
+    width: 45px;
+    margin: 10px 0;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+
+  a {
+    width: 100%;
+    text-decoration: none;
+    display: flex;
   }
 
   img {
-    border: 1px solid red;
     width: 50%;
   }
   .review-div {
     width: 100%;
-    border: 1px solid red;
-    display: flex;
   }
   p {
-    margin-top: 20px;
-    width: 92%;
-    border: 1px solid red;
-    left: calc(50% - 603px / 2 + 59.5px);
-    font-size: 16px;
+    margin: 10px 0;
+    width: 100%;
+    font-size: 18px;
     line-height: 25px;
     color: #333333;
   }
 }
 
 .verifications {
-  .veri-sec-1 {
-    border: 1px solid red;
-    display: flex;
+  label {
+    cursor: pointer;
+    margin-left: 40px;
+    font-size: 15px;
+    padding: 6px 20px;
+    background: #fdfdfd;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
   }
-  .veri-sec-2 {
-    border: 1px solid red;
+
+  #upload-photo {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .veri-sec-1 {
+    p {
+      margin-top: 5px;
+    }
     display: flex;
+    color: #404040;
   }
 
   .veri-sec-3 {
-    border: transparent;
-    // input {
-    //   margin-left: 10%;
-    //   width: 122px;
-    //   height: 35px;
-    //   left: 814px;
-    //   top: 1621px;
-    //   background: #fdfdfd;
-    //   border: 1px solid rgba(0, 0, 0, 0.5);
-    //   box-sizing: border-box;
-    //   border-radius: 5px;
-    // }
+    margin-top: 5px;
+    span {
+      margin-left: 33px;
+      font-size: 14px;
+      align-items: center;
+      color: #6a6a6a;
+    }
   }
 
   .upload {
     cursor: pointer;
     font-size: 14px;
     margin-top: 14px;
-    margin-left: 25%;
-    align-items: center;
+    margin-left: 200px;
     color: #3a85fc;
   }
 }
@@ -628,8 +859,27 @@ export default {
 }
 
 .payout-details {
+  .payout-bank-sec {
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+
+    .p-bank {
+      margin-right: 100px !important;
+    }
+
+    p {
+      font-style: normal;
+      margin-left: 40px;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 22px;
+      color: #333333;
+    }
+  }
+
   .num-placeholder {
-    width: 500px;
+    width: 250px;
   }
 
   hr {
@@ -646,7 +896,6 @@ export default {
     color: rgba(64, 64, 64, 0.75);
   }
   h3 {
-    margin-top: 18px;
     font-size: 18px;
     line-height: 22px;
     color: rgba(64, 64, 64, 0.75);
@@ -664,12 +913,14 @@ export default {
   background: rgba(58, 133, 252, 0.1);
   border-radius: 5px;
 }
+
 .profile-show {
   hr {
     width: 490px;
     border: 1px solid rgba(51, 51, 51, 0.1);
     margin-bottom: 30px;
   }
+  
   .p-desc {
     color: grey;
     margin-top: 30px;
@@ -679,6 +930,7 @@ export default {
     line-height: 18px;
     color: rgba(51, 51, 51, 0.75);
   }
+
   .p-work,
   .p-lives {
     color: grey;
@@ -693,9 +945,9 @@ export default {
     }
   }
 }
+
 .profile {
   width: 100%;
-
   .content {
     .file-select {
       label {
@@ -728,6 +980,7 @@ export default {
       position: sticky;
       top: 20px;
       height: 470px;
+
       background: #ffffff;
       box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 
@@ -770,20 +1023,11 @@ export default {
         flex-direction: row;
         padding: 0 30px;
         div {
-          background: rgba(196, 196, 196, 0.2);
+          background: rgba(58, 133, 252, 0.05);
           height: 40px;
           width: 40px;
           border-radius: 50%;
           margin-right: 20px;
-        }
-        i {
-          border: 1px solid red;
-          left: 9.71%;
-          right: 88.21%;
-          top: 10.35%;
-          bottom: 87.9%;
-
-          background: rgba(58, 133, 252, 0.05);
         }
 
         a {
@@ -796,6 +1040,20 @@ export default {
     }
 
     .right {
+      img {
+        width: 35%;
+        margin: 1rem 3rem;
+      }
+
+      .add-listing {
+        width: 393px;
+        height: 50px;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 25px;
+        text-align: center;
+        color: #333333;
+      }
       .listing-card-holder {
         display: flex;
         align-items: center;
@@ -887,6 +1145,28 @@ export default {
             color: #3a85fc;
             cursor: pointer;
           }
+        }
+      }
+      .mid-payout {
+        display: grid;
+        grid-gap: 15px;
+        width: 80%;
+        grid-template-columns: 1fr 1fr;
+      }
+      .rev-title-payout {
+        cursor: pointer;
+        display: flex;
+        width: 80%;
+        margin-top: 20px;
+        p {
+          color: #333333;
+          font-size: 18px;
+        }
+        .p-review-payout {
+          margin-left: 100px;
+          font-size: 18px;
+          line-height: 22px;
+          color: #333333;
         }
       }
 

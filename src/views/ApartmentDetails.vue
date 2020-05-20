@@ -317,9 +317,7 @@
 
                     <div class="service-fee">
                       <p>Service fee</p>
-                      <p class="p">${{ 
-                        serviceFee 
-                        }}</p>
+                      <p class="p">${{ serviceFee }}</p>
                     </div>
 
                     <div class="total">
@@ -474,7 +472,6 @@ export default {
 
       if (this.getTotal() > 0) {
         this.reserveButtonClicked = true;
-
         this.dateErrorMessage = "";
         if (window.localStorage.getItem("token")) {
           window.console.log(this.$route.query);
@@ -714,7 +711,6 @@ export default {
         if (res == 1) {
           this.apartmentIsAvailable = 1;
           this.galleryCurrentImage = this.getCurrentApartment.main_image;
-
           this.images = this.getApartmentImages;
           this.imagesArr = this.getApartmentImages;
           this.imagesArr.unshift({
@@ -794,7 +790,6 @@ export default {
   width: 100%;
   padding: 0px 20px;
   height: 100vh;
-  //   border:1px solid red;
 
   i {
     font-size: 20px;
@@ -839,7 +834,6 @@ export default {
 
       img {
         width: 48%;
-        // border:1px solid red;
         height: 100px;
         margin: 0 1% 3px 0;
         object-fit: cover;
@@ -848,13 +842,12 @@ export default {
     }
   }
 }
+
 .apartment_details {
   width: 100%;
 
   .apartment-details-content {
-    // padding: 0 2%;
     width: 100%;
-    // margin-bottom: 100px;
   }
 
   .image-div {
@@ -871,27 +864,21 @@ export default {
     .img1 {
       grid-column: 1/5;
       grid-row: 1/-1;
-      // border:1px solid red;
     }
 
     .img2 {
       grid-column: 5/7;
       grid-row: 1/2;
-      // border:1px solid red;
     }
 
     .img3 {
       grid-column: 5/7;
       grid-row: 2/-1;
-      // border:1px solid red;
     }
 
     .img4 {
       grid-column: 7/-1;
       grid-row: 1/-1;
-      // img{
-      //     // display: none;
-      // }
 
       p {
         background: black;
@@ -902,14 +889,12 @@ export default {
         position: relative;
         float: right;
         bottom: 10%;
-        // width: 100px;
         margin-right: 20px;
         z-index: 9999;
       }
     }
 
     .img-item {
-      // border:1px solid red;
       width: 100%;
       min-height: 100%;
       object-fit: cover;
@@ -920,7 +905,6 @@ export default {
         transition: all 0.4s ease-in-out;
         width: 100%;
         height: 100%;
-        // border:1px solid red;
       }
     }
   }
@@ -969,7 +953,6 @@ export default {
   }
 
   .content-div {
-    // height: 400px;
     display: grid;
     grid-template-columns: 8fr 4fr;
     grid-column-gap: 50px;
@@ -1043,9 +1026,6 @@ export default {
       .more-info {
         margin-top: 30px;
         width: 100%;
-        // display: grid;
-        // grid-template-columns: 2fr 3fr;
-        // border:1px solid red;
 
         .second {
           margin-top: 10px;
@@ -1064,7 +1044,6 @@ export default {
             font-style: normal;
             font-weight: normal;
             font-size: 15px;
-            // line-height: 38px;
             color: #404040;
 
             i {
@@ -1096,7 +1075,6 @@ export default {
 
         div {
           width: 100%;
-          // height: 50px;
           padding: 20px;
           display: flex;
           align-items: center;
@@ -1163,7 +1141,6 @@ export default {
           grid-template-columns: repeat(3, 1fr);
           p {
             font-style: normal;
-            // font-weight: bold;
             font-size: 16px;
             line-height: 24px;
             margin-bottom: 15px;
@@ -1179,7 +1156,6 @@ export default {
 
       .reviews {
         width: 100%;
-        // border:1px solid red;
 
         h3 {
           margin: 20px 0;
@@ -1205,7 +1181,6 @@ export default {
           width: 100%;
           padding: 20px 0;
           height: auto;
-          // margin-bottom: 20px;
           border-bottom: 1px solid #ebebeb;
 
           .reviewer-info {
@@ -1241,16 +1216,15 @@ export default {
             font-size: 15px;
             line-height: 28px;
             color: #404040;
-            // font-family: Lato;
           }
           a {
             color: #3a85fc;
           }
         }
       }
+
       .other-div {
         width: 100%;
-        // border:1px solid red;
 
         h3 {
           margin: 20px 0;
@@ -1366,7 +1340,6 @@ export default {
 
           .book-guest {
             align-items: center;
-            // border:1px solid red;
             display: grid;
             grid-template-columns: 2fr 1fr;
 
@@ -1384,7 +1357,6 @@ export default {
             }
 
             .btns {
-              // border:1px solid red;
               height: 100%;
               display: flex;
               align-items: center;
@@ -1437,7 +1409,6 @@ export default {
             .total {
               p {
                 font-weight: bold;
-                // font-family: 'Roboto'
               }
             }
           }
