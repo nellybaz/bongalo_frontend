@@ -195,13 +195,16 @@
           </div>
         </div>
 
-        <div v-else-if="showId == 2">
-          <h2 class="title-listing">Listings</h2>
+        <div v-else-if="showId == 2" class="listing-container">
+          <h2>Listings</h2>
           <br />
-          <h3 class="special-hts">Here are your listings</h3>
-          <br />
+          
 
           <div v-if="getUserListing().length > 0" class="listing-card-holder">
+
+            <h3 class="special-hts">Here are your listings</h3>
+          <br />
+
             <div
               v-for="listing in getUserListing()"
               :key="listing.title"
@@ -229,25 +232,27 @@
             </div>
           </div>
 
-          <div v-else>
+          <div v-else class="no-lising-card">
             <h4 class="add-listing">
               You haven't added any listing. Add a listing to update a Payout
               Method
             </h4>
             <img src="../assets/images/pic.png" alt="bongalo-careers" />
-          </div>
-
-          <Button
-            style="width:20%; margin:0 110px; height:40px"
+            <Button
             @handleClick="handleOpeningHostPage"
             :isFullWidth="false"
+
             label="Add a Listing"
           />
+          </div>
+
+          
         </div>
 
         <div v-else-if="showId == 3" class="verifications">
           <div class="veri-sec-1">
             <h2>Verifications</h2>
+           
             <p class="upload">UPLOAD VERFICATION</p>
           </div>
 
@@ -262,23 +267,27 @@
             </div>
           </div>
 
-          <div class="confirm-verification">
-            <br />
-            <h2>Verifications</h2>
-            <div>
-              <img
-                style="width:auto; margin:2rem"
-                src="../assets/images/v-icon.png"
-                alt="bongalo-careers"
+<br>
+<br>
+<br>
+          <Button
+            @handleClick="window.alert('Verifying your account')"
+            :isFullWidth="false"
+
+            width="20%"
+            label="Verify"
+          />
+
+        <Verification 
+        title="Verifications" 
+        text1="Your file has been recieved, sit back while we verify it. This
+              process may take between 3 - 5 days, and we will "
+        text2="Thank you"
+        strongText="send you an email once confirmed."
+        width="80%"
+              
               />
-            </div>
-            <p>
-              Your file has been recieved, sit back while we verify it. This
-              process may take between 3 - 5 days, and we will
-              <strong>send you an email once confirmed.</strong><br />
-              Thank you!
-            </p>
-          </div>
+         
         </div>
 
         <div v-else-if="showId == 4" class="Security">
@@ -359,11 +368,18 @@
           <hr />
           <br />
 
-          <div class="payout-bank-sec"> 
-            <p class="p-bank"  @click="showBankPayoutMethod = true"  :style="getActiveBorder(2, true)">
+          <div class="payout-bank-sec">
+            <p
+              class="p-bank"
+              @click="showBankPayoutMethod = true"
+              :style="getActiveBorder(2, true)"
+            >
               Bank
             </p>
-            <p @click="showBankPayoutMethod = false" :style="getActiveBorder(2, false)" >
+            <p
+              @click="showBankPayoutMethod = false"
+              :style="getActiveBorder(2, false)"
+            >
               Mobile Money
             </p>
           </div>
@@ -430,9 +446,8 @@
           <br /><br />
           <Button
             @handleClick="addPaymentNumber"
-            :isFullWidth="false"
+            width="250px"
             label="Update Payout Method"
-            style="width:35%;"
           />
         </div>
 
@@ -441,7 +456,10 @@
           <br />
 
           <div class="rev-title">
-            <p @click="showReviewedContent = true" :style="getActiveBorder(1, true)">
+            <p
+              @click="showReviewedContent = true"
+              :style="getActiveBorder(1, true)"
+            >
               Reviews about you
             </p>
 
@@ -523,6 +541,7 @@ import Button from "../components/Button";
 import { mapActions, mapGetters } from "vuex";
 import Select from "../components/Select";
 // import Listing from "../components/views/Listing";
+import Verification from '../components/verification'
 
 export default {
   name: "",
@@ -549,10 +568,9 @@ export default {
   },
   methods: {
     getActiveBorder(section, intent) {
-      var flip = section == 1 ? this.showReviewedContent : this.showBankPayoutMethod
-      if (
-        flip == intent
-      ) {
+      var flip =
+        section == 1 ? this.showReviewedContent : this.showBankPayoutMethod;
+      if (flip == intent) {
         return " border-bottom: 3px solid #3a85fc !important;";
       }
       return "";
@@ -703,6 +721,7 @@ export default {
     Navigation,
     StyledInput,
     Button,
+    Verification
   },
 
   created() {
@@ -773,7 +792,7 @@ export default {
     p {
       // border-bottom: 1px solid red;
       width: auto;
-      
+
       padding-bottom: 5px;
       font-size: 18px;
       line-height: 22px;
@@ -826,36 +845,7 @@ export default {
 }
 
 .verifications {
-  .confirm-verification {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    width: 100%;
-    border-radius: 15px;
-    height: 50vh;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
-    background: #ffffff;
-    margin: 4rem 0rem;
-
-    p {
-      font-size: 14px;
-      width: 52%;
-      text-align: center;
-      line-height: 20px;
-      color: #404040;
-    }
-
-    div {
-      background: #50d75e;
-      height: 110px;
-      width: 110px;
-      border-radius: 50%;
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-  }
+ 
 
   label {
     cursor: pointer;
@@ -874,7 +864,6 @@ export default {
   }
 
   .veri-sec-1 {
-    // border: 1px solid red;
     p {
       margin-top: 5px;
     }
@@ -993,18 +982,6 @@ export default {
     line-height: 22px;
     color: rgba(64, 64, 64, 0.75);
   }
-}
-.p-primary-edit-profile {
-  padding: 13px 45px;
-  border: transparent;
-  position: absolute;
-  height: 44px;
-  left: 600px;
-  color: #3a85fc;
-  font-weight: bold;
-  cursor: pointer;
-  background: rgba(58, 133, 252, 0.1);
-  border-radius: 5px;
 }
 
 .profile-show {
@@ -1138,20 +1115,29 @@ export default {
         margin: 1rem 3rem;
       }
 
-      .add-listing {
-        width: 393px;
-        height: 50px;
-        font-weight: normal;
-        font-size: 18px;
-        line-height: 25px;
-        text-align: center;
-        color: #333333;
+      .no-lising-card {
+        width:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-direction: column;
+        width:50%;
+        .add-listing {
+          height: 50px;
+          font-weight: normal;
+          font-size: 18px;
+          line-height: 25px;
+          text-align: center;
+          color: #333333;
+        }
       }
+
       .listing-card-holder {
         display: flex;
         align-items: center;
         justify-content: flex-start;
         flex-direction: row;
+
       }
       .listing-card {
         margin-right: 10px;
@@ -1219,12 +1205,13 @@ export default {
         flex-direction: row;
 
         .icon-div {
-          border: 2px solid black;
+          // border: 2px solid black;
           height: 100px;
           width: 100px;
           border-radius: 50%;
           background-repeat: no-repeat;
           background-size: cover;
+          margin-right: 50px;
           input {
             width: 0.1px;
             height: 0.1px;
@@ -1238,6 +1225,17 @@ export default {
             color: #3a85fc;
             cursor: pointer;
           }
+        }
+
+        .p-primary-edit-profile {
+          padding: 13px 45px;
+          border: none;
+          height: 44px;
+          color: #3a85fc;
+          font-weight: bold;
+          cursor: pointer;
+          background: rgba(58, 133, 252, 0.1);
+          border-radius: 5px;
         }
       }
       .mid-payout {
