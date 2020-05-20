@@ -198,12 +198,10 @@
         <div v-else-if="showId == 2" class="listing-container">
           <h2>Listings</h2>
           <br />
-          
 
           <div v-if="getUserListing().length > 0" class="listing-card-holder">
-
             <h3 class="special-hts">Here are your listings</h3>
-          <br />
+            <br />
 
             <div
               v-for="listing in getUserListing()"
@@ -239,20 +237,17 @@
             </h4>
             <img src="../assets/images/pic.png" alt="bongalo-careers" />
             <Button
-            @handleClick="handleOpeningHostPage"
-            :isFullWidth="false"
-
-            label="Add a Listing"
-          />
+              @handleClick="handleOpeningHostPage"
+              :isFullWidth="false"
+              label="Add a Listing"
+            />
           </div>
-
-          
         </div>
 
         <div v-else-if="showId == 3" class="verifications">
           <div class="veri-sec-1">
             <h2>Verifications</h2>
-           
+
             <p class="upload">UPLOAD VERFICATION</p>
           </div>
 
@@ -267,27 +262,24 @@
             </div>
           </div>
 
-<br>
-<br>
-<br>
+          <br />
+          <br />
+          <br />
           <Button
             @handleClick="window.alert('Verifying your account')"
             :isFullWidth="false"
-
             width="20%"
             label="Verify"
           />
 
-        <Verification 
-        title="Verifications" 
-        text1="Your file has been recieved, sit back while we verify it. This
+          <Verification
+            title="Verifications"
+            text1="Your file has been recieved, sit back while we verify it. This
               process may take between 3 - 5 days, and we will "
-        text2="Thank you"
-        strongText="send you an email once confirmed."
-        width="80%"
-              
-              />
-         
+            text2="Thank you"
+            strongText="send you an email once confirmed."
+            width="80%"
+          />
         </div>
 
         <div v-else-if="showId == 4" class="Security">
@@ -541,7 +533,7 @@ import Button from "../components/Button";
 import { mapActions, mapGetters } from "vuex";
 import Select from "../components/Select";
 // import Listing from "../components/views/Listing";
-import Verification from '../components/verification'
+import Verification from "../components/verification";
 
 export default {
   name: "",
@@ -721,7 +713,7 @@ export default {
     Navigation,
     StyledInput,
     Button,
-    Verification
+    Verification,
   },
 
   created() {
@@ -845,8 +837,6 @@ export default {
 }
 
 .verifications {
- 
-
   label {
     cursor: pointer;
     margin-left: 40px;
@@ -1116,12 +1106,12 @@ export default {
       }
 
       .no-lising-card {
-        width:100%;
-        display:flex;
-        align-items:center;
-        justify-content:center;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         flex-direction: column;
-        width:50%;
+        width: 50%;
         .add-listing {
           height: 50px;
           font-weight: normal;
@@ -1137,7 +1127,6 @@ export default {
         align-items: center;
         justify-content: flex-start;
         flex-direction: row;
-
       }
       .listing-card {
         margin-right: 10px;
