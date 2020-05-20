@@ -3,8 +3,6 @@
     <Navigation :showSearch="false" />
     <div class="content">
       <div class="left">
-        <!-- <div class="d1 d">Profile
-        </div> -->
         <div class="d2 d" @click="handleWhatShows(1)">
           <a href="#">
             <div>
@@ -263,6 +261,24 @@
               <span>No file selected.</span>
             </div>
           </div>
+
+          <div class="confirm-verification">
+            <br />
+            <h2>Verifications</h2>
+            <div>
+              <img
+                style="width:auto; margin:2rem"
+                src="../assets/images/v-icon.png"
+                alt="bongalo-careers"
+              />
+            </div>
+            <p>
+              Your file has been recieved, sit back while we verify it. This
+              process may take between 3 - 5 days, and we will
+              <strong>send you an email once confirmed.</strong><br />
+              Thank you!
+            </p>
+          </div>
         </div>
 
         <div v-else-if="showId == 4" class="Security">
@@ -343,11 +359,11 @@
           <hr />
           <br />
 
-          <div class="payout-bank-sec">
-            <p class="p-bank" @click="showBankPayoutMethod = true">
+          <div class="payout-bank-sec"> 
+            <p class="p-bank"  @click="showBankPayoutMethod = true"  :style="getActiveBorder(2, true)">
               Bank
             </p>
-            <p @click="showBankPayoutMethod = false">
+            <p @click="showBankPayoutMethod = false" :style="getActiveBorder(2, false)" >
               Mobile Money
             </p>
           </div>
@@ -416,7 +432,7 @@
             @handleClick="addPaymentNumber"
             :isFullWidth="false"
             label="Update Payout Method"
-            style=""
+            style="width:35%;"
           />
         </div>
 
@@ -425,56 +441,76 @@
           <br />
 
           <div class="rev-title">
-            <div><p>Reviews about you</p></div>
-            <div><p class="p-review">Reviews you’ve left</p></div>
+            <p @click="showReviewedContent = true" :style="getActiveBorder(1, true)">
+              Reviews about you
+            </p>
+
+            <p
+              @click="showReviewedContent = false"
+              :style="getActiveBorder(1, false)"
+              class="p-review"
+            >
+              Reviews you’ve left
+            </p>
           </div>
           <hr />
           <br />
-          <a href="#">
-            <div class="rev-div"></div>
-            <p>
-              <strong>Benjamin</strong> |
-              <span class="rev-date">February 2020</span>
-              <br />
-              <span
-                ><i class="fas fa-star" title="Update profile image"></i>
-                <i class="fas fa-star" title="Update profile image"></i>
-                <i class="fas fa-star" title="Update profile image"></i
-                ><i class="fas fa-star" title="Update profile image"></i>
-              </span>
-            </p>
-          </a>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum
-            rutrum vel viverra leo. Etiam est sapien adipiscing maecenas eget.
-            Morbi nec molestie massa felis augue et orci. Dignissim sapien,
-            proin at felis urna, turpis ultrices.
-          </p>
-          <br />
-          <hr />
-          <br />
-          <a href="#">
-            <div class="rev-div"></div>
-            <p>
-              <strong>Benjamin</strong> |
-              <span class="rev-date">February 2020</span>
-              <br />
-              <span
-                ><i class="fas fa-star" title="Update profile image"></i>
-                <i class="fas fa-star" title="Update profile image"></i>
-                <i class="fas fa-star" title="Update profile image"></i
-                ><i class="fas fa-star" title="Update profile image"></i>
-              </span>
-            </p>
-          </a>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum
-            rutrum vel viverra leo. Etiam est sapien adipiscing maecenas eget.
-            Morbi nec molestie massa felis augue et orci. Dignissim sapien,
-            proin at felis urna, turpis ultrices.
-          </p>
+
+          <div v-if="showReviewedContent">
+            <div>
+              <a href="#">
+                <div class="rev-div"></div>
+                <p>
+                  <strong>Benjamin</strong> |
+                  <span class="rev-date">February 2020</span>
+                  <br />
+                  <span
+                    ><i class="fas fa-star" title="Update profile image"></i>
+                    <i class="fas fa-star" title="Update profile image"></i>
+                    <i class="fas fa-star" title="Update profile image"></i
+                    ><i class="fas fa-star" title="Update profile image"></i>
+                  </span>
+                </p>
+              </a>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Bibendum rutrum vel viverra leo. Etiam est sapien adipiscing
+                maecenas eget. Morbi nec molestie massa felis augue et orci.
+                Dignissim sapien, proin at felis urna, turpis ultrices.
+              </p>
+            </div>
+            <br />
+            <hr />
+            <br />
+
+            <div>
+              <a href="#">
+                <div class="rev-div"></div>
+                <p>
+                  <strong>Mike</strong> |
+                  <span class="rev-date">February 2020</span>
+                  <br />
+                  <span
+                    ><i class="fas fa-star" title="Update profile image"></i>
+                    <i class="fas fa-star" title="Update profile image"></i>
+                    <i class="fas fa-star" title="Update profile image"></i
+                    ><i class="fas fa-star" title="Update profile image"></i>
+                  </span>
+                </p>
+              </a>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Bibendum rutrum vel viverra leo. Etiam est sapien adipiscing
+                maecenas eget. Morbi nec molestie massa felis augue et orci.
+                Dignissim sapien, proin at felis urna, turpis ultrices.
+              </p>
+            </div>
+          </div>
+
+          <div v-else>
+            <h1>Nothing to show</h1>
+          </div>
         </div>
-        <!-- Review part two -->
       </div>
     </div>
   </div>
@@ -494,6 +530,7 @@ export default {
     return {
       editProfileBtnClicked: false,
       showBankPayoutMethod: true,
+      showReviewedContent: true,
       Select,
       user_description: "",
       firstName: "",
@@ -511,6 +548,15 @@ export default {
     };
   },
   methods: {
+    getActiveBorder(section, intent) {
+      var flip = section == 1 ? this.showReviewedContent : this.showBankPayoutMethod
+      if (
+        flip == intent
+      ) {
+        return " border-bottom: 3px solid #3a85fc !important;";
+      }
+      return "";
+    },
     getUserValue(intent) {
       return "ne";
       // if(intent == 1){
@@ -691,10 +737,13 @@ export default {
 
 <style lang="scss" scoped>
 // reviews ==================================*
+
 .review {
   width: 80%;
   hr {
-    border: 0.5px solid rgba(51, 51, 51, 0.1);
+    position: relative;
+    top: -13px;
+    border: 2px solid rgba(51, 51, 51, 0.1);
   }
   .rev-date {
     color: #404040;
@@ -716,20 +765,28 @@ export default {
   }
 
   .rev-title {
+    cursor: pointer;
     width: 100%;
     display: flex;
+    justify-content: space-evenly;
+
     p {
+      // border-bottom: 1px solid red;
+      width: auto;
+      
+      padding-bottom: 5px;
       font-size: 18px;
       line-height: 22px;
       color: #333333;
     }
-    .p-review {
-      margin-bottom: -205px;
-      margin-left: 100px;
-      font-size: 18px;
-      line-height: 22px;
-      color: #333333;
-    }
+    // .p-review {
+    //   width: 200px;
+    //   margin-bottom: -205px;
+    //   margin-left: 100px;
+    //   font-size: 18px;
+    //   line-height: 22px;
+    //   color: #333333;
+    // }
   }
 
   .edit-review {
@@ -769,6 +826,36 @@ export default {
 }
 
 .verifications {
+  .confirm-verification {
+    width: 100%;
+    text-align: center;
+    border-radius: 15px;
+    height: 50vh;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    margin: 4rem 0rem;
+
+    p {
+      font-size: 14px;
+      width: 52%;
+      margin-top: 20px;
+      margin-left: 24%;
+      line-height: 20px;
+      color: #404040;
+    }
+
+    div {
+      background: #50d75e;
+      height: 110px;
+      width: 110px;
+      margin-top: 20px;
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin-left: 42%;
+    }
+  }
+
   label {
     cursor: pointer;
     margin-left: 40px;
@@ -786,6 +873,7 @@ export default {
   }
 
   .veri-sec-1 {
+    // border: 1px solid red;
     p {
       margin-top: 5px;
     }
@@ -863,14 +951,18 @@ export default {
     margin-bottom: 10px;
     cursor: pointer;
     display: flex;
+    justify-content: flex-start;
 
     .p-bank {
-      margin-right: 100px !important;
+      margin-right: 150px !important;
     }
 
     p {
+      text-align: center;
+      padding-bottom: 5px;
+      width: 150px;
       font-style: normal;
-      margin-left: 40px;
+      // margin-left: 40px;
       font-weight: normal;
       font-size: 18px;
       line-height: 22px;
@@ -920,7 +1012,7 @@ export default {
     border: 1px solid rgba(51, 51, 51, 0.1);
     margin-bottom: 30px;
   }
-  
+
   .p-desc {
     color: grey;
     margin-top: 30px;
