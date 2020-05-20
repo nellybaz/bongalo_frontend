@@ -827,8 +827,12 @@ export default {
 
 .verifications {
   .confirm-verification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
     width: 100%;
-    text-align: center;
     border-radius: 15px;
     height: 50vh;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
@@ -838,8 +842,7 @@ export default {
     p {
       font-size: 14px;
       width: 52%;
-      margin-top: 20px;
-      margin-left: 24%;
+      text-align: center;
       line-height: 20px;
       color: #404040;
     }
@@ -848,11 +851,9 @@ export default {
       background: #50d75e;
       height: 110px;
       width: 110px;
-      margin-top: 20px;
       border-radius: 50%;
       background-repeat: no-repeat;
       background-size: cover;
-      margin-left: 42%;
     }
   }
 
