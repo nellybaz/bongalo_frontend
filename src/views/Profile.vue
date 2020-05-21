@@ -467,7 +467,8 @@
           <br />
 
           <div v-if="showReviewedContent">
-            <div>
+            
+            <div v-for="item in getReviewForMe()" :key="item.id">
               <a href="#">
                 <div class="rev-div"></div>
                 <p>
@@ -483,21 +484,24 @@
                 </p>
               </a>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Bibendum rutrum vel viverra leo. Etiam est sapien adipiscing
-                maecenas eget. Morbi nec molestie massa felis augue et orci.
-                Dignissim sapien, proin at felis urna, turpis ultrices.
+               {{
+                 item.review
+               }}
               </p>
             </div>
             <br />
             <hr />
             <br />
+          </div>
 
-            <div>
+          <div v-else>
+            <h1 v-if="getReviewFromMe().length < 1">Nothing to show</h1>
+
+                 <div v-else v-for="item in getReviewFromMe()" :key="item.id">
               <a href="#">
                 <div class="rev-div"></div>
                 <p>
-                  <strong>Mike</strong> |
+                  <strong>Benjamin</strong> |
                   <span class="rev-date">February 2020</span>
                   <br />
                   <span
@@ -509,16 +513,11 @@
                 </p>
               </a>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Bibendum rutrum vel viverra leo. Etiam est sapien adipiscing
-                maecenas eget. Morbi nec molestie massa felis augue et orci.
-                Dignissim sapien, proin at felis urna, turpis ultrices.
+               {{
+                 item.review
+               }}
               </p>
             </div>
-          </div>
-
-          <div v-else>
-            <h1>Nothing to show</h1>
           </div>
         </div>
       </div>
@@ -656,6 +655,8 @@ export default {
       "getUserListing",
       "getUserPaymentNumber",
       "getUserInfo",
+      "getReviewFromMe",
+      "getReviewForMe"
     ]),
     addImages(uuid) {
       // Add images to this apartment
@@ -717,6 +718,17 @@ export default {
   },
 
   created() {
+    // Fetch all data on reviews start
+
+    this.$store.dispatch("getReviewsForMe", {
+      token: this.getToken()
+    })
+     this.$store.dispatch("getReviewsFromMe", {
+      token: this.getToken()
+    })
+
+
+    // Fetch all data on reviews end
     this.$store.dispatch("getUserListing", {
       uuid: this.getUuid(),
       token: this.getToken(),

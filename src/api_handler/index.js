@@ -26,7 +26,9 @@ const URLS = {
     reset_password:'user/reset-password-confirm',
     apartment_get: '',
     book_apartment: 'apartment/book',
-    confirm_booking: 'payment/pay/confirm'
+    confirm_booking: 'payment/pay/confirm',
+    reviews_for_me: 'auth/user/review-on-my-apartment',
+    reviews_from_me: 'auth/user/review-by-me'
 }
  
 
