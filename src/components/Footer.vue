@@ -107,7 +107,7 @@ export default {
     return {
       showOutline: false,
       email: "",
-      emailErrorMessage:""
+      emailErrorMessage: "",
     };
   },
   methods: {
@@ -142,23 +142,19 @@ export default {
   }
 }
 .footer {
-  // border:1px solid red;
   width: 100%;
   height: auto;
   border-top: 1px solid #f6faff;
   padding: 40px 80px;
   background-color: #f6faff;
-  // margin-top: 10px;
 
   img {
-    // width: 106px;
     height: 30px;
   }
 
   .content {
     margin-top: 40px;
     height: 183px;
-    // border:1px solid red;
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 2fr;
@@ -217,9 +213,7 @@ export default {
 
       .payment-text-sub-btn {
         margin-top: 15px;
-        // border:1px solid red;
         width: 100%;
-        // height: 50px;
         float: left;
 
         p {
@@ -255,22 +249,17 @@ export default {
         grid-template-columns: 5fr 3fr;
         margin-top: 15%;
         width: 100%;
-        // border:1px solid red;
-        // height: 190px;
         div {
           width: 100%;
-          // border:1px solid red;
 
           img {
             width: 54px;
             height: 25px;
             object-fit: cover;
-            // border:1px solid red;
           }
         }
 
         .social-media {
-          // border:1px solid red;
           width: 100%;
 
           p {

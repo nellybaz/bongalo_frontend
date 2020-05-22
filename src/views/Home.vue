@@ -87,6 +87,8 @@
         />
       </div>
     </section>
+
+    <section></section>
   </div>
 </template>
 
@@ -315,6 +317,13 @@ export default {
 
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
+  .middle-banner-section {
+    height: 369px !important;
+    p {
+      font-size: 20px;
+      width: 314px !important;
+    }
+  }
   .explore-section,
   .event-section,
   .experience-section,
@@ -352,14 +361,20 @@ export default {
   }
 
   .powered-section {
+    h3 {
+      font-size: 20px !important;
+      margin-bottom: 20px;
+    }
     height: auto !important;
     .content {
       display: grid !important;
-      grid-template-columns: 1fr 1fr;
-      grid-column-gap: 20px;
-      grid-row-gap: 10px;
+      grid-template-columns: 1fr 1fr !important;
+      grid-column-gap: 10px !important;
+      grid-row-gap: 0px !important;
+      padding: 1rem;
       img {
-        width: 100%;
+        margin: 0 2rem;
+        width: 60% !important;
         max-height: 100px !important;
         object-fit: contain;
       }
@@ -382,7 +397,6 @@ export default {
 
   .event-section,
   .experience-section {
-    // border:1px solid red;
     background: #fff;
     width: 100%;
     padding: 0px 50px;
@@ -398,8 +412,6 @@ export default {
     padding: 20px 80px;
     background: #fff;
 
-    // border:1px solid green;
-
     .inner-content {
       margin-top: 30px;
       display: grid;
@@ -409,7 +421,6 @@ export default {
   }
 
   .apartment-section {
-    // border:1px solid red;
     margin-top: 10px;
     width: 100%;
     padding: 20px 80px;
@@ -444,7 +455,6 @@ export default {
     width: 100%;
     height: 500px;
     width: 100%;
-    // border:1px solid red;
     margin-top: 50px;
     background: url(../assets/images/middle-banner.png);
 

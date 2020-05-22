@@ -88,14 +88,12 @@ export default {
 
     ul {
       float: right;
-      // width: 400px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
       flex-direction: row;
 
       .profile-li {
-        // border:1px solid red;
         a {
           display: flex;
           align-items: center;
@@ -116,8 +114,6 @@ export default {
         line-height: 17px;
         padding: 0 10px;
         margin-left: 20px;
-        // border:1px solid red;
-        // width: 100px;
         color: #ffffff;
         list-style: none;
         cursor: pointer;

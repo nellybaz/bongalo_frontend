@@ -154,6 +154,7 @@ const actions = {
       }
     });
   },
+
   async register({ commit }, data) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -230,7 +231,7 @@ const actions = {
       try {
         var res = await getReq("get_user_info", dataToSend);
         if (res.responseCode == 1) {
-          window.console.log(res.data)
+          window.console.log(res.data);
           commit("setUserInfo", res.data);
           resolve(1);
         }

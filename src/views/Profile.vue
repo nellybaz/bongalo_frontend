@@ -84,7 +84,7 @@
 
       <div class="right">
         <div v-if="showId == 1">
-          <h2 id="dashboard">Hi, I am Kanneh {{ name }}</h2>
+          <h2 id="dashboard">Hi, I am Kanneh</h2>
           <div class="top">
             <div :style="getProfileImage()" class="icon-div">
               <input
@@ -328,9 +328,20 @@
           <br />
           <h3>Bank</h3>
 
-          <p>Bank Name: <span>Bank of Kigali</span></p>
           <p>
-            Accouunt Details: <span>Uchechukwu Onyeka - 88484848484848848</span>
+            Bank Name:
+            <span v-for="items in getBankName()" :key="items.id">
+              {{ items.bank }}
+            </span>
+          </p>
+          <p>
+            Accouunt Details:
+            <span v-for="items in getBankAccountName()" :key="items.id">
+              {{ items.account_name }}
+            </span>
+            <span v-for="items in getBankAccountNunber()" :key="items.id">
+              {{ items.bank }}
+            </span>
           </p>
           <p>SWIFT Code: <span>JIDNIODN4</span></p>
           <hr />
@@ -467,7 +478,6 @@
           <br />
 
           <div v-if="showReviewedContent">
-            
             <div v-for="item in getReviewForMe()" :key="item.id">
               <a href="#">
                 <div class="rev-div"></div>
@@ -484,9 +494,7 @@
                 </p>
               </a>
               <p>
-               {{
-                 item.review
-               }}
+                {{ item.review }}
               </p>
             </div>
             <br />
@@ -497,7 +505,7 @@
           <div v-else>
             <h1 v-if="getReviewFromMe().length < 1">Nothing to show</h1>
 
-                 <div v-else v-for="item in getReviewFromMe()" :key="item.id">
+            <div v-else v-for="item in getReviewFromMe()" :key="item.id">
               <a href="#">
                 <div class="rev-div"></div>
                 <p>
@@ -513,9 +521,7 @@
                 </p>
               </a>
               <p>
-               {{
-                 item.review
-               }}
+                {{ item.review }}
               </p>
             </div>
           </div>
@@ -656,7 +662,9 @@ export default {
       "getUserPaymentNumber",
       "getUserInfo",
       "getReviewFromMe",
-      "getReviewForMe"
+      "getReviewForMe",
+      "getBankName",
+      "getBankAccountNames"
     ]),
     addImages(uuid) {
       // Add images to this apartment
@@ -675,6 +683,7 @@ export default {
         token: this.getToken(),
         imageObject: e.target.files[0],
       };
+
       this.$store.dispatch("updateImage", data).then((res) => {
         this.$notify({
           group: "general",
@@ -721,14 +730,22 @@ export default {
     // Fetch all data on reviews start
 
     this.$store.dispatch("getReviewsForMe", {
-      token: this.getToken()
-    })
-     this.$store.dispatch("getReviewsFromMe", {
-      token: this.getToken()
-    })
-
-
+      token: this.getToken(),
+    });
+    this.$store.dispatch("getReviewsFromMe", {
+      token: this.getToken(),
+    });
     // Fetch all data on reviews end
+
+    // Fetch all data on bank account details
+    this.$store.dispatch("getBankNames", {
+      token: this.getToken(),
+    });
+
+    this.$store.dispatch("getBankAccountNames", {
+      token: this.getToken(),
+    });
+
     this.$store.dispatch("getUserListing", {
       uuid: this.getUuid(),
       token: this.getToken(),
