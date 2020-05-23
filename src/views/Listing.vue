@@ -154,16 +154,16 @@
             ></Paragraph>
             <div v-if="shouldShowGuestNumber" style="padding:0 !important">
               <Incrementer
-              @incrementerChangeHandler="handleIncrementer"
-              step="number_of_guest"
-              label="Guest"
-            ></Incrementer>
-            <small
-              class="listing-error"
-              v-if="showErrors && checkIfShouldShowError('number_of_guest')"
-            >
-              *{{ errorList["number_of_guest"] }}
-            </small>
+                @incrementerChangeHandler="handleIncrementer"
+                step="number_of_guest"
+                label="Guest"
+              ></Incrementer>
+              <small
+                class="listing-error"
+                v-if="showErrors && checkIfShouldShowError('number_of_guest')"
+              >
+                *{{ errorList["number_of_guest"] }}
+              </small>
             </div>
             <br />
             <br />
@@ -543,9 +543,17 @@
               </div>
             </label>
 
+            <div v-if="urls" class="mainImageView">
+              <!-- <div v-for="url in urls" :key="url" class=""></div>-->
+              <img :src="mainUrl[0]" />
+            </div>
+
             <div v-if="urls" class="preview">
               <div v-for="(url, index) in urls" :key="url" class="preview-item">
                 <em @click="removeImage(index)">remove</em>
+                <em class="swap-main-img" @click="setMainImage(index)"
+                  >Make main Image</em
+                >
                 <img :src="url" />
               </div>
             </div>
@@ -665,7 +673,7 @@
           </div>
           <div v-if="flow == 4">
             <h1>
-              Great progress.. <br />
+              Great progress... <br />
               Continue
             </h1>
 
@@ -991,7 +999,9 @@ export default {
 
   data: function() {
     return {
-      shouldShowGuestNumber:true,
+      mainImageIndex:0,
+      mainUrl: [],
+      shouldShowGuestNumber: true,
       showWhatWillGuestHave: false,
       countries: [],
       countryIsSelected: false,
@@ -1075,6 +1085,7 @@ export default {
         "3": "Get ready for guests",
       },
       step: 1,
+
       flow: 1,
       steps: {
         one: {
@@ -1347,6 +1358,7 @@ export default {
 
       return this.errorsToShow.length <= 0;
     },
+
     ...mapGetters(["getListingState", "getToken", "getUuid"]),
     handleSelect(val) {
       // Handling what guest will have for the seperate listing types
@@ -1456,6 +1468,16 @@ export default {
       return "";
     },
     handlePropertyUpload() {
+     
+      let d = {
+        key: "photos",
+        value: this.urls,
+      };
+
+       window.console.log(d)
+
+      this.$store.dispatch("setValue", d);
+
       if (window.localStorage.getItem("profile_image") || this.profile_img) {
         this.isUploading = true;
         //Upload image after listing sucess
@@ -1468,6 +1490,7 @@ export default {
 
         this.$store
           .dispatch("uploadProperty", {
+            mainImageIndex: this.mainImageIndex,
             images: this.files,
             token: this.getToken(),
             uuid: this.getUuid(),
@@ -1504,7 +1527,8 @@ export default {
 
     removeImage(index) {
       var existingPhotos = this.$store.getters.getListingState.photos;
-      existingPhotos.splice(index, 1);
+      var removedImage = existingPhotos.splice(index, 1);
+      window.console.log(removedImage);
 
       this.urls = existingPhotos;
 
@@ -1512,8 +1536,17 @@ export default {
         key: "photos",
         value: this.urls,
       };
+
       this.$store.dispatch("setValue", d);
     },
+
+    setMainImage(index) {
+      var currentClickedImage = this.urls[index];
+      this.urls.splice(index, 1, this.mainUrl[0]);
+      this.mainUrl[0] = currentClickedImage;
+      this.mainImageIndex = index;
+    },
+
     onFileChange(e) {
       e.stopPropagation();
       e.preventDefault();
@@ -1525,6 +1558,12 @@ export default {
       }
 
       this.urls = tmpUrl.concat(existingPhotos);
+      if (this.mainUrl.length == 0) {
+        this.mainUrl = [this.urls[this.urls.length - 1]];
+        var slicedUrls = this.urls.slice(0, this.urls.length - 1);
+        this.urls = slicedUrls;
+        this.mainImageIndex = this.urls.length-1;
+      }
       let d = {
         key: "photos",
         value: this.urls,
@@ -1600,31 +1639,57 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+//  Styles for selestmainImageViewing main image
+.mainImageView {
+  width: 100%;
+  padding: 0 !important;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  border: 1px dashed grey;
+  height: 200px;
+  margin-top: 20px;
+}
+
 .listing-error {
   color: red;
   font-size: 12px;
 }
 .input {
   padding: 0 !important;
-  // border:1px solid red;
+  // border: 1px solid red;
 }
 
 .preview {
-  // border:1px solid red;
+  .swap-main-img {
+    margin-left: 90px;
+  }
+
+  // display: flex;
   width: 500px;
   .preview-item {
-    height: auto;
+    // max-width: 50%;
+    // height: auto;
     padding: 0 !important;
 
     em {
       position: absolute;
-      padding: 0.5em;
+      padding: 0.2em;
+      border: 2px solid #3a85fc;
+      // box-shadow: black;
+      border-radius: 5px;
       background: white;
-      font-weight: bold;
+      font-weight: 400;
+      font-size: 15px;
       cursor: pointer;
     }
+
     img {
-      max-width: 100%;
+      max-width: 96%;
+      margin-left: 5px;
+      border-radius: 5px;
     }
   }
 }
@@ -1704,7 +1769,7 @@ export default {
         em {
           // position: absolute;
           top: 10px;
-          border: 1px solid red;
+          // border: 1px solid red;
         }
 
         img {

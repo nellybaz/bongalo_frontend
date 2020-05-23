@@ -32,8 +32,6 @@ const uploadImages = async function(images, uuid) {
   try {
     const downloadedImages = [];
     for (let i = 0; i < images.length; i++) {
-      const imageName = images[i].name;
-      // const imageExt = imageName.slice(imageName.lastIndexOf('.'))
       let res = await firebase
         .storage()
         .ref(
@@ -123,7 +121,7 @@ const actions = {
         title: data.info.title,
         description: data.info.description,
         price: data.info.price,
-        main_image: imageUploadRes[0],
+        main_image: imageUploadRes[data['mainImageIndex']],
         available_rooms: data.info.number_of_bedroom,
         number_of_bathrooms: data.info.number_of_bathroom,
         max_guest_number: data.info.number_of_guest,

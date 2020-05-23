@@ -383,8 +383,9 @@ export default {
             })
             .catch(err => {
               this.isButtonClicked = false;
+              this.termsCheckBoxError = err.data.message;
               for (var key in err.data.data){
-                this.termsCheckBoxError = err.data.data[key][0]
+                this.termsCheckBoxError = err.data.data[key][0] +"\n"
               }
             });
           }

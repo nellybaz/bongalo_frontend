@@ -6,14 +6,10 @@
         <a :href="getUrl(item)">
           <img src="../../assets/images/p-post.png" alt />
           <h3>
-            {{
-              item.title
-            }}
+            {{ item.title }}
           </h3>
           <p>
-            {{
-              getDate(item.created_at)
-             }}
+            {{ getDate(item.created_at) }}
           </p>
           <p style="font-size:11px">
             {{
@@ -21,22 +17,19 @@
             }}
           </p>
         </a>
-      </div> 
+      </div>
     </div>
   </section>
 </template>
 
-
 <script>
-import { mapGetters } from 'vuex';
-
+import { mapGetters } from "vuex";
 
 export default {
-  data: function(){
+  data: function() {
     return {
-      popular:"",
-      
-    }
+      popular: "",
+    };
   },
 
   methods:{
@@ -49,8 +42,8 @@ export default {
       this.$router.push({path: '/blog-details', query:{id:uuid}})
 
     },
-    getDate(date){
-      return Date(date).substring(0,15)
+    getDate(date) {
+      return Date(date).substring(0, 15);
     },
     
     ...mapGetters(['getAllBlogPost', 'getAllFeaturedPost', 'getAllRecentPost']),
@@ -62,17 +55,14 @@ export default {
             tmpPopular.push(post)
           }
       }
-      return tmpPopular.slice(0, 5)
+      return tmpPopular.slice(0, 5);
     },
   },
 };
 </script>
 
-
-
 <style scoped>
-
-a{
+a {
   text-decoration: none;
 }
 .post-img {
@@ -93,6 +83,7 @@ img {
 .popular-posts {
   width: 100%;
   display: flex;
+  cursor: pointer;
   /* border: 1px solid green; */
   margin-bottom: -20px;
 }
@@ -101,13 +92,12 @@ img {
   margin-top: 5px;
   font-size: 14px;
   margin-left: 10px;
-  color: #6A6A6A;
+  color: #6a6a6a;
 }
 
 .post {
   width: 90%;
   margin-top: 40px;
-  /* border: 1px solid red; */
   margin-left: 5%;
 }
 

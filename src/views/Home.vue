@@ -508,7 +508,7 @@ export default {
 
       .powered_img_1,
       .powered_img_2 {
-        width:120px;
+        width: 120px;
       }
     }
   }

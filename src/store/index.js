@@ -5,6 +5,7 @@ import listing from './modules/listing.js';
 import header from './modules/header.js';
 import apartment from './modules/apartment';
 import blog from './modules/blog'
+import profile from './modules/profile'
 
 // import createPersistedState from 'vuex-persistedstate'
 // import * as Cookies from 'js-cookie'
@@ -30,6 +31,7 @@ export default new Vuex.Store({
     header,
     listing,
     apartment,
-    blog
+    blog,
+    profile
   },
 })

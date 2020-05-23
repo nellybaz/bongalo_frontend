@@ -3,40 +3,88 @@
     <Navigation :showSearch="false" />
     <div class="content">
       <div class="left">
-        <div class="d1 d">Profile</div>
-
         <div class="d2 d" @click="handleWhatShows(1)">
           <a href="#">
-            <div></div>
-            <p class="p-item">Dashboard</p>
-          </a>
-        </div>
-
-        <div class="d3 d">
-          <a href="#favourite-section">
-            <div></div>
-            <p class="p-item">Favourites</p>
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
+            <p class="p-item">Profile</p>
           </a>
         </div>
 
         <div class="d3 d" @click="handleWhatShows(2)">
           <a href="#">
-            <div></div>
-            <p class="p-item">My Listings</p>
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
+            <p class="p-item">Listings</p>
           </a>
         </div>
 
-        <div class="d3 d" @click="handleWhatShows(3)">
+        <div class="d2 d" @click="handleWhatShows(3)">
           <a href="#">
-            <div></div>
-            <p class="p-item">Add Payment method</p>
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
+            <p class="p-item">Verifications</p>
+          </a>
+        </div>
+
+        <div class="d3 d" @click="handleWhatShows(4)">
+          <a href="#favourite-section">
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
+            <p class="p-item">Security</p>
+          </a>
+        </div>
+
+        <div class="d3 d" @click="handleWhatShows(5)">
+          <a href="#">
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
+            <p class="p-item">Payout Methods</p>
+          </a>
+        </div>
+
+        <div class="d3 d" @click="handleWhatShows(6)">
+          <a href="#">
+            <div>
+              <img
+                style="margin:0.7rem 0.8rem"
+                src="../assets/images/vector.png"
+                alt="bongalo-careers"
+              />
+            </div>
+            <p class="p-item">Reviews</p>
           </a>
         </div>
       </div>
 
       <div class="right">
         <div v-if="showId == 1">
-          <h2 id="dashboard">Profile</h2>
+          <h2 id="dashboard">Hi, I am {{ firstName }}</h2>
           <div class="top">
             <div :style="getProfileImage()" class="icon-div">
               <input
@@ -51,7 +99,7 @@
             </div>
 
             <button
-              class="p-primary"
+              class="p-primary-edit-profile"
               v-if="!editProfileBtnClicked"
               @click="editProfileBtnClicked = true"
             >
@@ -60,44 +108,29 @@
           </div>
 
           <div v-if="editProfileBtnClicked" class="update-div">
+            <h3>Tell us the basics</h3>
             <div class="mid">
               <StyledInput
-                @sendInput="handleFName"
-                :value="getUserInfo() != null ? getUserInfo().first_name : ''"
+                @sendInput="(v) => (firstName = v)"
+                :value="firstName"
                 type="text"
                 placeholder="First name"
                 label="FULL NAME"
               />
               <StyledInput
-                @sendInput="handleLName"
-                :value="getUserInfo().last_name"
+                @sendInput="(v) => (lastName = v)"
+                :value="lastName"
                 type="text"
                 placeholder="Last name"
                 label="LAST NAME"
               />
-              <!-- <StyledInput type="text" placeholder="ichieuche@gmail.com" label="EMAIL ADDRESS" /> -->
-              <!-- <StyledInput type="text" placeholder="Nigeria" label="NATIONALITY" /> -->
-              <StyledInput
-                @sendInput="handlePhone"
-                :value="getUserInfo().phone_number"
-                type="text"
-                placeholder="Enter phone"
-                label="PHONE NUMBER"
-              />
-
-              <!-- <div class="file-select">
-              <label for="select-below">UPLOAD VERIFICATION</label>
-              <br />
-              <br />
-              <input type="file" id="select-below" />
-            </div>-->
             </div>
 
             <br />
             <div class="bottom">
               <StyledInput
-                @sendInput="handleDesc"
-                :value="getUserInfo().description"
+                @sendInput="(v) => (userDescription = v)"
+                :value="userDescription"
                 :isTextArea="true"
                 type="text"
                 placeholder
@@ -105,42 +138,64 @@
               />
             </div>
 
-            <br />
+            <h3>Where are you located?</h3>
+            <div class="mid">
+              <StyledInput
+                @sendInput="(v) => (userCity = v)"
+                :value="userCity"
+                type="text"
+                placeholder="City"
+                label="CITY, STATE"
+              />
+              <StyledInput
+                @sendInput="(v) => (userCountry = v)"
+                :value="userCountry"
+                type="text"
+                placeholder="Country"
+                label="NATIONALITY"
+              />
+            </div>
+
+            <h3>How can we contact you?</h3>
+            <div class="mid">
+              <StyledInput
+                @sendInput="(v) => (phoneNumber = v)"
+                :value="phoneNumber"
+                type="text"
+                placeholder="Enter phone"
+                label="PHONE NUMBER"
+              />
+            </div>
+
             <br />
             <br />
             <div class="btn-div">
               <Button
                 @handleClick="updateUser"
                 :isFullWidth="false"
-                label="UPDATE PROFILE"
+                label="Update Profile"
               />
             </div>
           </div>
+
           <div v-else class="profile-show">
             <p class="p-desc">
-              {{ getUserInfo().description }}
+              {{ userDescription }}
             </p>
-
+            <hr />
             <p class="p-lives">
               <i class="fas fa-home"></i>
-              Lives in {{ "Kgali, Rwanda" }}
+              Lives in {{ userCity }} {{ userCountry }}
             </p>
             <p class="p-work">
               <i class="fas fa-briefcase"></i>
-              Lives in {{ "Software Engineer" }}
+              Works as {{ "Software Engineer" }}
             </p>
-          </div>
-
-          <div id="favourite-section" class="fav-section">
-            <h3>You dont have any favourite listings yet</h3>
-            <br />
-            <p class="hint">Places you save will appear hear</p>
           </div>
         </div>
 
-        <div v-else-if="showId == 2">
-          <h2>My Listings</h2>
-          <br />
+        <div v-else-if="showId == 2" class="listing-container">
+          <h2>Listings</h2>
           <br />
 
           <div v-if="getUserListing().length > 0" class="listing-card-holder">
@@ -150,72 +205,380 @@
               class="listing-card"
             >
               <img :src="listing.main_image" alt />
-              <div>
+              <div class="listing-title">
                 <h3>
                   {{ listing.title }}
-
-                  <span>
-                    ${{ listing.price }}
-                  </span>
+                  <span> ${{ listing.price }} </span>
                 </h3>
-                <!-- <input
-                  class="aprtment-title"
-                  type="text"
-                  :value="listing.title"
-                />
-                <br />
-                <textarea
-                  v-model="listing.description"
-                  cols="60"
-                  rows="10"
-                ></textarea>
-                <br />
-                <label>Price</label>
-                <input
-                  class="aprtment-price"
-                  type="text"
-                  :value="listing.price"
-                /> -->
                 <br />
                 <section class="action-section">
-                  <button @click="addImages('uuid')" class="p-primary">
+                  <button @click="addImages('uuid')" class="btn-update">
                     Update
                   </button>
-                  <button style="border:none; color:red; background:transparent" @click="deleteListing(listing.uuid)">Remove</button>
+                  <button
+                    @click="deleteListing(listing.uuid)"
+                    class="btn-remove"
+                  >
+                    Remove
+                  </button>
                 </section>
               </div>
             </div>
           </div>
 
-          <div v-else>
-            <h4>You have not yet listed any property</h4>
+          <div v-else class="no-lising-card">
+            <h4 class="add-listing">
+              You haven't added any listing. Add a listing to update a Payout
+              Method
+            </h4>
+            <img src="../assets/images/pic.png" alt="bongalo-careers" />
+            <Button
+              @handleClick="handleOpeningHostPage"
+              :isFullWidth="false"
+              label="Add a Listing"
+            />
           </div>
         </div>
 
-        <div v-else-if="showId == 3">
-          <h2>Add payment method</h2>
+        <div v-else-if="showId == 3" class="verifications">
+          <div class="veri-sec-1">
+            <h2>Verifications</h2>
+
+            <!-- <p
+              v-if="verificationStatus == '' || verificationStatus == 'U'"
+              class="upload"
+            >
+              UPLOAD VERFICATION
+            </p> -->
+          </div>
+
+          <div v-if="verificationStatus == '' || verificationStatus == 'U'">
+            <br />
+            <br />
+
+            <div class="veri-sec-1">
+              <div class="">
+                <p>Choose Verification Type</p>
+                <br />
+                <Select
+                  v-on:selectChangeHandler="
+                    (v) => (verificationTypeValue = v.data)
+                  "
+                  step="verification_type"
+                  :options="verificationType"
+                  width="300px"
+                  :model="''"
+                ></Select>
+              </div>
+              <div class="veri-sec-3">
+                <br />
+                <br />
+
+                <label for="upload-photo">Choose file</label>
+                <input
+                  @change="(e) => (verificationFile = e.target.files[0])"
+                  type="file"
+                  name="photo"
+                  id="upload-photo"
+                />
+                <span>No file selected.</span>
+              </div>
+            </div>
+
+            <br />
+            <br />
+            <br />
+            <Button
+              v-if="!verificationButtonClicked"
+              @handleClick="handleVerification"
+              :isFullWidth="false"
+              width="20%"
+              label="Verify"
+            />
+
+            <p v-else>
+              Uploading verification, please wait ...
+            </p>
+          </div>
+
+          <div v-else-if="verificationStatus == 'P'">
+            <Verification
+              title="Verification"
+              text1="Your file has been recieved, sit back while we verify it. This
+                  process may take between 3 - 5 days, and we will "
+              text2="Thank you"
+              strongText="send you an email once confirmed."
+              width="80%"
+            />
+          </div>
+          <div v-else>
+            <Verification
+              title="Verification"
+              text1=""
+              text2="Thank you"
+              strongText="Verified Bongalo User"
+              width="80%"
+            />
+          </div>
+        </div>
+
+        <div v-else-if="showId == 4" class="Security">
+          <h2>Security</h2>
+          <br />
+          <div v-if="!changePasswordIsSuccessful">
+            <h3>Change your password</h3>
+
+          <div class="mid">
+            <StyledInput
+              @sendInput="(v) => (oldPassword = v)"
+              :value="''"
+              type="password"
+              placeholder="Enter old password"
+              label="OLD PASSWORD"
+            />
+
+            <br />
+            <StyledInput
+              @sendInput="(v) => (newPassword = v)"
+              :value="''"
+              type="password"
+              placeholder="Enter new password"
+              label="NEW PASSWORD"
+            />
+            <br />
+
+            <StyledInput
+              @sendInput="(v) => (newPasswordConfirm = v)"
+              :value="''"
+              type="password"
+              placeholder="Confirm new password"
+              label="CONFIRM PASSWORD"
+            />
+
+            <Button
+              v-if="!changePasswordButtonClicked"
+              @handleClick="changePassword"
+              :isFullWidth="false"
+              style="margin-top:20px; height:45px"
+              label="Update Password"
+            />
+
+            <p v-else>
+              <br />
+              Changing your password, please wait...
+            </p>
+          </div>
+
+          </div>
+          <div v-else>
+            <Verification
+              title="Successful"
+              text1="Your password has been changed successfully"
+              text2="Thank you"
+              strongText=""
+              width="80%"
+            />
+
+          </div>
+          
+        </div>
+
+        <div v-else-if="showId == 5" class="payout-details">
+          <h2>Payout Methods</h2>
+          <br />
+          <h3>Bank</h3>
+
+          <p>
+            Bank Name: <span>{{ bankName }}</span>
+          </p>
+          <p>
+            Accouunt Details:
+            <span>{{ accountName }} - {{ accountNumber }}</span>
+          </p>
+          <p>
+            SWIFT Code: <span>{{ swiftCode }}</span>
+          </p>
+          <hr />
+          <br />
+          <h3>Mobile Wallet</h3>
+          <img
+            style="width:10%; margin:10px 0px"
+            src="../assets/images/mtn.png"
+            alt="bongalo-careers"
+          />
+          <p>
+            Account Name: <span>{{ momoName }}</span>
+          </p>
+          <p>
+            Account Number: <span>{{ momoNumber }}</span>
+          </p>
+          <br />
 
           <br />
-          <br />
-          <h3>Mobile Money Number</h3>
-          <br />
-          <br />
-          <strong>Current:</strong>
-          <p>{{ paymentNumber }}</p>
-          <br />
-          <StyledInput
-            @sendInput="handleInput"
-            :value="paymentNumber"
-            type="text"
-            placeholder="Enter mobile money number"
-            label="MOBILE MONEY NUMBER"
-          />
-          <br />
-          <Button
-            @handleClick="addPaymentNumber"
+          <!-- <Button
+            @handleClick="addPaymentMethod"
             :isFullWidth="false"
             label="Save"
+            style="width:25%; margin-top:20px0"
+          /> -->
+          <br /><br />
+          <hr />
+          <br />
+
+          <div class="payout-bank-sec">
+            <p
+              class="p-bank"
+              @click="showBankPayoutMethod = true"
+              :style="getActiveBorder(2, true)"
+            >
+              Bank
+            </p>
+            <p
+              @click="showBankPayoutMethod = false"
+              :style="getActiveBorder(2, false)"
+            >
+              Mobile Money
+            </p>
+          </div>
+
+          <div>
+            <div v-if="showBankPayoutMethod" class="mid-payout">
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="(v) => (bankName = v)"
+                :value="bankName"
+                type="text"
+                placeholder="Enter your bank name"
+                label="BANK NAME"
+              />
+
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="(v) => (accountName = v)"
+                :value="accountName"
+                type="text"
+                placeholder="Enter your account name"
+                label="ACCOUNT NAME"
+              />
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="(v) => (accountNumber = v)"
+                :value="accountNumber"
+                type="text"
+                placeholder="Enter your bank account number"
+                label="ACCOUNT NUMBER"
+              />
+
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="(v) => (swiftCode = v)"
+                :value="swiftCode"
+                type="text"
+                placeholder="Optional: Enter swift code"
+                label="SWIFT CODE"
+              />
+            </div>
+
+            <div v-else class="mid-payout">
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="(v) => (momoNumber = v)"
+                :value="momoNumber"
+                type="text"
+                placeholder="Enter your Mobile Number"
+                label="MOBILE MOENY NUMBER"
+              />
+
+              <StyledInput
+                class="num-placeholder"
+                @sendInput="(v) => (momoName = v)"
+                :value="momoName"
+                type="text"
+                placeholder="Enter your mobile money name"
+                label="MOBILE MONEY NAME"
+              />
+            </div>
+          </div>
+
+          <br /><br />
+          <Button
+            @handleClick="addPaymentMethod"
+            width="250px"
+            label="Update Payout Method"
           />
+        </div>
+
+        <div v-else-if="showId == 6" class="review">
+          <h2>Review</h2>
+          <br />
+
+          <div class="rev-title">
+            <p
+              @click="showReviewedContent = true"
+              :style="getActiveBorder(1, true)"
+            >
+              Reviews about you
+            </p>
+
+            <p
+              @click="showReviewedContent = false"
+              :style="getActiveBorder(1, false)"
+              class="p-review"
+            >
+              Reviews you’ve left
+            </p>
+          </div>
+          <hr />
+          <br />
+
+          <div v-if="showReviewedContent">
+            <div v-for="item in getReviewForMe()" :key="item.id">
+              <a href="#">
+                <div class="rev-div"></div>
+                <p>
+                  <strong>Benjamin</strong> |
+                  <span class="rev-date">February 2020</span>
+                  <br />
+                  <span
+                    ><i class="fas fa-star" title="Update profile image"></i>
+                    <i class="fas fa-star" title="Update profile image"></i>
+                    <i class="fas fa-star" title="Update profile image"></i
+                    ><i class="fas fa-star" title="Update profile image"></i>
+                  </span>
+                </p>
+              </a>
+              <p>
+                {{ item.review }}
+              </p>
+            </div>
+            <br />
+            <hr />
+            <br />
+          </div>
+
+          <div v-else>
+            <h1 v-if="getReviewFromMe().length < 1">Nothing to show</h1>
+
+            <div v-else v-for="item in getReviewFromMe()" :key="item.id">
+              <a href="#">
+                <div class="rev-div"></div>
+                <p>
+                  <strong>Benjamin</strong> |
+                  <span class="rev-date">February 2020</span>
+                  <br />
+                  <span
+                    ><i class="fas fa-star" title="Update profile image"></i>
+                    <i class="fas fa-star" title="Update profile image"></i>
+                    <i class="fas fa-star" title="Update profile image"></i
+                    ><i class="fas fa-star" title="Update profile image"></i>
+                  </span>
+                </p>
+              </a>
+              <p>
+                {{ item.review }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -227,16 +590,48 @@ import Navigation from "../components/Blog/Navigation";
 import StyledInput from "../components/StyledInput";
 import Button from "../components/Button";
 import { mapActions, mapGetters } from "vuex";
+import Select from "../components/Select";
+// import Listing from "../components/views/Listing";
+import Verification from "../components/verification";
 
 export default {
   name: "",
   data: function() {
     return {
+      verificationTypeValue: "",
+      verificationType: [
+        {
+          text: "National ID",
+          value: "national_id",
+        },
+        {
+          text: "Passport",
+          value: "passport",
+        },
+      ],
+      changePasswordIsSuccessful: false,
+      momoNumber: "",
+      momoName: "",
+      bankName: "",
+      accountName: "",
+      accountNumber: "",
+      swiftCode: "",
+      changePasswordButtonClicked: false,
+      newPassword: "",
+      newPasswordConfirm: "",
+      oldPassword: "",
+      verificationStatus: "",
+      verificationButtonClicked: false,
       editProfileBtnClicked: false,
-      user_description: "",
+      showBankPayoutMethod: true,
+      showReviewedContent: true,
+      userDescription: "",
       firstName: "",
       lastName: "",
       phoneNumber: "",
+      userCity: "",
+      userCountry: "",
+      verificationFile: "",
       listing: {
         paymentNumber: "",
         title: "",
@@ -249,6 +644,123 @@ export default {
     };
   },
   methods: {
+    changePassword() {
+      if (
+        this.newPassword.length < 1 ||
+        this.newPasswordConfirm.length < 1 ||
+        this.oldPassword.length < 1
+      ) {
+        this.$notify({
+          group: "general",
+          title: "Passowrd Change",
+          text: "Passwords cannot be empty",
+          type: "error",
+        });
+      } else if (this.newPassword != this.newPasswordConfirm) {
+        this.$notify({
+          group: "general",
+          title: "Passowrd Change",
+          text: "Passwords don't match",
+          type: "error",
+        });
+      } else {
+        this.changePasswordButtonClicked = true;
+        const data = {
+          old_password:this.oldPassword,
+          token: this.getToken(),
+          password: this.newPassword,
+        };
+        this.$store
+          .dispatch("changeUserPassword", data)
+          .then((res) => {
+            this.changePasswordButtonClicked = false;
+            this.$notify({
+              group: "general",
+              title: "Passowrd Change",
+              text: "Password changed successfully!!",
+              type: "success",
+            });
+            this.changePasswordIsSuccessful = true;
+            this.newPassword = "";
+            this.newPasswordConfirm = "";
+            this.password = "";
+          })
+          .catch((err) => {
+            this.changePasswordButtonClicked = false;
+            this.$notify({
+              group: "general",
+              title: "Passowrd Change",
+              text: err,
+              type: "error",
+            });
+          });
+      }
+    },
+    handleVerification() {
+      this.verificationButtonClicked = true;
+      window.console.log(this.verificationFile);
+      const data = {
+        type: this.verificationTypeValue,
+        image: this.verificationFile,
+        token: this.getToken(),
+      };
+
+      this.$store
+        .dispatch("verifyUser", data)
+        .then((v) => {
+          this.verificationButtonClicked = false;
+          this.$notify({
+            group: "general",
+            title: "Verification Uploaded",
+            text: "Wait patiently for your verification to be verified",
+            type: "success",
+          });
+          this.getAndUpdateUserData();
+        })
+        .catch((err) => {
+          this.verificationButtonClicked = false;
+          this.$notify({
+            group: "general",
+            title: "Verification Upload",
+            text: "Error occured",
+            type: "error",
+          });
+        });
+    },
+    getAndUpdateUserData() {
+      this.$store
+        .dispatch("getUserInfo", {
+          uuid: this.getUuid(),
+          token: this.getToken(),
+        })
+        .then((res) => {
+          if (res == 1) {
+            window.console.log("user info here");
+            window.console.log(this.getUserInfo());
+            this.firstName = this.getUserInfo().first_name;
+            this.lastName = this.getUserInfo().last_name;
+            this.userDescription = this.getUserInfo().description;
+            this.phoneNumber = this.getUserInfo().phone_number;
+            this.userCity = this.getUserInfo().city;
+            this.userCountry = this.getUserInfo().country;
+            this.verificationStatus = this.getUserInfo().verification_status;
+            this.bankName = this.getUserInfo().bank_name;
+            this.accountName = this.getUserInfo().account_name;
+            this.accountNumber = this.getUserInfo().account_number;
+            this.swiftCode = this.getUserInfo().swift_code;
+            this.momoNumber = this.getUserInfo().momo_number;
+            this.momoName = this.getUserInfo().momo_name;
+          }
+        });
+    },
+    getActiveBorder(section, intent) {
+      var flip =
+        section == 1 ? this.showReviewedContent : this.showBankPayoutMethod;
+      if (flip == intent) {
+        return " border-bottom: 3px solid #3a85fc !important;";
+      }
+      return "";
+    },
     getUserValue(intent) {
       return "ne";
       // if(intent == 1){
@@ -256,32 +768,20 @@ export default {
       //   return this.phoneNumber
       // }
     },
-    handleFName(val) {
-      this.firstName = val;
-    },
-    handleLName(val) {
-      this.lastName = val;
-    },
-    handleDesc(val) {
-      this.user_description = val;
-    },
-    handlePhone(val) {
-      this.phoneNumber = val;
-    },
-
-    handleInput(val) {
-      this.paymentNumber = val;
-    },
     updateUser() {
+      const updateInfo = {
+        last_name: this.lastName,
+        first_name: this.firstName,
+        phone: this.phoneNumber,
+        token: this.getToken(),
+        user: this.getUuid(),
+        description: this.userDescription,
+        city: this.userCity,
+        country: this.userCountry,
+      };
+
       this.$store
-        .dispatch("updateUserInfo", {
-          last_name: this.lastName,
-          first_name: this.firstName,
-          phone: this.phoneNumber,
-          token: this.getToken(),
-          user: this.getUuid(),
-          description: this.user_description,
-        })
+        .dispatch("updateUserInfo", updateInfo)
         .then((res) => {
           if (res == 1) {
             this.$notify({
@@ -291,15 +791,33 @@ export default {
               type: "success",
             });
             this.editProfileBtnClicked = false;
+
+            return 3;
           }
+        })
+        .then((v) => {
+          window.console.log(v);
+          this.getAndUpdateUserData();
         });
     },
-    addPaymentNumber() {
+
+    // switchPaymentMethod(){
+
+    // },
+
+    addPaymentMethod() {
+      const paymentMethodData = {
+        token: this.getToken(),
+        momo_number: this.momoNumber,
+        momo_name: this.momoName,
+        bank_name: this.bankName,
+        account_name: this.accountName,
+        account_number: this.accountNumber,
+        swift_code: this.swiftCode,
+      };
+
       this.$store
-        .dispatch("addPaymentMethod", {
-          user: this.getUuid(),
-          momo_number: this.paymentNumber,
-        })
+        .dispatch("addPaymentMethod", paymentMethodData)
         .then((res) => {
           if (res == 1) {
             this.$notify({
@@ -308,9 +826,16 @@ export default {
               text: "Payment Method updated successfully!",
               type: "success",
             });
-
-            // this.addPaymentNumber =
+            this.getAndUpdateUserData();
           }
+        })
+        .catch((err) => {
+          this.$notify({
+            group: "general",
+            title: "Payment Info",
+            text: err,
+            type: "error",
+          });
         });
     },
     deleteListing(apartmentUuid) {
@@ -333,10 +858,12 @@ export default {
       "getUserListing",
       "getUserPaymentNumber",
       "getUserInfo",
+      "getReviewFromMe",
+      "getReviewForMe",
     ]),
     addImages(uuid) {
       // Add images to this apartment
-      this.$router.push({path:"/become-a-host"})
+      this.$router.push({ path: "/become-a-host" });
     },
     handleWhatShows(intent) {
       this.showId = intent;
@@ -361,6 +888,7 @@ export default {
         window.location.reload();
       });
     },
+
     getProfileImage() {
       return window.localStorage.getItem("profile_image")
         ? "background-image:" +
@@ -369,70 +897,323 @@ export default {
             ")"
         : "background-image:" + "url(" + this.backgroundUrl + ")";
     },
+
+    ...mapGetters(["isMobile", "getFeatured", "isLoggedIn"]),
+    ...mapActions(["setModalState"]),
+    handleOpeningHostPage() {
+      if (this.isLoggedIn()) {
+        this.$router.push("/become-a-host");
+      } else {
+        this.$router.push({ query: { next: "become-a-host" } });
+        this.setModalState(1);
+      }
+    },
+    makePoweredByImageClass(index) {
+      return "powered_img_";
+    },
   },
+
   components: {
     Navigation,
     StyledInput,
     Button,
+    Verification,
+    Select,
   },
 
   created() {
+    // Fetch all data on reviews start
+
+    this.$store.dispatch("getReviewsForMe", {
+      token: this.getToken(),
+    });
+    this.$store.dispatch("getReviewsFromMe", {
+      token: this.getToken(),
+    });
+
+    // Fetch all data on reviews end
     this.$store.dispatch("getUserListing", {
       uuid: this.getUuid(),
       token: this.getToken(),
     });
-    this.$store
-      .dispatch("getPaymentMethod", {
-        uuid: this.getUuid(),
-        token: this.getToken(),
-      })
-      .then((res) => {
-        if (res == 1) {
-          this.paymentNumber = this.getUserPaymentNumber();
-        }
-      });
+    // this.$store
+    //   .dispatch("getPaymentMethod", {
+    //     uuid: this.getUuid(),
+    //     token: this.getToken(),
+    //   })
+    //   .then((res) => {
+    //     if (res == 1) {
+    //       this.paymentNumber = this.getUserPaymentNumber();
+    //     }
+    //   });
 
-    this.$store
-      .dispatch("getUserInfo", { uuid: this.getUuid(), token: this.getToken() })
-      .then((res) => {
-        if (res == 1) {
-          this.firstName = this.getUserInfo().first_name;
-          this.lastName = this.getUserInfo().last_name;
-          this.user_description = this.getUserInfo().description;
-          this.phoneNumber = this.getUserInfo().phone_number;
-        }
-      });
+    this.getAndUpdateUserData();
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.p-primary {
-  margin-left: 30px;
-  background-color: #3a85fc;
-  color: white;
-  padding: 1em 1.5em;
-  border-radius: 5px;
-}
-.profile-show {
-  .p-desc {
-    color: grey;
-    margin: 10px;
-    margin-bottom: 30px;
+// reviews ==================================*
+
+.review {
+  width: 80%;
+  hr {
+    position: relative;
+    top: -13px;
+    border: 2px solid rgba(51, 51, 51, 0.1);
   }
-  .p-work,
-  .p-lives {
-    color: grey;
-    margin-top: 10px;
-    i {
-      margin-right: 15px;
-      font-size: 24px;
+  .rev-date {
+    color: #404040;
+    font-size: 15px;
+  }
+  i {
+    color: #3a85fc;
+    letter-spacing: 5px;
+    font-size: 12px;
+  }
+
+  strong {
+    height: 24px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    align-items: center;
+    color: #404040;
+  }
+
+  .rev-title {
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+
+    p {
+      // border-bottom: 1px solid red;
+      width: auto;
+
+      padding-bottom: 5px;
+      font-size: 18px;
+      line-height: 22px;
+      color: #333333;
+    }
+    // .p-review {
+    //   width: 200px;
+    //   margin-bottom: -205px;
+    //   margin-left: 100px;
+    //   font-size: 18px;
+    //   line-height: 22px;
+    //   color: #333333;
+    // }
+  }
+
+  .edit-review {
+    margin-left: 200px;
+    font-size: 14px;
+    color: #3a85fc;
+  }
+
+  .rev-div {
+    background: rgba(196, 196, 196, 0.2);
+    height: 40px;
+    width: 45px;
+    margin: 10px 0;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+
+  a {
+    width: 100%;
+    text-decoration: none;
+    display: flex;
+  }
+
+  img {
+    width: 50%;
+  }
+  .review-div {
+    width: 100%;
+  }
+  p {
+    margin: 10px 0;
+    width: 100%;
+    font-size: 18px;
+    line-height: 25px;
+    color: #333333;
+  }
+}
+
+.verifications {
+  label {
+    cursor: pointer;
+    margin-left: 40px;
+    font-size: 15px;
+    padding: 6px 20px;
+    background: #fdfdfd;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+  }
+
+  #upload-photo {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .veri-sec-1 {
+    p {
+      margin-top: 5px;
+    }
+    display: flex;
+    color: #404040;
+  }
+
+  .veri-sec-3 {
+    margin-top: 5px;
+    span {
+      margin-left: 33px;
+      font-size: 14px;
+      align-items: center;
+      color: #6a6a6a;
+    }
+  }
+
+  .upload {
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 14px;
+    margin-left: 200px;
+    color: #3a85fc;
+  }
+}
+
+.update-div {
+  width: 80%;
+  margin-bottom: 20px;
+
+  h3 {
+    font-weight: bold;
+    margin-top: 34px;
+    margin-bottom: 5px;
+    width: 100%;
+    font-size: 18px;
+    color: #404040;
+  }
+
+  .btn-div {
+    button {
+      padding: 13px 45px;
+      width: 35%;
+      height: 44px;
+      font-size: 15px;
+      background: #3a85fc;
+      border-radius: 5px;
     }
   }
 }
+
+.action-section {
+  .btn-update {
+    border: transparent;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    background: #3a85fc;
+    border-radius: 5px;
+  }
+  .btn-remove {
+    background: transparent;
+    border: transparent;
+    font-weight: bold;
+    color: red;
+  }
+}
+.special-hts {
+  color: #404040;
+  font-size: 18px;
+}
+
+.payout-details {
+  .payout-bank-sec {
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+
+    .p-bank {
+      margin-right: 150px !important;
+    }
+
+    p {
+      text-align: center;
+      padding-bottom: 5px;
+      width: 150px;
+      font-style: normal;
+      // margin-left: 40px;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 22px;
+      color: #333333;
+    }
+  }
+
+  .num-placeholder {
+    width: 250px;
+  }
+
+  hr {
+    width: 500px;
+    margin-top: 15px;
+    border: 0.5px solid rgba(128, 128, 128, 0.26);
+  }
+  span {
+    margin-left: 10px;
+  }
+  p {
+    font-size: 14px;
+    line-height: 28px;
+    color: rgba(64, 64, 64, 0.75);
+  }
+  h3 {
+    font-size: 18px;
+    line-height: 22px;
+    color: rgba(64, 64, 64, 0.75);
+  }
+}
+
+.profile-show {
+  hr {
+    width: 490px;
+    border: 1px solid rgba(51, 51, 51, 0.1);
+    margin-bottom: 30px;
+  }
+
+  .p-desc {
+    color: grey;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    width: 500px;
+    font-size: 14px;
+    line-height: 18px;
+    color: rgba(51, 51, 51, 0.75);
+  }
+
+  .p-work,
+  .p-lives {
+    color: grey;
+    margin-top: 20px;
+    height: 18px;
+    left: 534px;
+    font-size: 14px;
+    color: rgba(51, 51, 51, 0.75);
+    i {
+      margin-right: 15px;
+      font-size: 20px;
+    }
+  }
+}
+
 .profile {
   width: 100%;
-
   .content {
     .file-select {
       label {
@@ -454,19 +1235,25 @@ export default {
     .left,
     .right {
       width: 100%;
+      h2 {
+        font-weight: bold;
+        font-size: 24px;
+        color: #404040;
+      }
     }
 
     .left {
       position: sticky;
       top: 20px;
-      height: 450px;
+      height: 470px;
+
       background: #ffffff;
       box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 
       .d {
         width: 100%;
-        border-bottom: 1px solid #3a85fc;
-        height: 80px;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.294);
+        height: 78px;
 
         .p-item {
           font-style: normal;
@@ -475,8 +1262,7 @@ export default {
           line-height: 24px;
           display: flex;
           align-items: center;
-
-          color: #404040;
+          color: grey;
         }
       }
 
@@ -486,15 +1272,13 @@ export default {
         justify-content: flex-start;
         flex-direction: row;
         padding: 0 30px;
-
         font-style: normal;
         font-weight: bold;
         font-size: 20px;
         line-height: 24px;
         display: flex;
         align-items: center;
-
-        color: #404040;
+        color: gray;
       }
 
       .d2,
@@ -505,11 +1289,10 @@ export default {
         flex-direction: row;
         padding: 0 30px;
         div {
-          background: rgba(196, 196, 196, 0.2);
+          background: rgba(58, 133, 252, 0.05);
           height: 40px;
           width: 40px;
           border-radius: 50%;
-          // border:1px solid red;
           margin-right: 20px;
         }
 
@@ -523,19 +1306,41 @@ export default {
     }
 
     .right {
-      .listing-card-holder{
-        display:flex;
-        align-items:center;
-        justify-content:flex-start;
-        flex-direction: row;
-        // border:1px solid red;
+      img {
+        width: 35%;
+        margin: 1rem 3rem;
+      }
+
+      .no-lising-card {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 50%;
+        .add-listing {
+          height: 50px;
+          font-weight: normal;
+          font-size: 18px;
+          line-height: 25px;
+          text-align: center;
+          color: #333333;
+        }
+      }
+
+      .listing-card-holder {
+        // display: flex;
+        // align-items: center;
+        // justify-content: flex-start;
+        // flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
       }
       .listing-card {
-        margin-right: 10px;
-        .action-section{
-
-          button{
-            margin:0 10px 0 0 !important;
+        margin-right: 20px;
+        .action-section {
+          button {
+            margin: 0 10px 0 0 !important;
             padding: 0.9em 2.5em;
             cursor: pointer;
           }
@@ -544,27 +1349,32 @@ export default {
         width: 400px;
         height: 350px;
         box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
-        background-color: #f6faff;
+        background-color: #ffffff;
         border-radius: 5px;
         cursor: pointer;
 
         img {
+          margin: 0 !important;
           width: 100%;
           border-radius: 5px;
-          height: 50%;
+          height: 55%;
           object-fit: cover;
         }
 
         div {
-
           height: 100%;
           padding: 20px;
           h3 {
+            font-size: 18px;
+            color: #404040;
             span {
-              background: #99bcf5;
+              margin-left: 10px;
+              padding: 0.1em 0.2em;
               color: #3a85fc;
-              padding: 0.1em 0.3em;
-              margin-left: 20px;
+              padding: 0.2em 1em;
+              font-size: 14px;
+              background: rgba(58, 133, 252, 0.1);
+              border-radius: 1px;
             }
           }
           p {
@@ -579,9 +1389,8 @@ export default {
       h2 {
         font-style: normal;
         font-weight: bold;
-        font-size: 35px;
+        font-size: 24px;
         line-height: 42px;
-
         color: #404040;
       }
 
@@ -594,12 +1403,13 @@ export default {
         flex-direction: row;
 
         .icon-div {
-          border: 2px solid black;
+          // border: 2px solid black;
           height: 100px;
           width: 100px;
           border-radius: 50%;
           background-repeat: no-repeat;
           background-size: cover;
+          margin-right: 50px;
           input {
             width: 0.1px;
             height: 0.1px;
@@ -614,17 +1424,50 @@ export default {
             cursor: pointer;
           }
         }
+
+        .p-primary-edit-profile {
+          padding: 13px 45px;
+          border: none;
+          height: 44px;
+          color: #3a85fc;
+          font-weight: bold;
+          cursor: pointer;
+          background: rgba(58, 133, 252, 0.1);
+          border-radius: 5px;
+        }
+      }
+      .mid-payout {
+        display: grid;
+        grid-gap: 15px;
+        width: 80%;
+        grid-template-columns: 1fr 1fr;
+      }
+      .rev-title-payout {
+        cursor: pointer;
+        display: flex;
+        width: 80%;
+        margin-top: 20px;
+        p {
+          color: #333333;
+          font-size: 18px;
+        }
+        .p-review-payout {
+          margin-left: 100px;
+          font-size: 18px;
+          line-height: 22px;
+          color: #333333;
+        }
       }
 
       .mid {
         display: grid;
         grid-gap: 40px;
+        width: 100%;
         grid-template-columns: 1fr 1fr;
       }
 
       .bottom {
         width: 100%;
-        // border:1px solid red;
       }
 
       .fav-section {
