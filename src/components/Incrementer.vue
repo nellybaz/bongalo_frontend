@@ -13,7 +13,7 @@
         <i class="fas fa-minus"></i>
       </button>
       <p>
-        {{ getValue() }}
+        {{ value }}
       </p>
 
       <button v-on:click="handleGuestClick(1)">
@@ -55,22 +55,23 @@ export default {
     },
   },
   methods: {
-    getValue() {
-      const storeData = this.$store.getters.getListingState;
-      let dataInStore = storeData[this.step];
+    // getValue() {
+    //   const storeData = this.$store.getters.getListingState;
+    //   let dataInStore = storeData[this.step];
     
-      if (dataInStore || dataInStore.length > 1) {
-        this.value = dataInStore;
-      }
+    //   if (dataInStore || dataInStore.length > 1) {
+    //     this.value = dataInStore;
+    //   }
 
-      if(storeData['what_guest_will_have'] && storeData['what_guest_will_have'] == 'full_place'){
-          this.value = 4;
-      }
-      this.value = this.start ? this.start : this.value;
+    //   if(storeData['what_guest_will_have'] && storeData['what_guest_will_have'] == 'full_place'){
+    //       this.value = 4;
+    //   }
+    //   this.value = this.start ? this.start : this.value;
 
-      return this.value;
-    },
+    //   return this.value;
+    // },
     handleGuestClick(motive) {
+      let val = this.value
       if (motive == 1) {
         if (this.stop) {
           if (this.value < this.stop) {
@@ -82,16 +83,29 @@ export default {
       } else if (motive == 0 && this.value > 1) {
         this.value -= 1;
       }
-
       this.$emit("incrementerChangeHandler", {
         step: this.step,
-        data: this.value,
+        data: val,
       });
     },
   },
-  //  created(){
-  //     this.value = this.start ? this.start : 1;
-  //  }
+   created(){
+       const storeData = this.$store.getters.getListingState;
+      let dataInStore = storeData[this.step];
+    
+
+    this.value = this.start ? this.start : this.value;
+
+    
+      if (dataInStore || dataInStore.length > 1) {
+        this.value = dataInStore;
+      }
+
+      if(storeData['what_guest_will_have'] && storeData['what_guest_will_have'] == 'full_place'){
+          this.value = 4;
+      }
+    
+   }
 };
 </script>
 
