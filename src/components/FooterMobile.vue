@@ -162,6 +162,7 @@ export default {
         border-radius: 5px;
       }
       button {
+        margin-top: 10px;
         padding: 0.5rem 2rem;
         border: transparent;
         background: #3a85fc;
