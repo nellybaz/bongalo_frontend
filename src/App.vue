@@ -4,14 +4,14 @@
     <notifications position="top left" group="general" />
     <router-view />
     <Footer v-if="!isMobile"></Footer>
-    <FooterMobile v-else="isMobile"></FooterMobile>
-  </div>  
+    <FooterMobile v-else></FooterMobile>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import Footer from "./components/Footer";
-import FooterMobile from "./components/Footer";
+import FooterMobile from "./components/FooterMobile";
 import Login from "./components/SignInModal";
 
 export default {
