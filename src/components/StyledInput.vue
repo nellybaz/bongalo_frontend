@@ -19,7 +19,8 @@
                 @click="showOutline=true" 
                 @mouseleave="showOutline=false" 
                 :style="getClass()" 
-                rows="10" 
+                @keyup="$emit('sendInput', model)" 
+                rows="5" 
                 v-else 
                 v-model="model">
 

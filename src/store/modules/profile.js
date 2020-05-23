@@ -67,8 +67,6 @@ const actions = {
         });
     }
 
-
-
 }
 
 const mutations = {

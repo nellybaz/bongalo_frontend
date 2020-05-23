@@ -28,7 +28,9 @@ const URLS = {
     book_apartment: 'apartment/book',
     confirm_booking: 'payment/pay/confirm',
     reviews_for_me: 'auth/user/review-on-my-apartment',
-    reviews_from_me: 'auth/user/review-by-me'
+    reviews_from_me: 'auth/user/review-by-me',
+    verify_user:'auth/user/verify',
+    change_password:'auth/user/password/change'
 }
  
 

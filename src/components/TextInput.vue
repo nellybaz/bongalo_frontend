@@ -18,12 +18,9 @@ export default {
     },
     methods:{
         getClass(){
-          var inputRef = this.$refs.inputRef
-            if(inputRef){
-                // inputRef.value = "ko"
-                 window.console.log(inputRef.value)
-            }
-            
+        //   var inputRef = this.$refs.inputRef
+            // if(inputRef){
+            // }
             return this.showOutline ? "border: 1px solid #3A85FC !important;" : ""
         }
     },

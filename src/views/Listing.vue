@@ -999,6 +999,7 @@ export default {
 
   data: function() {
     return {
+      mainImageIndex:0,
       mainUrl: [],
       shouldShowGuestNumber: true,
       showWhatWillGuestHave: false,
@@ -1467,11 +1468,13 @@ export default {
       return "";
     },
     handlePropertyUpload() {
-      this.urls = this.mainUrl + this.urls;
+     
       let d = {
         key: "photos",
         value: this.urls,
       };
+
+       window.console.log(d)
 
       this.$store.dispatch("setValue", d);
 
@@ -1487,6 +1490,7 @@ export default {
 
         this.$store
           .dispatch("uploadProperty", {
+            mainImageIndex: this.mainImageIndex,
             images: this.files,
             token: this.getToken(),
             uuid: this.getUuid(),
@@ -1540,6 +1544,7 @@ export default {
       var currentClickedImage = this.urls[index];
       this.urls.splice(index, 1, this.mainUrl[0]);
       this.mainUrl[0] = currentClickedImage;
+      this.mainImageIndex = index;
     },
 
     onFileChange(e) {
@@ -1557,6 +1562,7 @@ export default {
         this.mainUrl = [this.urls[this.urls.length - 1]];
         var slicedUrls = this.urls.slice(0, this.urls.length - 1);
         this.urls = slicedUrls;
+        this.mainImageIndex = this.urls.length-1;
       }
       let d = {
         key: "photos",
