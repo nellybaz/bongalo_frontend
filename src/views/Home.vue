@@ -128,6 +128,7 @@ export default {
     WhySectionCard,
     MobileEventCard,
   },
+
   methods: {
     ...mapGetters(["isMobile", "getFeatured", "isLoggedIn"]),
     ...mapActions(["setModalState"]),
@@ -139,6 +140,7 @@ export default {
         this.setModalState(1);
       }
     },
+
     makePoweredByImageClass(index) {
       return "powered_img_";
     },
@@ -353,7 +355,6 @@ export default {
   .why-section {
     .inner {
       width: 100%;
-
       display: grid;
       grid-template-columns: 1fr !important;
       grid-row-gap: 30px;

@@ -1,14 +1,5 @@
 <template>
   <div class="footer">
-    <!-- <div>
-
-      <h1>Enter your email below to recieve updates on our Newletter</h1>
-    </div> -->
-    <!-- <div> -->
-
-    <!-- <div>
-      <h1>Enter your email below to recieve updates on our Newletter</h1>
-    </div> -->
     <div class="subscribe-section">
       <p>Enter your email below to recieve updates on our Newsletter</p>
       <small style="color:red">
@@ -24,6 +15,7 @@
         v-model="email"
         placeholder=""
       />
+
       <div class="payment-text-sub-btn">
         <button>Subscribe</button>
       </div>
@@ -36,7 +28,6 @@
 
       <div class="content-item">
         <h4>About us</h4>
-
         <ul>
           <li>
             <a href="/about">
@@ -80,7 +71,10 @@
       <div class="content-item">
         <h4>Contact</h4>
         <ul>
-          <li>KG 622 St, <br> Kigali</li>
+          <li>
+            KG 622 St, <br />
+            Kigali
+          </li>
           <li>+250 730078410</li>
           <li>info@bongalo.co</li>
         </ul>
@@ -135,7 +129,7 @@ export default {
     padding: 40px 10px !important;
     height: auto !important;
     background-color: #f6faff;
-    p{
+    p {
       color: rgba(106, 106, 106, 0.7);
       font-size: 15px;
     }

@@ -111,7 +111,7 @@ const putReq = async function(urlKey, data) {
       });
   });
 };
-
+  
 const deleteReq = async function(urlKey, data) {
   const CONFIG = {
     headers: {
@@ -119,6 +119,7 @@ const deleteReq = async function(urlKey, data) {
       Authorization: "Token " + data.token,
     },
   };
+
   return new Promise((resolve, reject) => {
     let url = API_URL;
     if (data.url == null) {

@@ -12,9 +12,7 @@
             {{ getDate(item.created_at) }}
           </p>
           <p style="font-size:11px">
-            {{
-              item['tag']
-            }}
+            {{ item["tag"] }}
           </p>
         </a>
       </div>
@@ -32,28 +30,33 @@ export default {
     };
   },
 
-  methods:{
-
-     getUrl(item){
-      return "/blog-details/?uid"+item.uuid+"&title="+item.title+"&body="+item.body
+  methods: {
+    getUrl(item) {
+      return (
+        "/blog-details/?uid" +
+        item.uuid +
+        "&title=" +
+        item.title +
+        "&body=" +
+        item.body
+      );
     },
 
-    gotoDetails(uuid){
-      this.$router.push({path: '/blog-details', query:{id:uuid}})
-
+    gotoDetails(uuid) {
+      this.$router.push({ path: "/blog-details", query: { id: uuid } });
     },
     getDate(date) {
       return Date(date).substring(0, 15);
     },
-    
-    ...mapGetters(['getAllBlogPost', 'getAllFeaturedPost', 'getAllRecentPost']),
-    getPopular(){
+
+    ...mapGetters(["getAllBlogPost", "getAllFeaturedPost", "getAllRecentPost"]),
+    getPopular() {
       let tmpPopular = [];
-      for(let i=0; i < this.getAllFeaturedPost().length; i++){
+      for (let i = 0; i < this.getAllFeaturedPost().length; i++) {
         let post = this.getAllFeaturedPost()[i];
-          if(post.is_featured){
-            tmpPopular.push(post)
-          }
+        if (post.is_featured) {
+          tmpPopular.push(post);
+        }
       }
       return tmpPopular.slice(0, 5);
     },
@@ -66,7 +69,8 @@ a {
   text-decoration: none;
 }
 .post-img {
-  width: 25%;cursor: pointer;
+  width: 25%;
+  cursor: pointer;
 }
 
 .post-img h3 {

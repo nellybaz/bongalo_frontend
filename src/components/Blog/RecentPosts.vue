@@ -5,31 +5,23 @@
       <div v-for="item in getPosts()" :key="item.id" class="sec-1">
         <div class="img1">
           <a :href="getUrl(item)">
-            <img  :src="require(`../../assets/images/blog-img.png`)" alt />
+            <img :src="require(`../../assets/images/blog-img.png`)" alt />
           </a>
         </div>
         <div class="cap-1">
           <div class="div-inner">
             <h2>
-              {{
-              item.title
-              }}
+              {{ item.title }}
             </h2>
-            <p>
-              {{
-              item.body.substring(0, 1000)
-              }}...
-            </p>
+            <p>{{ item.body.substring(0, 1000) }}...</p>
             <br />
           </div>
           <div class="read-more">
-
             <a :href="getUrl(item)">
-<p>
-              Read More
-            </p>
+              <p>
+                Read More
+              </p>
             </a>
-            
           </div>
         </div>
       </div>
@@ -38,39 +30,43 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
+import { mapGetters } from "vuex";
 
 export default {
   name: "recent_post",
   data: function() {
     return {
-      blogs: []
+      blogs: [],
     };
   },
-  methods:{
-    getUrl(item){
-      return "/blog-details/?uid"+item.uuid+"&title="+item.title+"&body="+item.body
+  methods: {
+    getUrl(item) {
+      return (
+        "/blog-details/?uid" +
+        item.uuid +
+        "&title=" +
+        item.title +
+        "&body=" +
+        item.body
+      );
     },
-    getPosts(){
-      if(this.getAllBlogPost().length < 1){
-      this.$store.dispatch('getAllBlogPost')
-    }
-    
-    return this.getAllBlogPost()
+    getPosts() {
+      if (this.getAllBlogPost().length < 1) {
+        this.$store.dispatch("getAllBlogPost");
+      }
+
+      return this.getAllBlogPost();
     },
-    gotoBlogDetails(uuid){
-      this.$router.push({path: "/blog-details/", query: {"id": uuid}})
+    gotoBlogDetails(uuid) {
+      this.$router.push({ path: "/blog-details/", query: { id: uuid } });
     },
-    ...mapGetters(['getAllBlogPost']),
+    ...mapGetters(["getAllBlogPost"]),
   },
-  
 };
 </script>
 
-
-<style lang='scss' scoped>
-a{
+<style lang="scss" scoped>
+a {
   text-decoration: none;
 }
 .recentPost {

@@ -5,83 +5,110 @@
         <a href="/">
           <img src="../../assets/images/bongalo-logo.png" alt />
         </a>
-        <ul v-if="isBlog" class="blg">Blog</ul>
+        <ul v-if="isBlog" class="blg">
+          Blog
+        </ul>
       </div>
-      
-      <div 
-        @click="showOutline=true" 
-        @mouseleave="showOutline=false" 
-        :style="getClass()" 
-        v-if="showSearch == true" 
-        class="search-div">
+
+      <div
+        @click="showOutline = true"
+        @mouseleave="showOutline = false"
+        :style="getClass()"
+        v-if="showSearch == true"
+        class="search-div"
+      >
         <i class="fa fa-search" aria-hidden="true"></i>
-        <input 
+        <input
           @keyup="searchBlog"
-          placeholder="Type for anything to search for tag or topics" 
-          type="text" 
+          placeholder="Type for anything to search for tag or topics"
+          type="text"
           v-model="searchWord"
-          
+          class="search-input"
         />
       </div>
+
+      <SearchBlogMobile></SearchBlogMobile>
       <NavLink :isDark="true"></NavLink>
     </header>
   </div>
 </template>
 
-
 <script>
-
-import { mapGetters, mapActions } from 'vuex';
-import NavLink from '../../components/NavLink';
-
+import { mapGetters, mapActions } from "vuex";
+import NavLink from "../../components/NavLink";
+import SearchBlogMobile from "../../components/SearchBlogMobile";
 
 export default {
-  components:{
-    NavLink
+  components: {
+    NavLink,
+    SearchBlogMobile,
   },
-  props:{
-    isBlog:{
-      type:Boolean
+  props: {
+    isBlog: {
+      type: Boolean,
     },
-    showSearch:{
-      type:Boolean
-    }
+    showSearch: {
+      type: Boolean,
+    },
   },
-  data: function(){
+  data: function() {
     return {
       showOutline: false,
-      searchWord:'',
-    }
+      searchWord: "",
+    };
   },
 
-  methods:{
-    searchBlog(){
+  methods: {
+    searchBlog() {
       var newBlog = [];
       var blogs = this.$store.getters.getAllBlogPost;
-      for(var item in blogs){
-        if(blogs[item]['title'].toLowerCase().includes(this.searchWord.toLowerCase()) 
-        || blogs[item]['body'].toLowerCase().includes(this.searchWord.toLowerCase())){
+      for (var item in blogs) {
+        if (
+          blogs[item]["title"]
+            .toLowerCase()
+            .includes(this.searchWord.toLowerCase()) ||
+          blogs[item]["body"]
+            .toLowerCase()
+            .includes(this.searchWord.toLowerCase())
+        ) {
           newBlog.push(blogs[item]);
         }
       }
-      this.$store.dispatch('setBlog', newBlog)
-
+      this.$store.dispatch("setBlog", newBlog);
     },
-    getClass(){
-            return this.showOutline ? "border: 1px solid #3A85FC !important;" : ""
-        },
-      ...mapGetters(['isMobile']),
-      ...mapActions(['setModalState']),
+    getClass() {
+      return this.showOutline ? "border: 1px solid #3A85FC !important;" : "";
+    },
+    ...mapGetters(["isMobile"]),
+    ...mapActions(["setModalState"]),
 
-      handleSignin(val){
-        this.setModalState(val)
-      }
-  }
+    handleSignin(val) {
+      this.setModalState(val);
+    },
+  },
 };
 </script>
 
+<style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  * {
+    padding: 10px !important;
+  }
+  .search-div {
+    height: 45px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 85% !important;
+    position: absolute;
+    margin: 5px 10px !important;
+    top: 70px !important;
+  }
 
-<style lang='scss' scoped>
+  .search-input {
+    color: gray !important;
+  }
+}
 .logo-blg {
   display: flex;
   justify-content: flex-start;
@@ -126,8 +153,8 @@ li {
   color: #404040;
   list-style: none;
   cursor: pointer;
-  
-  a{
+
+  a {
     text-decoration: none;
     color: #404040;
   }

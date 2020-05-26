@@ -1,7 +1,7 @@
 <template>
   <div class="event-card">
     <div class="inner-content">
-      <div>
+      <div class="who-are-we">
         <h2>Who are we</h2>
         <p>
           We are a passionate and diverse team of young people from across
@@ -23,7 +23,7 @@
           amazing prices.
         </p>
       </div>
-      <div>
+      <div class="mission-and-mission">
         <h2>Our Vision</h2>
         <p>
           Empower Africans to travel across the continent and beyond.
@@ -78,13 +78,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  .event-card {
+    border-radius: 0 !important;
+    position: absolute;
+    width: 100% !important;
+    top: 0 !important;
+    padding: 10px 28px !important;
+    margin: auto !important;
+
+    .inner-content {
+      display: block !important;
+      position: relative !important;
+    }
+
+    .inner-content2,
+    .core-values,
+    .inner-content-div {
+      display: none;
+    }
+
+    br {
+      display: none;
+    }
+  }
+
+  .mission-and-mission {
+    margin: 15px 0 !important;
+  }
+}
+
 .core-values h2 {
   width: 393px;
   height: 30px;
   left: 110px;
   top: 1106px;
-  font-family: Inter;
-  font-style: normal;
   font-weight: bold;
   font-size: 25px;
   line-height: 30px;

@@ -5,7 +5,6 @@
     <div class="content">
       <div class="content-item">
         <h4>About us</h4>
-
         <ul>
           <li>
             <a href="/about">
@@ -81,12 +80,10 @@
             <img src="../assets/images/pay3.png" alt="" />
             <img src="../assets/images/pay4.png" alt="" />
           </div>
-
           <div class="social-media">
             <p>
               Connect with us
             </p>
-
             <i class="fab fa-facebook-f"></i>
             <i class="fab fa-linkedin-in"></i>
             <i class="fab fa-twitter"></i>

@@ -7,7 +7,6 @@
                 Terms and Condition
             </h1>
 
-
            <div class="side-nav">
                 <h3 class="item-a">
                     <a href="#modification">
@@ -62,15 +61,9 @@
                         Term and Termination, Suspension and other Measures
                     </a>
                 </h3>
-
-                
-                
            </div>
 
 
-           <!-- <select>
-               <option value="community">Community</option>
-           </select> -->
 
 <div>
     <h2>  1. Scope of the Services</h2>
@@ -656,6 +649,20 @@ export default {
 
 <style lang='scss' scoped>
 
+@media only screen and (max-width: 900px) {
+    *{
+        margin: auto !important;
+        padding: 0 !important;
+        h4{
+            border: 1px solid red !important;
+        }
+
+        h2, ul, li{
+            margin: 10px  !important;
+        }
+    }
+}
+
     a{
         text-decoration: none;
         
@@ -670,8 +677,6 @@ export default {
             margin: 0 150px;
             border-left: 1px solid rgb(228, 227, 227);
             border-right: 1px solid rgb(228, 227, 227);
-            // border:1px solid red;
-
             padding: 50px 50px;
 
             h1{
@@ -692,12 +697,8 @@ export default {
                 font-weight: normal;
                 font-size: 16px;
                 line-height: 35px;
-                /* or 225% */
-
                 text-align: justify;
-
                 color: #3A85FC;
-
             }
 
             }

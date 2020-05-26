@@ -4,7 +4,7 @@
 
     <div class="content">
       <h1>
-       Privacy Policy
+        Privacy Policy
       </h1>
 
       <div class="side-nav">
@@ -123,7 +123,9 @@
           Full Privacy Statement
         </h2>
 
-        <h3 id="categories-personal-collect">Categories of Personal Information We Collect</h3>
+        <h3 id="categories-personal-collect">
+          Categories of Personal Information We Collect
+        </h3>
         <p>
           When you use our platform, we may collect the following kinds of
           personal information from you:
@@ -732,6 +734,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  * {
+    margin: 0 !important;
+    padding: 0 5px !important;
+    width: 100% !important;
+    border: transparent !important;
+  }
+
+  .side-nav {
+    a {
+      text-align: start !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  strong {
+    margin: 10px 0 !important;
+  }
+  ul,
+  li {
+    margin: 5px 10px !important;
+    width: auto !important;
+  }
+  p {
+    text-align: justify !important;
+  }
+}
 a {
   text-decoration: none;
 }
@@ -745,15 +780,12 @@ a:visited {
     margin: 0 150px;
     border-left: 1px solid rgb(228, 227, 227);
     border-right: 1px solid rgb(228, 227, 227);
-    // border:1px solid red;
-
     padding: 50px 50px;
 
     h1 {
       font-style: normal;
       font-weight: bold;
       font-size: 30px;
-
       color: #404040;
       margin-bottom: 30px;
     }
@@ -766,14 +798,14 @@ a:visited {
         font-weight: normal;
         font-size: 16px;
         line-height: 25px;
-        /* or 225% */
-
         text-align: justify;
-
         color: #3a85fc;
       }
     }
-    h2, h3, h4, h5 {
+    h2,
+    h3,
+    h4,
+    h5 {
       margin-top: 10px;
     }
 

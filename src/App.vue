@@ -13,6 +13,7 @@ import { mapGetters } from "vuex";
 import Footer from "./components/Footer";
 import FooterMobile from "./components/FooterMobile";
 import Login from "./components/SignInModal";
+import SearchBlogMobile from "./components/SearchBlogMobile";
 
 export default {
   name: "main_app",

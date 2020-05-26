@@ -5,9 +5,10 @@
         <li>
           <strong>Tags:</strong>
         </li>
-        <li @click="filterBlog('')" class="tag-item">All</li>
+        <li @click="filterBlog('')" class="tag-item">Holiday Trip</li>
         <li @click="filterBlog('tourism')" class="tag-item">Tourism</li>
         <li @click="filterBlog('food')" class="tag-item">Food</li>
+        <li @click="filterBlog('food')" class="tag-item">Night Life</li>
         <li @click="filterBlog('coffee')" class="tag-item">Coffee</li>
       </ul>
     </nav>
@@ -16,28 +17,45 @@
 
 <script>
 export default {
-
-  methods:{
-    filterBlog(tag){
+  methods: {
+    filterBlog(tag) {
       var newBlog = [];
       var blogs = this.$store.getters.getAllBlogPost;
-      for(var item in blogs){
-        if(blogs[item]['tag'].includes(tag)){
+      for (var item in blogs) {
+        if (blogs[item]["tag"].includes(tag)) {
           newBlog.push(blogs[item]);
         }
       }
-      //  window.console.log(blogs)
-      window.console.log(newBlog)
-      this.$store.dispatch('setBlog', newBlog)
-
-    }
-  }
-
+      window.console.log(newBlog);
+      this.$store.dispatch("setBlog", newBlog);
+    },
+  },
 };
 </script>
 
-
 <style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  * {
+    width: 100% !important;
+    margin: 5px !important;
+    padding: 0 !important;
+  }
+
+  .tag {
+    width: 97% !important;
+    position: absolute;
+    margin: 5px 10px !important;
+    top: 110px !important;
+
+    ul {
+      width: 100% !important;
+    }
+    li {
+      font-size: 10px !important;
+      word-spacing: 0 !important;
+    }
+  }
+}
 .tag {
   height: 64px;
   padding: 0 60px;
@@ -55,12 +73,10 @@ li {
   margin-right: 50px;
   width: auto;
   list-style: none;
-  
-  
 }
-.tag-item{
-    cursor: pointer;
-  }
+.tag-item {
+  cursor: pointer;
+}
 ul {
   display: flex;
   width: 100%;

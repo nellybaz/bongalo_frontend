@@ -10,6 +10,16 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  .middle-banner-section {
+    height: 369px !important;
+    p {
+      font-size: 20px;
+      width: 314px !important;
+    }
+  }
+}
+
 .middle-banner-section {
   width: 100%;
   height: 500px;

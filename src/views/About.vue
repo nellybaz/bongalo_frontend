@@ -18,12 +18,11 @@ import AboutHeader from "../components/About/AboutHeader";
 import HeadCard from "../components/About/HeadCard";
 import ListProperity from "../components/About/ListProperity";
 import EventCard from "../components/EventCard";
-// import Jumbotron from '../components/Jumbotron'
+import MobileEventCard from "../components/MobileEventCard";
 
 export default {
   name: "about",
   components: {
-    //   Jumbotron,
     AboutHeader,
     HeadCard,
     ListProperity,

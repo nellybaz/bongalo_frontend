@@ -1,34 +1,31 @@
 <template>
   <div class="header">
     <header>
-        <a href="/">
-            <img src="../../assets/images/bongalo-logo-white.png" alt />
-        </a>
-     <NavLink :isDark="false"></NavLink>
+      <a href="/">
+        <img src="../../assets/images/bongalo-logo-white.png" alt />
+      </a>
+      <NavLink :isDark="false"></NavLink>
     </header>
   </div>
 </template>
 
-
 <script>
-
-import NavLink from '../../components/NavLink';
+import NavLink from "../../components/NavLink";
 
 export default {
-  //    name:'header',
-     components:{
-       NavLink,
-     }
+  components: {
+    NavLink,
+  },
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .header {
   width: 100%;
   height: auto;
   padding-bottom: 8%;
   background: url(../../assets/images/about-img.png);
-    height: 100vh;
+  height: 100vh;
 
   header {
     height: 64px;
@@ -55,7 +52,7 @@ export default {
           color: #ffffff;
           list-style: none;
 
-          a{
+          a {
             text-decoration: none;
             color: #ffffff;
           }
