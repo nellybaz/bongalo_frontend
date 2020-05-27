@@ -1,8 +1,6 @@
 <template>
   <div class="blog-details">
     <Navigation :showSearch="true" />
-    <!-- <Tags /> -->
-
     <div class="details">
       <div class="left">
         <img src="../assets/images/blog_details.png" alt />
@@ -29,7 +27,6 @@
           >
             <i class="fab fa-twitter"></i>
           </a>
-          <!-- <i class="fab fa-instagram"></i> -->
           <a
             rel="noopener noreferrer"
             target="_blank"
@@ -38,16 +35,17 @@
             <i class="fab fa-linkedin-in"></i>
           </a>
         </div>
+        <div class="social-media-share">
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="mailto:?subject=Bongalo Website is amazing&amp;body=Check out this site https://bongalo-frontend.herokuapp.com."
+          >
+            <p><i class="fas fa-envelope"></i> Share via email</p>
+          </a>
 
-        <a
-          rel="noopener noreferrer"
-          target="_blank"
-          href="mailto:?subject=Bongalo Website is amazing&amp;body=Check out this site https://bongalo-frontend.herokuapp.com."
-        >
-          <p><i class="fas fa-envelope"></i> Share via email</p>
-        </a>
-
-        <p><i class="fas fa-copy"></i> Copy link</p>
+          <p><i class="fas fa-copy"></i> Copy link</p>
+        </div>
       </div>
 
       <div class="right">
@@ -71,7 +69,7 @@ import PopularPosts from "../components/Blog/PopularPosts";
 
 export default {
   name: "blog_details",
-  data: function() {
+  data: function () {
     return {
       postDetails: {},
     };
@@ -122,8 +120,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-a{
-    text-decoration: none;
+@media only screen and (max-width: 900px) {
+  * {
+    margin: auto !important;
+    padding: 8px !important;
+    display: block !important;
+  }
+  input {
+    display: none !important;
+  }
+  .details {
+    img {
+      object-fit: contain;
+      border-radius: 20px !important;
+    }
+    .left {
+      margin: 30px 5px 0 0 !important;
+    }
+
+    .social-media,
+    .social-media-share {
+      display: flex !important;
+      border: 1px solid rgba(128, 128, 128, 0.39);
+      padding: 0 !important;
+      border-radius: 5px;
+      text-align: left !important;
+    }
+  }
+}
+
+a {
+  text-decoration: none;
 }
 .blog-details {
   width: 100%;
@@ -132,7 +159,6 @@ a{
     padding: 0 80px;
     margin-top: 80px;
     width: 100%;
-    // border:1px solid red;
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-gap: 30px;
@@ -142,10 +168,7 @@ a{
       font-weight: normal;
       font-size: 15px;
       line-height: 20px;
-      /* or 133% */
-
       text-align: justify;
-
       color: #6a6a6a;
     }
 

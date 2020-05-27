@@ -152,7 +152,7 @@
               weight="normal"
               color="rgba(64, 64, 64, 0.7)"
             ></Paragraph>
-            <div v-if="shouldShowGuestNumber" style="padding:0 !important">
+            <div v-if="shouldShowGuestNumber" style="padding: 0 !important;">
               <Incrementer
                 @incrementerChangeHandler="handleIncrementer"
                 step="number_of_guest"
@@ -718,7 +718,7 @@
               class="listing-error"
               v-if="
                 showErrors &&
-                  checkIfShouldShowError('will_update_calender_checkbox')
+                checkIfShouldShowError('will_update_calender_checkbox')
               "
             >
               *{{ errorList["will_update_calender_checkbox"] }}
@@ -997,7 +997,7 @@ export default {
     PulseLoader,
   },
 
-  data: function() {
+  data: function () {
     return {
       mainUrl: [],
       shouldShowGuestNumber: true,
@@ -1083,7 +1083,7 @@ export default {
         "2": "Set the scene",
         "3": "Get ready for guests",
       },
-      step: 1,
+      step: 3,
 
       flow: 1,
       steps: {
@@ -1613,7 +1613,6 @@ export default {
           this.flow = 1;
         }
       }
-
       this.flow_percentage = (this.flow / this.total) * 100;
     },
   },
@@ -1626,14 +1625,50 @@ export default {
         text: country["countryName"],
       });
     }
-
-    // this.$store.dispatch('clearListingData');
   },
 };
 </script>
 
 <style lang="scss" scoped>
-//  Styles for selestmainImageViewing main image
+@media only screen and(max-width:900px) {
+  * {
+    width: 100%;
+    padding: 12px !important;
+    margin: 0 !important;
+  }
+
+  .image-modal-wrapper {
+    width: 60% !important;
+    position: absolute;
+    left: 30% !important;
+    margin: auto !important;
+    h2 {
+      text-align: center;
+    }
+  }
+
+  .box-content {
+    p {
+      width: 100%;
+      padding: 12px 0 !important;
+      margin: 0 !important;
+    }
+
+    em {
+      width: auto !important;
+    }
+
+    .checkin-div {
+      display: block !important;
+    }
+    .action-section {
+      .button {
+        width: 0 !important;
+      }
+    }
+  }
+}
+
 .mainImageView {
   width: 100%;
   padding: 0 !important;

@@ -51,7 +51,7 @@ export default {
       type: Boolean,
     },
   },
-  data: function() {
+  data: function () {
     return {
       showOutline: false,
       searchWord: "",

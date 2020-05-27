@@ -34,7 +34,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "recent_post",
-  data: function() {
+  data: function () {
     return {
       blogs: [],
     };
@@ -66,6 +66,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  * {
+    display: block !important;
+    padding: auto !important;
+    margin: auto !important;
+    width: auto !important;
+  }
+
+  h2,
+  p {
+    margin-left: -10px !important;
+  }
+
+  .recent-post-sec {
+    .post-heading {
+      margin: 30px 5px 10px 30px !important;
+      width: 84% !important;
+    }
+    img {
+      width: 88% !important ;
+    }
+
+    .read-more {
+      margin: 0 !important;
+      width: 50% !important;
+
+      p {
+        padding: 0.8rem !important;
+        text-align: center !important;
+      }
+    }
+  }
+}
+
 a {
   text-decoration: none;
 }

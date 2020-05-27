@@ -68,7 +68,7 @@ export default {
     Navigation,
     ApplySection,
   },
-  data: function() {
+  data: function () {
     return {
       positions: "abcde",
     };
@@ -77,6 +77,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and(max-width: 900px) {
+  * {
+    margin: auto !important;
+    padding: 0 5px !important;
+    width: 100% !important;
+    border: transparent !important;
+  }
+
+  h1 {
+    font-size: 28px !important;
+    margin: 10px 0 !important;
+  }
+  .careers {
+    h2 {
+      font-size: 24px !important;
+      line-height: 28px !important;
+      margin: 15px 0 !important;
+    }
+  }
+  .top {
+    display: block !important;
+    p {
+      line-height: 20px !important;
+      text-align: justify;
+    }
+  }
+  .list-item {
+    border: 1px solid red !important;
+  }
+}
+
 .careers {
   h2 {
     width: 60%;
@@ -84,7 +115,6 @@ export default {
     font-weight: bold;
     font-size: 35px;
     line-height: 42px;
-
     color: #404040;
   }
 
@@ -94,8 +124,6 @@ export default {
     margin: 0 150px;
     border-left: 1px solid rgb(228, 227, 227);
     border-right: 1px solid rgb(228, 227, 227);
-    // border:1px solid red;
-
     padding: 50px 50px;
 
     .top {
@@ -107,7 +135,6 @@ export default {
           font-weight: bold;
           font-size: 35px;
           line-height: 42px;
-
           color: #404040;
           margin-bottom: 30px;
         }
@@ -117,7 +144,6 @@ export default {
           font-weight: normal;
           font-size: 15px;
           line-height: 18px;
-
           color: #404040;
         }
       }
@@ -129,15 +155,12 @@ export default {
 
     .careers-list {
       width: 100%;
-      //    border:1px solid red;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
 
       .list-item {
-        //    width:40%;
-        //    border:1px solid red;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -150,7 +173,6 @@ export default {
           font-size: 16px;
           line-height: 24px;
           text-align: center;
-
           color: #404040;
         }
 
@@ -160,7 +182,6 @@ export default {
           font-size: 16px;
           line-height: 24px;
           text-align: center;
-
           color: #404040;
         }
 
@@ -170,7 +191,6 @@ export default {
           font-size: 16px;
           line-height: 24px;
           text-align: center;
-
           color: #3a85fc;
         }
       }

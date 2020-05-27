@@ -121,10 +121,6 @@
             </li>
         </ul>
 
-
-
-
-
     </p>
 </div>
 
@@ -637,12 +633,12 @@ export default {
      components:{
          Navigation,
      },
+     
      data:function(){
          return {
              
          }
      }
-     
 }
 </script>
 
@@ -653,19 +649,32 @@ export default {
     *{
         margin: auto !important;
         padding: 0 !important;
-        h4{
-            border: 1px solid red !important;
+        text-align: justify !important;
+        border: transparent !important;
+    }
+    .content{
+        h2{
+            font-size: 24px !important;
+            color: #404040 !important;
+            text-align: left !important;
         }
 
-        h2, ul, li{
-            margin: 10px  !important;
+    h2, h4{
+        padding: 0 16px !important;
+        margin: 5px  !important;
+    }
+
+    ul, li{
+        margin: 10px  !important;
+    }
+      .side-nav, h1{
+        width: 90% !important;
         }
     }
 }
 
     a{
         text-decoration: none;
-        
     }
     a:visited{
         color: #3A85FC;
@@ -684,7 +693,6 @@ export default {
                 font-weight: bold;
                 font-size: 30px;
                 line-height: 42px;
-
                 color: #404040;
                 margin-bottom: 30px;
             }
@@ -713,10 +721,7 @@ export default {
                 font-weight: normal;
                 font-size: 14px;
                 line-height: 24px;
-                /* or 175% */
-
                 text-align: left;
-
                 color: #404040;
             }
             li{

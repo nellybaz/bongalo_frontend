@@ -11,7 +11,7 @@
           <p>
             {{ getDate(item.created_at) }}
           </p>
-          <p style="font-size:11px">
+          <p style="font-size: 11px;">
             {{ item["tag"] }}
           </p>
         </a>
@@ -24,7 +24,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       popular: "",
     };
@@ -64,7 +64,30 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  * {
+    padding: auto !important;
+    margin: auto !important;
+    width: auto !important;
+  }
+  .post {
+    margin-top: 120px !important;
+    img {
+      width: 100% !important;
+    }
+    h2,
+    h3,
+    p {
+      margin: 10px auto !important;
+      width: 95% !important;
+    }
+    h2 {
+      width: 84% !important;
+    }
+  }
+}
+
 a {
   text-decoration: none;
 }

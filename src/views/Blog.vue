@@ -38,7 +38,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  *{
+    // border: 1px solid red;
+  }
+}
+
 .no-items-div {
   padding-left: 20%;
   display: flex;
