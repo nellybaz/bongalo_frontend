@@ -214,12 +214,11 @@ const actions = {
         if (res.responseCode == 1) {
           commit("setUserPaymentNumber", res.data);
           resolve(1);
-        }
-        else{
+        } else {
           resolve(res.message);
         }
       } catch (error) {
-        window.console.log(error)
+        window.console.log(error);
         reject(error.data.message);
       }
     });
@@ -239,7 +238,7 @@ const actions = {
           resolve(1);
         }
       } catch (error) {
-        window.console.log(error)
+        window.console.log(error);
         reject(0);
       }
     });
@@ -270,23 +269,22 @@ const actions = {
       try {
         const imageUrl = await uploadImage(data["image"], data["user"]);
 
-        let dataToSend = {}
+        let dataToSend = {};
 
-        if (data['type'] == "passport"){
-            dataToSend = {
-              passport: imageUrl,
-              token: data["token"],
-              national_id: "",
-            };
-        }
-        else{
+        if (data["type"] == "passport") {
+          dataToSend = {
+            passport: imageUrl,
+            token: data["token"],
+            national_id: "",
+          };
+        } else {
           dataToSend = {
             passport: "",
             token: data["token"],
             national_id: imageUrl,
           };
         }
-       
+
         var res = await putReq("verify_user", dataToSend);
         if (res.responseCode == 1) {
           setRegisteredUserData(res, { commit });
@@ -379,7 +377,6 @@ const actions = {
   },
 
   async changeUserPassword({ commit }, data) {
-    
     return new Promise(async (resolve, reject) => {
       try {
         var res = await putReq("change_password", data);
@@ -393,6 +390,22 @@ const actions = {
       }
     });
   },
+
+  async subscribe({_}, data){
+  return new Promise(async (resolve, reject) => {
+    try {
+      var res = await postReq("subscribe", data);
+      if (res.responseCode == 1){
+        resolve(1)
+      }
+      else{
+        resolve(0)
+      }
+    } catch (error) {
+      reject(error)
+    }
+  });
+  }
 };
 
 const mutations = {

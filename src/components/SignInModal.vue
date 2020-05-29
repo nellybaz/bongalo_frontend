@@ -6,23 +6,21 @@
       </div>
       <div v-if="getModalState == 3" class="forgot-password">
         <h3>Verify</h3>
-         <small class="terms-small">{{termsCheckBoxError}}</small>
+        <small class="terms-small">{{ termsCheckBoxError }}</small>
 
         <p>Enter the pin received on your email</p>
 
         <br />
         <div class="pin-div">
           <input
-            @keyup="handleInput({data:pinModel, step:'pin_verify'})"
+            @keyup="handleInput({ data: pinModel, step: 'pin_verify' })"
             v-model="pinModel"
             type="text"
             placeholder="Enter PIN"
           />
         </div>
         <small v-if="pinErrorMessage">
-          {{
-          pinErrorMessage
-          }}
+          {{ pinErrorMessage }}
         </small>
         <br />
 
@@ -35,17 +33,24 @@
           :isFullWidth="true"
         />
         <div class="loader-div" v-else>
-          <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
+          <pulse-loader
+            class="loader"
+            color="#3A85FC"
+            size="10px"
+          ></pulse-loader>
         </div>
         <hr />
 
-        <p 
-         v-if="!isButtonResendVerifyPinClicked">
+        <p v-if="!isButtonResendVerifyPinClicked">
           Didn't get a pin ?
           <span v-on:click="resendPin()">Resend</span>
         </p>
-         <div class="loader-div" v-else>
-          <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
+        <div class="loader-div" v-else>
+          <pulse-loader
+            class="loader"
+            color="#3A85FC"
+            size="10px"
+          ></pulse-loader>
         </div>
 
         <p>
@@ -56,9 +61,7 @@
 
       <div class="login-div" v-else-if="getModalState == 1">
         <p class="login-error" v-if="signInError">
-          {{
-          signInError
-          }}
+          {{ signInError }}
         </p>
         <Input
           @inputHandler="handleInput"
@@ -68,7 +71,7 @@
           type="email"
           :isFullWidth="true"
         />
-        <small v-if="emailErrorMessage">{{emailErrorMessage}}</small>
+        <small v-if="emailErrorMessage">{{ emailErrorMessage }}</small>
         <br />
         <Input
           @inputHandler="handleInput"
@@ -78,7 +81,7 @@
           type="password"
           :isFullWidth="true"
         />
-        <small v-if="passwordErrorMessage">{{passwordErrorMessage}}</small>
+        <small v-if="passwordErrorMessage">{{ passwordErrorMessage }}</small>
         <br />
         <br />
 
@@ -89,7 +92,11 @@
           :isFullWidth="true"
         />
         <div class="loader-div" v-else>
-          <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
+          <pulse-loader
+            class="loader"
+            color="#3A85FC"
+            size="10px"
+          ></pulse-loader>
         </div>
 
         <strong v-on:click="goto(4)">Forgot password ?</strong>
@@ -104,7 +111,7 @@
       </div>
 
       <div v-else-if="getModalState == 2" class="signup-div">
-         <!-- <input type="email" class="hiddens">
+        <!-- <input type="email" class="hiddens">
         <input type="password" class="hiddens"> -->
         <Input
           @inputHandler="handleInput"
@@ -114,7 +121,7 @@
           type="text"
           :isFullWidth="true"
         />
-        <small v-if="fnameErrorMessage">{{fnameErrorMessage}}</small>
+        <small v-if="fnameErrorMessage">{{ fnameErrorMessage }}</small>
         <br />
         <Input
           @inputHandler="handleInput"
@@ -124,10 +131,10 @@
           type="text"
           :isFullWidth="true"
         />
-        <small v-if="lnameErrorMessage">{{lnameErrorMessage}}</small>
+        <small v-if="lnameErrorMessage">{{ lnameErrorMessage }}</small>
         <br />
         <Input
-        ref="emailAddressRef"
+          ref="emailAddressRef"
           @inputHandler="handleInput"
           icon="fas fa-envelope"
           hint="Email address"
@@ -135,10 +142,10 @@
           type="email"
           :isFullWidth="true"
         />
-        <small v-if="emailErrorMessage">{{emailErrorMessage}}</small>
+        <small v-if="emailErrorMessage">{{ emailErrorMessage }}</small>
         <br />
         <Input
-        ref="passwordRef"
+          ref="passwordRef"
           @inputHandler="handleInput"
           icon="fas fa-lock"
           hint="Create Password"
@@ -146,10 +153,10 @@
           type="password"
           :isFullWidth="true"
         />
-        <small v-if="passwordErrorMessage">{{passwordErrorMessage}}</small>
+        <small v-if="passwordErrorMessage">{{ passwordErrorMessage }}</small>
         <br />
         <br />
-        <small class="terms-small">{{termsCheckBoxError}}</small>
+        <small class="terms-small">{{ termsCheckBoxError }}</small>
 
         <div class="terms-checkbox">
           <input type="checkbox" v-model="termsCheckBox" />
@@ -166,7 +173,11 @@
           :isFullWidth="true"
         />
         <div class="loader-div" v-else>
-          <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
+          <pulse-loader
+            class="loader"
+            color="#3A85FC"
+            size="10px"
+          ></pulse-loader>
         </div>
 
         <hr />
@@ -182,30 +193,42 @@
       <div v-else-if="getModalState == 4" class="forgot-password">
         <h3>Reset Password</h3>
 
-        <p>Enter the email address associated with your account, 
-          and we’ll email you a link to reset your password.</p>
+        <p>
+          Enter the email address associated with your account, and we’ll email
+          you a link to reset your password.
+        </p>
 
         <br />
-         <small class="terms-small">{{emailErrorMessage}}</small>
-         <small class="success-mes">{{successMessage}}</small>
+        <small class="terms-small">{{ emailErrorMessage }}</small>
+        <small class="success-mes">{{ successMessage }}</small>
 
-        <Input v-if="successMessage.length < 1" 
-        @inputHandler="handleInput"
-        hint="Email address" 
-        icon="fas fa-envelope" 
-        step="email" 
-        type="email" 
-        :isFullWidth="true" />
+        <Input
+          v-if="successMessage.length < 1"
+          @inputHandler="handleInput"
+          hint="Email address"
+          icon="fas fa-envelope"
+          step="email"
+          type="email"
+          :isFullWidth="true"
+        />
         <br />
 
-        <Button  
-        v-if="!isButtonClicked && successMessage.length < 1 "
-        v-on:handleClick="handleButton(3)"
-        label="Send reset link" 
-        :isFullWidth="true" />
-        
-        <div class="loader-div" v-else-if="isButtonClicked && successMessage.length < 1 ">
-          <pulse-loader class="loader" color="#3A85FC" size="10px"></pulse-loader>
+        <Button
+          v-if="!isButtonClicked && successMessage.length < 1"
+          v-on:handleClick="handleButton(3)"
+          label="Send reset link"
+          :isFullWidth="true"
+        />
+
+        <div
+          class="loader-div"
+          v-else-if="isButtonClicked && successMessage.length < 1"
+        >
+          <pulse-loader
+            class="loader"
+            color="#3A85FC"
+            size="10px"
+          ></pulse-loader>
         </div>
 
         <hr />
@@ -219,7 +242,6 @@
   </div>
 </template>
 
-
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Input from "../components/TextInput";
@@ -227,29 +249,30 @@ import Button from "../components/Button";
 import SocialSignin from "./SocialSignin";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
-
 export default {
   name: "login-modal",
   components: {
     Input,
     Button,
     SocialSignin,
-    PulseLoader
+    PulseLoader,
   },
   methods: {
-    resendPin(){
+    resendPin() {
       this.isButtonResendVerifyPinClicked = true;
-      this.termsCheckBoxError = ""
-      this.pinErrorMessage = ""
-      this.$store.dispatch('resendVerificationPin', {'email': this.email})
-      .then(res => {
-        this.termsCheckBoxError = "Pin resent to your email, enter it here to verify"
-        this.isButtonResendVerifyPinClicked = false;
-      })
-      .catch(err => {
-        this.isButtonResendVerifyPinClicked = false;
-        this.termsCheckBox = "Error occured. Please try again"
-      })
+      this.termsCheckBoxError = "";
+      this.pinErrorMessage = "";
+      this.$store
+        .dispatch("resendVerificationPin", { email: this.email })
+        .then((res) => {
+          this.termsCheckBoxError =
+            "Pin resent to your email, enter it here to verify";
+          this.isButtonResendVerifyPinClicked = false;
+        })
+        .catch((err) => {
+          this.isButtonResendVerifyPinClicked = false;
+          this.termsCheckBox = "Error occured. Please try again";
+        });
     },
     handleTermsLink() {
       this.setModalState(0);
@@ -274,11 +297,13 @@ export default {
     },
     ...mapActions(["setModalState"]),
     handleSocialSignup(provider) {
-      this.$store.dispatch("socialSignin", { provider: provider }).then(res => {
-        if (res == 1) {
-          this.setModalState(0);
-        }
-      });
+      this.$store
+        .dispatch("socialSignin", { provider: provider })
+        .then((res) => {
+          if (res == 1) {
+            this.setModalState(0);
+          }
+        });
     },
     closeModal() {
       this.isButtonClicked = false;
@@ -286,23 +311,22 @@ export default {
     },
 
     goto(intent) {
-
-      this.termsCheckBoxError = ""
-      this.pinErrorMessage = ""
-      this.emailErrorMessage = ""
-      this.signInError = ""
-      this.fnameErrorMessage = ""
-      this.passwordErrorMessage = ""
-      this.lnameErrorMessage = ""
-      this.successMessage = ""
-      this.pinErrorMessage = ""
-      if(intent != 3){
+      this.termsCheckBoxError = "";
+      this.pinErrorMessage = "";
+      this.emailErrorMessage = "";
+      this.signInError = "";
+      this.fnameErrorMessage = "";
+      this.passwordErrorMessage = "";
+      this.lnameErrorMessage = "";
+      this.successMessage = "";
+      this.pinErrorMessage = "";
+      if (intent != 3) {
         this.email = "";
       }
       this.first_name = "";
       this.last_name = "";
       this.password = "";
-      this.setModalState(intent)
+      this.setModalState(intent);
     },
     validateFields(intent) {
       let res = true;
@@ -343,7 +367,7 @@ export default {
         } else {
           this.passwordErrorMessage = "";
         }
-      } else if(intent == 2) {
+      } else if (intent == 2) {
         if (!this.password) {
           this.passwordErrorMessage = "Password is required";
           res = false;
@@ -371,82 +395,84 @@ export default {
               last_name: this.last_name,
               password: this.password,
               is_active: false,
-              is_admin: false
-            }; 
-            this.$store.dispatch("register", data).then(res => {
-              // this.email = ""
-              this.first_name = "";
-              this.last_name = "";
-              this.password = "";
-              this.isButtonClicked = false;
-              this.goto(3)
-            })
-            .catch(err => {
-              this.isButtonClicked = false;
-              this.termsCheckBoxError = err.data.message;
-              for (var key in err.data.data){
-                this.termsCheckBoxError = err.data.data[key][0] +"\n"
-              }
-            });
+              is_admin: false,
+            };
+            this.$store
+              .dispatch("register", data)
+              .then((res) => {
+                // this.email = ""
+                this.first_name = "";
+                this.last_name = "";
+                this.password = "";
+                this.isButtonClicked = false;
+                this.goto(3);
+              })
+              .catch((err) => {
+                this.isButtonClicked = false;
+                this.termsCheckBoxError = err.data.message;
+                for (var key in err.data.data) {
+                  this.termsCheckBoxError = err.data.data[key][0] + "\n";
+                }
+              });
           }
         }
-      }
-      else if (intent == 2) {
-          if(this.validateFields(2)){
-            let data = {
+      } else if (intent == 2) {
+        if (this.validateFields(2)) {
+          let data = {
             username: this.email,
-            password: this.password
+            password: this.password,
           };
 
-            this.isButtonClicked = true;
-            this.$store.dispatch("login", data).then(res => {
-            
-            if (res == 1) {
-              this.setModalState(0);
-              let query = this.$route.query.next
-              if (query){
-                this.$router.push(query)
+          this.isButtonClicked = true;
+          this.$store
+            .dispatch("login", data)
+            .then((res) => {
+              if (res == 1) {
+                this.setModalState(0);
+                let query = this.$route.query.next;
+                if (query) {
+                  this.$router.push(query);
+                }
               }
-            }
-          })
-          .catch(res => {
+            })
+            .catch((res) => {
               this.isButtonClicked = false;
               this.signInError = res.data.message;
-          })
-          }
-      }
-      else if(intent == 3){
-        if(this.validateFields(3)){
-            this.emailErrorMessage = ""
-            this.isButtonClicked = true
-            this.$store.dispatch("sendForgetPasswordLink", {'email':this.email}).then(res => {
-            this.isButtonClicked = false;
-            this.successMessage = res.message
-            
-          })
-          .catch(err => {
-             window.console.log(err)
-            this.isButtonClicked = false;
-            this.emailErrorMessage = err.data.email;
-            this.signInError = err.data.email;
-          })
+            });
+        }
+      } else if (intent == 3) {
+        if (this.validateFields(3)) {
+          this.emailErrorMessage = "";
+          this.isButtonClicked = true;
+          this.$store
+            .dispatch("sendForgetPasswordLink", { email: this.email })
+            .then((res) => {
+              this.isButtonClicked = false;
+              this.successMessage = res.message;
+            })
+            .catch((err) => {
+              window.console.log(err);
+              this.isButtonClicked = false;
+              this.emailErrorMessage = err.data.email;
+              this.signInError = err.data.email;
+            });
         }
       }
     },
 
     verifyEmail() {
-      this.pinErrorMessage = ""
+      this.pinErrorMessage = "";
       if (!this.pinModel) {
         this.pinErrorMessage = "PIN is required";
       } else {
         this.isButtonClicked = true;
         let data = {
           email: this.email,
-          pin: this.pinModel
+          pin: this.pinModel,
         };
         this.$store
           .dispatch("verifyEmail", data)
-          .then(res => {
+          .then((res) => {
             this.isButtonClicked = false;
             if (res == 1) {
               this.setModalState(0);
@@ -454,27 +480,27 @@ export default {
                 group: "general",
                 title: "Congratulations !!",
                 text: "You are now a user of bongalo, have fun in your travels",
-                type: "success"
+                type: "success",
               });
 
-              let query = this.$route.query.next
-              if (query){
-                this.$router.push(query)
+              let query = this.$route.query.next;
+              if (query) {
+                this.$router.push(query);
               }
             }
           })
-          .catch(err => {
+          .catch((err) => {
             this.isButtonClicked = false;
             this.pinErrorMessage = err.data.data;
           });
       }
-    }
+    },
   },
 
   data: function() {
     return {
-      successMessage:"",
-      isButtonResendVerifyPinClicked:false,
+      successMessage: "",
+      isButtonResendVerifyPinClicked: false,
       isButtonClicked: false,
       termsCheckBoxError: "",
       emailErrorMessage: "",
@@ -489,36 +515,41 @@ export default {
       showModal: true,
       termsCheckBox: "",
       pinModel: "",
-      signInError: ""
+      signInError: "",
     };
   },
   computed: mapGetters(["getModalState"]),
+  created(){
+    window.console.log("created called")
+
+  },
+  updated(){
+    window.console.log("updated called")
+  }
 };
 </script>
 
-
-<style lang='scss' scoped>
-
-.success-mes{
-  color:green;
+<style lang="scss" scoped>
+.success-mes {
+  color: green;
   font-size: 14px !important;
 }
 
-.hidden{
-height: 0.1px;
-width: 0.1px;
-position: absolute;
-top:-100000px;
+.hidden {
+  height: 0.1px;
+  width: 0.1px;
+  position: absolute;
+  top: -100000px;
 }
 
-.login-error{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction: row;
-    width:100%;
-    color: red !important;
-    font-size: 12px;
+.login-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+  color: red !important;
+  font-size: 12px;
 }
 .loader-div {
   display: flex;

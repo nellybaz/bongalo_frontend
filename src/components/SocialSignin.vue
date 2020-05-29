@@ -2,12 +2,10 @@
     <div class="social-signin">
                             
         <p class="p">Or</p>
-        <!-- <i @click="$emit('handleSocialSignup', 'google')" class="fab fa-google"></i>  -->
         <div @click="$emit('handleSocialSignup', 'google')" class="icon-wrapper">
             <img class="icon" src="../assets/images/google.png" alt="sign in with google - bongalo">
             <p>Contiue with Google</p>
         </div>
-        <!-- <i @click="$emit('handleSocialSignup', 'facebook')" class="fab fa-facebook"></i> -->
     </div>
 </template>
 
@@ -22,7 +20,7 @@ export default {
 <style lang='scss' scoped>
     .social-signin{
         width:100%;
-        padding: 20px 30px;
+        padding: 0px 0px;
         display:flex;
         align-items:center;
         justify-content:center;
@@ -33,6 +31,7 @@ export default {
         }
 
         .icon-wrapper{
+            height: 50px;
             width:100%;
             background: rgb(219, 218, 218);
             padding: 10px 30px;
