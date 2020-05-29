@@ -233,7 +233,7 @@
               @incrementerChangeHandler="handleIncrementer"
               step="number_of_bathroom"
               label="Bathrooms"
-              :start="1"
+              :stop="10"
             ></Incrementer>
 
             <br /><small
@@ -843,7 +843,6 @@
               @incrementerChangeHandler="handleIncrementer"
               step="min_nights"
               label="Nights min"
-              :start="1"
               :stop="30"
             ></Incrementer>
             <br />
