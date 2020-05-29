@@ -48,7 +48,7 @@ export default {
       for (var i = start; i <= end; i++) {
         list.push({
           text: i + " bedroom",
-          value: "" + i,
+          value: i.toString(),
         });
       }
 
@@ -58,7 +58,7 @@ export default {
       let selectOptions = this.options;
 
       const storeData = this.$store.getters.getListingState;
-
+ 
       if (
         this.step == "number_of_bedroom" &&
         storeData["listing_type"] &&
@@ -77,12 +77,18 @@ export default {
       return selectOptions;
     },
   },
+  updated(){
+    const store = this.$store.getters.getListingState;
+    let dataInStore = store[this.step];
+    if (dataInStore && dataInStore.toString().length > 0) {
+       this.data = dataInStore.toString();
+    }
+  },
   created() {
-    let dataInStore = this.$store.getters.getListingState[this.step];
-    if (dataInStore) {
-      if (dataInStore.length > 1) {
-        this.data = dataInStore;
-      }
+    const store = this.$store.getters.getListingState;
+    let dataInStore = store[this.step];
+    if (dataInStore && dataInStore.toString().length > 0) {
+       this.data = dataInStore.toString();
     }
   },
 };

@@ -212,7 +212,7 @@
                 </h3>
                 <br />
                 <section class="action-section">
-                  <button @click="addImages('uuid')" class="btn-update">
+                  <button @click="updateListing(listing)" class="btn-update">
                     Update
                   </button>
                   <button
@@ -328,47 +328,46 @@
           <div v-if="!changePasswordIsSuccessful">
             <h3>Change your password</h3>
 
-          <div class="mid">
-            <StyledInput
-              @sendInput="(v) => (oldPassword = v)"
-              :value="''"
-              type="password"
-              placeholder="Enter old password"
-              label="OLD PASSWORD"
-            />
+            <div class="mid">
+              <StyledInput
+                @sendInput="(v) => (oldPassword = v)"
+                :value="''"
+                type="password"
+                placeholder="Enter old password"
+                label="OLD PASSWORD"
+              />
 
-            <br />
-            <StyledInput
-              @sendInput="(v) => (newPassword = v)"
-              :value="''"
-              type="password"
-              placeholder="Enter new password"
-              label="NEW PASSWORD"
-            />
-            <br />
-
-            <StyledInput
-              @sendInput="(v) => (newPasswordConfirm = v)"
-              :value="''"
-              type="password"
-              placeholder="Confirm new password"
-              label="CONFIRM PASSWORD"
-            />
-
-            <Button
-              v-if="!changePasswordButtonClicked"
-              @handleClick="changePassword"
-              :isFullWidth="false"
-              style="margin-top:20px; height:45px"
-              label="Update Password"
-            />
-
-            <p v-else>
               <br />
-              Changing your password, please wait...
-            </p>
-          </div>
+              <StyledInput
+                @sendInput="(v) => (newPassword = v)"
+                :value="''"
+                type="password"
+                placeholder="Enter new password"
+                label="NEW PASSWORD"
+              />
+              <br />
 
+              <StyledInput
+                @sendInput="(v) => (newPasswordConfirm = v)"
+                :value="''"
+                type="password"
+                placeholder="Confirm new password"
+                label="CONFIRM PASSWORD"
+              />
+
+              <Button
+                v-if="!changePasswordButtonClicked"
+                @handleClick="changePassword"
+                :isFullWidth="false"
+                style="margin-top:20px; height:45px"
+                label="Update Password"
+              />
+
+              <p v-else>
+                <br />
+                Changing your password, please wait...
+              </p>
+            </div>
           </div>
           <div v-else>
             <Verification
@@ -378,9 +377,7 @@
               strongText=""
               width="80%"
             />
-
           </div>
-          
         </div>
 
         <div v-else-if="showId == 5" class="payout-details">
@@ -666,7 +663,7 @@ export default {
       } else {
         this.changePasswordButtonClicked = true;
         const data = {
-          old_password:this.oldPassword,
+          old_password: this.oldPassword,
           token: this.getToken(),
           password: this.newPassword,
         };
@@ -698,7 +695,6 @@ export default {
     },
     handleVerification() {
       this.verificationButtonClicked = true;
-      window.console.log(this.verificationFile);
       const data = {
         type: this.verificationTypeValue,
         image: this.verificationFile,
@@ -735,8 +731,6 @@ export default {
         })
         .then((res) => {
           if (res == 1) {
-            window.console.log("user info here");
-            window.console.log(this.getUserInfo());
             this.firstName = this.getUserInfo().first_name;
             this.lastName = this.getUserInfo().last_name;
             this.userDescription = this.getUserInfo().description;
@@ -796,7 +790,6 @@ export default {
           }
         })
         .then((v) => {
-          window.console.log(v);
           this.getAndUpdateUserData();
         });
     },
@@ -861,8 +854,44 @@ export default {
       "getReviewFromMe",
       "getReviewForMe",
     ]),
-    addImages(uuid) {
-      // Add images to this apartment
+    updateListing(listing) {
+      const listingData = {
+        isUpdate: true,
+        apartmentId:listing['uuid'],
+        listing_type: listing["type"],
+        what_guest_will_have: listing["space"],
+        number_of_guest: listing["max_guest_number"],
+        number_of_bedroom: listing["available_rooms"],
+        number_of_bathroom: listing["number_of_bathrooms"],
+        property_country: listing["country"],
+        property_address: listing["address"],
+        property_city: listing["city"],
+        property_province: "",
+        amenities: listing["amenities"].split(","),
+        extras: listing["extras"].split(","),
+        rules: listing["rules"].split(","),
+        photos: [],
+        description: listing["description"],
+        title: listing["title"],
+        mobile_number: "",
+        will_update_calender_checkbox: "",
+        checkin: listing["check_in"],
+        checkout: listing["check_out"],
+        min_nights: listing["min_nights"],
+        max_nights: listing["max_nights"],
+        blocked_dates: [],
+        price: listing["price"],
+        userListing: [],
+      };
+
+      window.console.log(listingData);
+      for (var item in listingData) {
+        let d = {
+          key: item,
+          value: listingData[item],
+        };
+        this.$store.dispatch("setValue", d);
+      }
       this.$router.push({ path: "/become-a-host" });
     },
     handleWhatShows(intent) {
@@ -922,8 +951,6 @@ export default {
   },
 
   created() {
-    // Fetch all data on reviews start
-
     this.$store.dispatch("getReviewsForMe", {
       token: this.getToken(),
     });
@@ -931,21 +958,10 @@ export default {
       token: this.getToken(),
     });
 
-    // Fetch all data on reviews end
     this.$store.dispatch("getUserListing", {
       uuid: this.getUuid(),
       token: this.getToken(),
     });
-    // this.$store
-    //   .dispatch("getPaymentMethod", {
-    //     uuid: this.getUuid(),
-    //     token: this.getToken(),
-    //   })
-    //   .then((res) => {
-    //     if (res == 1) {
-    //       this.paymentNumber = this.getUserPaymentNumber();
-    //     }
-    //   });
 
     this.getAndUpdateUserData();
   },
