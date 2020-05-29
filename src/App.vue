@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Login></Login>
-    <notifications :duration="5000" position="top left" group="general" />
+    <notifications :duration="5000" position="top right" group="general" />
     <router-view/>
     <Footer></Footer>
   </div>

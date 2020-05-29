@@ -58,7 +58,7 @@ export default {
     // getValue() {
     //   const storeData = this.$store.getters.getListingState;
     //   let dataInStore = storeData[this.step];
-    
+
     //   if (dataInStore || dataInStore.length > 1) {
     //     this.value = dataInStore;
     //   }
@@ -71,7 +71,7 @@ export default {
     //   return this.value;
     // },
     handleGuestClick(motive) {
-      let val = this.value
+      let val = this.value;
       if (motive == 1) {
         if (this.stop) {
           if (this.value < this.stop) {
@@ -89,23 +89,49 @@ export default {
       });
     },
   },
-   created(){
-       const storeData = this.$store.getters.getListingState;
-      let dataInStore = storeData[this.step];
-    
 
-    this.value = this.start ? this.start : this.value;
+  updated() {
+    const store = this.$store.getters.getListingState;
+    this.value = this.start ? this.start : this.value; // Do this if there is start value provided
 
-    
-      if (dataInStore || dataInStore.length > 1) {
-        this.value = dataInStore;
-      }
+    if (
+      this.step == "number_of_guest" &&
+      store["what_guest_will_have"] &&
+      store["what_guest_will_have"] == "full_place"
+    ) {
+      this.value = 4;
+      let d = {
+        key: this.step,
+        value: this.value,
+      };
+      this.$store.dispatch("setValue", d);
+    }
+    let dataInStore = store[this.step];
+    if (dataInStore && dataInStore.toString().length > 0) {
+      this.value = dataInStore.toString();
+    }
+  },
+  created() {
+    const store = this.$store.getters.getListingState;
+    this.value = this.start ? this.start : this.value; // Do this if there is start value provided
 
-      if(storeData['what_guest_will_have'] && storeData['what_guest_will_have'] == 'full_place'){
-          this.value = 4;
-      }
-    
-   }
+    if (
+      this.step == "number_of_guest" &&
+      store["what_guest_will_have"] &&
+      store["what_guest_will_have"] == "full_place"
+    ) {
+      this.value = 4;
+      let d = {
+        key: this.step,
+        value: this.value,
+      };
+      this.$store.dispatch("setValue", d);
+    }
+    let dataInStore = store[this.step];
+    if (dataInStore && dataInStore.toString().length > 0) {
+      this.value = dataInStore.toString();
+    }
+  },
 };
 </script>
 

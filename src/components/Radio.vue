@@ -42,15 +42,21 @@ export default {
   methods: {
     getOptions() {
       let optionsToUse = this.options;
-
-      const storeData = this.$store.getters.getListingState;
       return optionsToUse;
     },
   },
+  updated() {
+    const store = this.$store.getters.getListingState;
+    let dataInStore = store[this.step];
+    if (dataInStore && dataInStore.toString().length > 0) {
+       this.model = dataInStore.toString();
+    }
+  },
   created() {
-    let dataInStore = this.$store.getters.getListingState[this.step];
-    if (dataInStore || dataInStore.length > 1) {
-      this.model = dataInStore;
+    const store = this.$store.getters.getListingState;
+    let dataInStore = store[this.step];
+    if (dataInStore && dataInStore.toString().length > 0) {
+       this.model = dataInStore.toString();
     }
   },
 };

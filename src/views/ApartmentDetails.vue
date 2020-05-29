@@ -317,12 +317,25 @@
 
                     <div class="service-fee">
                       <p>Service fee</p>
-                      <p class="p">${{ serviceFee }}</p>
+                      <p class="p">
+                        ${{
+                          (apartment.price || $route.query.price) *
+                            bookedNights *
+                            0.05
+                        }}
+                      </p>
                     </div>
 
                     <div class="total">
                       <p>Total</p>
-                      <p class="p">${{ getTotal() }}</p>
+                      <p class="p">
+                        ${{
+                          getTotal() +
+                            (apartment.price || $route.query.price) *
+                              bookedNights *
+                              0.05
+                        }}
+                      </p>
                     </div>
                   </div>
 
@@ -516,7 +529,9 @@ export default {
       }
     },
     getAmenitiesIcon(value) {
-      return this.amenitiesIcon[value];
+      return this.amenitiesIcon[value]
+        ? this.amenitiesIcon[value]
+        : "fas fa-fan";
     },
     handleImageChange(index) {
       this.galleryIndex = index;
@@ -674,6 +689,7 @@ export default {
       isImageShow: false,
       amenities: [],
       rules: [],
+      extras: [],
     };
   },
 
@@ -736,6 +752,16 @@ export default {
     this.amenities = this.apartment.amenities
       ? this.apartment.amenities.split(",")
       : this.$route.query.amenities.split(",");
+
+    this.extras = this.apartment.extras
+      ? this.apartment.extras.split(",")
+      : this.$route.query.extras
+      ? this.$route.query.extras.split(",")
+      : [];
+
+    // this.extras[0] = "," + this.extras[0];
+    this.amenities = this.amenities.concat(this.extras)
+    window.console.log(this.amenities);
     this.rules = this.apartment.rules
       ? this.apartment.rules.split(",")
       : this.$route.query.rules.split(",");
