@@ -30,7 +30,8 @@ const URLS = {
     reviews_for_me: 'auth/user/review-on-my-apartment',
     reviews_from_me: 'auth/user/review-by-me',
     verify_user:'auth/user/verify',
-    change_password:'auth/user/password/change'
+    change_password:'auth/user/password/change',
+    subscribe: "auth/user/subscribe"
 }
  
 

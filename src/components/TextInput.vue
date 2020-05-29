@@ -72,7 +72,7 @@ export default {
   created() {
     const store = this.$store.getters.getListingState;
     let dataInStore = store[this.step];
-    // window.console.log(this.step)
+    window.console.log(`input created called for ${this.step}`)
     if (dataInStore && dataInStore.toString().length > 0) {
       this.model = dataInStore.toString();
     }

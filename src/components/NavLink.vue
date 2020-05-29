@@ -18,7 +18,7 @@
           </a>
         </li>
 
-        <li v-if="!isLoggedIn" v-on:click="handleSignin(2)">Sign up</li>
+        <li v-if="!isLoggedIn" v-on:click="$modal.show('register')">Sign up</li>
         <li class="profile-li" v-else>
           <a href="/profile">
             <img :src="getProfile()" />
@@ -26,7 +26,7 @@
           </a>
         </li>
 
-        <li v-if="!isLoggedIn" v-on:click="handleSignin(1)">Login</li>
+        <li v-if="!isLoggedIn" v-on:click="$modal.show('login')">Login</li>
         <li v-else v-on:click="logout">Logout</li>
       </ul>
     </nav>
@@ -62,9 +62,6 @@ export default {
       }
     },
 
-    handleSignin(val) {
-      this.setModalState(val);
-    },
 
     logout() {
       this.$store.dispatch("logout").then((res) => {

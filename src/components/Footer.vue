@@ -71,7 +71,7 @@
           placeholder="Enter your email"
         />
         <div class="payment-text-sub-btn">
-          <button>Subscribe</button>
+          <button @click="handleSubscribe()">Subscribe</button>
           <p>Payment Methods</p>
         </div>
         <div class="payment-imgs">
@@ -107,10 +107,47 @@ export default {
     return {
       showOutline: false,
       email: "",
-      emailErrorMessage:""
+      emailErrorMessage: "",
     };
   },
   methods: {
+    handleSubscribe() {
+      if (!this.email.includes("@") || !this.email.includes(".")) {
+        // wrong email
+        this.$notify({
+          group: "general",
+          title: "Info !!",
+          text: "Email is not valid",
+          type: "error",
+        });
+      } else {
+        var data = {
+          email: this.email,
+        };
+        this.$store
+          .dispatch("subscribe", data)
+          .then((res) => {
+            if (res == 1) {
+              this.email = ""
+              this.$notify({
+                group: "general",
+                title: "Info !!",
+                text: "Subscribed Successfully. Thanks!!",
+                type: "success",
+              });
+              
+            }
+          })
+          .catch((err) => {
+            this.$notify({
+              group: "general",
+              title: "Info !!",
+              text: err.data.message,
+              type: "error",
+            });
+          });
+      }
+    },
     getClass() {
       return this.showOutline ? "border: 1px solid #3A85FC !important;" : "";
     },
@@ -217,7 +254,6 @@ export default {
 
       .payment-text-sub-btn {
         margin-top: 15px;
-        // border:1px solid red;
         width: 100%;
         // height: 50px;
         float: left;
