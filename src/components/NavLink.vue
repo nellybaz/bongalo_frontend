@@ -58,7 +58,7 @@ export default {
       if (this.isLoggedIn) {
         this.$router.push("/become-a-host");
       } else {
-        this.handleSignin(1);
+        this.$modal.show("login");
       }
     },
 
