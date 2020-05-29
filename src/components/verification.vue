@@ -6,25 +6,22 @@
         {{ title }}
         <!-- Verifications -->
       </h2>
-      <br>
-        
+      <br />
 
       <div>
         <img
-          style="width:auto; margin:2rem"
+          style="width: auto; margin: 2rem;"
           src="../assets/images/v-icon.png"
           alt="bongalo-careers"
         />
       </div>
       <p>
         {{ text1 }}
-     
+
         <strong>
-          {{ strongText }}
-           </strong
+          {{ strongText }} </strong
         ><br />
         {{ text2 }}
-       
       </p>
     </div>
   </div>
@@ -50,27 +47,35 @@ export default {
       required: true,
       type: String,
     },
-    width:{
-        type:String,
+    width: {
+      type: String,
     },
-    height:{
-        type:String,
-    }
+    height: {
+      type: String,
+    },
   },
-    methods:{
-       
-        getGivenStyle(){
-             var style = "";
-            if(this.width){
-               style += "width:"+this.width+";"
-            }
-            return style;
-        }
-    }
+  methods: {
+    getGivenStyle() {
+      var style = "";
+      if (this.width) {
+        style += "width:" + this.width + ";";
+      }
+      return style;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  * {
+    width: auto !important;
+  }
+  p {
+    margin: 10px !important;
+  }
+}
+
 .verification {
   .confirm-verification {
     display: flex;

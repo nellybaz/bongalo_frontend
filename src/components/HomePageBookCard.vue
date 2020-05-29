@@ -99,7 +99,7 @@ export default {
     Select,
     PulseLoader,
   },
-  data: function() {
+  data: function () {
     return {
       isBtnClicked: false,
       apartment_types: [

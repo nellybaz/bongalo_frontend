@@ -3,12 +3,19 @@
     <div v-if="!isImageShow" class="detials-content">
       <Navigation :showSearch="false"></Navigation>
       <ImageGrid
+        class="apartment_details-img-sec"
         v-on:updateImageShow="updateImageShowHandler"
         :showMoreImages="true"
       ></ImageGrid>
 
+      <div class="apartment-img">
+        <img src="../assets/images/apartment.png" alt="" />
+      </div>
+
       <div class="apartment-details-content">
         <div class="details-div">
+          <!-- <br /> -->
+
           <div class="tap-div">
             <ul>
               <li :class="{ border_bottom: borderItem == 1 }">
@@ -23,33 +30,40 @@
               <li v-if="review.length > 0"><a href="#">Review</a></li>
             </ul>
           </div>
+          <br />
           <div class="content-div">
             <div class="left" id="overview">
               <div @click="getUserUrl()" class="host-details">
                 <div class="name">
+                  <span class="host-details-mobile">
+                    <p>Host</p>
+                    <strong style="text-decoration: underline;">
+                      {{ apartment.owner || $route.query.owner }}
+                    </strong>
+                  </span>
+
                   <img
                     v-if="
                       getCurrentApartment.owner_details &&
-                        getCurrentApartment.owner_details.profile_image.length >
-                          5
+                      getCurrentApartment.owner_details.profile_image.length > 5
                     "
                     :src="getCurrentApartment.owner_details.profile_image"
                     alt=""
                   />
                   <i v-else class="fas fa-user-circle"></i>
-                  <span>
+                  <!-- <span class="host-details-desktop">
                     <p>Host</p>
-                    <strong style="text-decoration:underline;">
+                    <strong style="text-decoration: underline;">
                       {{ apartment.owner || $route.query.owner }}
                     </strong>
-                  </span>
+                  </span> -->
                 </div>
 
                 <div
                   v-if="
                     getCurrentApartment.owner_details &&
-                      getCurrentApartment.owner_details.resident_country
-                        .length > 1
+                    getCurrentApartment.owner_details.resident_country.length >
+                      1
                   "
                   class="country"
                 >
@@ -90,7 +104,7 @@
                     <i class="fas fa-shower"></i> Bathrooms:
                     {{
                       apartment.number_of_bathrooms ||
-                        $route.query.number_of_bathrooms
+                      $route.query.number_of_bathrooms
                     }}
                   </p>
                 </div>
@@ -101,8 +115,22 @@
                     night(s)
                   </p>
                 </div>
+              </div>
 
-                <!-- <img src="../assets/images/map_placeholder.png" alt="" /> -->
+              <div class="booking-section">
+                <h4>
+                  ${{ apartment.price || $route.query.price }}
+                  <span>/ night</span>
+                </h4>
+                <button>Book</button>
+              </div>
+
+              <div>
+                <img
+                  class="google-map-mobile"
+                  src="../assets/images/google-map.png"
+                  alt=""
+                />
               </div>
 
               <div id="rules" class="rules" ref="rulesRef">
@@ -122,7 +150,7 @@
                   Beedrooms,
                   {{
                     apartment.number_of_bathrooms ||
-                      $route.query.number_of_bathrooms
+                    $route.query.number_of_bathrooms
                   }}
                   Bathrooms,
                   {{
@@ -278,7 +306,7 @@
                       </div>
                     </vc-date-picker>
                   </div>
-                  <small style="font-size:9px; color:red">
+                  <small style="font-size: 9px; color: red;">
                     {{ dateErrorMessage }}
                   </small>
                   <br />
@@ -295,7 +323,6 @@
                       </button>
                     </div>
                   </div>
-                  <!-- <br> -->
 
                   <div v-if="checkout != 'Checkout'" class="price-info">
                     <div class="per-night">
@@ -355,7 +382,7 @@
       </div>
     </div>
     <div v-else class="details-img-show">
-      <p style="color:white">
+      <p style="color: white;">
         {{ Math.abs(galleryIndex) + 1 }}/{{ imagesArr.length }}
       </p>
       <span v-on:click="updateImageShowHandler(0)">X</span>
@@ -595,18 +622,18 @@ export default {
     },
   },
   watch: {
-    checkout: function(newValue, oldValue) {
+    checkout: function (newValue, oldValue) {
       if (newValue != "Checkout") {
         this.dateErrorMessage = "";
       }
     },
-    checkin: function(newValue, oldValue) {
+    checkin: function (newValue, oldValue) {
       if (newValue != "Checkin") {
         this.dateErrorMessage = "";
       }
     },
   },
-  data: function() {
+  data: function () {
     return {
       reserveButtonClicked: false,
       userUrl: "user/",
@@ -765,6 +792,142 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and(max-width:900px) {
+  * {
+    display: block !important;
+    padding: 0 !important;
+    width: auto !important;
+    border: transparent !important;
+  }
+
+  .detials-content {
+    width: 100% !important;
+    .apartment_details-img-sec {
+      display: none !important;
+      object-fit: contain !important;
+    }
+
+    .apartment-img {
+      img {
+        display: block !important;
+        object-fit: cover !important;
+        width: 100% !important;
+      }
+    }
+  }
+
+  .booking-section {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    width: 100% !important;
+    margin: 30px 0 0 0 !important;
+    button {
+      font-size: 15px !important;
+      color: #ffffff;
+      font-weight: bold;
+      background: #3a85fc;
+      height: 40px !important;
+      border-radius: 5px;
+    }
+    h4 {
+      display: flex !important;
+    }
+    span {
+      width: auto;
+      font-size: 14px !important;
+      color: gray;
+      font-weight: normal !important;
+    }
+  }
+
+  .host-details-desktop,
+  .other-div {
+    width: 100% !important;
+    margin: 10px 20px 0 0;
+  }
+
+  .name {
+    width: 96% !important;
+    display: grid !important;
+    grid-template-columns: 10fr 1fr !important;
+    position: absolute;
+    left: 16px !important;
+    margin: 60px 10px 0 0 !important;
+
+    span {
+      strong {
+        text-decoration: none !important;
+        font-size: 20px !important;
+      }
+    }
+  }
+
+  .apartment-details-content {
+    padding: 0 20px !important;
+    .google-map-mobile {
+      width: 100% !important;
+      margin: 30px 15px 0 0 !important;
+      padding: 0 !important;
+    }
+
+    .rules,
+    .right {
+      display: none !important;
+    }
+
+    .tap-div {
+      display: none !important;
+    }
+
+    .more-info {
+      width: 100% !important;
+      margin: 0 !important;
+      margin: 100px 20px 0 0 !important;
+
+      p {
+        text-align: start !important;
+        color: gray !important;
+        margin: 10px 0 !important;
+      }
+
+      i {
+        color: gray !important;
+        font-size: 20px !important;
+        text-align: start !important;
+      }
+    }
+
+    i {
+      margin: 0 !important;
+      width: auto;
+      color: #404040 !important;
+      font-size: 30px !important;
+    }
+
+    #amenities {
+      // border: 1px solid red !important;
+      p {
+        display: flex !important;
+        color: gray !important;
+      }
+      i {
+        font-size: 15px !important;
+        color: gray !important;
+        margin: 0 10px 0px 0px !important;
+      }
+    }
+    .host-details-mobile {
+      display: block !important;
+    }
+  }
+}
+
+// .host-details-mobile,
+// .apartment-img,
+// .google-map-mobile,
+// .booking-section {
+//   display: none !important;
+// }
 .apd-loader-div,
 .loader-div {
   width: 100%;

@@ -7,7 +7,7 @@
           <a href="#">
             <div>
               <img
-                style="margin:0.7rem 0.8rem"
+                style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
               />
@@ -15,12 +15,12 @@
             <p class="p-item">Profile</p>
           </a>
         </div>
-
+        
         <div class="d3 d" @click="handleWhatShows(2)">
           <a href="#">
             <div>
               <img
-                style="margin:0.7rem 0.8rem"
+                style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
               />
@@ -33,7 +33,7 @@
           <a href="#">
             <div>
               <img
-                style="margin:0.7rem 0.8rem"
+                style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
               />
@@ -46,7 +46,7 @@
           <a href="#favourite-section">
             <div>
               <img
-                style="margin:0.7rem 0.8rem"
+                style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
               />
@@ -59,7 +59,7 @@
           <a href="#">
             <div>
               <img
-                style="margin:0.7rem 0.8rem"
+                style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
               />
@@ -72,7 +72,7 @@
           <a href="#">
             <div>
               <img
-                style="margin:0.7rem 0.8rem"
+                style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
               />
@@ -180,7 +180,7 @@
           </div>
 
           <div v-else class="profile-show">
-            <p class="p-desc">
+            <p class=".p-desc">
               {{ getUserInfo().description }}
             </p>
             <hr />
@@ -247,16 +247,15 @@
         <div v-else-if="showId == 3" class="verifications">
           <div class="veri-sec-1">
             <h2>Verifications</h2>
-
             <p class="upload">UPLOAD VERFICATION</p>
           </div>
 
           <div class="veri-sec-1">
-            <div class="">
-              <P>You currently don’t have any verifications</P>
-            </div>
+            <P class="veri-sec-1-mobile"
+              >You currently don’t have any verifications</P
+            >
             <div class="veri-sec-3">
-              <label for="upload-photo">Choose file</label>
+              <label class="choose-file" for="upload-photo">Choose file</label>
               <input type="file" name="photo" id="upload-photo" />
               <span>No file selected.</span>
             </div>
@@ -317,7 +316,7 @@
             <Button
               @handleClick="updateUser"
               :isFullWidth="false"
-              style="margin-top:20px; height:45px"
+              style="margin-top: 20px; height: 45px;"
               label="Update Password"
             />
           </div>
@@ -348,7 +347,7 @@
           <br />
           <h3>Mobile Wallet</h3>
           <img
-            style="width:10%; margin:10px 0px"
+            style="width: 10%; margin: 10px 0px;"
             src="../assets/images/mtn.png"
             alt="bongalo-careers"
           />
@@ -365,7 +364,7 @@
             @handleClick="addPaymentNumber"
             :isFullWidth="false"
             label="Save"
-            style="width:25%; margin-top:20px0"
+            style="width: 25%; margin-top: 20px0;"
           />
           <br /><br />
           <hr />
@@ -478,7 +477,11 @@
           <br />
 
           <div v-if="showReviewedContent">
-            <div v-for="item in getReviewForMe()" :key="item.id">
+            <div
+              v-for="item in getReviewForMe()"
+              :key="item.id"
+              class="rev-div-mobile"
+            >
               <a href="#">
                 <div class="rev-div"></div>
                 <p>
@@ -505,7 +508,12 @@
           <div v-else>
             <h1 v-if="getReviewFromMe().length < 1">Nothing to show</h1>
 
-            <div v-else v-for="item in getReviewFromMe()" :key="item.id">
+            <div
+              v-else
+              v-for="item in getReviewFromMe()"
+              :key="item.id"
+              class="rev-div-mobile"
+            >
               <a href="#">
                 <div class="rev-div"></div>
                 <p>
@@ -542,7 +550,7 @@ import Verification from "../components/verification";
 
 export default {
   name: "",
-  data: function() {
+  data: function () {
     return {
       editProfileBtnClicked: false,
       showBankPayoutMethod: true,
@@ -618,10 +626,6 @@ export default {
         });
     },
 
-    // switchPaymentMethod(){
-
-    // },
-
     addPaymentNumber() {
       this.$store
         .dispatch("addPaymentMethod", {
@@ -664,7 +668,7 @@ export default {
       "getReviewFromMe",
       "getReviewForMe",
       "getBankName",
-      "getBankAccountNames"
+      "getBankAccountNames",
     ]),
     addImages(uuid) {
       // Add images to this apartment
@@ -776,10 +780,151 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// reviews ==================================*
+@media only screen and (max-width: 900px) {
+  * {
+    margin: 0 !important;
+    padding: 10px !important;
+  }
+
+  .profile {
+    max-width: 100% !important;
+    .listing-container {
+      width: 100% !important;
+
+      .no-lising-card {
+        width: 100% !important;
+      }
+
+      img {
+        margin: 30px 0 0 0 !important;
+      }
+
+      button {
+        width: 100% !important;
+      }
+    }
+    .right {
+      .top {
+        .p-primary-edit-profile {
+          width: 50% !important;
+          margin: 10px 10px 20px 50px !important;
+        }
+      }
+
+      .profile-show {
+        p {
+          padding: 0 !important;
+          margin: 10px 0 !important;
+        }
+        height: auto !important;
+        hr {
+          display: none !important;
+        }
+      }
+    }
+
+    .verifications {
+      * {
+        display: block !important;
+        margin: 10px 0 !important;
+        padding: 15px 15px 10px 0 !important;
+      }
+      .upload {
+        margin: -30px 0 -30px !important;
+      }
+      .choose-file {
+        text-align: center !important;
+      }
+
+      .veri-sec-1-mobile {
+        margin: 0px 0 -30px !important;
+      }
+
+      br {
+        display: none !important;
+      }
+
+      .veri-sec-3 {
+        label {
+          height: 100% !important;
+        }
+      }
+
+      button {
+        width: 50% !important;
+      }
+    }
+
+    .Security {
+      * {
+        display: block !important;
+        padding: 0 !important;
+      }
+      h3 {
+        margin: 0 0px 10px 0 !important;
+      }
+      button {
+        margin: 30px 10px 0 0 !important;
+      }
+    }
+
+    .payout-details {
+      // *{
+      //   border: 1px solid red;
+      // }
+    }
+
+    .review {
+      * {
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+      width: 100% !important;
+
+      hr {
+        margin: 10px 0 0 0 !important;
+      }
+
+      .rev-div {
+        margin: 0 10px 0 0 !important;
+      }
+      .rev-div-mobile {
+        margin: 0 0 30px 0 !important;
+      }
+    }
+  }
+
+  .update-div {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    .mid {
+      padding: 0 !important;
+      display: block !important;
+    }
+
+    .btn-div {
+      button {
+        width: 50% !important;
+      }
+    }
+  }
+
+  .content {
+    display: block !important;
+  }
+
+  .left {
+    height: auto !important;
+    display: block !important;
+    position: block !important;
+    z-index: 1px !important;
+  }
+}
 
 .review {
   width: 80%;
+
   hr {
     position: relative;
     top: -13px;
@@ -789,6 +934,7 @@ export default {
     color: #404040;
     font-size: 15px;
   }
+
   i {
     color: #3a85fc;
     letter-spacing: 5px;
@@ -811,22 +957,12 @@ export default {
     justify-content: space-evenly;
 
     p {
-      // border-bottom: 1px solid red;
       width: auto;
-
       padding-bottom: 5px;
       font-size: 18px;
       line-height: 22px;
       color: #333333;
     }
-    // .p-review {
-    //   width: 200px;
-    //   margin-bottom: -205px;
-    //   margin-left: 100px;
-    //   font-size: 18px;
-    //   line-height: 22px;
-    //   color: #333333;
-    // }
   }
 
   .edit-review {
@@ -856,6 +992,7 @@ export default {
   .review-div {
     width: 100%;
   }
+
   p {
     margin: 10px 0;
     width: 100%;
@@ -943,6 +1080,7 @@ export default {
     background: #3a85fc;
     border-radius: 5px;
   }
+
   .btn-remove {
     background: transparent;
     border: transparent;
@@ -971,7 +1109,6 @@ export default {
       padding-bottom: 5px;
       width: 150px;
       font-style: normal;
-      // margin-left: 40px;
       font-weight: normal;
       font-size: 18px;
       line-height: 22px;
@@ -1058,6 +1195,7 @@ export default {
     .left,
     .right {
       width: 100%;
+
       h2 {
         font-weight: bold;
         font-size: 24px;
@@ -1069,7 +1207,6 @@ export default {
       position: sticky;
       top: 20px;
       height: 470px;
-
       background: #ffffff;
       box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 
@@ -1100,7 +1237,6 @@ export default {
         font-size: 20px;
         line-height: 24px;
         display: flex;
-        align-items: center;
         color: gray;
       }
 
@@ -1111,6 +1247,7 @@ export default {
         justify-content: center;
         flex-direction: row;
         padding: 0 30px;
+
         div {
           background: rgba(58, 133, 252, 0.05);
           height: 40px;
@@ -1157,6 +1294,7 @@ export default {
         justify-content: flex-start;
         flex-direction: row;
       }
+
       .listing-card {
         margin-right: 10px;
         .action-section {
@@ -1166,6 +1304,7 @@ export default {
             cursor: pointer;
           }
         }
+
         margin-bottom: 20px;
         width: 400px;
         height: 350px;
@@ -1223,7 +1362,6 @@ export default {
         flex-direction: row;
 
         .icon-div {
-          // border: 2px solid black;
           height: 100px;
           width: 100px;
           border-radius: 50%;
