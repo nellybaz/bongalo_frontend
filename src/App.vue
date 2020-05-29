@@ -381,6 +381,7 @@ export default {
       this.fnameErrorMessage = "";
       this.lnameErrorMessage = "";
       this.passwordErrorMessage = "";
+      this.signInError = "";
     },
     resendPin() {
       this.isButtonResendVerifyPinClicked = true;
@@ -590,7 +591,7 @@ export default {
           .then((res) => {
             this.isButtonClicked = false;
             if (res == 1) {
-              this.setModalState(0);
+              this.$modal.hide("verify-pin")
               this.$notify({
                 group: "general",
                 title: "Congratulations !!",
