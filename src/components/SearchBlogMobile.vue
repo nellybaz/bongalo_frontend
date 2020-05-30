@@ -1,5 +1,5 @@
 <template>
-<!-- <div>
+  <!-- <div>
   <h1>Nak</h1>
 </div> -->
   <div
@@ -23,7 +23,7 @@
 <script>
 export default {
   //   name: "app_footer",
-  data: function() {
+  data: function () {
     return {
       showOutline: false,
       email: "",
@@ -37,7 +37,7 @@ export default {
 @media only screen and (max-width: 900px) {
   .search-div {
     // border: 1px solid red !important;
-        // display: none !important;
+    // display: none !important;
   }
   .search-input {
     border: 1px solid red !important;

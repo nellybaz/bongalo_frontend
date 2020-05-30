@@ -1,7 +1,7 @@
 <template>
   <div class="book-card">
     <h3>
-      Travelling Africa, Trip for Business or Leisure? Book your stay with us.
+      Trip for Business or Leisure? Book your stay with us.
     </h3>
 
     <div class="item1">
@@ -55,7 +55,6 @@
           <button v-on:click="handleGuestClick(0)">
             <i class="fas fa-minus"></i>
           </button>
-
           <button v-on:click="handleGuestClick(1)">
             <i class="fas fa-plus"></i>
           </button>
@@ -180,7 +179,6 @@ export default {
         this.checkin == "dd/mm/yyyy"
       ) {
         this.isBtnClicked = false;
-        // Checkin neeeed
         this.$notify({
           group: "general",
           title: "Missing Info",
@@ -227,15 +225,16 @@ export default {
     margin: 0 10% !important;
     padding: 20px !important;
     padding-bottom: 70px !important;
+
     h3 {
       display: none !important;
     }
-
+    .item-label {
+      margin: 10px 0 !important;
+    }
     .item2 {
       grid-template-columns: 1fr !important;
-      // .inner{
-      //     // border:1px solid red;
-      // }
+
       input {
         width: 100%;
         background: #fff;
@@ -248,7 +247,6 @@ export default {
         width: 50% !important;
       }
       button {
-        // width: 40px !important;
         margin: 0px 5px !important;
         background: #fff;
       }
@@ -262,7 +260,6 @@ export default {
   justify-content: flex-end;
   flex-direction: row;
   width: 80%;
-  // border:1px solid red;
 }
 
 .book-card {
@@ -288,9 +285,11 @@ export default {
     line-height: 17px;
     color: rgba(106, 106, 106, 0.7);
   }
+
   .card-date-input:focus {
     outline: none;
   }
+
   ::-webkit-input-placeholder {
     font-style: normal;
     font-weight: normal;
@@ -326,7 +325,6 @@ export default {
   }
   .item2 {
     width: 100%;
-    // border:1px solid red;
     display: grid;
     grid-column-gap: 5px;
     grid-template-columns: 1fr 1fr;
@@ -340,7 +338,6 @@ export default {
       border: 1px solid #c4c4c4;
       border-radius: 5px;
       padding: 10px 10px;
-
       font-style: normal;
       font-weight: normal;
       font-size: 14px;
@@ -351,7 +348,6 @@ export default {
     .inner1,
     .inner2 {
       width: 100%;
-      // border:1px solid green;
 
       input {
         width: 100%;
@@ -361,7 +357,6 @@ export default {
   }
   .item3 {
     margin-bottom: 20px;
-    // border:1px solid red;
 
     .content {
       display: grid;
@@ -384,10 +379,10 @@ export default {
       }
       .btn-container {
         width: 100%;
-        // border:1px solid red;
         display: flex;
         justify-content: space-between;
         flex-direction: row;
+
         button {
           height: 40px;
           width: 40px;

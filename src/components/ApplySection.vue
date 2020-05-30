@@ -19,9 +19,7 @@
     <br />
 
     <div class="file-select">
-      <label for="select-below"
-        >UPLOAD YOUR RESUME</label
-      >
+      <label for="select-below">UPLOAD YOUR RESUME</label>
       <br />
       <br />
       <input ref="input_select_ref" type="file" id="select-below" />
@@ -40,7 +38,7 @@
     <br />
 
     <div class="btn-div">
-        <Button label="SUBMIT APPLICATION"></Button>
+      <Button label="SUBMIT APPLICATION"></Button>
     </div>
   </div>
 </template>
@@ -55,8 +53,7 @@ export default {
     Button,
     StyledInput,
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 
@@ -66,16 +63,16 @@ export default {
   margin-bottom: 30px;
   width: 50%;
 
-  .btn-div{
-      button{
-          float:right;
-      }
+  .btn-div {
+    button {
+      float: right;
+    }
   }
 
   .file-select {
-      margin-top: 60px;
+    margin-top: 60px;
     label {
-      border: 1px dashed #B4B4B4;
+      border: 1px dashed #b4b4b4;
       font-style: normal;
       font-weight: normal;
       border-radius: 3px;

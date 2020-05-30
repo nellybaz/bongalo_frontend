@@ -145,7 +145,7 @@ export default {
       return "powered_img_";
     },
   },
-  data: function() {
+  data: function () {
     return {
       events: [
         {
@@ -445,7 +445,6 @@ export default {
 
     .inner {
       width: 100%;
-
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-column-gap: 30px;
@@ -458,7 +457,6 @@ export default {
     width: 100%;
     margin-top: 50px;
     background: url(../assets/images/middle-banner.png);
-
     display: flex;
     align-items: center;
     justify-content: center;

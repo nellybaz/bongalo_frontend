@@ -2,7 +2,7 @@
   <div class="footer">
     <div class="subscribe-section">
       <p>Enter your email below to recieve updates on our Newsletter</p>
-      <small style="color:red">
+      <small style="color: red;">
         {{ emailErrorMessage }}
       </small>
 
@@ -78,7 +78,7 @@
           <li>+250 730078410</li>
           <li>info@bongalo.co</li>
         </ul>
-      </div>
+      </div>  
       <br />
 
       <h4>
@@ -98,7 +98,7 @@
 <script>
 export default {
   name: "app_footer",
-  data: function() {
+  data: function () {
     return {
       showOutline: false,
       email: "",
@@ -124,6 +124,9 @@ export default {
 
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
+  * {
+    max-width: 100% !important;
+  }
   .footer {
     text-align: center;
     padding: 40px 10px !important;
@@ -148,23 +151,21 @@ export default {
         color: #404040;
       }
       input {
+        width: auto !important;
         border: 1px solid #686868;
         box-sizing: border-box;
         background-color: #f6faff;
-        padding: 1rem 7rem;
-        margin: 10px 0;
+        padding: 1rem 7rem !important;
+        margin: 10px 0 !important;
         border-radius: 5px;
       }
       button {
-        margin-top: 10px;
-        padding: 0.5rem 2rem;
+        padding: 0.5rem 2rem !important;
         border: transparent;
         background: #3a85fc;
         border-radius: 5px;
-        font-style: normal;
         font-weight: bold;
         font-size: 15px;
-        line-height: 18px;
         align-items: center;
         color: #ffffff;
       }

@@ -15,7 +15,7 @@
             <p class="p-item">Profile</p>
           </a>
         </div>
-        
+
         <div class="d3 d" @click="handleWhatShows(2)">
           <a href="#">
             <div>

@@ -36,23 +36,20 @@ export default {
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
   * {
-    width: 100% !important;
-    margin: 5px !important;
+    max-width: 100% !important;
+    margin: auto !important;
     padding: 0 !important;
   }
 
   .tag {
-    width: 97% !important;
     position: absolute;
-    margin: 5px 10px !important;
-    top: 110px !important;
+    top: 120px !important;
 
-    ul {
-      width: 100% !important;
-    }
     li {
+      float: left !important;
+      padding: 5px 13px !important;
+      text-align: left !important;
       font-size: 10px !important;
-      word-spacing: 0 !important;
     }
   }
 }

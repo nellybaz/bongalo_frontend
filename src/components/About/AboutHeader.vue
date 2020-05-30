@@ -4,6 +4,11 @@
       <a href="/">
         <img src="../../assets/images/bongalo-logo-white.png" alt />
       </a>
+
+      <div>
+        <img src="../../assets/images/mobile-nav-shape.png" alt />
+      </div>
+
       <NavLink :isDark="false"></NavLink>
     </header>
   </div>
@@ -20,6 +25,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  header {
+    display: grid !important;
+    grid-template-columns: repeat(9, 1fr);
+    grid-gap: 80% !important;
+    padding: 0 30px !important;
+
+    img {
+      margin: 10px 0 0 0 !important;
+    }
+  }
+}
 .header {
   width: 100%;
   height: auto;

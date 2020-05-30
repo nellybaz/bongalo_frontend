@@ -276,6 +276,7 @@ export default {
       this.setModalState(0);
       this.$router.push("/terms-condition");
     },
+
     handleInput(val) {
       if (val.step == "pin_verify") {
         this.pinModel = val.data;
@@ -293,6 +294,7 @@ export default {
         this.password = val.data;
       }
     },
+
     ...mapActions(["setModalState"]),
     handleSocialSignup(provider) {
       this.$store
@@ -303,6 +305,7 @@ export default {
           }
         });
     },
+    
     closeModal() {
       this.isButtonClicked = false;
       this.setModalState(0);
@@ -326,6 +329,7 @@ export default {
       this.password = "";
       this.setModalState(intent);
     },
+
     validateFields(intent) {
       let res = true;
 
@@ -353,12 +357,14 @@ export default {
         } else {
           this.fnameErrorMessage = "";
         }
+
         if (!this.last_name) {
           this.lnameErrorMessage = "Last name is required";
           res = false;
         } else {
           this.lnameErrorMessage = "";
         }
+
         if (!this.password) {
           this.passwordErrorMessage = "Password is required";
           res = false;
@@ -373,12 +379,9 @@ export default {
           this.passwordErrorMessage = "";
         }
       }
-      // else if(intent == 3){
-
-      // }
-
       return res;
     },
+
     handleButton(intent) {
       if (intent == 1) {
         if (this.validateFields(1)) {

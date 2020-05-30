@@ -69,23 +69,20 @@ export default {
 @media only screen and (max-width: 900px) {
   * {
     display: block !important;
-    padding: auto !important;
+    padding: 4px !important;
     margin: auto !important;
-    width: auto !important;
+    // border: 1px solid red;
+    width: 100% !important;
   }
 
   h2,
-  p {
-    margin-left: -10px !important;
-  }
-
   .recent-post-sec {
     .post-heading {
       margin: 30px 5px 10px 30px !important;
-      width: 84% !important;
+      width: auto !important;
     }
     img {
-      width: 88% !important ;
+      width: 100% !important ;
     }
 
     .read-more {

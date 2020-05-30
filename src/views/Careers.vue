@@ -104,7 +104,7 @@ export default {
     }
   }
   .list-item {
-    border: 1px solid red !important;
+    margin: 10px !important;
   }
 }
 

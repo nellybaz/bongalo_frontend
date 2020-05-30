@@ -1,12 +1,20 @@
 <template>
   <div class="jumbotron">
     <header>
-      <img src="../assets/images/bongalo-logo-white.png" alt />
+      <div>
+        <img src="../assets/images/bongalo-logo-white.png" alt />
+      </div>
+
+      <div>
+        <img src="../assets/images/mobile-nav-shape.png" alt />
+      </div>
+
       <NavLink :isDark="false"></NavLink>
     </header>
 
     <h3 v-if="isMobile()">
-      Travelling Africa, Trip for Business or Pleasure ? Book your stay with us.
+      Trip for Business or Pleasure? <br />
+      Book your stay with us.
     </h3>
 
     <div class="book-card-div">
@@ -46,7 +54,13 @@ export default {
     padding: 0 0 20px 0 !important;
 
     header {
+      display: grid !important;
+      grid-template-columns: repeat(9, 1fr);
+      grid-gap: 80% !important;
       padding: 0 30px !important;
+      img {
+        margin: 10px 0 0 0 !important;
+      }
     }
     .book-card-div {
       width: 85% !important;

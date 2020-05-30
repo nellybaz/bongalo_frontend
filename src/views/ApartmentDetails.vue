@@ -14,8 +14,6 @@
 
       <div class="apartment-details-content">
         <div class="details-div">
-          <!-- <br /> -->
-
           <div class="tap-div">
             <ul>
               <li :class="{ border_bottom: borderItem == 1 }">
@@ -122,7 +120,10 @@
                   ${{ apartment.price || $route.query.price }}
                   <span>/ night</span>
                 </h4>
-                <button>Book</button>
+                <a href="/booking" class="action">
+                  Book
+                </a>
+                <!-- <button @click="handleOpeningHostPage">Book</button> -->
               </div>
 
               <div>
@@ -905,7 +906,6 @@ export default {
     }
 
     #amenities {
-      // border: 1px solid red !important;
       p {
         display: flex !important;
         color: gray !important;
@@ -922,12 +922,6 @@ export default {
   }
 }
 
-// .host-details-mobile,
-// .apartment-img,
-// .google-map-mobile,
-// .booking-section {
-//   display: none !important;
-// }
 .apd-loader-div,
 .loader-div {
   width: 100%;

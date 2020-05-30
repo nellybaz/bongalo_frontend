@@ -5,9 +5,12 @@
         <a href="/">
           <img src="../../assets/images/bongalo-logo.png" alt />
         </a>
-        <ul v-if="isBlog" class="blg">
-          Blog
-        </ul>
+        <div>
+          <img class="blog-logo" src="../../assets/images/v-mobile.png" alt />
+          <ul class="blg">
+            Blog
+          </ul>
+        </div>
       </div>
 
       <div
@@ -92,23 +95,50 @@ export default {
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
   * {
-    padding: 10px !important;
+    max-width: 100% !important;
   }
+
+  .tm-header {
+    display: grid !important;
+    grid-template-columns: repeat(9, 1fr);
+    padding: 0 25px !important;
+
+    .blog-logo {
+      margin: 0 0 40px 320px !important;
+      position: absolute;
+    }
+    @media only screen and (max-width: 375px) {
+      .blog-logo {
+        margin: 0 0 40px 270px !important;
+      }
+      @media only screen and (max-width: 320px) {
+        .blog-logo {
+          margin: 0 0 40px 230px !important;
+        }
+      }
+    }
+    .blg {
+      color: #6a6a6a;
+    }
+  }
+
   .search-div {
     height: 45px;
-    border: 1px solid #c4c4c4;
     box-sizing: border-box;
     border-radius: 5px;
-    width: 85% !important;
+    width: 88% !important;
     position: absolute;
-    margin: 5px 10px !important;
+    margin: 5px 10px 0 0 !important;
     top: 70px !important;
   }
 
   .search-input {
     color: gray !important;
+    width: 100% !important;
+    font-size: 10px !important;
   }
 }
+
 .logo-blg {
   display: flex;
   justify-content: flex-start;
@@ -168,7 +198,7 @@ li {
   margin-right: -20px;
   display: flex;
   align-items: center;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
+  // box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
   i {
     margin-right: 15px;
     color: #686868;

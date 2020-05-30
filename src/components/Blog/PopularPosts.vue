@@ -67,9 +67,9 @@ export default {
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
   * {
-    padding: auto !important;
+    padding: 4px !important;
     margin: auto !important;
-    width: auto !important;
+    width: 100% !important;
   }
   .post {
     margin-top: 120px !important;

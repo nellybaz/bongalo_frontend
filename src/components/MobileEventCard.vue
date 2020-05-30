@@ -54,7 +54,6 @@ export default {
   width: 100%;
 
   h3 {
-    font-style: normal;
     font-weight: bold;
     font-size: 25px;
     line-height: 30px;
@@ -66,7 +65,6 @@ export default {
 
   .inner-content {
     width: 100%;
-    // height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,11 +75,9 @@ export default {
       cursor: pointer;
       width: 250px !important;
       height: 400px;
-      // border:1px solid red;
       img {
         width: 250px;
         height: 70%;
-        // border:1px solid red;
         object-fit: contain;
       }
       .vertical-card-info-section {

@@ -40,6 +40,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  * {
+    padding: 8px !important;
+    margin: 0 !important;
+    width: auto !important;
+    border: transparent !important;
+  }
+  p {
+    text-align: justify;
+  }
+}
 .apply-page {
   width: 100%;
 
@@ -47,8 +58,6 @@ export default {
     margin: 0 150px;
     border-left: 1px solid rgb(228, 227, 227);
     border-right: 1px solid rgb(228, 227, 227);
-    // border:1px solid red;
-
     padding: 50px 50px;
 
     h1 {

@@ -10,13 +10,12 @@
       </div>
       <div class="images-content">
         <div class="content" :style="getContentStyle()">
-          <VerticalCard
-            class="vertical-card"
-            v-for="event in events"
-            :key="event.id"
-            :event="event"
-            :link="link"
-          ></VerticalCard>
+          <EventCard
+            v-if="!isMobile()"
+            :events="events"
+            link="/event-details"
+          ></EventCard>
+          <MobileEventCard v-else :events="events"></MobileEventCard>
         </div>
       </div>
 
@@ -29,7 +28,9 @@
 
 <script>
 import VerticalCard from "../components/VerticalCard";
-
+import MobileEventCard from "../components/MobileEventCard";
+import { mapGetters, mapActions } from "vuex";
+import EventCard from "../components/EventCard";
 export default {
   name: "event-card",
   props: {
@@ -48,15 +49,19 @@ export default {
     },
   },
   components: {
-    VerticalCard,
+    // VerticalCard,
+    EventCard,
+    // MobileEventCard,
   },
-  data: function() {
+  data: function () {
     return {
       left: 0,
       length: 5,
     };
   },
+
   methods: {
+    ...mapGetters(["isMobile", "getFeatured", "isLoggedIn"]),
     handleIcons(intent) {
       let width = window.innerWidth * 0.167;
       if (intent == 1) {
@@ -80,18 +85,19 @@ export default {
 
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
-  .event-card {
-    position: relative;
-    top: 25px !important;
-    width: 100% !important;
-    background: #fff;
-    height: auto !important;
-    border-radius: 0 !important;
+  * {
     padding: 0 !important;
-    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  .icon-div {
+    display: none !important;
+  }
+  .event-card {
+    top: 25px !important;
 
     .inner-content {
       .images-content {
+        height: auto !important;
         grid-template-columns: repeat(1, 1fr) !important;
       }
     }
