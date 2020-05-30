@@ -122,7 +122,7 @@
             type="email"
             :isFullWidth="true"
           />
-          <small v-if="emailErrorMessage">
+          <small v-if="registerEmailErrorMessage">
             {{ registerEmailErrorMessage }}
           </small>
           <br />
@@ -135,7 +135,7 @@
             type="password"
             :isFullWidth="true"
           />
-          <small v-if="passwordErrorMessage">
+          <small v-if="registerPasswordErrorMessage">
             {{ registerPasswordErrorMessage }}
           </small>
           <br />
@@ -448,7 +448,7 @@ export default {
     validateFields(intent) {
       let res = true;
 
-      if (!this.email) {
+      if (this.email.length < 1) {
         if (intent == 1) {
           this.registerEmailErrorMessage = "Email is required";
         } else {
@@ -479,26 +479,26 @@ export default {
       }
 
       if (intent == 1) {
-        if (!this.first_name) {
+        if (this.first_name.length < 1) {
           this.fnameErrorMessage = "First name is required";
           res = false;
         } else {
           this.fnameErrorMessage = "";
         }
-        if (!this.last_name) {
+        if (this.last_name.length < 1) {
           this.lnameErrorMessage = "Last name is required";
           res = false;
         } else {
           this.lnameErrorMessage = "";
         }
-        if (!this.password) {
+        if (this.password.length < 1) {
           this.registerPasswordErrorMessage = "Password is required";
           res = false;
         } else {
           this.registerPasswordErrorMessage = "";
         }
       } else if (intent == 2) {
-        if (!this.password) {
+        if (this.password.length < 1) {
           this.passwordErrorMessage = "Password is required";
           res = false;
         } else {
