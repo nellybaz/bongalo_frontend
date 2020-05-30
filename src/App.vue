@@ -185,7 +185,7 @@
     </modal>
     <modal
       name="forgot-password"
-      height="650"
+      height="450"
       width="30%"
       @before-close="beforeClose"
       :clickToClose="false"
@@ -198,9 +198,10 @@
           ></i>
         </div>
         <div class="forgot-password">
-          <h3>Reset Password</h3>
+         <div v-if="successMessage.length < 1">
+            <h3>Reset Password</h3>
 
-          <p v-if="successMessage.length < 1" @inputHandler="handleInput">
+          <p>
             Enter the email address associated with your account, and we’ll
             email you a link to reset your password.
           </p>
@@ -212,7 +213,6 @@
           <br />
 
           <Input
-            v-if="successMessage.length < 1"
             @inputHandler="handleInput"
             hint="Email address"
             icon="fas fa-envelope"
@@ -223,7 +223,7 @@
           <br />
 
           <Button
-            v-if="!isButtonClicked && successMessage.length < 1"
+            v-if="!isButtonClicked"
             v-on:handleClick="handleButton(3)"
             label="Send reset link"
             :isFullWidth="true"
@@ -231,7 +231,7 @@
 
           <div
             class="loader-div"
-            v-else-if="isButtonClicked && successMessage.length < 1"
+            v-else-if="isButtonClicked"
           >
             <pulse-loader
               class="loader"
@@ -242,7 +242,7 @@
 
           <hr />
 
-          <p v-if="successMessage.length < 1">
+          <p >
             Or cancel and head back to
             <span
               v-on:click="
@@ -254,6 +254,48 @@
               >Login</span
             >
           </p>
+         </div>
+         <div v-else class="success-container">
+            <h3>We've sent you an email</h3>
+            <br>
+            <br>
+
+            <img
+          style="width:auto; margin:2rem"
+          src="./assets/images/s-icon.png"
+          alt="bongalo-careers"
+        />
+        <br>
+            <p class="reset-success-text">Please check</p>
+            <strong>{{"nellybaz10@gmail.com"}}</strong>
+            <p class="reset-success-text"> to reset your password using the link we just sent</p>
+
+            <!-- <br> -->
+            <!-- <p v-if="!isButtonClicked">Didn't get the email? <span @click="handleButton(3)">Resend</span></p>
+
+          <div
+            class="loader-div"
+            v-else-if="isButtonClicked"
+          >
+            <pulse-loader
+              class="loader"
+              color="#3A85FC"
+              size="10px"
+            ></pulse-loader>
+          </div> -->
+            <hr>
+
+
+
+            <br>
+            <p>Go back to  <span @click="()=>{
+              $modal.hide('forgot-password');
+              $modal.show('login');
+              }">Login</span></p>
+            <hr>
+
+
+         </div>
         </div>
       </div>
     </modal>
@@ -791,6 +833,26 @@ small {
   .signup-div,
   .forgot-password {
     width: 100%;
+
+    .success-container{
+      padding: 0 !important;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction: column;
+
+      img, p, strong{
+        margin: 0 !important;
+      }
+
+      .reset-success-text{
+
+        span{
+          font-weight: bold;
+        }
+}
+
+    }
 
     strong {
       margin: 20px 0;
