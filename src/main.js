@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import firebase from 'firebase';
 import VModal from 'vue-js-modal'
+import VueClipboard from 'vue-clipboard2'
 // import DisableAutocomplete from 'vue-disable-autocomplete';
 
 
@@ -19,6 +20,7 @@ Vue.config.productionTip = false
 
 Vue.use(Notifications)
 Vue.use(VModal)
+Vue.use(VueClipboard)
 // Vue.use(DisableAutocomplete);
 
 
