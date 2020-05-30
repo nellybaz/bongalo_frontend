@@ -205,6 +205,8 @@
         <br />
         <small class="terms-small">{{ emailErrorMessage }}</small>
         <small class="success-mes">{{ successMessage }}</small>
+        <br>
+        <br>
 
         <Input
           v-if="successMessage.length < 1"
@@ -569,8 +571,8 @@ export default {
             .catch((err) => {
               window.console.log(err);
               this.isButtonClicked = false;
-              this.emailErrorMessage = err.data.email;
-              this.signInError = err.data.email;
+              this.emailErrorMessage = err.data.message;
+              this.signInError = err.data.message;
             });
         }
       }
