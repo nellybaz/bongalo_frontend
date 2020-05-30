@@ -267,7 +267,7 @@
         />
         <br>
             <p class="reset-success-text">Please check</p>
-            <strong>{{"nellybaz10@gmail.com"}}</strong>
+            <strong>{{email}}</strong>
             <p class="reset-success-text"> to reset your password using the link we just sent</p>
 
             <!-- <br> -->
