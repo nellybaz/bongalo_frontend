@@ -3,7 +3,7 @@
     <Navigation :showSearch="false" />
     <div class="content">
       <div class="left">
-        <div class="d2 d" @click="handleWhatShows(1)">
+        <div class="d2 d" :style="highlightThis(1)" @click="handleWhatShows(1)">
           <a href="#">
             <div>
               <img
@@ -12,11 +12,11 @@
                 alt="bongalo-careers"
               />
             </div>
-            <p class="p-item">Profile</p>
+            <p class="p-item" :style="highlightThisText(1)">Profile</p>
           </a>
         </div>
 
-        <div class="d3 d" @click="handleWhatShows(2)">
+        <div class="d3 d" :style="highlightThis(2)" @click="handleWhatShows(2)">
           <a href="#">
             <div>
               <img
@@ -25,11 +25,11 @@
                 alt="bongalo-careers"
               />
             </div>
-            <p class="p-item">Listings</p>
+            <p class="p-item" :style="highlightThisText(2)">Listings</p>
           </a>
         </div>
 
-        <div class="d2 d" @click="handleWhatShows(3)">
+        <div class="d2 d" :style="highlightThis(3)" @click="handleWhatShows(3)">
           <a href="#">
             <div>
               <img
@@ -38,11 +38,11 @@
                 alt="bongalo-careers"
               />
             </div>
-            <p class="p-item">Verifications</p>
+            <p class="p-item" :style="highlightThisText(3)">Verifications</p>
           </a>
         </div>
 
-        <div class="d3 d" @click="handleWhatShows(4)">
+        <div class="d3 d" :style="highlightThis(4)" @click="handleWhatShows(4)">
           <a href="#favourite-section">
             <div>
               <img
@@ -51,11 +51,11 @@
                 alt="bongalo-careers"
               />
             </div>
-            <p class="p-item">Security</p>
+            <p class="p-item" :style="highlightThisText(4)">Security</p>
           </a>
         </div>
 
-        <div class="d3 d" @click="handleWhatShows(5)">
+        <div class="d3 d" :style="highlightThis(5)" @click="handleWhatShows(5)">
           <a href="#">
             <div>
               <img
@@ -64,11 +64,11 @@
                 alt="bongalo-careers"
               />
             </div>
-            <p class="p-item">Payout Methods</p>
+            <p class="p-item" :style="highlightThisText(5)">Payout Methods</p>
           </a>
         </div>
 
-        <div class="d3 d" @click="handleWhatShows(6)">
+        <div class="d3 d" :style="highlightThis(6)" @click="handleWhatShows(6)">
           <a href="#">
             <div>
               <img
@@ -77,7 +77,7 @@
                 alt="bongalo-careers"
               />
             </div>
-            <p class="p-item">Reviews</p>
+            <p class="p-item" :style="highlightThisText(6)">Reviews</p>
           </a>
         </div>
       </div>
@@ -641,6 +641,15 @@ export default {
     };
   },
   methods: {
+    highlightThis(id){
+      const style = "background-color:#3a85fc;";
+      return id == this.showId ? style : ""
+    },
+
+    highlightThisText(id){
+      return this.showId == id ? 'color:white !important;' : ''
+    },
+
     changePassword() {
       if (
         this.newPassword.length < 1 ||
