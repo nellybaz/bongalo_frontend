@@ -22,6 +22,7 @@ const actions = {
           token: data.token,
           url: "apartment/get?uuid=" + data.apartment,
         });
+        window.console.log(res)
         commit("setCurrentApartment", res.data);
         resolve(1);
       } catch (error) {
@@ -84,9 +85,15 @@ const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         let res = await postReq("book_apartment", data);
-        resolve(res);
+        if(res.responseCode == 1){
+          resolve(res)
+        }
+        else{
+          resolve(0);
+        }
+        
       } catch (error) {
-        reject(0);
+        reject(error);
       }
     });
   },

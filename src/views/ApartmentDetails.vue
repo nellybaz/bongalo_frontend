@@ -254,12 +254,13 @@
                       :min-date="new Date()"
                     >
                       <div>
-                        {{
+                        <!-- {{
                           getDateFormat(
                             checkin.toString(),
                             $route.query.checkin ? 3 : 1
                           )
-                        }}
+                        }} -->
+                        {{ checkin.toString().substring(0, 16) }}
                       </div>
                     </vc-date-picker>
                     <vc-date-picker
@@ -269,12 +270,14 @@
                       :disabled-dates="{ start: null, end: Date.now() }"
                     >
                       <div>
-                        {{
+                        <!-- {{
                           getDateFormat(
                             checkout.toString(),
                             $route.query.checkin ? 4 : 2
                           )
-                        }}
+                        }} -->
+
+                        {{ checkout.toString().substring(0, 16) }}
                       </div>
                     </vc-date-picker>
                   </div>
@@ -297,7 +300,7 @@
                   </div>
                   <!-- <br> -->
 
-                  <div v-if="checkout != 'Checkout'" class="price-info">
+                  <div v-if="bookedNights > 0" class="price-info">
                     <div class="per-night">
                       <p>
                         ${{ apartment.price || $route.query.price }} x
@@ -328,14 +331,7 @@
 
                     <div class="total">
                       <p>Total</p>
-                      <p class="p">
-                        ${{
-                          getTotal() +
-                            (apartment.price || $route.query.price) *
-                              bookedNights *
-                              0.05
-                        }}
-                      </p>
+                      <p class="p">${{ getTotal() }}</p>
                     </div>
                   </div>
 
@@ -413,10 +409,19 @@ export default {
 
   methods: {
     getUserUrl() {
-      this.$router.push({
-        path: "user/",
-        query: { ...this.getCurrentApartment.owner_details },
-      });
+      if (!this.$store.getters.isLoggedIn) {
+        this.$notify({
+          group: "general",
+          title: "Info !!",
+          text: "You must be logged in to view host profile",
+          type: "error",
+        });
+      } else {
+        this.$router.push({
+          path: "profile/",
+          query: { user: this.getCurrentApartment.owner_details["uuid"] },
+        });
+      }
     },
     handleGuest(intent) {
       if (intent == 0 && this.guestNumber > 1) {
@@ -449,7 +454,10 @@ export default {
     getTotal() {
       return (
         (this.apartment.price || this.$route.query.price) * this.bookedNights +
-        this.serviceFee
+        this.serviceFee +
+        (this.apartment.price || this.$route.query.price) *
+          this.bookedNights *
+          0.05
       );
     },
 
@@ -469,20 +477,6 @@ export default {
     },
 
     reserveButtonHandler() {
-      let checkoutReverse = this.reverseString(
-        this.getDateFormat(
-          this.checkout.toString(),
-          this.$route.query.checkin ? 4 : 2
-        )
-      );
-
-      let checkinReverse = this.reverseString(
-        this.getDateFormat(
-          this.checkin.toString(),
-          this.$route.query.checkin ? 3 : 1
-        )
-      );
-
       if (this.getTotal() > 0) {
         this.reserveButtonClicked = true;
         this.dateErrorMessage = "";
@@ -490,18 +484,16 @@ export default {
           window.console.log(this.$route.query);
           let data = {
             token: this.$store.getters.getToken,
-            apartment_id: this.$route.query["uuid"],
-            // date_from: this.$route.query['checkin'] ||  checkinReverse,
-            // date_to: this.$route.query['checkout'] || checkoutReverse,
-            // check_in:this.$route.query['check_in'],
-            // check_out: this.$route.query['check_out'],
-            date_from: "2020-02-12",
-            date_to: "2020-02-14",
-            check_in: "03:45:00",
-            check_out: "19:00:00",
+            apartment: this.$route.query["uuid"],
+            date_from: this.checkin.toISOString().substring(0, 10),
+            date_to: this.checkout.toISOString().substring(0, 10),
             number_of_rooms: 1,
             number_of_guest: this.guestNumber,
             client: this.getUuid,
+            amount: this.getTotal(),
+            back_url: window.location.origin.toString(),
+            // +window.location.pathname+`?apartment=${this.$route.query.apartment}&uuid=${this.$route.query.uuid}`,
+            redirect_url: window.location.origin.toString() + "/payment",
           };
 
           window.console.log(data);
@@ -509,22 +501,32 @@ export default {
             .dispatch("bookApartment", data)
             .then((res) => {
               window.console.log(res);
-              try {
+              if (res.responseCode && res.responseCode == 1) {
                 window.location.href = res["redirect_url"];
-              } catch (error) {
-                // alert('')
-                this.reserveButtonClicked = false;
+              } else {
+                this.$notify({
+                  group: "general",
+                  title: "Info !!",
+                  text: "Booking failed",
+                  type: "error",
+                });
               }
             })
             .catch((err) => {
               this.reserveButtonClicked = false;
+              this.$notify({
+                group: "general",
+                title: "Info !!",
+                text: err.data.message,
+                type: "error",
+              });
             });
         } else {
           this.$store.dispatch("setModalState", 1);
         }
-      } else if (this.checkin == "Checkin") {
+      } else if (this.checkin.toString().includes("dd/mm")) {
         this.dateErrorMessage = "Checkin required";
-      } else if (this.checkout == "Checkout") {
+      } else if (this.checkout.toString().includes("dd/mm")) {
         this.dateErrorMessage = "Checkout required";
       }
     },
@@ -550,57 +552,6 @@ export default {
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
-    getDateFormat(date, intent) {
-      if (date == "Checkin" || date == "Checkout") {
-        return date;
-      }
-
-      if (this.$route.query.checkin) {
-        if (date.includes("GMT")) {
-          let splitted = date.split(" ");
-
-          let new_date =
-            splitted[2] + "/" + this.monthMap[splitted[1]] + "/" + splitted[3];
-          if (intent == 4) {
-            let seconds = Math.abs(this.checkin - this.checkout) / 1000;
-            let days = seconds / 86400;
-            this.bookedNights = days;
-          }
-
-          return new_date;
-        } else {
-          try {
-            let new_checkin_d = new Date(
-              this.checkin.split("/")[2],
-              this.checkin.split("/")[1] - 1,
-              this.checkin.split("/")[0]
-            );
-            let new_checkout_d = new Date(
-              this.checkout.split("/")[2],
-              this.checkout.split("/")[1] - 1,
-              this.checkout.split("/")[0]
-            );
-            let seconds = Math.abs(new_checkin_d - new_checkout_d) / 1000;
-            let days = seconds / 86400;
-            this.bookedNights = days;
-          } catch (error) {
-            //pass
-          }
-        }
-        return intent == 3 ? this.checkin : intent == 4 ? this.checkout : "";
-      }
-      let splitted = date.split(" ");
-
-      let new_date =
-        splitted[2] + "/" + this.monthMap[splitted[1]] + "/" + splitted[3];
-
-      if (intent == 2) {
-        let seconds = Math.abs(this.checkin - this.checkout) / 1000;
-        let days = seconds / 86400;
-        this.bookedNights = days;
-      }
-      return new_date;
-    },
     updateImageShowHandler(intent) {
       if (intent == 1) {
         this.isImageShow = true;
@@ -611,12 +562,16 @@ export default {
   },
   watch: {
     checkout: function(newValue, oldValue) {
-      if (newValue != "Checkout") {
+      if (!newValue.toString().includes("dd/mm")) {
         this.dateErrorMessage = "";
+
+        let seconds = Math.abs(this.checkin - this.checkout) / 1000;
+        let days = seconds / 86400;
+        this.bookedNights = days;
       }
     },
     checkin: function(newValue, oldValue) {
-      if (newValue != "Checkin") {
+      if (!newValue.toString().includes("dd/mm")) {
         this.dateErrorMessage = "";
       }
     },
@@ -660,8 +615,8 @@ export default {
         Dec: 12,
       },
       guestNumber: 1,
-      checkin: "Checkin",
-      checkout: "Checkout",
+      checkin: "dd/mm/yyyy",
+      checkout: "dd/mm/yyyy",
       reviews: [
         {
           id: 1,
@@ -701,7 +656,6 @@ export default {
   ]),
   created() {
     window.addEventListener("scroll", this.handleScroll);
-
     this.$store
       .dispatch("getApartmentDetails", {
         token: this.$store.getters.getToken,
@@ -713,6 +667,8 @@ export default {
         // for (let k in currentProp){
         //   this.userUrl += k+"="+currentProp[k] + "&"
         // }
+
+        // this.amenities = this.getCurrentApartment.amenities
       })
       .catch((err) => {
         this.apartmentIsAvailable = -1;
@@ -738,12 +694,13 @@ export default {
 
     this.checkin =
       this.$route.query.checkin != null
-        ? this.$route.query.checkin
+        ? new Date(this.$route.query.checkin)
         : this.checkin;
     this.checkout =
       this.$route.query.checkout != null
-        ? this.$route.query.checkout
+        ? new Date(this.$route.query.checkout)
         : this.checkout;
+
     this.guestNumber =
       this.$route.query.guest != null
         ? parseInt(this.$route.query.guest)
@@ -760,26 +717,21 @@ export default {
       : [];
 
     // this.extras[0] = "," + this.extras[0];
-    this.amenities = this.amenities.concat(this.extras)
+    this.amenities = this.amenities.concat(this.extras);
     window.console.log(this.amenities);
     this.rules = this.apartment.rules
       ? this.apartment.rules.split(",")
       : this.$route.query.rules.split(",");
 
     try {
-      let new_checkin_d = new Date(
-        this.checkin.split("/")[2],
-        this.checkin.split("/")[1] - 1,
-        this.checkin.split("/")[0]
-      );
-      let new_checkout_d = new Date(
-        this.checkout.split("/")[2],
-        this.checkout.split("/")[1] - 1,
-        this.checkout.split("/")[0]
-      );
-      let seconds = Math.abs(new_checkin_d - new_checkout_d) / 1000;
-      let days = seconds / 86400;
-      this.bookedNights = days;
+      if (
+        !this.checkin.toString().includes("dd/mm") &&
+        !this.checkout.toString().includes("dd/mm")
+      ) {
+        let seconds = Math.abs(this.checkin - this.checkout) / 1000;
+        let days = seconds / 86400;
+        this.bookedNights = days;
+      }
     } catch (error) {
       //pass
     }

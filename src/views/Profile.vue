@@ -16,7 +16,7 @@
           </a>
         </div>
 
-        <div class="d3 d" :style="highlightThis(2)" @click="handleWhatShows(2)">
+        <div v-if="isMyProfile()" class="d3 d" :style="highlightThis(2)" @click="handleWhatShows(2)">
           <a href="#">
             <div>
               <img
@@ -29,7 +29,7 @@
           </a>
         </div>
 
-        <div class="d2 d" :style="highlightThis(3)" @click="handleWhatShows(3)">
+        <div v-if="isMyProfile()" class="d2 d" :style="highlightThis(3)" @click="handleWhatShows(3)">
           <a href="#">
             <div>
               <img
@@ -42,7 +42,7 @@
           </a>
         </div>
 
-        <div class="d3 d" :style="highlightThis(4)" @click="handleWhatShows(4)">
+        <div v-if="isMyProfile()" class="d3 d" :style="highlightThis(4)" @click="handleWhatShows(4)">
           <a href="#favourite-section">
             <div>
               <img
@@ -55,7 +55,7 @@
           </a>
         </div>
 
-        <div class="d3 d" :style="highlightThis(5)" @click="handleWhatShows(5)">
+        <div v-if="isMyProfile()" class="d3 d" :style="highlightThis(5)" @click="handleWhatShows(5)">
           <a href="#">
             <div>
               <img
@@ -100,7 +100,7 @@
 
             <button
               class="p-primary-edit-profile"
-              v-if="!editProfileBtnClicked"
+              v-if="!editProfileBtnClicked && isMyProfile()"
               @click="editProfileBtnClicked = true"
             >
               Edit Profile
@@ -183,13 +183,18 @@
               {{ userDescription }}
             </p>
             <hr />
-            <p class="p-lives">
-              <i class="fas fa-home"></i>
-              Lives in {{ userCity }} {{ userCountry }}
-            </p>
-            <p class="p-work">
+             <p class="p-work">
               <i class="fas fa-briefcase"></i>
-              Works as {{ "Software Engineer" }}
+              Joined on {{userDateJoined}}
+            </p>
+
+            <p v-if="userCity && userCountry" class="p-lives">
+              <i class="fas fa-home"></i>
+              Lives in {{ userCity }}, {{ userCountry }}
+            </p>
+             <p v-if="userJob" class="p-work">
+              <i class="fas fa-briefcase"></i>
+              Works as {{userJob}}
             </p>
           </div>
         </div>
@@ -629,6 +634,8 @@ export default {
       userCity: "",
       userCountry: "",
       verificationFile: "",
+      userDateJoined:"",
+      userJob:"",
       listing: {
         paymentNumber: "",
         title: "",
@@ -641,13 +648,13 @@ export default {
     };
   },
   methods: {
-    highlightThis(id){
-      const style = "background-color:#3a85fc;";
-      return id == this.showId ? style : ""
+    highlightThis(id) {
+      const style = "background-color:rgba(58, 133, 252, 0.1);";
+      return id == this.showId ? style : "";
     },
 
-    highlightThisText(id){
-      return this.showId == id ? 'color:white !important;' : ''
+    highlightThisText(id) {
+      return this.showId == id ? "color:#3a85fc !important;" : "";
     },
 
     changePassword() {
@@ -732,10 +739,16 @@ export default {
           });
         });
     },
+    isMyProfile(){
+      const queryID = this.$route.query.user
+      return (queryID && queryID == this.getUuid()) || !queryID
+    },
     getAndUpdateUserData() {
+      window.console.log(this.$route.query.user )
+      const uUid = this.$route.query.user ? this.$route.query.user : this.getUuid()
       this.$store
         .dispatch("getUserInfo", {
-          uuid: this.getUuid(),
+          uuid: uUid,
           token: this.getToken(),
         })
         .then((res) => {
@@ -753,6 +766,7 @@ export default {
             this.swiftCode = this.getUserInfo().swift_code;
             this.momoNumber = this.getUserInfo().momo_number;
             this.momoName = this.getUserInfo().momo_name;
+            this.userDateJoined = this.getUserInfo().joined.substring(0,10);
           }
         });
     },
@@ -866,7 +880,7 @@ export default {
     updateListing(listing) {
       const listingData = {
         isUpdate: true,
-        apartmentId:listing['uuid'],
+        apartmentId: listing["uuid"],
         listing_type: listing["type"],
         what_guest_will_have: listing["space"],
         number_of_guest: listing["max_guest_number"],
