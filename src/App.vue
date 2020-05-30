@@ -384,6 +384,12 @@ export default {
       this.lnameErrorMessage = "";
       this.passwordErrorMessage = "";
       this.signInError = "";
+      this.email = ""
+      this.password = ""
+      this.first_name = ""
+      this.last_name = ""
+      this.termsCheckBox = false
+      this.pinModel = ""
     },
     resendPin() {
       this.isButtonResendVerifyPinClicked = true;
