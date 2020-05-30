@@ -29,12 +29,9 @@ export default {
   },
   methods: {
     getClass() {
-      var inputRef = this.$refs.inputRef;
-      if (inputRef) {
-        // inputRef.value = "ko"
-        window.console.log(inputRef.value);
-      }
-
+      //   var inputRef = this.$refs.inputRef
+      // if(inputRef){
+      // }
       return this.showOutline ? "border: 1px solid #3A85FC !important;" : "";
     },
   },
@@ -65,15 +62,19 @@ export default {
       required: true,
     },
   },
+  updated() {
+    // const store = this.$store.getters.getListingState;
+    // let dataInStore = store[this.step];
+    // if (dataInStore && dataInStore.toString().length > 0) {
+    //   this.model = dataInStore.toString();
+    // }
+  },
   created() {
-    let dataInStore = this.$store.getters.getListingState[this.step];
-    if (dataInStore) {
-      if (dataInStore.length > 1) {
-        this.model = dataInStore;
-      }
-    } else {
-      // For removing prefills for other uses other than listing
-      //  this.model = ""
+    const store = this.$store.getters.getListingState;
+    let dataInStore = store[this.step];
+    window.console.log(`input created called for ${this.step}`)
+    if (dataInStore && dataInStore.toString().length > 0) {
+      this.model = dataInStore.toString();
     }
   },
 };

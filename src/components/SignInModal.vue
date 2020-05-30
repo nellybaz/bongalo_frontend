@@ -111,6 +111,8 @@
       </div>
 
       <div v-else-if="getModalState == 2" class="signup-div">
+        <!-- <input type="email" class="hiddens">
+        <input type="password" class="hiddens"> -->
         <Input
           @inputHandler="handleInput"
           icon="fas fa-user"
@@ -299,7 +301,8 @@ export default {
         .dispatch("socialSignin", { provider: provider })
         .then((res) => {
           if (res == 1) {
-            this.setModalState(0);
+            this.$modal.hide("register")
+            this.$modal.hide("login")
           }
         });
     },
@@ -407,8 +410,9 @@ export default {
               })
               .catch((err) => {
                 this.isButtonClicked = false;
+                this.termsCheckBoxError = err.data.message;
                 for (var key in err.data.data) {
-                  this.termsCheckBoxError = err.data.data[key][0];
+                  this.termsCheckBoxError = err.data.data[key][0] + "\n";
                 }
               });
           }
@@ -516,17 +520,17 @@ export default {
     };
   },
   computed: mapGetters(["getModalState"]),
+  created(){
+    window.console.log("created called")
+
+  },
+  updated(){
+    window.console.log("updated called")
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@media only screen and (max-width: 900px) {
-  * {
-    padding: 10px !important;
-    width: 100% !important;
-  }
-}
-
 .success-mes {
   color: green;
   font-size: 14px !important;

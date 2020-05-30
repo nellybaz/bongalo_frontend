@@ -31,14 +31,19 @@ export default {
   },
   data: function() {
     return {
-      model: ""
+      model: []
     };
   },
+  updated(){
+    // window.console.log(this.model)
+    // window.console.log(this.$store.getters.getListingState[this.step])
+  },
   created(){
-    let dataInStore = this.$store.getters.getListingState[this.step];
-         if(dataInStore || dataInStore.length > 1 ){
-             this.model = dataInStore;
-         }
+    const store = this.$store.getters.getListingState;
+    let dataInStore = store[this.step];
+    if (dataInStore && dataInStore.length > 0) {
+       this.model = dataInStore;
+    }
   }
 };
 </script>

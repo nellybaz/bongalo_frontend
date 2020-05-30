@@ -84,7 +84,7 @@
 
       <div class="right">
         <div v-if="showId == 1">
-          <h2 id="dashboard">Hi, I am Kanneh</h2>
+          <h2 id="dashboard">Hi, I am {{ firstName }}</h2>
           <div class="top">
             <div :style="getProfileImage()" class="icon-div">
               <input
@@ -111,15 +111,15 @@
             <h3>Tell us the basics</h3>
             <div class="mid">
               <StyledInput
-                @sendInput="handleFName"
-                :value="getUserInfo() != null ? getUserInfo().first_name : ''"
+                @sendInput="(v) => (firstName = v)"
+                :value="firstName"
                 type="text"
                 placeholder="First name"
                 label="FULL NAME"
               />
               <StyledInput
-                @sendInput="handleLName"
-                :value="getUserInfo().last_name"
+                @sendInput="(v) => (lastName = v)"
+                :value="lastName"
                 type="text"
                 placeholder="Last name"
                 label="LAST NAME"
@@ -129,28 +129,27 @@
             <br />
             <div class="bottom">
               <StyledInput
-                @sendInput="handleDesc"
-                :value="getUserInfo().description"
+                @sendInput="(v) => (userDescription = v)"
+                :value="userDescription"
                 :isTextArea="true"
                 type="text"
                 placeholder
                 label="DESCRIPTION"
               />
             </div>
-            <!-- <br /> -->
 
             <h3>Where are you located?</h3>
             <div class="mid">
               <StyledInput
-                @sendInput="handleFName"
-                :value="getUserInfo() != null ? getUserInfo().first_name : ''"
+                @sendInput="(v) => (userCity = v)"
+                :value="userCity"
                 type="text"
                 placeholder="City"
                 label="CITY, STATE"
               />
               <StyledInput
-                @sendInput="handleLName"
-                :value="getUserInfo().last_name"
+                @sendInput="(v) => (userCountry = v)"
+                :value="userCountry"
                 type="text"
                 placeholder="Country"
                 label="NATIONALITY"
@@ -160,10 +159,10 @@
             <h3>How can we contact you?</h3>
             <div class="mid">
               <StyledInput
-                @sendInput="handleLName"
-                :value="getUserInfo().last_name"
+                @sendInput="(v) => (phoneNumber = v)"
+                :value="phoneNumber"
                 type="text"
-                placeholder="Last name"
+                placeholder="Enter phone"
                 label="PHONE NUMBER"
               />
             </div>
@@ -180,17 +179,17 @@
           </div>
 
           <div v-else class="profile-show">
-            <p class=".p-desc">
-              {{ getUserInfo().description }}
+            <p class="p-desc">
+              {{ userDescription }}
             </p>
             <hr />
             <p class="p-lives">
               <i class="fas fa-home"></i>
-              Lives in {{ "Kgali, Rwanda" }}
+              Lives in {{ userCity }} {{ userCountry }}
             </p>
             <p class="p-work">
               <i class="fas fa-briefcase"></i>
-              Lives in {{ "Software Engineer" }}
+              Works as {{ "Software Engineer" }}
             </p>
           </div>
         </div>
@@ -200,9 +199,6 @@
           <br />
 
           <div v-if="getUserListing().length > 0" class="listing-card-holder">
-            <h3 class="special-hts">Here are your listings</h3>
-            <br />
-
             <div
               v-for="listing in getUserListing()"
               :key="listing.title"
@@ -216,7 +212,7 @@
                 </h3>
                 <br />
                 <section class="action-section">
-                  <button @click="addImages('uuid')" class="btn-update">
+                  <button @click="updateListing(listing)" class="btn-update">
                     Update
                   </button>
                   <button
@@ -247,77 +243,139 @@
         <div v-else-if="showId == 3" class="verifications">
           <div class="veri-sec-1">
             <h2>Verifications</h2>
-            <p class="upload">UPLOAD VERFICATION</p>
-          </div>
 
-          <div class="veri-sec-1">
-            <P class="veri-sec-1-mobile"
-              >You currently don’t have any verifications</P
+            <!-- <p
+              v-if="verificationStatus == '' || verificationStatus == 'U'"
+              class="upload"
             >
-            <div class="veri-sec-3">
-              <label class="choose-file" for="upload-photo">Choose file</label>
-              <input type="file" name="photo" id="upload-photo" />
-              <span>No file selected.</span>
-            </div>
+              UPLOAD VERFICATION
+            </p> -->
           </div>
 
-          <br />
-          <br />
-          <br />
-          <Button
-            @handleClick="window.alert('Verifying your account')"
-            :isFullWidth="false"
-            width="20%"
-            label="Verify"
-          />
+          <div v-if="verificationStatus == '' || verificationStatus == 'U'">
+            <br />
+            <br />
 
-          <Verification
-            title="Verifications"
-            text1="Your file has been recieved, sit back while we verify it. This
-              process may take between 3 - 5 days, and we will "
-            text2="Thank you"
-            strongText="send you an email once confirmed."
-            width="80%"
-          />
+            <div class="veri-sec-1">
+              <div class="">
+                <p>Choose Verification Type</p>
+                <br />
+                <Select
+                  v-on:selectChangeHandler="
+                    (v) => (verificationTypeValue = v.data)
+                  "
+                  step="verification_type"
+                  :options="verificationType"
+                  width="300px"
+                  :model="''"
+                ></Select>
+              </div>
+              <div class="veri-sec-3">
+                <br />
+                <br />
+
+                <label for="upload-photo">Choose file</label>
+                <input
+                  @change="(e) => (verificationFile = e.target.files[0])"
+                  type="file"
+                  name="photo"
+                  id="upload-photo"
+                />
+                <span>No file selected.</span>
+              </div>
+            </div>
+
+            <br />
+            <br />
+            <br />
+            <Button
+              v-if="!verificationButtonClicked"
+              @handleClick="handleVerification"
+              :isFullWidth="false"
+              width="20%"
+              label="Verify"
+            />
+
+            <p v-else>
+              Uploading verification, please wait ...
+            </p>
+          </div>
+
+          <div v-else-if="verificationStatus == 'P'">
+            <Verification
+              title="Verification"
+              text1="Your file has been recieved, sit back while we verify it. This
+                  process may take between 3 - 5 days, and we will "
+              text2="Thank you"
+              strongText="send you an email once confirmed."
+              width="80%"
+            />
+          </div>
+          <div v-else>
+            <Verification
+              title="Verification"
+              text1=""
+              text2="Thank you"
+              strongText="Verified Bongalo User"
+              width="80%"
+            />
+          </div>
         </div>
 
         <div v-else-if="showId == 4" class="Security">
           <h2>Security</h2>
           <br />
-          <h3>Change your password</h3>
+          <div v-if="!changePasswordIsSuccessful">
+            <h3>Change your password</h3>
 
-          <div class="mid">
-            <StyledInput
-              @sendInput="handleFName"
-              :value="getUserInfo() != null ? getUserInfo().first_name : ''"
-              type="text"
-              placeholder=""
-              label="OLD PASSWORD"
-            />
+            <div class="mid">
+              <StyledInput
+                @sendInput="(v) => (oldPassword = v)"
+                :value="''"
+                type="password"
+                placeholder="Enter old password"
+                label="OLD PASSWORD"
+              />
 
-            <br />
-            <StyledInput
-              @sendInput="handleLName"
-              :value="getUserInfo().last_name"
-              type="text"
-              placeholder=""
-              label="NEW PASSWORD"
-            />
-            <br />
+              <br />
+              <StyledInput
+                @sendInput="(v) => (newPassword = v)"
+                :value="''"
+                type="password"
+                placeholder="Enter new password"
+                label="NEW PASSWORD"
+              />
+              <br />
 
-            <StyledInput
-              @sendInput="handleLName"
-              :value="getUserInfo().last_name"
-              type="text"
-              placeholder=""
-              label="CONFIRM PASSWORD"
-            />
+              <StyledInput
+                @sendInput="(v) => (newPasswordConfirm = v)"
+                :value="''"
+                type="password"
+                placeholder="Confirm new password"
+                label="CONFIRM PASSWORD"
+              />
 
-            <Button
-              @handleClick="updateUser"
-              :isFullWidth="false"
-              style="margin-top: 20px; height: 45px;"
-              label="Update Password"
+              <Button
+                v-if="!changePasswordButtonClicked"
+                @handleClick="changePassword"
+                :isFullWidth="false"
+                style="margin-top:20px; height:45px"
+                label="Update Password"
+              />
+
+              <p v-else>
+                <br />
+                Changing your password, please wait...
+              </p>
+            </div>
+          </div>
+          <div v-else>
+            <Verification
+              title="Successful"
+              text1="Your password has been changed successfully"
+              text2="Thank you"
+              strongText=""
+              width="80%"
             />
           </div>
         </div>
@@ -328,21 +386,15 @@
           <h3>Bank</h3>
 
           <p>
-            Bank Name:
-            <span v-for="items in getBankName()" :key="items.id">
-              {{ items.bank }}
-            </span>
+            Bank Name: <span>{{ bankName }}</span>
           </p>
           <p>
             Accouunt Details:
-            <span v-for="items in getBankAccountName()" :key="items.id">
-              {{ items.account_name }}
-            </span>
-            <span v-for="items in getBankAccountNunber()" :key="items.id">
-              {{ items.bank }}
-            </span>
+            <span>{{ accountName }} - {{ accountNumber }}</span>
           </p>
-          <p>SWIFT Code: <span>JIDNIODN4</span></p>
+          <p>
+            SWIFT Code: <span>{{ swiftCode }}</span>
+          </p>
           <hr />
           <br />
           <h3>Mobile Wallet</h3>
@@ -352,20 +404,20 @@
             alt="bongalo-careers"
           />
           <p>
-            Account Name: <span>{{ paymentName }}</span>
+            Account Name: <span>{{ momoName }}</span>
           </p>
           <p>
-            Account Number: <span>{{ paymentNumber }}</span>
+            Account Number: <span>{{ momoNumber }}</span>
           </p>
           <br />
 
           <br />
-          <Button
-            @handleClick="addPaymentNumber"
+          <!-- <Button
+            @handleClick="addPaymentMethod"
             :isFullWidth="false"
             label="Save"
-            style="width: 25%; margin-top: 20px0;"
-          />
+            style="width:25%; margin-top:20px0"
+          /> -->
           <br /><br />
           <hr />
           <br />
@@ -390,36 +442,36 @@
             <div v-if="showBankPayoutMethod" class="mid-payout">
               <StyledInput
                 class="num-placeholder"
-                @sendInput="handleInput"
-                :value="paymentNumber"
+                @sendInput="(v) => (bankName = v)"
+                :value="bankName"
                 type="text"
-                placeholder="Enter your Mobile Number"
+                placeholder="Enter your bank name"
                 label="BANK NAME"
               />
 
               <StyledInput
                 class="num-placeholder"
-                @sendInput="handleInput"
-                :value="paymentName"
+                @sendInput="(v) => (accountName = v)"
+                :value="accountName"
                 type="text"
-                placeholder="Enter your Account Name"
+                placeholder="Enter your account name"
                 label="ACCOUNT NAME"
               />
               <StyledInput
                 class="num-placeholder"
-                @sendInput="handleInput"
-                :value="paymentNumber"
+                @sendInput="(v) => (accountNumber = v)"
+                :value="accountNumber"
                 type="text"
-                placeholder="Enter your Mobile Number"
+                placeholder="Enter your bank account number"
                 label="ACCOUNT NUMBER"
               />
 
               <StyledInput
                 class="num-placeholder"
-                @sendInput="handleInput"
-                :value="paymentName"
+                @sendInput="(v) => (swiftCode = v)"
+                :value="swiftCode"
                 type="text"
-                placeholder="Enter your Account Name"
+                placeholder="Optional: Enter swift code"
                 label="SWIFT CODE"
               />
             </div>
@@ -427,27 +479,27 @@
             <div v-else class="mid-payout">
               <StyledInput
                 class="num-placeholder"
-                @sendInput="handleInput"
-                :value="paymentNumber"
+                @sendInput="(v) => (momoNumber = v)"
+                :value="momoNumber"
                 type="text"
                 placeholder="Enter your Mobile Number"
-                label="MOBILE NUMBER"
+                label="MOBILE MOENY NUMBER"
               />
 
               <StyledInput
                 class="num-placeholder"
-                @sendInput="handleInput"
-                :value="paymentName"
+                @sendInput="(v) => (momoName = v)"
+                :value="momoName"
                 type="text"
-                placeholder="Enter your Account Name"
-                label="ACCOUNT NAME"
+                placeholder="Enter your mobile money name"
+                label="MOBILE MONEY NAME"
               />
             </div>
           </div>
 
           <br /><br />
           <Button
-            @handleClick="addPaymentNumber"
+            @handleClick="addPaymentMethod"
             width="250px"
             label="Update Payout Method"
           />
@@ -477,11 +529,7 @@
           <br />
 
           <div v-if="showReviewedContent">
-            <div
-              v-for="item in getReviewForMe()"
-              :key="item.id"
-              class="rev-div-mobile"
-            >
+            <div v-for="item in getReviewForMe()" :key="item.id">
               <a href="#">
                 <div class="rev-div"></div>
                 <p>
@@ -508,12 +556,7 @@
           <div v-else>
             <h1 v-if="getReviewFromMe().length < 1">Nothing to show</h1>
 
-            <div
-              v-else
-              v-for="item in getReviewFromMe()"
-              :key="item.id"
-              class="rev-div-mobile"
-            >
+            <div v-else v-for="item in getReviewFromMe()" :key="item.id">
               <a href="#">
                 <div class="rev-div"></div>
                 <p>
@@ -552,14 +595,40 @@ export default {
   name: "",
   data: function () {
     return {
+      verificationTypeValue: "",
+      verificationType: [
+        {
+          text: "National ID",
+          value: "national_id",
+        },
+        {
+          text: "Passport",
+          value: "passport",
+        },
+      ],
+      changePasswordIsSuccessful: false,
+      momoNumber: "",
+      momoName: "",
+      bankName: "",
+      accountName: "",
+      accountNumber: "",
+      swiftCode: "",
+      changePasswordButtonClicked: false,
+      newPassword: "",
+      newPasswordConfirm: "",
+      oldPassword: "",
+      verificationStatus: "",
+      verificationButtonClicked: false,
       editProfileBtnClicked: false,
       showBankPayoutMethod: true,
       showReviewedContent: true,
-      Select,
-      user_description: "",
+      userDescription: "",
       firstName: "",
       lastName: "",
       phoneNumber: "",
+      userCity: "",
+      userCountry: "",
+      verificationFile: "",
       listing: {
         paymentNumber: "",
         title: "",
@@ -572,6 +641,112 @@ export default {
     };
   },
   methods: {
+    changePassword() {
+      if (
+        this.newPassword.length < 1 ||
+        this.newPasswordConfirm.length < 1 ||
+        this.oldPassword.length < 1
+      ) {
+        this.$notify({
+          group: "general",
+          title: "Passowrd Change",
+          text: "Passwords cannot be empty",
+          type: "error",
+        });
+      } else if (this.newPassword != this.newPasswordConfirm) {
+        this.$notify({
+          group: "general",
+          title: "Passowrd Change",
+          text: "Passwords don't match",
+          type: "error",
+        });
+      } else {
+        this.changePasswordButtonClicked = true;
+        const data = {
+          old_password: this.oldPassword,
+          token: this.getToken(),
+          password: this.newPassword,
+        };
+        this.$store
+          .dispatch("changeUserPassword", data)
+          .then((res) => {
+            this.changePasswordButtonClicked = false;
+            this.$notify({
+              group: "general",
+              title: "Passowrd Change",
+              text: "Password changed successfully!!",
+              type: "success",
+            });
+            this.changePasswordIsSuccessful = true;
+            this.newPassword = "";
+            this.newPasswordConfirm = "";
+            this.password = "";
+          })
+          .catch((err) => {
+            this.changePasswordButtonClicked = false;
+            this.$notify({
+              group: "general",
+              title: "Passowrd Change",
+              text: err,
+              type: "error",
+            });
+          });
+      }
+    },
+    handleVerification() {
+      this.verificationButtonClicked = true;
+      const data = {
+        type: this.verificationTypeValue,
+        image: this.verificationFile,
+        token: this.getToken(),
+      };
+
+      this.$store
+        .dispatch("verifyUser", data)
+        .then((v) => {
+          this.verificationButtonClicked = false;
+          this.$notify({
+            group: "general",
+            title: "Verification Uploaded",
+            text: "Wait patiently for your verification to be verified",
+            type: "success",
+          });
+          this.getAndUpdateUserData();
+        })
+        .catch((err) => {
+          this.verificationButtonClicked = false;
+          this.$notify({
+            group: "general",
+            title: "Verification Upload",
+            text: "Error occured",
+            type: "error",
+          });
+        });
+    },
+    getAndUpdateUserData() {
+      this.$store
+        .dispatch("getUserInfo", {
+          uuid: this.getUuid(),
+          token: this.getToken(),
+        })
+        .then((res) => {
+          if (res == 1) {
+            this.firstName = this.getUserInfo().first_name;
+            this.lastName = this.getUserInfo().last_name;
+            this.userDescription = this.getUserInfo().description;
+            this.phoneNumber = this.getUserInfo().phone_number;
+            this.userCity = this.getUserInfo().city;
+            this.userCountry = this.getUserInfo().country;
+            this.verificationStatus = this.getUserInfo().verification_status;
+            this.bankName = this.getUserInfo().bank_name;
+            this.accountName = this.getUserInfo().account_name;
+            this.accountNumber = this.getUserInfo().account_number;
+            this.swiftCode = this.getUserInfo().swift_code;
+            this.momoNumber = this.getUserInfo().momo_number;
+            this.momoName = this.getUserInfo().momo_name;
+          }
+        });
+    },
     getActiveBorder(section, intent) {
       var flip =
         section == 1 ? this.showReviewedContent : this.showBankPayoutMethod;
@@ -587,32 +762,20 @@ export default {
       //   return this.phoneNumber
       // }
     },
-    handleFName(val) {
-      this.firstName = val;
-    },
-    handleLName(val) {
-      this.lastName = val;
-    },
-    handleDesc(val) {
-      this.user_description = val;
-    },
-    handlePhone(val) {
-      this.phoneNumber = val;
-    },
-
-    handleInput(val) {
-      this.paymentNumber = val;
-    },
     updateUser() {
+      const updateInfo = {
+        last_name: this.lastName,
+        first_name: this.firstName,
+        phone: this.phoneNumber,
+        token: this.getToken(),
+        user: this.getUuid(),
+        description: this.userDescription,
+        city: this.userCity,
+        country: this.userCountry,
+      };
+
       this.$store
-        .dispatch("updateUserInfo", {
-          last_name: this.lastName,
-          first_name: this.firstName,
-          phone: this.phoneNumber,
-          token: this.getToken(),
-          user: this.getUuid(),
-          description: this.user_description,
-        })
+        .dispatch("updateUserInfo", updateInfo)
         .then((res) => {
           if (res == 1) {
             this.$notify({
@@ -622,16 +785,32 @@ export default {
               type: "success",
             });
             this.editProfileBtnClicked = false;
+
+            return 3;
           }
+        })
+        .then((v) => {
+          this.getAndUpdateUserData();
         });
     },
 
-    addPaymentNumber() {
+    // switchPaymentMethod(){
+
+    // },
+
+    addPaymentMethod() {
+      const paymentMethodData = {
+        token: this.getToken(),
+        momo_number: this.momoNumber,
+        momo_name: this.momoName,
+        bank_name: this.bankName,
+        account_name: this.accountName,
+        account_number: this.accountNumber,
+        swift_code: this.swiftCode,
+      };
+
       this.$store
-        .dispatch("addPaymentMethod", {
-          user: this.getUuid(),
-          momo_number: this.paymentNumber,
-        })
+        .dispatch("addPaymentMethod", paymentMethodData)
         .then((res) => {
           if (res == 1) {
             this.$notify({
@@ -640,9 +819,16 @@ export default {
               text: "Payment Method updated successfully!",
               type: "success",
             });
-
-            // this.addPaymentNumber =I
+            this.getAndUpdateUserData();
           }
+        })
+        .catch((err) => {
+          this.$notify({
+            group: "general",
+            title: "Payment Info",
+            text: err,
+            type: "error",
+          });
         });
     },
     deleteListing(apartmentUuid) {
@@ -670,8 +856,44 @@ export default {
       "getBankName",
       "getBankAccountNames",
     ]),
-    addImages(uuid) {
-      // Add images to this apartment
+    updateListing(listing) {
+      const listingData = {
+        isUpdate: true,
+        apartmentId:listing['uuid'],
+        listing_type: listing["type"],
+        what_guest_will_have: listing["space"],
+        number_of_guest: listing["max_guest_number"],
+        number_of_bedroom: listing["available_rooms"],
+        number_of_bathroom: listing["number_of_bathrooms"],
+        property_country: listing["country"],
+        property_address: listing["address"],
+        property_city: listing["city"],
+        property_province: "",
+        amenities: listing["amenities"].split(","),
+        extras: listing["extras"].split(","),
+        rules: listing["rules"].split(","),
+        photos: [],
+        description: listing["description"],
+        title: listing["title"],
+        mobile_number: "",
+        will_update_calender_checkbox: "",
+        checkin: listing["check_in"],
+        checkout: listing["check_out"],
+        min_nights: listing["min_nights"],
+        max_nights: listing["max_nights"],
+        blocked_dates: [],
+        price: listing["price"],
+        userListing: [],
+      };
+
+      window.console.log(listingData);
+      for (var item in listingData) {
+        let d = {
+          key: item,
+          value: listingData[item],
+        };
+        this.$store.dispatch("setValue", d);
+      }
       this.$router.push({ path: "/become-a-host" });
     },
     handleWhatShows(intent) {
@@ -728,25 +950,14 @@ export default {
     StyledInput,
     Button,
     Verification,
+    Select,
   },
 
   created() {
-    // Fetch all data on reviews start
-
     this.$store.dispatch("getReviewsForMe", {
       token: this.getToken(),
     });
     this.$store.dispatch("getReviewsFromMe", {
-      token: this.getToken(),
-    });
-    // Fetch all data on reviews end
-
-    // Fetch all data on bank account details
-    this.$store.dispatch("getBankNames", {
-      token: this.getToken(),
-    });
-
-    this.$store.dispatch("getBankAccountNames", {
       token: this.getToken(),
     });
 
@@ -754,27 +965,8 @@ export default {
       uuid: this.getUuid(),
       token: this.getToken(),
     });
-    this.$store
-      .dispatch("getPaymentMethod", {
-        uuid: this.getUuid(),
-        token: this.getToken(),
-      })
-      .then((res) => {
-        if (res == 1) {
-          this.paymentNumber = this.getUserPaymentNumber();
-        }
-      });
 
-    this.$store
-      .dispatch("getUserInfo", { uuid: this.getUuid(), token: this.getToken() })
-      .then((res) => {
-        if (res == 1) {
-          this.firstName = this.getUserInfo().first_name;
-          this.lastName = this.getUserInfo().last_name;
-          this.user_description = this.getUserInfo().description;
-          this.phoneNumber = this.getUserInfo().phone_number;
-        }
-      });
+    this.getAndUpdateUserData();
   },
 };
 </script>
@@ -1289,14 +1481,16 @@ export default {
       }
 
       .listing-card-holder {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        flex-direction: row;
+        // display: flex;
+        // align-items: center;
+        // justify-content: flex-start;
+        // flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .listing-card {
-        margin-right: 10px;
+        margin-right: 20px;
         .action-section {
           button {
             margin: 0 10px 0 0 !important;
@@ -1314,9 +1508,10 @@ export default {
         cursor: pointer;
 
         img {
+          margin: 0 !important;
           width: 100%;
           border-radius: 5px;
-          height: 60%;
+          height: 55%;
           object-fit: cover;
         }
 

@@ -76,7 +76,10 @@
             <br />
             <br />
 
-            <div class="commercial-div" v-if="steps.one.showCommercialText">
+            <div
+              class="commercial-div"
+              v-if="getListingState()['listing_type'] == 'C'"
+            >
               <Paragraph
                 text="This listing will go through review"
                 size="22"
@@ -100,7 +103,10 @@
             <br />
             <br />
 
-            <div v-if="showWhatWillGuestHave" style="padding: 0 !important;">
+            <div
+              v-if="getListingState()['listing_type'].length > 0"
+              style="padding: 0 !important;"
+            >
               <Paragraph
                 text="What will guest have?"
                 size="16"
@@ -126,7 +132,10 @@
 
             <br /><br /><br />
 
-            <div class="action-section" v-if="showWhatWillGuestHave">
+            <div
+              class="action-section"
+              v-if="getListingState()['listing_type'].length > 0"
+            >
               <div></div>
               <Button
                 :isFullWidth="false"
@@ -152,7 +161,10 @@
               weight="normal"
               color="rgba(64, 64, 64, 0.7)"
             ></Paragraph>
-            <div v-if="shouldShowGuestNumber" style="padding: 0 !important;">
+            <div
+              v-if="getListingState()['listing_type'] != 'C'"
+              style="padding:0 !important"
+            >
               <Incrementer
                 @incrementerChangeHandler="handleIncrementer"
                 step="number_of_guest"
@@ -221,7 +233,7 @@
               @incrementerChangeHandler="handleIncrementer"
               step="number_of_bathroom"
               label="Bathrooms"
-              :start="1"
+              :stop="10"
             ></Incrementer>
 
             <br /><small
@@ -492,69 +504,75 @@
 
         <div v-else-if="step == 2" class="box-content">
           <div v-if="flow == 1">
-            <Paragraph
-              text="Add photos to your listing"
-              size="26"
-              weight="bold"
-              color="#404040"
-            ></Paragraph>
+            <div v-if="!getListingState()['isUpdate']">
+              <Paragraph
+                text="Add photos to your listing"
+                size="26"
+                weight="bold"
+                color="#404040"
+              ></Paragraph>
 
-            <br />
-            <Paragraph
-              text="Photos help your guest imagine staying at your place. You can add minimum five and maximum ten photos"
-              size="16"
-              weight=""
-              color="rgba(64, 64, 64, 0.7)"
-            ></Paragraph>
-            <br />
-            <small
-              class="listing-error"
-              v-if="showErrors && checkIfShouldShowError('photos')"
-            >
-              *{{ errorList["photos"] }}
-            </small>
-            <small
-              class="listing-error"
-              v-else-if="showErrors && checkIfShouldShowError('photosMin')"
-            >
-              *{{ errorList["photosMin"] }}
-            </small>
-            <small
-              class="listing-error"
-              v-else-if="showErrors && checkIfShouldShowError('photosMax')"
-            >
-              *{{ errorList["photosMax"] }}
-            </small>
-            <br />
+              <br />
+              <Paragraph
+                text="Photos help your guest imagine staying at your place. You can add minimum five and maximum ten photos"
+                size="16"
+                weight=""
+                color="rgba(64, 64, 64, 0.7)"
+              ></Paragraph>
+              <br />
+              <small
+                class="listing-error"
+                v-if="showErrors && checkIfShouldShowError('photos')"
+              >
+                *{{ errorList["photos"] }}
+              </small>
+              <small
+                class="listing-error"
+                v-else-if="showErrors && checkIfShouldShowError('photosMin')"
+              >
+                *{{ errorList["photosMin"] }}
+              </small>
+              <small
+                class="listing-error"
+                v-else-if="showErrors && checkIfShouldShowError('photosMax')"
+              >
+                *{{ errorList["photosMax"] }}
+              </small>
+              <br />
 
-            <input
-              id="property-images-input"
-              class="image_select"
-              type="file"
-              multiple
-              @change="onFileChange"
-            />
-            <label class="image_select_label" for="property-images-input">
-              <div class="div" @dragover.prevent @drop="onFileChange">
-                <div>
-                  <p>Upload photos</p>
-                  <small>or drag them in</small>
+              <input
+                id="property-images-input"
+                class="image_select"
+                type="file"
+                multiple
+                @change="onFileChange"
+              />
+              <label class="image_select_label" for="property-images-input">
+                <div class="div" @dragover.prevent @drop="onFileChange">
+                  <div>
+                    <p>Upload photos</p>
+                    <small>or drag them in</small>
+                  </div>
                 </div>
+              </label>
+
+              <div v-if="urls" class="mainImageView">
+                <!-- <div v-for="url in urls" :key="url" class=""></div>-->
+                <img :src="mainUrl[0]" />
               </div>
-            </label>
 
-            <div v-if="urls" class="mainImageView">
-              <!-- <div v-for="url in urls" :key="url" class=""></div>-->
-              <img :src="mainUrl[0]" />
-            </div>
-
-            <div v-if="urls" class="preview">
-              <div v-for="(url, index) in urls" :key="url" class="preview-item">
-                <em @click="removeImage(index)">remove</em>
-                <em class="swap-main-img" @click="setMainImage(index)"
-                  >Make main Image</em
+              <div v-if="urls" class="preview">
+                <div
+                  v-for="(url, index) in urls"
+                  :key="url"
+                  class="preview-item"
                 >
-                <img :src="url" />
+                  <em @click="removeImage(index)">remove</em>
+                  <em class="swap-main-img" @click="setMainImage(index)"
+                    >Make main Image</em
+                  >
+                  <img :src="url" />
+                </div>
               </div>
             </div>
 
@@ -562,9 +580,17 @@
               <button class="button" v-on:click="processSteps(0)">
                 <i class="fas fa-chevron-left"></i> Back
               </button>
-              <Button
+              <Button 
+              v-if="!getListingState()['isUpdate']"
                 :isFullWidth="false"
                 v-on:handleClick="processSteps(1)"
+                label="Next"
+                width="120px"
+              ></Button>
+              <Button 
+              v-else
+                :isFullWidth="false"
+                v-on:handleClick="() => {flow +=1}"
                 label="Next"
                 width="120px"
               ></Button>
@@ -817,7 +843,6 @@
               @incrementerChangeHandler="handleIncrementer"
               step="min_nights"
               label="Nights min"
-              :start="1"
               :stop="30"
             ></Incrementer>
             <br />
@@ -927,12 +952,16 @@
           <div v-if="flow == 6">
             <h1 v-if="!isUploading">
               You've come this far<br />
-              Now upload your listing
+              {{
+                "Now " + finalButtonLabel() +" your listing" 
+              }}
             </h1>
             <h1 v-else>
               Stay put <br />
               We are uploading your listing.
             </h1>
+            <br>
+            <small>Progress: {{ getListingState()['uploadedImageSofar'] }}/{{ getListingState()['photos'].length+1 }} uploaded</small>
 
             <div class="action-section">
               <button class="button" v-on:click="processSteps(0)">
@@ -942,7 +971,7 @@
                 v-if="!isUploading"
                 :isFullWidth="false"
                 v-on:handleClick="handlePropertyUpload"
-                label="Upload"
+                :label ="finalButtonLabel()"
                 width="120px"
               ></Button>
               <pulse-loader
@@ -999,6 +1028,7 @@ export default {
 
   data: function () {
     return {
+      mainImageIndex: 0,
       mainUrl: [],
       shouldShowGuestNumber: true,
       showWhatWillGuestHave: false,
@@ -1312,6 +1342,9 @@ export default {
   },
 
   methods: {
+    finalButtonLabel(){
+      return this.getListingState()['isUpdate'] ? "Update" : "Upload";
+    },
     checkIfShouldShowError(errorKey) {
       let ans = false;
       for (let i = 0; i < this.errorsToShow.length; i++) {
@@ -1438,6 +1471,7 @@ export default {
         key: val.step,
         value: val.data,
       };
+      // window.console.log(d)
       this.$store.dispatch("setValue", d);
     },
 
@@ -1467,12 +1501,11 @@ export default {
       return "";
     },
     handlePropertyUpload() {
-      this.urls = this.mainUrl + this.urls;
-      let d = {
+     if(!this.getListingState()['isUpdate']){
+        let d = {
         key: "photos",
         value: this.urls,
       };
-
       this.$store.dispatch("setValue", d);
 
       if (window.localStorage.getItem("profile_image") || this.profile_img) {
@@ -1487,6 +1520,7 @@ export default {
 
         this.$store
           .dispatch("uploadProperty", {
+            mainImageIndex: this.mainImageIndex,
             images: this.files,
             token: this.getToken(),
             uuid: this.getUuid(),
@@ -1494,6 +1528,14 @@ export default {
           })
           .then((res) => {
             if (res == 1) {
+              this.$notify({
+                group: "general",
+                title: "Info !!",
+                text:
+                  "Apartment uploaded successfully",
+                type: "success",
+              });
+              
               this.$router.push("/profile");
             } else {
               this.isUploading = false;
@@ -1512,13 +1554,53 @@ export default {
               group: "general",
               title: "Info !!",
               text:
-                "Error ocurred while uploading your apartment, please retry!",
+                err.data.message,
               type: "error",
             });
           });
       } else {
         this.$modal.show("no-image-modal");
       }
+     }
+     else{
+       this.$store
+          .dispatch("updateListing", {
+            token: this.getToken(),
+            uuid: this.getUuid(),
+            info: this.getListingState(),
+          })
+          .then((res) => {
+            if (res == 1) {
+              this.$notify({
+                group: "general",
+                title: "Info !!",
+                text:
+                  "Apartment updated successfully",
+                type: "success",
+              });
+              this.$router.push("/profile");
+            } else {
+              this.isUploading = false;
+              this.$notify({
+                group: "general",
+                title: "Info !!",
+                text:
+                  "Error ocurred while updating your apartment, please retry!",
+                type: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            this.isUploading = false;
+            this.$notify({
+              group: "general",
+              title: "Info !!",
+              text:
+                err.data.message,
+              type: "error",
+            });
+          });
+     }
     },
 
     removeImage(index) {
@@ -1540,6 +1622,7 @@ export default {
       var currentClickedImage = this.urls[index];
       this.urls.splice(index, 1, this.mainUrl[0]);
       this.mainUrl[0] = currentClickedImage;
+      this.mainImageIndex = index;
     },
 
     onFileChange(e) {
@@ -1557,6 +1640,7 @@ export default {
         this.mainUrl = [this.urls[this.urls.length - 1]];
         var slicedUrls = this.urls.slice(0, this.urls.length - 1);
         this.urls = slicedUrls;
+        this.mainImageIndex = this.urls.length - 1;
       }
       let d = {
         key: "photos",
@@ -1624,6 +1708,31 @@ export default {
         value: country["countryName"],
         text: country["countryName"],
       });
+    }
+
+    const store = this.getListingState();
+    const descriptionValueFromStore = store["description"];
+    const titleFromStore = store["title"];
+    this.steps.two.description = descriptionValueFromStore;
+    this.steps.two.title = titleFromStore;
+    this.steps.three.price = store['price']
+
+    // update city here
+    if (store["property_country"] && store["property_country"].length > 0) {
+      for (let i = 0; i < countryData.length; i++) {
+        if (countryData[i]["countryName"] == store["property_country"]) {
+          this.cities = [];
+          let selectedCities = countryData[i]["regions"];
+          for (let j = 0; j < selectedCities.length; j++) {
+            this.cities.push({
+              value: selectedCities[j]["name"],
+              text: selectedCities[j]["name"],
+            });
+          }
+          this.countryIsSelected = true;
+          break;
+        }
+      }
     }
   },
 };
