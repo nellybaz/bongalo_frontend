@@ -192,66 +192,69 @@
     >
       <div class="modal-content">
         <div class="i-div">
-        <i v-on:click="$modal.hide('forgot-password')" class="far fa-times-circle"></i>
-      </div>
-      <div class="forgot-password">
-        <h3>Reset Password</h3>
-
-        <p v-if="successMessage.length < 1" @inputHandler="handleInput">
-          Enter the email address associated with your account, and we’ll email
-          you a link to reset your password.
-        </p>
-
-        <br />
-        <small class="terms-small">{{ emailErrorMessage }}</small>
-        <small class="success-mes">{{ successMessage }}</small>
-        <br>
-        <br>
-
-        <Input
-          v-if="successMessage.length < 1"
-          @inputHandler="handleInput"
-          hint="Email address"
-          icon="fas fa-envelope"
-          step="email"
-          type="email"
-          :isFullWidth="true"
-        />
-        <br />
-
-        <Button
-          v-if="!isButtonClicked && successMessage.length < 1"
-          v-on:handleClick="handleButton(3)"
-          label="Send reset link"
-          :isFullWidth="true"
-        />
-
-        <div
-          class="loader-div"
-          v-else-if="isButtonClicked && successMessage.length < 1"
-        >
-          <pulse-loader
-            class="loader"
-            color="#3A85FC"
-            size="10px"
-          ></pulse-loader>
+          <i
+            v-on:click="$modal.hide('forgot-password')"
+            class="far fa-times-circle"
+          ></i>
         </div>
+        <div class="forgot-password">
+          <h3>Reset Password</h3>
 
-        <hr />
+          <p v-if="successMessage.length < 1" @inputHandler="handleInput">
+            Enter the email address associated with your account, and we’ll
+            email you a link to reset your password.
+          </p>
 
-        <p v-if="successMessage.length < 1">
-          Or cancel and head back to
-          <span
-            v-on:click="
-              () => {
-                $modal.hide('forgot-password');
-                $modal.show('login');
-              }
-            "
-            >Login</span
+          <br />
+          <small class="terms-small">{{ emailErrorMessage }}</small>
+          <small class="success-mes">{{ successMessage }}</small>
+          <br />
+          <br />
+
+          <Input
+            v-if="successMessage.length < 1"
+            @inputHandler="handleInput"
+            hint="Email address"
+            icon="fas fa-envelope"
+            step="email"
+            type="email"
+            :isFullWidth="true"
+          />
+          <br />
+
+          <Button
+            v-if="!isButtonClicked && successMessage.length < 1"
+            v-on:handleClick="handleButton(3)"
+            label="Send reset link"
+            :isFullWidth="true"
+          />
+
+          <div
+            class="loader-div"
+            v-else-if="isButtonClicked && successMessage.length < 1"
           >
-        </p>
-      </div>
+            <pulse-loader
+              class="loader"
+              color="#3A85FC"
+              size="10px"
+            ></pulse-loader>
+          </div>
+
+          <hr />
+
+          <p v-if="successMessage.length < 1">
+            Or cancel and head back to
+            <span
+              v-on:click="
+                () => {
+                  $modal.hide('forgot-password');
+                  $modal.show('login');
+                }
+              "
+              >Login</span
+            >
+          </p>
+        </div>
       </div>
     </modal>
 
@@ -263,63 +266,66 @@
       :clickToClose="false"
     >
       <div class="modal-content">
-         <div class="i-div">
-          <i v-on:click="$modal.hide('verify-pin')" class="far fa-times-circle"></i>
+        <div class="i-div">
+          <i
+            v-on:click="$modal.hide('verify-pin')"
+            class="far fa-times-circle"
+          ></i>
         </div>
         <div class="forgot-password">
-        <h3>Verify</h3>
-        <small class="terms-small">{{ termsCheckBoxError }}</small>
+          <h3>Verify</h3>
+          <small class="terms-small">{{ termsCheckBoxError }}</small>
 
-        <p>Enter the pin received on your email</p>
+          <p>Enter the pin received on your email</p>
 
-        <br />
-        <div class="pin-div">
-          <input
-            @keyup="handleInput({ data: pinModel, step: 'pin_verify' })"
-            v-model="pinModel"
-            type="text"
-            placeholder="Enter PIN"
+          <br />
+          <div class="pin-div">
+            <input
+              @keyup="handleInput({ data: pinModel, step: 'pin_verify' })"
+              v-model="pinModel"
+              type="text"
+              placeholder="Enter PIN"
+            />
+          </div>
+          <small v-if="pinErrorMessage">
+            {{ pinErrorMessage }}
+          </small>
+          <br />
+
+          <br />
+
+          <Button
+            v-if="!isButtonClicked"
+            @handleClick="verifyEmail"
+            label="Verify"
+            :isFullWidth="true"
           />
+          <div class="loader-div" v-else>
+            <pulse-loader
+              class="loader"
+              color="#3A85FC"
+              size="10px"
+            ></pulse-loader>
+          </div>
+          <hr />
+
+          <p v-if="!isButtonResendVerifyPinClicked">
+            Didn't get a pin ?
+            <span v-on:click="resendPin()">Resend</span>
+          </p>
+          <div class="loader-div" v-else>
+            <pulse-loader
+              class="loader"
+              color="#3A85FC"
+              size="10px"
+            ></pulse-loader>
+          </div>
+
+          <p>
+            Go back to
+            <span v-on:click="goto(2)">Register</span>
+          </p>
         </div>
-        <small v-if="pinErrorMessage">
-          {{ pinErrorMessage }}
-        </small>
-        <br />
-
-        <br />
-
-        <Button
-          v-if="!isButtonClicked"
-          @handleClick="verifyEmail"
-          label="Verify"
-          :isFullWidth="true"
-        />
-        <div class="loader-div" v-else>
-          <pulse-loader
-            class="loader"
-            color="#3A85FC"
-            size="10px"
-          ></pulse-loader>
-        </div>
-        <hr />
-
-        <p v-if="!isButtonResendVerifyPinClicked">
-          Didn't get a pin ?
-          <span v-on:click="resendPin()">Resend</span>
-        </p>
-        <div class="loader-div" v-else>
-          <pulse-loader
-            class="loader"
-            color="#3A85FC"
-            size="10px"
-          ></pulse-loader>
-        </div>
-
-        <p>
-          Go back to
-          <span v-on:click="goto(2)">Register</span>
-        </p>
-      </div>
       </div>
     </modal>
     <Login></Login>
@@ -384,12 +390,12 @@ export default {
       this.lnameErrorMessage = "";
       this.passwordErrorMessage = "";
       this.signInError = "";
-      this.email = ""
-      this.password = ""
-      this.first_name = ""
-      this.last_name = ""
-      this.termsCheckBox = false
-      this.pinModel = ""
+      this.email = "";
+      this.password = "";
+      this.first_name = "";
+      this.last_name = "";
+      this.termsCheckBox = false;
+      this.pinModel = "";
     },
     resendPin() {
       this.isButtonResendVerifyPinClicked = true;
@@ -434,7 +440,8 @@ export default {
         .dispatch("socialSignin", { provider: provider })
         .then((res) => {
           if (res == 1) {
-            this.setModalState(0);
+            this.$modal.hide("register");
+            this.$modal.hide("login");
           }
         });
     },
@@ -522,7 +529,7 @@ export default {
             };
             this.$store
               .dispatch("register", data)
-              .then(res => {
+              .then((res) => {
                 // this.email = ""
                 this.first_name = "";
                 this.last_name = "";
@@ -531,7 +538,7 @@ export default {
                 this.$modal.hide("register");
                 this.$modal.show("verify-pin");
               })
-              .catch(err => {
+              .catch((err) => {
                 this.isButtonClicked = false;
                 this.termsCheckBoxError = err.data.message;
                 for (var key in err.data.data) {
@@ -599,7 +606,7 @@ export default {
           .then((res) => {
             this.isButtonClicked = false;
             if (res == 1) {
-              this.$modal.hide("verify-pin")
+              this.$modal.hide("verify-pin");
               this.$notify({
                 group: "general",
                 title: "Congratulations !!",

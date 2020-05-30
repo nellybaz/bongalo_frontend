@@ -301,7 +301,8 @@ export default {
         .dispatch("socialSignin", { provider: provider })
         .then((res) => {
           if (res == 1) {
-            this.setModalState(0);
+            this.$modal.hide("register")
+            this.$modal.hide("login")
           }
         });
     },
