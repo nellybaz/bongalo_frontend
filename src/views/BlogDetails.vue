@@ -47,7 +47,7 @@
           <p><i class="fas fa-envelope"></i> Share via email</p>
         </a>
 
-        <p><i class="fas fa-copy"></i> Copy link</p>
+        <p @click="copyLink"><i class="fas fa-copy"></i> Copy link</p>
       </div>
 
       <div class="right">
@@ -77,6 +77,26 @@ export default {
     };
   },
   methods: {
+    
+    copyLink(){
+      const that = this;
+      this.$copyText(window.location.href.toString()).then(function (e) {
+          that.$notify({
+              group: "general",
+              title: "Info !!",
+              text:"Link copied",
+              type: "success",
+            });
+        }, function (e) {
+          that.$notify({
+              group: "general",
+              title: "Info !!",
+              text:"Link not copied",
+              type: "error",
+            });
+          window.console.log(e)
+        })
+    },
     socialShare(intent) {
       switch (intent) {
         case 2:
