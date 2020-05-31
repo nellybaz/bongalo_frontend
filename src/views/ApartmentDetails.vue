@@ -475,14 +475,13 @@ export default {
         this.reserveButtonClicked = true;
         this.dateErrorMessage = "";
         if (window.localStorage.getItem("token")) {
-          window.console.log(this.$route.query);
-          var cIn = this.checkin.toISOString().substring(0, 10).split("-");
-          var cOut = this.checkout.toISOString().substring(0, 10).split("-");
+          var cIn = this.checkin.toString().substring(0, 15).split(" ");
+          var cOut = this.checkout.toString().substring(0, 15).split(" ");
           let data = {
             token: this.$store.getters.getToken,
             apartment: this.$route.query["uuid"],
-            date_from: `${cIn[0]}-${cIn[1]}-${parseInt(cIn[2])+1}`,
-            date_to: `${cOut[0]}-${cOut[1]}-${parseInt(cOut[2])+1}`,
+            date_from: `${cIn[3]}-${this.monthMap[cIn[1]]}-${cIn[2]}`,
+            date_to: `${cOut[3]}-${this.monthMap[cOut[1]]}-${cOut[2]}`,
             number_of_rooms: 1,
             number_of_guest: this.guestNumber,
             client: this.getUuid,
@@ -491,7 +490,7 @@ export default {
             // +window.location.pathname+`?apartment=${this.$route.query.apartment}&uuid=${this.$route.query.uuid}`,
             redirect_url: window.location.origin.toString() + "/payment",
           };
-          window.console.log(data);
+          window.console.log(data)
           this.$store
             .dispatch("bookApartment", data)
             .then((res) => {
@@ -617,18 +616,18 @@ export default {
       apartment: {},
       images: [],
       monthMap: {
-        Jan: 1,
-        Feb: 2,
-        Mar: 3,
-        Apr: 4,
-        May: 5,
-        Jun: 6,
-        Jul: 7,
-        Aug: 8,
-        Sep: 9,
-        Oct: 10,
-        Nov: 11,
-        Dec: 12,
+        Jan: '01',
+        Feb: '02',
+        Mar: '03',
+        Apr: '04',
+        May: '05',
+        Jun: '06',
+        Jul: '07',
+        Aug: '08',
+        Sep: '09',
+        Oct: '10',
+        Nov: '11',
+        Dec: '12',
       },
       guestNumber: 1,
       checkin: "dd/mm/yyyy",
@@ -743,7 +742,6 @@ export default {
 
     // this.extras[0] = "," + this.extras[0];
     this.amenities = this.amenities.concat(this.extras);
-    window.console.log(this.amenities);
     this.rules = this.apartment.rules
       ? this.apartment.rules.split(",")
       : this.$route.query.rules.split(",");
