@@ -18,9 +18,7 @@
 import NavLink from "../../components/NavLink";
 
 export default {
-  components: {
-    NavLink,
-  },
+  components: {},
 };
 </script>
 
@@ -33,7 +31,7 @@ export default {
     padding: 0 30px !important;
 
     img {
-      margin: 10px 0 0 0 !important;
+      margin: 30px 0 0 0 !important;
     }
   }
 }

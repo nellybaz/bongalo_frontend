@@ -649,6 +649,7 @@ export default {
     *{
         margin: auto !important;
         padding: 0 !important;
+        max-width: 100% !important;
         text-align: justify !important;
         border: transparent !important;
     }
@@ -658,14 +659,23 @@ export default {
             color: #404040 !important;
             text-align: left !important;
         }
+        p{
+               padding: 0 !important;
+             font-size: 15px !important;
+        }
 
     h2, h4{
         padding: 0 16px !important;
         margin: 5px  !important;
     }
 
+    .item-a{
+        font-weight: bold !important;
+    }
+
     ul, li{
-        margin: 10px  !important;
+        margin: 10px !important;
+        font-size: 15px !important;
     }
       .side-nav, h1{
         width: 90% !important;
@@ -700,6 +710,7 @@ export default {
             .side-nav{
                 margin-bottom: 30px;
                 width:100%;
+
                 .item-a{
                 font-style: normal;
                 font-weight: normal;

@@ -16,7 +16,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "",
-  data: function() {
+  data: function () {
     return {
       data: "any",
       style: "width:" + this.width,
@@ -58,7 +58,7 @@ export default {
       let selectOptions = this.options;
 
       const storeData = this.$store.getters.getListingState;
- 
+
       if (
         this.step == "number_of_bedroom" &&
         storeData["listing_type"] &&
@@ -77,18 +77,18 @@ export default {
       return selectOptions;
     },
   },
-  updated(){
+  updated() {
     const store = this.$store.getters.getListingState;
     let dataInStore = store[this.step];
     if (dataInStore && dataInStore.toString().length > 0) {
-       this.data = dataInStore.toString();
+      this.data = dataInStore.toString();
     }
   },
   created() {
     const store = this.$store.getters.getListingState;
     let dataInStore = store[this.step];
     if (dataInStore && dataInStore.toString().length > 0) {
-       this.data = dataInStore.toString();
+      this.data = dataInStore.toString();
     }
   },
 };

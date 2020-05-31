@@ -58,6 +58,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  .file-select {
+    margin-top: 60px !important;
+
+    label {
+      border: 1px dashed #918f8f;
+      font-style: normal;
+      font-weight: normal;
+      border-radius: 3px;
+      color: #3a85fc;
+      cursor: pointer;
+      padding: 3em 1em;
+    }
+
+    input {
+      height: 0.1px !important;
+      width: 0.1px !important;
+      position: absolute;
+    }
+  }
+  .btn-div {
+    button {
+      float: left !important;
+    }
+  }
+}
+
 .apply-section {
   margin-top: 50px;
   margin-bottom: 30px;
@@ -67,10 +94,12 @@ export default {
     button {
       float: right;
     }
+    position: !important;
   }
 
   .file-select {
-    margin-top: 60px;
+    margin-top: 60px !important;
+
     label {
       border: 1px dashed #b4b4b4;
       font-style: normal;
@@ -84,7 +113,6 @@ export default {
     input {
       height: 0.1px !important;
       width: 0.1px !important;
-      //   display: none;
       position: absolute;
     }
   }

@@ -1,15 +1,17 @@
 <template>
-  <div class="Blog-nav">
+  <div class="">
     <header class="tm-header">
       <div class="logo-blg">
         <a href="/">
           <img src="../../assets/images/bongalo-logo.png" alt />
         </a>
         <div>
-          <img class="blog-logo" src="../../assets/images/v-mobile.png" alt />
-          <ul class="blg">
-            Blog
-          </ul>
+          <img
+            @click="$modal.show('mobile-booking')"
+            class="blog-logo"
+            src="../../assets/images/v-mobile.png"
+            alt
+          />
         </div>
       </div>
 
@@ -99,37 +101,30 @@ export default {
   }
 
   .tm-header {
-    display: grid !important;
-    grid-template-columns: repeat(9, 1fr);
-    padding: 0 25px !important;
-
+    max-width: 100% !important;
+    padding: 0 15px !important;
+img{
+      // border: 1px solid red !important;
+      padding: 10px !important;
+}
     .blog-logo {
-      margin: 0 0 40px 320px !important;
+      margin: 0 60% !important;
       position: absolute;
     }
-    @media only screen and (max-width: 375px) {
-      .blog-logo {
-        margin: 0 0 40px 270px !important;
-      }
-      @media only screen and (max-width: 320px) {
-        .blog-logo {
-          margin: 0 0 40px 230px !important;
-        }
-      }
-    }
+
     .blg {
       color: #6a6a6a;
+      
     }
   }
 
   .search-div {
     height: 45px;
-    box-sizing: border-box;
     border-radius: 5px;
-    width: 88% !important;
+    width: 86% !important;
     position: absolute;
-    margin: 5px 10px 0 0 !important;
-    top: 70px !important;
+    left: -16px !important;
+    top: 80px !important;
   }
 
   .search-input {
@@ -159,14 +154,17 @@ header {
   justify-content: flex-start;
   flex-direction: row;
 }
+
 img {
   margin-right: 40px;
   width: auto;
 }
+
 nav {
   width: 80%;
   margin-right: -4%;
 }
+
 ul {
   float: right;
   width: 400px;
@@ -175,6 +173,7 @@ ul {
   justify-content: flex-end;
   flex-direction: row;
 }
+
 li {
   font-weight: 600;
   font-size: 14px;
@@ -189,6 +188,7 @@ li {
     color: #404040;
   }
 }
+
 .search-div {
   width: 100%;
   border: 1px solid #c4c4c4;
@@ -198,7 +198,6 @@ li {
   margin-right: -20px;
   display: flex;
   align-items: center;
-  // box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
   i {
     margin-right: 15px;
     color: #686868;
@@ -225,6 +224,11 @@ li {
   }
   input:focus {
     outline: none;
+  }
+
+  .logo-blg,
+  .blog-logo {
+    display: none !important;
   }
 }
 </style>

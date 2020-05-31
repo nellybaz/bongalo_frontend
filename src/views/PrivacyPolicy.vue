@@ -727,7 +727,7 @@ export default {
   components: {
     Navigation,
   },
-  data: function() {
+  data: function () {
     return {};
   },
 };
@@ -737,9 +737,12 @@ export default {
 @media only screen and (max-width: 900px) {
   * {
     margin: 0 !important;
-    padding: 0 5px !important;
     width: 100% !important;
     border: transparent !important;
+  }
+
+  .content {
+    padding: 0 20px !important;
   }
 
   .side-nav {
@@ -749,6 +752,9 @@ export default {
       padding: 0 !important;
     }
   }
+  .item-a {
+    font-weight: bold !important;
+  }
 
   h1,
   h2,
@@ -756,15 +762,21 @@ export default {
   h4,
   h5,
   strong {
-    margin: 10px 0 !important;
+    margin: 15px 10px 0 0 !important;
+  }
+  h5 {
+    font-size: 18px !important;
   }
   ul,
   li {
-    margin: 5px 10px !important;
     width: auto !important;
+    text-align: justify !important;
+    font-size: 15px !important;
+    margin: 8px 0 !important;
   }
   p {
     text-align: justify !important;
+    font-size: 15px !important;
   }
 }
 a {

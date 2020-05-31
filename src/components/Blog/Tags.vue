@@ -47,12 +47,13 @@ export default {
 
     li {
       float: left !important;
-      padding: 5px 13px !important;
+      padding: 5px 9px !important;
       text-align: left !important;
       font-size: 10px !important;
     }
   }
 }
+
 .tag {
   height: 64px;
   padding: 0 60px;
@@ -63,6 +64,7 @@ export default {
   flex-direction: row;
   border-bottom: 1px solid #f2f2f2;
 }
+
 li {
   color: #808080;
   font-size: 14px;

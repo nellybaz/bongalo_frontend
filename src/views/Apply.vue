@@ -42,15 +42,18 @@ export default {
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
   * {
-    padding: 8px !important;
-    margin: 0 !important;
-    width: auto !important;
+    margin: auto !important;
+    width: 100% !important;
     border: transparent !important;
   }
   p {
     text-align: justify;
   }
+  .content {
+    padding: 15px 25px !important;
+  }
 }
+
 .apply-page {
   width: 100%;
 
@@ -65,7 +68,6 @@ export default {
       font-weight: bold;
       font-size: 35px;
       line-height: 42px;
-
       color: #404040;
       margin-bottom: 30px;
     }

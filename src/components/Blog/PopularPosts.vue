@@ -71,6 +71,7 @@ export default {
     margin: auto !important;
     width: 100% !important;
   }
+
   .post {
     margin-top: 120px !important;
     img {
@@ -111,7 +112,6 @@ img {
   width: 100%;
   display: flex;
   cursor: pointer;
-  /* border: 1px solid green; */
   margin-bottom: -20px;
 }
 

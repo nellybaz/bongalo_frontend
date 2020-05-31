@@ -2,15 +2,12 @@
   <div class="apartment_details">
     <div v-if="!isImageShow" class="detials-content">
       <Navigation :showSearch="false"></Navigation>
+
       <ImageGrid
         class="apartment_details-img-sec"
         v-on:updateImageShow="updateImageShowHandler"
         :showMoreImages="true"
       ></ImageGrid>
-
-      <div class="apartment-img">
-        <img src="../assets/images/apartment.png" alt="" />
-      </div>
 
       <div class="apartment-details-content">
         <div class="details-div">
@@ -33,13 +30,6 @@
             <div class="left" id="overview">
               <div @click="getUserUrl()" class="host-details">
                 <div class="name">
-                  <span class="host-details-mobile">
-                    <p>Host</p>
-                    <strong style="text-decoration: underline;">
-                      {{ apartment.owner || $route.query.owner }}
-                    </strong>
-                  </span>
-
                   <img
                     v-if="
                       getCurrentApartment.owner_details &&
@@ -49,12 +39,12 @@
                     alt=""
                   />
                   <i v-else class="fas fa-user-circle"></i>
-                  <!-- <span class="host-details-desktop">
+                  <span class="host-details-desktop">
                     <p>Host</p>
                     <strong style="text-decoration: underline;">
                       {{ apartment.owner || $route.query.owner }}
                     </strong>
-                  </span> -->
+                  </span>
                 </div>
 
                 <div
@@ -115,24 +105,20 @@
                 </div>
               </div>
 
-              <div class="booking-section">
+              <!-- <div class="booking-section">
                 <h4>
                   ${{ apartment.price || $route.query.price }}
                   <span>/ night</span>
                 </h4>
-                <a href="/booking" class="action">
-                  Book
-                </a>
-                <!-- <button @click="handleOpeningHostPage">Book</button> -->
-              </div>
 
-              <div>
-                <img
-                  class="google-map-mobile"
-                  src="../assets/images/google-map.png"
-                  alt=""
-                />
-              </div>
+                <button @click="$modal.show('mobile-booking')">Book</button>
+              </div> -->
+
+              <img
+                class="google-map-mobile"
+                src="../assets/images/google-map.png"
+                alt=""
+              />
 
               <div id="rules" class="rules" ref="rulesRef">
                 <h3>House Rules</h3>
@@ -348,8 +334,8 @@
                       <p class="p">
                         ${{
                           (apartment.price || $route.query.price) *
-                            bookedNights *
-                            0.05
+                          bookedNights *
+                          0.05
                         }}
                       </p>
                     </div>
@@ -359,9 +345,9 @@
                       <p class="p">
                         ${{
                           getTotal() +
-                            (apartment.price || $route.query.price) *
-                              bookedNights *
-                              0.05
+                          (apartment.price || $route.query.price) *
+                            bookedNights *
+                            0.05
                         }}
                       </p>
                     </div>
@@ -446,6 +432,7 @@ export default {
         query: { ...this.getCurrentApartment.owner_details },
       });
     },
+
     handleGuest(intent) {
       if (intent == 0 && this.guestNumber > 1) {
         this.guestNumber -= 1;
@@ -456,6 +443,7 @@ export default {
         this.guestNumber += 1;
       }
     },
+
     handleScroll(event) {
       let windowScrollPosition = event.target.scrollingElement.scrollTop;
       let amenitiesRef = this.$refs.amenitiesDiv;
@@ -556,17 +544,20 @@ export default {
         this.dateErrorMessage = "Checkout required";
       }
     },
+
     getAmenitiesIcon(value) {
       return this.amenitiesIcon[value]
         ? this.amenitiesIcon[value]
         : "fas fa-fan";
     },
+
     handleImageChange(index) {
       this.galleryIndex = index;
       this.galleryCurrentImage = this.getApartmentImages[
         this.galleryIndex
       ].image;
     },
+
     handleGalleryIndex(intent) {
       if (intent == 1 && this.galleryIndex < this.imagesArr.length - 1) {
         this.galleryIndex += 1;
@@ -575,9 +566,11 @@ export default {
       }
       this.galleryCurrentImage = this.imagesArr[this.galleryIndex].image;
     },
+
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
+
     getDateFormat(date, intent) {
       if (date == "Checkin" || date == "Checkout") {
         return date;
@@ -668,7 +661,6 @@ export default {
       galleryIndex: 0,
       galleryCurrentImage: "",
       serviceFee: 0,
-      // cleaningFee: 20,
       bookedNights: 0,
       review: [],
       apartment: {},
@@ -788,7 +780,7 @@ export default {
       : [];
 
     // this.extras[0] = "," + this.extras[0];
-    this.amenities = this.amenities.concat(this.extras)
+    this.amenities = this.amenities.concat(this.extras);
     window.console.log(this.amenities);
     this.rules = this.apartment.rules
       ? this.apartment.rules.split(",")
@@ -821,133 +813,47 @@ export default {
 <style lang="scss" scoped>
 @media only screen and(max-width:900px) {
   * {
+    max-width: 100% !important;
     display: block !important;
-    padding: 0 !important;
-    width: auto !important;
-    border: transparent !important;
   }
 
-  .detials-content {
-    width: 100% !important;
-    .apartment_details-img-sec {
-      display: none !important;
-      object-fit: contain !important;
-    }
-
-    .apartment-img {
-      img {
-        display: block !important;
-        object-fit: cover !important;
-        width: 100% !important;
-      }
-    }
-  }
-
-  .booking-section {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    width: 100% !important;
-    margin: 30px 0 0 0 !important;
-    button {
-      font-size: 15px !important;
-      color: #ffffff;
-      font-weight: bold;
-      background: #3a85fc;
-      height: 40px !important;
-      border-radius: 5px;
-    }
-    h4 {
-      display: flex !important;
-    }
-    span {
-      width: auto;
-      font-size: 14px !important;
-      color: gray;
-      font-weight: normal !important;
-    }
-  }
-
-  .host-details-desktop,
-  .other-div {
-    width: 100% !important;
-    margin: 10px 20px 0 0;
-  }
-
-  .name {
-    width: 96% !important;
-    display: grid !important;
-    grid-template-columns: 10fr 1fr !important;
-    position: absolute;
-    left: 16px !important;
-    margin: 60px 10px 0 0 !important;
-
-    span {
-      strong {
-        text-decoration: none !important;
-        font-size: 20px !important;
-      }
-    }
+  .tap-div {
+    display: none !important;
   }
 
   .apartment-details-content {
-    padding: 0 20px !important;
-    .google-map-mobile {
-      width: 100% !important;
-      margin: 30px 15px 0 0 !important;
-      padding: 0 !important;
-    }
-
-    .rules,
-    .right {
-      display: none !important;
-    }
-
-    .tap-div {
-      display: none !important;
-    }
-
-    .more-info {
-      width: 100% !important;
+    * {
       margin: 0 !important;
-      margin: 100px 20px 0 0 !important;
+      padding: 5px !important;
+    }
+  }
 
-      p {
-        text-align: start !important;
-        color: gray !important;
-        margin: 10px 0 !important;
-      }
+  .rules {
+    p {
+      padding: 10px !important;
+      margin: 10px 0 !important;
+    }
+  }
+  .google-map-mobile {
+    display: block !important;
+  }
+
+  .amenities {
+    p {
+      display: flex !important;
 
       i {
-        color: gray !important;
         font-size: 20px !important;
-        text-align: start !important;
+        margin-left: -5px !important;
+        margin-right: 10px !important;
       }
-    }
-
-    i {
-      margin: 0 !important;
-      width: auto;
-      color: #404040 !important;
-      font-size: 30px !important;
-    }
-
-    #amenities {
-      p {
-        display: flex !important;
-        color: gray !important;
-      }
-      i {
-        font-size: 15px !important;
-        color: gray !important;
-        margin: 0 10px 0px 0px !important;
-      }
-    }
-    .host-details-mobile {
-      display: block !important;
     }
   }
 }
 
+.google-map-mobile {
+  display: none !important;
+}
 .apd-loader-div,
 .loader-div {
   width: 100%;
@@ -1104,6 +1010,7 @@ export default {
       height: 50px;
       position: sticky;
       top: 0;
+
       ul {
         height: 100%;
         padding: 0;
@@ -1139,13 +1046,16 @@ export default {
     display: grid;
     grid-template-columns: 8fr 4fr;
     grid-column-gap: 50px;
+
     .left {
       a {
         text-decoration: none;
       }
+
       width: 100%;
       padding: 30px 120px;
       border-top: 1px solid #f2f2f2;
+
       h4 {
         font-style: normal;
         font-weight: bold;

@@ -1,9 +1,56 @@
 <template>
   <div id="app">
     <modal
+      name="mobile-booking"
+      height="100%"
+      width="100%"
+      @before-close="beforeClose"
+      :clickToClose="true"
+    >
+      <div class="mobile-booking">
+        <div class="i-div">
+          <i
+            v-on:click="$modal.hide('mobile-booking')"
+            class="far fa-times-circle"
+          ></i>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <a href="/">EN</a>
+            </li>
+            <li>
+              <a @click="handleOpeningHostPage" href="/">
+                List Properity
+              </a>
+            </li>
+            <li>
+              <a href="/blog">Blog</a>
+            </li>
+            <li class="profile-li">
+              <a href="/profile">
+                <!-- <img :src="getProfile()" /> -->
+                Welcome {{ getFirstName }}
+              </a>
+            </li>
+
+            <li>
+              <a v-if="!isLoggedIn" v-on:click="$modal.show('register')">
+                Sign up
+              </a>
+            </li>
+            <li v-if="!isLoggedIn" v-on:click="$modal.show('login')">
+              Login
+            </li>
+            <li v-else v-on:click="logout">Logout</li>
+          </ul>
+        </nav>
+      </div>
+    </modal>
+    <modal
       name="login"
       height="570"
-      width="30%"
+      width="100%"
       @before-close="beforeClose"
       :clickToClose="false"
     >
@@ -63,7 +110,7 @@
           <SocialSignin @handleSocialSignup="handleSocialSignup" />
 
           <p>
-            Don't have an account ?
+            Don't have an account?
             <span
               v-on:click="
                 () => {
@@ -80,7 +127,7 @@
     <modal
       name="register"
       height="650"
-      width="30%"
+      width="100%"
       @before-close="beforeClose"
       :clickToClose="false"
     >
@@ -198,77 +245,76 @@
           ></i>
         </div>
         <div class="forgot-password">
-         <div v-if="successMessage.length < 1">
+          <div v-if="successMessage.length < 1">
             <h3>Reset Password</h3>
 
-          <p>
-            Enter the email address associated with your account, and we’ll
-            email you a link to reset your password.
-          </p>
+            <p>
+              Enter the email address associated with your account, and we’ll
+              email you a link to reset your password.
+            </p>
 
-          <br />
-          <small class="terms-small">{{ emailErrorMessage }}</small>
-          <small class="success-mes">{{ successMessage }}</small>
-          <br />
-          <br />
+            <br />
+            <small class="terms-small">{{ emailErrorMessage }}</small>
+            <small class="success-mes">{{ successMessage }}</small>
+            <br />
+            <br />
 
-          <Input
-            @inputHandler="handleInput"
-            hint="Email address"
-            icon="fas fa-envelope"
-            step="email"
-            type="email"
-            :isFullWidth="true"
-          />
-          <br />
+            <Input
+              @inputHandler="handleInput"
+              hint="Email address"
+              icon="fas fa-envelope"
+              step="email"
+              type="email"
+              :isFullWidth="true"
+            />
+            <br />
 
-          <Button
-            v-if="!isButtonClicked"
-            v-on:handleClick="handleButton(3)"
-            label="Send reset link"
-            :isFullWidth="true"
-          />
+            <Button
+              v-if="!isButtonClicked"
+              v-on:handleClick="handleButton(3)"
+              label="Send reset link"
+              :isFullWidth="true"
+            />
 
-          <div
-            class="loader-div"
-            v-else-if="isButtonClicked"
-          >
-            <pulse-loader
-              class="loader"
-              color="#3A85FC"
-              size="10px"
-            ></pulse-loader>
+            <div class="loader-div" v-else-if="isButtonClicked">
+              <pulse-loader
+                class="loader"
+                color="#3A85FC"
+                size="10px"
+              ></pulse-loader>
+            </div>
+
+            <hr />
+
+            <p>
+              Or cancel and head back to
+              <span
+                v-on:click="
+                  () => {
+                    $modal.hide('forgot-password');
+                    $modal.show('login');
+                  }
+                "
+                >Login</span
+              >
+            </p>
           </div>
-
-          <hr />
-
-          <p >
-            Or cancel and head back to
-            <span
-              v-on:click="
-                () => {
-                  $modal.hide('forgot-password');
-                  $modal.show('login');
-                }
-              "
-              >Login</span
-            >
-          </p>
-         </div>
-         <div v-else class="success-container">
+          <div v-else class="success-container">
             <h3>We've sent you an email</h3>
-            <br>
-            <br>
+            <br />
+            <br />
 
             <img
-          style="width:auto; margin:2rem"
-          src="./assets/images/s-icon.png"
-          alt="bongalo-careers"
-        />
-        <br>
+              style="width: auto; margin: 2rem;"
+              src="./assets/images/s-icon.png"
+              alt="bongalo-careers"
+            />
+            <br />
             <p class="reset-success-text">Please check</p>
-            <strong>{{"nellybaz10@gmail.com"}}</strong>
-            <p class="reset-success-text"> to reset your password using the link we just sent</p>
+            <strong>{{ "nellybaz10@gmail.com" }}</strong>
+            <p class="reset-success-text">
+              to reset your password using the link we just sent
+            </p>
 
             <!-- <br> -->
             <!-- <p v-if="!isButtonClicked">Didn't get the email? <span @click="handleButton(3)">Resend</span></p>
@@ -283,19 +329,23 @@
               size="10px"
             ></pulse-loader>
           </div> -->
-            <hr>
+            <hr />
 
-
-
-            <br>
-            <p>Go back to  <span @click="()=>{
-              $modal.hide('forgot-password');
-              $modal.show('login');
-              }">Login</span></p>
-            <hr>
-
-
-         </div>
+            <br />
+            <p>
+              Go back to
+              <span
+                @click="
+                  () => {
+                    $modal.hide('forgot-password');
+                    $modal.show('login');
+                  }
+                "
+                >Login</span
+              >
+            </p>
+            <hr />
+          </div>
         </div>
       </div>
     </modal>
@@ -397,7 +447,8 @@ export default {
     SocialSignin,
     PulseLoader,
   },
-  data: function() {
+
+  data: function () {
     return {
       successMessage: "",
       isButtonResendVerifyPinClicked: false,
@@ -420,6 +471,7 @@ export default {
       signInError: "",
     };
   },
+
   computed: mapGetters(["getModalState"]),
   methods: {
     beforeClose(event) {
@@ -439,6 +491,7 @@ export default {
       this.termsCheckBox = false;
       this.pinModel = "";
     },
+
     resendPin() {
       this.isButtonResendVerifyPinClicked = true;
       this.termsCheckBoxError = "";
@@ -455,10 +508,12 @@ export default {
           this.termsCheckBox = "Error occured. Please try again";
         });
     },
+
     handleTermsLink() {
       this.$modal.hide("register");
       this.$router.push("/terms-condition");
     },
+
     handleInput(val) {
       if (val.step == "pin_verify") {
         this.pinModel = val.data;
@@ -476,6 +531,7 @@ export default {
         this.password = val.data;
       }
     },
+
     ...mapActions(["setModalState"]),
     handleSocialSignup(provider) {
       this.$store
@@ -487,6 +543,7 @@ export default {
           }
         });
     },
+
     validateFields(intent) {
       let res = true;
 
@@ -547,12 +604,10 @@ export default {
           this.passwordErrorMessage = "";
         }
       }
-      // else if(intent == 3){
-
-      // }
 
       return res;
     },
+
     handleButton(intent) {
       if (intent == 1) {
         if (this.validateFields(1)) {
@@ -572,7 +627,6 @@ export default {
             this.$store
               .dispatch("register", data)
               .then((res) => {
-                // this.email = ""
                 this.first_name = "";
                 this.last_name = "";
                 this.password = "";
@@ -681,7 +735,6 @@ export default {
 </script>
 
 <style lang="scss">
-/* Import Inter fonts  */
 @import url("https://rsms.me/inter/inter.css");
 
 html {
@@ -731,6 +784,7 @@ input[type="number"] {
   color: red !important;
   font-size: 12px;
 }
+
 .loader-div {
   display: flex;
   align-items: center;
@@ -739,15 +793,16 @@ input[type="number"] {
   width: 100%;
   margin-bottom: 20px;
 }
+
 .pin-div {
   width: 100%;
-  // height: 40px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: row;
   border: 1px solid #c4c4c4;
   border-radius: 5px;
+
   input {
     width: 92%;
     height: 40px;
@@ -766,6 +821,7 @@ input[type="number"] {
     padding: 0 10px;
     color: #3a85fc;
   }
+
   input:focus {
     outline: none;
   }
@@ -778,9 +834,6 @@ input[type="number"] {
     color: rgba(106, 106, 106, 0.7);
   }
 }
-// .border{
-//     border: 1px solid #3A85FC !important;
-// }
 
 small {
   font-size: 10px;
@@ -799,7 +852,7 @@ small {
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-
+  margin: 0 !important;
   .i-div {
     width: 100%;
     display: flex;
@@ -813,7 +866,6 @@ small {
       color: #3a85fc;
       margin-bottom: 30px;
       float: right;
-      // border:1px solid red;
     }
   }
 
@@ -833,30 +885,28 @@ small {
   .signup-div,
   .forgot-password {
     width: 100%;
-
-    .success-container{
+    .success-container {
       padding: 0 !important;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-direction: column;
 
-      img, p, strong{
+      img,
+      p,
+      strong {
         margin: 0 !important;
       }
 
-      .reset-success-text{
-
-        span{
+      .reset-success-text {
+        span {
           font-weight: bold;
         }
-}
-
+      }
     }
 
     strong {
       margin: 20px 0;
-      // border:1px solid red;
       text-align: center;
       width: 100%;
       display: flex;
@@ -874,14 +924,12 @@ small {
     }
     p {
       margin: 20px 0;
-      // border:1px solid red;
       font-style: normal;
       font-weight: normal;
       font-size: 14px;
       line-height: 17px;
       display: flex;
       align-items: center;
-
       color: #6a6a6a;
 
       span {
@@ -890,8 +938,6 @@ small {
         font-weight: bold;
         font-size: 14px;
         line-height: 17px;
-        /* identical to box height */
-
         display: flex;
         align-items: center;
         cursor: pointer;
@@ -910,6 +956,74 @@ small {
       align-items: center;
 
       color: #404040;
+    }
+  }
+}
+
+.mobile-booking {
+  * {
+    width: auto !important;
+    border-radius: 0 !important;
+    margin: 5px 20px !important;
+    padding: 0 !important;
+  }
+
+  .terms-checkbox {
+    display: flex;
+  }
+
+  .content {
+    border: 1px solid #404040 !important;
+    margin: 30px !important;
+    padding: 30px 0 !important;
+  }
+
+  p {
+    font-weight: bold;
+    font-size: 12px;
+    align-items: center;
+    color: #404040;
+  }
+
+  input {
+    height: 30px !important;
+  }
+  .i-div {
+    background: #3a85fc;
+    width: 90% !important;
+    padding: 10px !important;
+    margin: 40px 18px !important;
+    border-radius: 5px !important;
+    i {
+      color: #ffffff !important;
+      font-size: 20px !important;
+    }
+  }
+
+  nav {
+    width: 100%;
+    margin: 0 !important;
+
+    ul {
+      margin: 40px 0 !important;
+
+      li {
+        width: auto !important;
+        margin: 20px !important;
+        font-size: 20px !important;
+        list-style: none;
+        font-weight: normal !important;
+        cursor: pointer;
+
+        a {
+          color: #404040;
+          font-weight: normal;
+          left: 20px !important;
+          margin: 0 !important;
+          font-size: 20px !important;
+          text-decoration: none;
+        }
+      }
     }
   }
 }

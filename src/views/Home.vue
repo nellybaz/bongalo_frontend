@@ -353,12 +353,20 @@ export default {
   }
 
   .why-section {
+    height: auto !important;
+    margin-top: auto !important;
     .inner {
       width: 100%;
       display: grid;
       grid-template-columns: 1fr !important;
+
       grid-row-gap: 30px;
     }
+  }
+
+  .experience-section {
+    margin-top: 0px !important;
+    height: auto !important;
   }
 
   .powered-section {
@@ -439,6 +447,7 @@ export default {
   .why-section {
     width: 100%;
     margin-top: 5px;
+
     width: 100%;
     padding: 20px 80px;
     background: #fff;

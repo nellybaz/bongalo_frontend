@@ -62,7 +62,6 @@ export default {
       }
     },
 
-
     logout() {
       this.$store.dispatch("logout").then((res) => {
         window.location.reload();
@@ -79,6 +78,7 @@ export default {
 <style lang="scss" scoped>
 .nav-link {
   width: 100%;
+  
   nav {
     width: 100%;
     margin-right: 2%;

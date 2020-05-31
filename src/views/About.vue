@@ -15,17 +15,14 @@
         label="What's trending"
       ></MobileEventCard>
     </section>
-     <section class="event-section">
+    <section class="event-section">
       <EventCard
         v-if="!isMobile()"
         :events="events"
         label="Wha's Trending"
         link="/event-details"
       ></EventCard>
-      <MobileEventCard
-        v-else
-        :events="events"
-      ></MobileEventCard>
+      <MobileEventCard v-else :events="events"></MobileEventCard>
     </section>
 
     <ListProperity />
@@ -49,6 +46,7 @@
 <script>
 import AboutHeader from "../components/About/AboutHeader";
 import HeadCard from "../components/About/HeadCard";
+import WhySectionCard from "../components/WhySectionCard";
 import ListProperity from "../components/About/ListProperity";
 import EventCard from "../components/EventCard";
 import MobileEventCard from "../components/MobileEventCard";
@@ -62,6 +60,7 @@ export default {
     ListProperity,
     EventCard,
     MobileEventCard,
+    // WhySectionCard
   },
 
   methods: {
@@ -168,11 +167,10 @@ export default {
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
   .event-section {
-    * {
-      padding: 20px !important;
-      max-width: 100% !important;
-      margin: auto !important;
-    }
+    // border: 1px solid red;
+    height: auto !important;
+    max-width: 100% !important;
+    margin: auto !important;
   }
   .powered-section {
     h3 {

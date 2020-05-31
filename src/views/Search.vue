@@ -2,9 +2,10 @@
   <div class="search" @click="filterCodeHandler(0)">
     <Navigation :showSearch="false"></Navigation>
     <section class="filter">
+      <p @click="filterCode = 1">Date</p>
       <p @click="filterCode = 1">Guest</p>
-      <p @click="filterCode = 2">Type</p>
-      <p @click="filterCode = 3">Price</p>
+      <p @click="filterCode = 2">Price</p>
+      <p @click="filterCode = 3">More Filter</p>
     </section>
 
     <section class="filter-dropdown">
@@ -53,6 +54,7 @@ export default {
     Navigation,
     HorizontalCard,
   },
+
   methods: {
     filterCodeHandler(intent) {
       if (intent == 0) {
@@ -61,6 +63,7 @@ export default {
         this.filterCode = intent;
       }
     },
+
     handleGuestClick(intent) {
       if (intent == 1) {
         this.guestNumber += 1;
@@ -69,6 +72,7 @@ export default {
       }
     },
   },
+
   data: function () {
     return {
       filterCode: 0,
@@ -76,6 +80,7 @@ export default {
       apartments: [],
     };
   },
+
   computed: mapGetters(["getSearchedApartment"]),
   created() {
     this.guestNumber = parseInt(this.$route.query["guest"]);
@@ -84,6 +89,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and(max-width: 900px) {
+  * {
+    margin: auto !important;
+    padding: 10px !important;
+    width: 100% !important;
+  }
+
+  .filter {
+    border: transparent !important;
+    p {
+      margin: 0 5px !important;
+      font-size: 10px !important;
+    }
+  }
+}
+
 .filter-dropdown {
   .dropdown-item {
     width: 200px;

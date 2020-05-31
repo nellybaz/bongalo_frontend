@@ -6,7 +6,12 @@
       </div>
 
       <div>
-        <img src="../assets/images/mobile-nav-shape.png" alt />
+        <img
+          @click="$modal.show('mobile-booking')"
+          class="nav-modal"
+          src="../assets/images/mobile-nav-shape.png"
+          alt
+        />
       </div>
 
       <NavLink :isDark="false"></NavLink>

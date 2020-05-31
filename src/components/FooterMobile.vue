@@ -78,7 +78,7 @@
           <li>+250 730078410</li>
           <li>info@bongalo.co</li>
         </ul>
-      </div>  
+      </div>
       <br />
 
       <h4>

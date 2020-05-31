@@ -79,20 +79,24 @@ export default {
 <style lang="scss" scoped>
 @media only screen and(max-width: 900px) {
   * {
-    margin: auto !important;
-    padding: 0 5px !important;
     width: 100% !important;
     border: transparent !important;
+  }
+  .content {
+    padding: 20px !important;
+    margin: 0 !important;
   }
 
   h1 {
     font-size: 28px !important;
     margin: 10px 0 !important;
   }
+
   .careers {
     h2 {
       font-size: 24px !important;
       line-height: 28px !important;
+      text-align: center;
       margin: 15px 0 !important;
     }
   }
@@ -102,9 +106,6 @@ export default {
       line-height: 20px !important;
       text-align: justify;
     }
-  }
-  .list-item {
-    margin: 10px !important;
   }
 }
 
@@ -151,6 +152,7 @@ export default {
 
     .bottom {
       margin-top: 30px;
+      text-align: center;
     }
 
     .careers-list {

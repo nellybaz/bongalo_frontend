@@ -163,7 +163,7 @@
             ></Paragraph>
             <div
               v-if="getListingState()['listing_type'] != 'C'"
-              style="padding:0 !important"
+              style="padding: 0 !important;"
             >
               <Incrementer
                 @incrementerChangeHandler="handleIncrementer"
@@ -557,7 +557,6 @@
               </label>
 
               <div v-if="urls" class="mainImageView">
-                <!-- <div v-for="url in urls" :key="url" class=""></div>-->
                 <img :src="mainUrl[0]" />
               </div>
 
@@ -580,17 +579,21 @@
               <button class="button" v-on:click="processSteps(0)">
                 <i class="fas fa-chevron-left"></i> Back
               </button>
-              <Button 
-              v-if="!getListingState()['isUpdate']"
+              <Button
+                v-if="!getListingState()['isUpdate']"
                 :isFullWidth="false"
                 v-on:handleClick="processSteps(1)"
                 label="Next"
                 width="120px"
               ></Button>
-              <Button 
-              v-else
+              <Button
+                v-else
                 :isFullWidth="false"
-                v-on:handleClick="() => {flow +=1}"
+                v-on:handleClick="
+                  () => {
+                    flow += 1;
+                  }
+                "
                 label="Next"
                 width="120px"
               ></Button>
@@ -952,16 +955,19 @@
           <div v-if="flow == 6">
             <h1 v-if="!isUploading">
               You've come this far<br />
-              {{
-                "Now " + finalButtonLabel() +" your listing" 
-              }}
+              {{ "Now " + finalButtonLabel() + " your listing" }}
             </h1>
             <h1 v-else>
               Stay put <br />
               We are uploading your listing.
             </h1>
-            <br>
-            <small>Progress: {{ getListingState()['uploadedImageSofar'] }}/{{ getListingState()['photos'].length+1 }} uploaded</small>
+            <br />
+            <small
+              >Progress: {{ getListingState()["uploadedImageSofar"] }}/{{
+                getListingState()["photos"].length + 1
+              }}
+              uploaded</small
+            >
 
             <div class="action-section">
               <button class="button" v-on:click="processSteps(0)">
@@ -971,7 +977,7 @@
                 v-if="!isUploading"
                 :isFullWidth="false"
                 v-on:handleClick="handlePropertyUpload"
-                :label ="finalButtonLabel()"
+                :label="finalButtonLabel()"
                 width="120px"
               ></Button>
               <pulse-loader
@@ -1342,8 +1348,8 @@ export default {
   },
 
   methods: {
-    finalButtonLabel(){
-      return this.getListingState()['isUpdate'] ? "Update" : "Upload";
+    finalButtonLabel() {
+      return this.getListingState()["isUpdate"] ? "Update" : "Upload";
     },
     checkIfShouldShowError(errorKey) {
       let ans = false;
@@ -1501,69 +1507,66 @@ export default {
       return "";
     },
     handlePropertyUpload() {
-     if(!this.getListingState()['isUpdate']){
+      if (!this.getListingState()["isUpdate"]) {
         let d = {
-        key: "photos",
-        value: this.urls,
-      };
-      this.$store.dispatch("setValue", d);
-
-      if (window.localStorage.getItem("profile_image") || this.profile_img) {
-        this.isUploading = true;
-        //Upload image after listing sucess
-        let data = {
-          uuid: this.getUuid(),
-          token: this.getToken(),
-          imageObject: this.profile_img,
+          key: "photos",
+          value: this.urls,
         };
-        this.$store.dispatch("updateImage", data);
+        this.$store.dispatch("setValue", d);
 
-        this.$store
-          .dispatch("uploadProperty", {
-            mainImageIndex: this.mainImageIndex,
-            images: this.files,
-            token: this.getToken(),
+        if (window.localStorage.getItem("profile_image") || this.profile_img) {
+          this.isUploading = true;
+          //Upload image after listing sucess
+          let data = {
             uuid: this.getUuid(),
-            info: this.getListingState(),
-          })
-          .then((res) => {
-            if (res == 1) {
-              this.$notify({
-                group: "general",
-                title: "Info !!",
-                text:
-                  "Apartment uploaded successfully",
-                type: "success",
-              });
-              
-              this.$router.push("/profile");
-            } else {
+            token: this.getToken(),
+            imageObject: this.profile_img,
+          };
+          this.$store.dispatch("updateImage", data);
+
+          this.$store
+            .dispatch("uploadProperty", {
+              mainImageIndex: this.mainImageIndex,
+              images: this.files,
+              token: this.getToken(),
+              uuid: this.getUuid(),
+              info: this.getListingState(),
+            })
+            .then((res) => {
+              if (res == 1) {
+                this.$notify({
+                  group: "general",
+                  title: "Info !!",
+                  text: "Apartment uploaded successfully",
+                  type: "success",
+                });
+
+                this.$router.push("/profile");
+              } else {
+                this.isUploading = false;
+                this.$notify({
+                  group: "general",
+                  title: "Info !!",
+                  text:
+                    "Error ocurred while uploading your apartment, please retry!",
+                  type: "error",
+                });
+              }
+            })
+            .catch((err) => {
               this.isUploading = false;
               this.$notify({
                 group: "general",
                 title: "Info !!",
-                text:
-                  "Error ocurred while uploading your apartment, please retry!",
+                text: err.data.message,
                 type: "error",
               });
-            }
-          })
-          .catch((err) => {
-            this.isUploading = false;
-            this.$notify({
-              group: "general",
-              title: "Info !!",
-              text:
-                err.data.message,
-              type: "error",
             });
-          });
+        } else {
+          this.$modal.show("no-image-modal");
+        }
       } else {
-        this.$modal.show("no-image-modal");
-      }
-     }
-     else{
-       this.$store
+        this.$store
           .dispatch("updateListing", {
             token: this.getToken(),
             uuid: this.getUuid(),
@@ -1574,8 +1577,7 @@ export default {
               this.$notify({
                 group: "general",
                 title: "Info !!",
-                text:
-                  "Apartment updated successfully",
+                text: "Apartment updated successfully",
                 type: "success",
               });
               this.$router.push("/profile");
@@ -1595,12 +1597,11 @@ export default {
             this.$notify({
               group: "general",
               title: "Info !!",
-              text:
-                err.data.message,
+              text: err.data.message,
               type: "error",
             });
           });
-     }
+      }
     },
 
     removeImage(index) {
@@ -1715,7 +1716,7 @@ export default {
     const titleFromStore = store["title"];
     this.steps.two.description = descriptionValueFromStore;
     this.steps.two.title = titleFromStore;
-    this.steps.three.price = store['price']
+    this.steps.three.price = store["price"];
 
     // update city here
     if (store["property_country"] && store["property_country"].length > 0) {
@@ -1742,37 +1743,44 @@ export default {
 @media only screen and(max-width:900px) {
   * {
     width: 100%;
-    padding: 12px !important;
     margin: 0 !important;
   }
 
-  .image-modal-wrapper {
-    width: 60% !important;
-    position: absolute;
-    left: 30% !important;
-    margin: auto !important;
-    h2 {
-      text-align: center;
-    }
-  }
-
-  .box-content {
-    p {
-      width: 100%;
-      padding: 12px 0 !important;
-      margin: 0 !important;
+  .listing-content-wrapper {
+    padding: 12px !important;
+    * {
+      padding: 12px !important;
     }
 
-    em {
-      width: auto !important;
+    .image-modal-wrapper {
+      width: 60% !important;
+      position: absolute;
+      left: 30% !important;
+      margin: auto !important;
+
+      h2 {
+        text-align: center;
+      }
     }
 
-    .checkin-div {
-      display: block !important;
-    }
-    .action-section {
-      .button {
-        width: 0 !important;
+    .box-content {
+      p {
+        width: 100%;
+        padding: 12px 0 !important;
+        margin: 0 !important;
+      }
+
+      em {
+        width: auto !important;
+      }
+
+      .checkin-div {
+        display: block !important;
+      }
+      .action-section {
+        .button {
+          width: 0 !important;
+        }
       }
     }
   }
@@ -1797,7 +1805,6 @@ export default {
 }
 .input {
   padding: 0 !important;
-  // border: 1px solid red;
 }
 
 .preview {
@@ -1805,18 +1812,14 @@ export default {
     margin-left: 90px;
   }
 
-  // display: flex;
   width: 500px;
   .preview-item {
-    // max-width: 50%;
-    // height: auto;
     padding: 0 !important;
 
     em {
       position: absolute;
       padding: 0.2em;
       border: 2px solid #3a85fc;
-      // box-shadow: black;
       border-radius: 5px;
       background: white;
       font-weight: 400;

@@ -7,6 +7,7 @@
           <a href="#">
             <div>
               <img
+                class="profile-icons-mobile"
                 style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
@@ -20,6 +21,7 @@
           <a href="#">
             <div>
               <img
+                class="profile-icons-mobile"
                 style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
@@ -28,11 +30,11 @@
             <p class="p-item">Listings</p>
           </a>
         </div>
-
         <div class="d2 d" @click="handleWhatShows(3)">
           <a href="#">
             <div>
               <img
+                class="profile-icons-mobile"
                 style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
@@ -46,6 +48,7 @@
           <a href="#favourite-section">
             <div>
               <img
+                class="profile-icons-mobile"
                 style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
@@ -59,6 +62,7 @@
           <a href="#">
             <div>
               <img
+                class="profile-icons-mobile"
                 style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
@@ -72,6 +76,7 @@
           <a href="#">
             <div>
               <img
+                class="profile-icons-mobile"
                 style="margin: 0.7rem 0.8rem;"
                 src="../assets/images/vector.png"
                 alt="bongalo-careers"
@@ -359,7 +364,7 @@
                 v-if="!changePasswordButtonClicked"
                 @handleClick="changePassword"
                 :isFullWidth="false"
-                style="margin-top:20px; height:45px"
+                style="margin-top: 20px; height: 45px;"
                 label="Update Password"
               />
 
@@ -588,7 +593,6 @@ import StyledInput from "../components/StyledInput";
 import Button from "../components/Button";
 import { mapActions, mapGetters } from "vuex";
 import Select from "../components/Select";
-// import Listing from "../components/views/Listing";
 import Verification from "../components/verification";
 
 export default {
@@ -794,10 +798,6 @@ export default {
         });
     },
 
-    // switchPaymentMethod(){
-
-    // },
-
     addPaymentMethod() {
       const paymentMethodData = {
         token: this.getToken(),
@@ -859,7 +859,7 @@ export default {
     updateListing(listing) {
       const listingData = {
         isUpdate: true,
-        apartmentId:listing['uuid'],
+        apartmentId: listing["uuid"],
         listing_type: listing["type"],
         what_guest_will_have: listing["space"],
         number_of_guest: listing["max_guest_number"],
@@ -975,11 +975,19 @@ export default {
 @media only screen and (max-width: 900px) {
   * {
     margin: 0 !important;
-    padding: 10px !important;
+    max-width: 100% !important;
   }
-
+  .content {
+    padding: 20px !important;
+  }
   .profile {
     max-width: 100% !important;
+
+    .profile-icons-mobile {
+      margin: 0.8rem !important;
+      padding: 0 !important;
+    }
+
     .listing-container {
       width: 100% !important;
 
@@ -996,6 +1004,9 @@ export default {
       }
     }
     .right {
+      margin-top: 20px !important;
+      padding: 20px !important;
+
       .top {
         .p-primary-edit-profile {
           width: 50% !important;
@@ -1061,9 +1072,27 @@ export default {
     }
 
     .payout-details {
-      // *{
-      //   border: 1px solid red;
-      // }
+      * {
+        width: 100% !important;
+      }
+
+      img {
+        width: auto !important;
+      }
+      h3 {
+        font-size: 24px !important;
+      }
+      p {
+        font-size: 15px !important;
+      }
+
+      hr {
+        display: none !important;
+      }
+
+      .mid-payout {
+        display: block !important;
+      }
     }
 
     .review {
@@ -1108,9 +1137,7 @@ export default {
 
   .left {
     height: auto !important;
-    display: block !important;
-    position: block !important;
-    z-index: 1px !important;
+    display: fixed !important;
   }
 }
 
@@ -1122,6 +1149,7 @@ export default {
     top: -13px;
     border: 2px solid rgba(51, 51, 51, 0.1);
   }
+
   .rev-date {
     color: #404040;
     font-size: 15px;
@@ -1181,6 +1209,7 @@ export default {
   img {
     width: 50%;
   }
+
   .review-div {
     width: 100%;
   }
@@ -1317,14 +1346,17 @@ export default {
     margin-top: 15px;
     border: 0.5px solid rgba(128, 128, 128, 0.26);
   }
+
   span {
     margin-left: 10px;
   }
+
   p {
     font-size: 14px;
     line-height: 28px;
     color: rgba(64, 64, 64, 0.75);
   }
+
   h3 {
     font-size: 18px;
     line-height: 22px;
@@ -1481,10 +1513,6 @@ export default {
       }
 
       .listing-card-holder {
-        // display: flex;
-        // align-items: center;
-        // justify-content: flex-start;
-        // flex-direction: column;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
       }

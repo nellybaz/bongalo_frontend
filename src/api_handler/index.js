@@ -3,36 +3,35 @@ import axios from "axios";
 const BASE_URL = process.env.VUE_APP_BASE_URL;
 const API_URL = BASE_URL + "api/v1/";
 const URLS = {
-    register: 'auth/register',
-    login: 'auth/login',
-    add_apartment: 'apartment/add',
-    social_auth: 'auth/social/auth',
-    apartment_all: 'apartment/all',
-    apartment_images: 'apartment/images/get?apartment=',
-    search_apartment: '',
-    update_image: 'auth/user/update-profile-image',
-    get_user_listing:'',
-    delete_user_listing:'apartment/show-listing',
-    update_user_listing:'apartment/update-listing',
-    get_user_payment:'',
-    add_user_payment:'auth/user/update-payment',
-    get_user_info:'auth/user/profile',
-    update_user_info:'auth/update',
-    verify_email:'auth/verify-email',
-    all_blog_post: 'blog/posts/all',
-    resend_pin: 'auth/verification-pin/resend',
-    forget_password_request: 'auth/user/reset-password',
-    reset_password:'user/reset-password-confirm',
-    apartment_get: '',
-    book_apartment: 'apartment/book',
-    confirm_booking: 'payment/pay/confirm',
-    reviews_for_me: 'auth/user/review-on-my-apartment',
-    reviews_from_me: 'auth/user/review-by-me',
-    verify_user:'auth/user/verify',
-    change_password:'auth/user/password/change',
-    subscribe: "auth/user/subscribe"
-}
- 
+  register: "auth/register",
+  login: "auth/login",
+  add_apartment: "apartment/add",
+  social_auth: "auth/social/auth",
+  apartment_all: "apartment/all",
+  apartment_images: "apartment/images/get?apartment=",
+  search_apartment: "",
+  update_image: "auth/user/update-profile-image",
+  get_user_listing: "",
+  delete_user_listing: "apartment/show-listing",
+  update_user_listing: "apartment/update-listing",
+  get_user_payment: "",
+  add_user_payment: "auth/user/update-payment",
+  get_user_info: "auth/user/profile",
+  update_user_info: "auth/update",
+  verify_email: "auth/verify-email",
+  all_blog_post: "blog/posts/all",
+  resend_pin: "auth/verification-pin/resend",
+  forget_password_request: "auth/user/reset-password",
+  reset_password: "user/reset-password-confirm",
+  apartment_get: "",
+  book_apartment: "apartment/book",
+  confirm_booking: "payment/pay/confirm",
+  reviews_for_me: "auth/user/review-on-my-apartment",
+  reviews_from_me: "auth/user/review-by-me",
+  verify_user: "auth/user/verify",
+  change_password: "auth/user/password/change",
+  subscribe: "auth/user/subscribe",
+};
 
 const getReq = async function(urlKey, data) {
   const CONFIG = {
@@ -115,7 +114,7 @@ const putReq = async function(urlKey, data) {
       });
   });
 };
-  
+
 const deleteReq = async function(urlKey, data) {
   const CONFIG = {
     headers: {

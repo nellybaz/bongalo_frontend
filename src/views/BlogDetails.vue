@@ -113,8 +113,6 @@ export default {
 
   components: {
     Navigation,
-    // Tags,
-    // PopularPosts,
   },
 };
 </script>
@@ -123,15 +121,16 @@ export default {
 @media only screen and (max-width: 900px) {
   * {
     margin: auto !important;
-    padding: 8px !important;
     display: block !important;
   }
   input {
     display: none !important;
   }
   .details {
+    padding: 20px !important;
+    margin: 30px 0 !important;
     img {
-      object-fit: contain;
+      max-width: 100% !important;
       border-radius: 20px !important;
     }
     .left {
@@ -141,10 +140,10 @@ export default {
     .social-media,
     .social-media-share {
       display: flex !important;
+      margin: 20px 0 !important;
       border: 1px solid rgba(128, 128, 128, 0.39);
-      padding: 0 !important;
+      padding: 10px !important;
       border-radius: 5px;
-      text-align: left !important;
     }
   }
 }
@@ -152,6 +151,7 @@ export default {
 a {
   text-decoration: none;
 }
+
 .blog-details {
   width: 100%;
 
@@ -200,7 +200,6 @@ a {
           margin-right: 20px;
         }
         width: 100%;
-        // border:1px solid red;
         margin: 15px 0;
         margin-bottom: 30px;
 

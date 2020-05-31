@@ -23,7 +23,7 @@
           amazing prices.
         </p>
       </div>
-      <div class="mission-and-mission">
+      <div class="our-mission">
         <h2>Our Vision</h2>
         <p>
           Empower Africans to travel across the continent and beyond.
@@ -41,30 +41,31 @@
 
     <div class="core-values">
       <h2>Our core values</h2>
-    </div>
-    <div class="inner-content2">
-      <div class="inner-content-div">
-        <h2>Resilience</h2>
-        <p>
-          We are always of high-spirit. We stay strong no matter the situation.
-          We fight till the very end.
-        </p>
-      </div>
-      <div class="inner-content-div">
-        <h2>Team work</h2>
-        <p>
-          Many hands do more. Alone we go fast, but together we go far. We
-          support each other. We work together across multiple boundaries
-          satisfy users and help our company grow.
-        </p>
-      </div>
-      <div class="inner-content-div">
-        <h2>Passion</h2>
-        <p>
-          We are focused and passionate at what we do. We strive to provide a
-          high level of personalized service, whether you want to rent a place
-          for a long or short stay
-        </p>
+
+      <div class="inner-content2">
+        <div class="inner-content-div">
+          <h2>Resilience</h2>
+          <p>
+            We are always of high-spirit. We stay strong no matter the
+            situation. We fight till the very end.
+          </p>
+        </div>
+        <div class="inner-content-div">
+          <h2>Team work</h2>
+          <p>
+            Many hands do more. Alone we go fast, but together we go far. We
+            support each other. We work together across multiple boundaries
+            satisfy users and help our company grow.
+          </p>
+        </div>
+        <div class="inner-content-div">
+          <h2>Passion</h2>
+          <p>
+            We are focused and passionate at what we do. We strive to provide a
+            high level of personalized service, whether you want to rent a place
+            for a long or short stay
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -81,13 +82,24 @@ export default {
 @media only screen and (max-width: 900px) {
   .event-card {
     border-radius: 0 !important;
-    position: absolute;
-    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
     top: 0 !important;
-    padding: 10px 28px !important;
+    padding: 0 10px !important;
     margin: auto !important;
 
+    h2 {
+      width: auto !important;
+      margin: 15px 0 10px 0 !important;
+    }
+
+    p {
+      font-size: 15px !important;
+      line-height: 25px !important;
+    }
+
     .inner-content {
+      width: 100% !important;
       display: block !important;
       position: relative !important;
     }
@@ -95,7 +107,7 @@ export default {
     .inner-content2,
     .core-values,
     .inner-content-div {
-      display: none;
+      display: none !important;
     }
 
     br {
