@@ -67,7 +67,7 @@
               <h4>
                 {{ apartment.title || $route.query.title }}
               </h4>
-              <small>
+              <small style="color:#6a6a6a; font-size:14px">
                 {{ apartment.city || $route.query.city }},
                 {{ apartment.country || $route.query.country }}
               </small>
