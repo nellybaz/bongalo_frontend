@@ -491,32 +491,31 @@ export default {
             // +window.location.pathname+`?apartment=${this.$route.query.apartment}&uuid=${this.$route.query.uuid}`,
             redirect_url: window.location.origin.toString() + "/payment",
           };
-
           window.console.log(data);
-          // this.$store
-          //   .dispatch("bookApartment", data)
-          //   .then((res) => {
-          //     window.console.log(res);
-          //     if (res.responseCode && res.responseCode == 1) {
-          //       window.location.href = res["redirect_url"];
-          //     } else {
-          //       this.$notify({
-          //         group: "general",
-          //         title: "Info !!",
-          //         text: "Booking failed",
-          //         type: "error",
-          //       });
-          //     }
-          //   })
-          //   .catch((err) => {
-          //     this.reserveButtonClicked = false;
-          //     this.$notify({
-          //       group: "general",
-          //       title: "Info !!",
-          //       text: err.data.message,
-          //       type: "error",
-          //     });
-          //   });
+          this.$store
+            .dispatch("bookApartment", data)
+            .then((res) => {
+              window.console.log(res);
+              if (res.responseCode && res.responseCode == 1) {
+                window.location.href = res["redirect_url"];
+              } else {
+                this.$notify({
+                  group: "general",
+                  title: "Info !!",
+                  text: "Booking failed",
+                  type: "error",
+                });
+              }
+            })
+            .catch((err) => {
+              this.reserveButtonClicked = false;
+              this.$notify({
+                group: "general",
+                title: "Info !!",
+                text: err.data.message,
+                type: "error",
+              });
+            });
         } else {
           this.$store.dispatch("setModalState", 1);
         }
