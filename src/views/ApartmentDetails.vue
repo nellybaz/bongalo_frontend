@@ -579,11 +579,10 @@ export default {
     // },
 
     selectedDate: function(newValue, oldValue) {
-      this.checkin = newValue.start.toISOString().substring(0,10)
-      this.checkout = newValue.end.toISOString().substring(0,10)
+      this.checkin = newValue.start
+      this.checkout = newValue.end
      
-
-        let seconds = Math.abs(newValue.start - newValue.end) / 1000;
+        let seconds = Math.abs(this.checkin -this.checkout) / 1000;
         let days = seconds / 86400;
         this.bookedNights = days;
         window.console.log(this.bookedNights)
