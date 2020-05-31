@@ -245,26 +245,25 @@
                 </div>
 
                 <div class="book">
-                  <label for="">Dates</label>
+                  <br>
+                  <label for="" style="font-size:16px">Choose Dates</label>
+                  <br />
+                  <br>
 
                   <div class="dates">
                     <vc-date-picker
-                      v-model="checkin"
+                      is-expanded
+                      is-inline
+                      mode="range"
+                      v-model="selectedDate"
                       :popover="{ placement: 'bottom', visibility: 'click' }"
                       :disabled-dates="checkin_unavailable_dates"
-                      
                     >
                       <div>
-                        <!-- {{
-                          getDateFormat(
-                            checkin.toString(),
-                            $route.query.checkin ? 3 : 1
-                          )
-                        }} -->
                         {{ checkin.toString().substring(0, 16) }}
                       </div>
                     </vc-date-picker>
-                    <vc-date-picker
+                    <!-- <vc-date-picker
                       v-model="checkout"
                       :popover="{ placement: 'bottom', visibility: 'click' }"
                      
@@ -272,16 +271,9 @@
 
                     >
                       <div>
-                        <!-- {{
-                          getDateFormat(
-                            checkout.toString(),
-                            $route.query.checkin ? 4 : 2
-                          )
-                        }} -->
-
                         {{ checkout.toString().substring(0, 16) }}
                       </div>
-                    </vc-date-picker>
+                    </vc-date-picker> -->
                   </div>
                   <small style="font-size:9px; color:red">
                     {{ dateErrorMessage }}
@@ -324,9 +316,9 @@
                       <p>Service fee</p>
                       <p class="p">
                         ${{
-                          (apartment.price || $route.query.price) *
+                          ((apartment.price || $route.query.price) *
                             bookedNights *
-                            0.05
+                            0.05).toString().substring(0,4)
                         }}
                       </p>
                     </div>
@@ -563,34 +555,45 @@ export default {
     },
   },
   watch: {
-    checkout: function(newValue, oldValue) {
-      if (!newValue.toString().includes("dd/mm")) {
-        this.dateErrorMessage = "";
+    // checkout: function(newValue, oldValue) {
+    //   if (!newValue.toString().includes("dd/mm")) {
+    //     this.dateErrorMessage = "";
 
-        let seconds = Math.abs(this.checkin - this.checkout) / 1000;
+    //     let seconds = Math.abs(this.checkin - this.checkout) / 1000;
+    //     let days = seconds / 86400;
+    //     this.bookedNights = days;
+    //   }
+    // },
+    // checkin: function(newValue, oldValue) {
+    //   if (!newValue.toString().includes("dd/mm")) {
+    //     this.dateErrorMessage = "";
+    //     this.checkout = "dd/mm/yyyy";
+    //     this.bookedNights = 0;
+    //     for (var item in this.checkout_unavailable_dates) {
+    //       var date = this.checkout_unavailable_dates[item];
+    //       if (date["start"] == null) {
+    //         date["end"] = newValue;
+    //       }
+    //     }
+    //   }
+    // },
+
+    selectedDate: function(newValue, oldValue) {
+      this.checkin = newValue.start.toISOString().substring(0,10)
+      this.checkout = newValue.end.toISOString().substring(0,10)
+     
+
+        let seconds = Math.abs(newValue.start - newValue.end) / 1000;
         let days = seconds / 86400;
         this.bookedNights = days;
-      }
-    },
-    checkin: function(newValue, oldValue) {
-      if (!newValue.toString().includes("dd/mm")) {
-        this.dateErrorMessage = "";
-        this.checkout = "dd/mm/yyyy"
-        this.bookedNights = 0
-        for(var item in this.checkout_unavailable_dates){
-          var date = this.checkout_unavailable_dates[item]
-          if(date['start'] == null){
-            date['end'] = newValue
-          }
-        }
-
-      }
+        window.console.log(this.bookedNights)
     },
   },
   data: function() {
     return {
-      checkin_unavailable_dates:[],
-      checkout_unavailable_dates:[],
+      selectedDate: "",
+      checkin_unavailable_dates: [],
+      checkout_unavailable_dates: [],
       reserveButtonClicked: false,
       userUrl: "user/",
       dateErrorMessage: "",
@@ -682,14 +685,15 @@ export default {
         // }
 
         // this.amenities = this.getCurrentApartment.amenities
-        this.checkin_unavailable_dates.push({start:null, end: new Date()})
-        for(var item in this.getCurrentApartment.unavailable_dates){
-          const date_range = this.getCurrentApartment.unavailable_dates[item]
-          this.checkin_unavailable_dates.push(
-            {start: new Date(date_range['from']), end: new Date(date_range['to'])}
-          );
+        this.checkin_unavailable_dates.push({ start: null, end: new Date() });
+        for (var item in this.getCurrentApartment.unavailable_dates) {
+          const date_range = this.getCurrentApartment.unavailable_dates[item];
+          this.checkin_unavailable_dates.push({
+            start: new Date(date_range["from"]),
+            end: new Date(date_range["to"]),
+          });
         }
-        this.checkout_unavailable_dates = this.checkin_unavailable_dates
+        this.checkout_unavailable_dates = this.checkin_unavailable_dates;
       })
       .catch((err) => {
         this.apartmentIsAvailable = -1;
@@ -1315,10 +1319,10 @@ export default {
 
           .dates {
             width: 100%;
-            height: 50px;
+            // height: 500px;
             margin-top: 3px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            // display: grid;
+            // grid-template-columns: 1fr 1fr;
 
             div {
               height: 100%;
