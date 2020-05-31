@@ -253,14 +253,14 @@
                   <div class="dates">
                     <vc-date-picker
                       is-expanded
-                      is-inline
                       mode="range"
+                      :columns="$screens({ default: 1, lg: 2 })"
                       v-model="selectedDate"
                       :popover="{ placement: 'bottom', visibility: 'click' }"
                       :disabled-dates="checkin_unavailable_dates"
                     >
                       <div>
-                        {{ checkin.toString().substring(0, 16) }}
+                        {{ checkin.toString().substring(0, 16) }} to {{ checkout.toString().substring(0, 16) }}
                       </div>
                     </vc-date-picker>
                     <!-- <vc-date-picker
@@ -1318,7 +1318,7 @@ export default {
 
           .dates {
             width: 100%;
-            // height: 500px;
+            height: 50px;
             margin-top: 3px;
             // display: grid;
             // grid-template-columns: 1fr 1fr;
