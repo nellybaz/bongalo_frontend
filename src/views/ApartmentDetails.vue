@@ -251,7 +251,8 @@
                     <vc-date-picker
                       v-model="checkin"
                       :popover="{ placement: 'bottom', visibility: 'click' }"
-                      :min-date="new Date()"
+                      :disabled-dates="checkin_unavailable_dates"
+                      
                     >
                       <div>
                         <!-- {{
@@ -266,8 +267,9 @@
                     <vc-date-picker
                       v-model="checkout"
                       :popover="{ placement: 'bottom', visibility: 'click' }"
-                      :min-date="checkin != 'Checkin' ? checkin : new Date()"
-                      :disabled-dates="{ start: null, end: Date.now() }"
+                     
+                      :disabled-dates="checkout_unavailable_dates"
+
                     >
                       <div>
                         <!-- {{
@@ -573,11 +575,22 @@ export default {
     checkin: function(newValue, oldValue) {
       if (!newValue.toString().includes("dd/mm")) {
         this.dateErrorMessage = "";
+        this.checkout = "dd/mm/yyyy"
+        this.bookedNights = 0
+        for(var item in this.checkout_unavailable_dates){
+          var date = this.checkout_unavailable_dates[item]
+          if(date['start'] == null){
+            date['end'] = newValue
+          }
+        }
+
       }
     },
   },
   data: function() {
     return {
+      checkin_unavailable_dates:[],
+      checkout_unavailable_dates:[],
       reserveButtonClicked: false,
       userUrl: "user/",
       dateErrorMessage: "",
@@ -669,6 +682,14 @@ export default {
         // }
 
         // this.amenities = this.getCurrentApartment.amenities
+        this.checkin_unavailable_dates.push({start:null, end: new Date()})
+        for(var item in this.getCurrentApartment.unavailable_dates){
+          const date_range = this.getCurrentApartment.unavailable_dates[item]
+          this.checkin_unavailable_dates.push(
+            {start: new Date(date_range['from']), end: new Date(date_range['to'])}
+          );
+        }
+        this.checkout_unavailable_dates = this.checkin_unavailable_dates
       })
       .catch((err) => {
         this.apartmentIsAvailable = -1;
