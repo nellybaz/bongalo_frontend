@@ -87,7 +87,7 @@
                 color="rgba(64, 64, 64, 0.7)"
               ></Paragraph>
               <Paragraph
-                text="A Boutique Hotel on Airbnb should be a licensed hospitality business and will go through review to make sure it meets our criteria. This helps listings appear in the right searches and lets guests know what to expect."
+                text="A Boutique Hotel on Bongalo should be a licensed hospitality business and will go through review to make sure it meets our criteria. This helps listings appear in the right searches and lets guests know what to expect."
                 size="16"
                 weight="normal"
                 color="rgba(64, 64, 64, 0.7)"
