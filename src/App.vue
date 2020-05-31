@@ -411,6 +411,7 @@ export default {
       passwordErrorMessage: "",
       pinErrorMessage: "",
       email: "",
+      emailForVerify:"",
       first_name: "",
       last_name: "",
       password: "",
@@ -572,6 +573,7 @@ export default {
             this.$store
               .dispatch("register", data)
               .then((res) => {
+                this.emailForVerify = this.email
                 // this.email = ""
                 this.first_name = "";
                 this.last_name = "";
@@ -640,7 +642,7 @@ export default {
       } else {
         this.isButtonClicked = true;
         let data = {
-          email: this.email,
+          email: this.emailForVerify,
           pin: this.pinModel,
         };
         this.$store
