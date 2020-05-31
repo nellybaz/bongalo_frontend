@@ -476,11 +476,13 @@ export default {
         this.dateErrorMessage = "";
         if (window.localStorage.getItem("token")) {
           window.console.log(this.$route.query);
+          var cIn = this.checkin.toISOString().substring(0, 10).split("-");
+          var cOut = this.checkout.toISOString().substring(0, 10).split("-");
           let data = {
             token: this.$store.getters.getToken,
             apartment: this.$route.query["uuid"],
-            date_from: this.checkin.toISOString().substring(0, 10),
-            date_to: this.checkout.toISOString().substring(0, 10),
+            date_from: `${cIn[0]}-${cIn[1]}-${parseInt(cIn[2])+1}`,
+            date_to: `${cOut[0]}-${cOut[1]}-${parseInt(cOut[2])+1}`,
             number_of_rooms: 1,
             number_of_guest: this.guestNumber,
             client: this.getUuid,
@@ -491,30 +493,30 @@ export default {
           };
 
           window.console.log(data);
-          this.$store
-            .dispatch("bookApartment", data)
-            .then((res) => {
-              window.console.log(res);
-              if (res.responseCode && res.responseCode == 1) {
-                window.location.href = res["redirect_url"];
-              } else {
-                this.$notify({
-                  group: "general",
-                  title: "Info !!",
-                  text: "Booking failed",
-                  type: "error",
-                });
-              }
-            })
-            .catch((err) => {
-              this.reserveButtonClicked = false;
-              this.$notify({
-                group: "general",
-                title: "Info !!",
-                text: err.data.message,
-                type: "error",
-              });
-            });
+          // this.$store
+          //   .dispatch("bookApartment", data)
+          //   .then((res) => {
+          //     window.console.log(res);
+          //     if (res.responseCode && res.responseCode == 1) {
+          //       window.location.href = res["redirect_url"];
+          //     } else {
+          //       this.$notify({
+          //         group: "general",
+          //         title: "Info !!",
+          //         text: "Booking failed",
+          //         type: "error",
+          //       });
+          //     }
+          //   })
+          //   .catch((err) => {
+          //     this.reserveButtonClicked = false;
+          //     this.$notify({
+          //       group: "general",
+          //       title: "Info !!",
+          //       text: err.data.message,
+          //       type: "error",
+          //     });
+          //   });
         } else {
           this.$store.dispatch("setModalState", 1);
         }
