@@ -1,12 +1,23 @@
 <template>
   <section class="middle-banner-section">
     <p>List your property on Bongalo and open your doors to rental income.</p>
-    <button>List</button>
+    <button @click="handleOpeningHostPage">List</button>
   </section>
 </template>
 
 <script>
-export default {};
+export default {
+  methods:{
+    handleOpeningHostPage() {
+      if (this.$store.getters.isLoggedIn) {
+        this.$router.push("/become-a-host");
+      } else {
+        this.$router.push({ query: { next: "become-a-host" } });
+        this.setModalState(1);
+      }
+    },
+  }
+};
 </script>
 
 <style lang="scss" scoped>
