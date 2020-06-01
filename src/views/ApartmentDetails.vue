@@ -4,10 +4,18 @@
       <Navigation :showSearch="false"></Navigation>
 
       <ImageGrid
+        v-if="!isMobile()"
         class="apartment_details-img-sec"
         v-on:updateImageShow="updateImageShowHandler"
         :showMoreImages="true"
       ></ImageGrid>
+
+      <ApartmentDetailsCard
+        v-else
+        class="apartment_details-img-sec"
+        v-on:updateImageShow="updateImageShowHandler"
+        :showMoreImages="true"
+      ></ApartmentDetailsCard>
 
       <div class="apartment-details-content">
         <div class="details-div">
@@ -28,97 +36,90 @@
           <br />
           <div class="content-div">
             <div class="left" id="overview">
-              <div @click="getUserUrl()" class="host-details">
-                <div class="name">
-                  <img
+              <div v-if="!isMobile()" class="destop-view-cover">
+                <div @click="getUserUrl()" class="host-details">
+                  <div class="name">
+                    <img
+                      v-if="
+                        getCurrentApartment.owner_details &&
+                        getCurrentApartment.owner_details.profile_image.length >
+                          5
+                      "
+                      :src="getCurrentApartment.owner_details.profile_image"
+                      alt=""
+                    />
+                    <i v-else class="fas fa-user-circle"></i>
+                    <span>
+                      <p>Host</p>
+                      <strong style="text-decoration: underline;">
+                        {{ apartment.owner || $route.query.owner }}
+                      </strong>
+                    </span>
+                  </div>
+
+                  <div
                     v-if="
                       getCurrentApartment.owner_details &&
-                      getCurrentApartment.owner_details.profile_image.length > 5
+                      getCurrentApartment.owner_details.resident_country
+                        .length > 1
                     "
-                    :src="getCurrentApartment.owner_details.profile_image"
-                    alt=""
-                  />
-                  <i v-else class="fas fa-user-circle"></i>
-                  <span class="host-details-desktop">
-                    <p>Host</p>
-                    <strong style="text-decoration: underline;">
-                      {{ apartment.owner || $route.query.owner }}
-                    </strong>
-                  </span>
+                    class="country"
+                  >
+                    <p>
+                      Nationality:
+                      <strong>
+                        {{
+                          getCurrentApartment.owner_details.resident_country ||
+                          ""
+                        }}
+                      </strong>
+                    </p>
+                  </div>
                 </div>
 
-                <div
-                  v-if="
-                    getCurrentApartment.owner_details &&
-                    getCurrentApartment.owner_details.resident_country.length >
-                      1
-                  "
-                  class="country"
-                >
-                  <p>
-                    Nationality:
-                    <strong>
+                <div>
+                  <h4 class="apartment-title-mobile">
+                    {{ apartment.title || $route.query.title }}
+                  </h4>
+                  <small>
+                    {{ apartment.city || $route.query.city }},
+                    {{ apartment.country || $route.query.country }}
+                  </small>
+                </div>
+
+                <div class="more-info">
+                  <div class="more-info-left">
+                    <p>
+                      <i class="fas fa-user-friends"></i> Sleeps:
                       {{
-                        getCurrentApartment.owner_details.resident_country || ""
+                        apartment.available_rooms ||
+                        $route.query.available_rooms
                       }}
-                    </strong>
-                  </p>
+                    </p>
+                    <p>
+                      <i class="fas fa-door-open"></i> Bedrooms:
+                      {{
+                        apartment.available_rooms ||
+                        $route.query.available_rooms
+                      }}
+                    </p>
+                    <p>
+                      <i class="fas fa-shower"></i> Bathrooms:
+                      {{
+                        apartment.number_of_bathrooms ||
+                        $route.query.number_of_bathrooms
+                      }}
+                    </p>
+                  </div>
+                  <div class="more-info-left second">
+                    <p>
+                      <i class="fas fa-moon"></i> Min Stay:
+                      {{ apartment.min_nights || $route.query.min_nights }}
+                      night(s)
+                    </p>
+                  </div>
                 </div>
               </div>
-
-              <h4>
-                {{ apartment.title || $route.query.title }}
-              </h4>
-              <small>
-                {{ apartment.city || $route.query.city }},
-                {{ apartment.country || $route.query.country }}
-              </small>
-
-              <div class="more-info">
-                <div class="more-info-left">
-                  <p>
-                    <i class="fas fa-user-friends"></i> Sleeps:
-                    {{
-                      apartment.available_rooms || $route.query.available_rooms
-                    }}
-                  </p>
-                  <p>
-                    <i class="fas fa-door-open"></i> Bedrooms:
-                    {{
-                      apartment.available_rooms || $route.query.available_rooms
-                    }}
-                  </p>
-                  <p>
-                    <i class="fas fa-shower"></i> Bathrooms:
-                    {{
-                      apartment.number_of_bathrooms ||
-                      $route.query.number_of_bathrooms
-                    }}
-                  </p>
-                </div>
-                <div class="more-info-left second">
-                  <p>
-                    <i class="fas fa-moon"></i> Min Stay:
-                    {{ apartment.min_nights || $route.query.min_nights }}
-                    night(s)
-                  </p>
-                </div>
-              </div>
-
-              <!-- <div class="booking-section">
-                <h4>
-                  ${{ apartment.price || $route.query.price }}
-                  <span>/ night</span>
-                </h4>
-
-                <button @click="$modal.show('mobile-booking')">Book</button>
-              </div> -->
-
-              <img
-                class="google-map-mobile"
-                src="../assets/images/google-map.png"
-                alt=""
-              />
 
               <div id="rules" class="rules" ref="rulesRef">
                 <h3>House Rules</h3>
@@ -324,11 +325,6 @@
                       </p>
                     </div>
 
-                    <!-- <div class="cleaning-fee">
-                      <p>Cleaning fee</p>
-                      <p class="p">${{ cleaningFee }}</p>
-                    </div> -->
-
                     <div class="service-fee">
                       <p>Service fee</p>
                       <p class="p">
@@ -405,8 +401,9 @@
 <script>
 import Navigation from "../components/Blog/Navigation";
 import ImageGrid from "../components/ImageGrid";
+import ApartmentDetailsCard from "../components/ApartmentDetailsCard";
 import Button from "../components/Button";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import Vue from "vue";
 import VCalendar from "v-calendar";
@@ -421,11 +418,13 @@ export default {
   components: {
     Navigation,
     Button,
+    ApartmentDetailsCard,
     ImageGrid,
     PulseLoader,
   },
 
   methods: {
+    ...mapGetters(["isMobile", "getFeatured", "isLoggedIn"]),
     getUserUrl() {
       this.$router.push({
         path: "user/",
@@ -814,11 +813,50 @@ export default {
 @media only screen and(max-width:900px) {
   * {
     max-width: 100% !important;
+    p {
+      color: gray !important;
+    }
+  }
+
+  .apartment-title-mobile {
+    padding-bottom: 50px !important;
+  }
+
+  .more-info {
+    height: auto !important;
+    position: relative;
+    width: auto !important;
+    padding-top: 100px !important;
+  }
+
+  .desc {
+    p {
+      text-align: left !important;
+      line-height: 22px !important;
+      font-size: 15px !important;
+      color: gray !important;
+    }
+  }
+
+  .more-info-left {
+    display: block !important;
+  }
+
+  .content-div {
     display: block !important;
   }
 
   .tap-div {
     display: none !important;
+  }
+
+  .other-div {
+    h4 {
+      margin-top: 10px !important;
+    }
+    p {
+      line-height: 20px !important;
+    }
   }
 
   .apartment-details-content {
@@ -830,22 +868,29 @@ export default {
 
   .rules {
     p {
-      padding: 10px !important;
-      margin: 10px 0 !important;
+      padding: 8px 10px !important;
     }
   }
+
   .google-map-mobile {
     display: block !important;
   }
 
   .amenities {
+    * {
+      display: block !important;
+    }
+
+    height: auto !important;
+    margin: 15px 10px 0 0 !important;
+
     p {
       display: flex !important;
-
+      font-size: 18px !important;
       i {
         font-size: 20px !important;
-        margin-left: -5px !important;
         margin-right: 10px !important;
+        margin-left: -10px !important;
       }
     }
   }

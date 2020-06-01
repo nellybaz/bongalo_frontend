@@ -120,7 +120,8 @@ const mutations = {
   setReviewFromMe: (state, newValue) => (state.reviews_from_me = newValue),
 
   setBankName: (state, newValue) => (state.bank_names = newValue),
-  setBankAccountName: (state, newValue) => (state.bank_account_names = newValue),
+  setBankAccountName: (state, newValue) =>
+    (state.bank_account_names = newValue),
   setBankAccountNumber: (state, newValue) =>
     (state.bank_account_number = newValue),
   setSwiftCode: (state, newValue) => (state.swift_code = newValue),

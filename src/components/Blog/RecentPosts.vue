@@ -69,10 +69,16 @@ export default {
 @media only screen and (max-width: 900px) {
   * {
     display: block !important;
-    padding: 4px !important;
+    padding: 0 4px !important;
     margin: auto !important;
-    // border: 1px solid red;
     width: 100% !important;
+  }
+
+  .div-inner{
+    p{
+      text-align: left !important;
+      font-size: 15px !important;
+    }
   }
 
   h2,
@@ -82,6 +88,7 @@ export default {
       width: auto !important;
     }
     img {
+      //  border: 1px solid red !important;
       width: 100% !important ;
     }
 
@@ -90,6 +97,7 @@ export default {
       width: 50% !important;
 
       p {
+        //  border: 1px solid red !important;
         padding: 0.8rem !important;
         text-align: center !important;
       }

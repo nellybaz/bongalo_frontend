@@ -88,6 +88,7 @@
             label="Login"
             :isFullWidth="true"
           />
+
           <div class="loader-div" v-else>
             <pulse-loader
               class="loader"
@@ -423,7 +424,8 @@
     <Login></Login>
     <notifications :duration="5000" position="top right" group="general" />
     <router-view />
-    <Footer></Footer>
+    <Footer v-if="!isMobile"></Footer>
+    <FooterMobile v-else></FooterMobile>
   </div>
 </template>
 
@@ -431,7 +433,7 @@
 import { mapGetters, mapActions } from "vuex";
 import Footer from "./components/Footer";
 import Login from "./components/SignInModal";
-
+import FooterMobile from "./components/FooterMobile";
 import Input from "./components/TextInput";
 import Button from "./components/Button";
 import SocialSignin from "./components/SocialSignin";
@@ -446,6 +448,7 @@ export default {
     Button,
     SocialSignin,
     PulseLoader,
+    FooterMobile,
   },
 
   data: function () {
@@ -472,7 +475,7 @@ export default {
     };
   },
 
-  computed: mapGetters(["getModalState"]),
+  computed: mapGetters(["getModalState", "isMobile"]),
   methods: {
     beforeClose(event) {
       this.emailErrorMessage = "";
@@ -853,6 +856,7 @@ small {
   justify-content: flex-start;
   flex-direction: column;
   margin: 0 !important;
+
   .i-div {
     width: 100%;
     display: flex;

@@ -9,6 +9,7 @@
         label="Things to look out for"
         link="/event-details"
       ></EventCard>
+
       <MobileEventCard
         v-else
         :events="events"
@@ -49,6 +50,7 @@
         label="Some amazing experiences"
         link="/experience"
       ></EventCard>
+
       <MobileEventCard
         v-else
         :events="events"

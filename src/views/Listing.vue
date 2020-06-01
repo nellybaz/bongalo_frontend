@@ -41,7 +41,7 @@
       <div class="progress-box-wrapper">
         <div :style="style()" class="box-paint"></div>
 
-        <div v-if="step == 1" class="box-content">
+        <div v-if="step == 3" class="box-content">
           <div v-if="flow == 1">
             <Paragraph
               text="What kind of place are you listing ?"
@@ -720,7 +720,7 @@
           </div>
         </div>
 
-        <div v-else-if="step == 3" class="box-content">
+        <div v-else-if="step == 1" class="box-content">
           <div v-if="flow == 1">
             <Paragraph
               text="Successful hosting starts with an accurate calendar"
@@ -793,6 +793,7 @@
                   weight="normal"
                   color="#404040"
                 ></Paragraph>
+
                 <Select
                   @selectChangeHandler="handleSelect"
                   step="checkin"
@@ -808,6 +809,7 @@
                   weight="normal"
                   color="#404040"
                 ></Paragraph>
+
                 <Select
                   @selectChangeHandler="handleSelect"
                   step="checkout"
@@ -861,6 +863,7 @@
               <button class="button" v-on:click="processSteps(0)">
                 <i class="fas fa-chevron-left"></i> Back
               </button>
+
               <Button
                 :isFullWidth="false"
                 v-on:handleClick="processSteps(1)"

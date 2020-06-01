@@ -20,6 +20,7 @@ new Vue({
   router,
   store,
   render: (h) => h(App),
+
   created() {
     // Your web app's Firebase configuration
     var firebaseConfig = {
@@ -32,8 +33,10 @@ new Vue({
       appId: "1:175061569890:web:6b3f85867ee185ebba9c3b",
       measurementId: "G-7KQMKMN749",
     };
+
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
   },
+  
 }).$mount("#app");

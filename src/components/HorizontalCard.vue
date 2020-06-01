@@ -50,20 +50,21 @@ export default {
         url += "&" + key + "=" + this.apartment[key];
       }
       for (let key2 in this.$route.query) {
-        if(!this.apartment[key2]){
+        if (!this.apartment[key2]) {
           url += "&" + key2 + "=" + this.$route.query[key2];
         }
       }
       return url;
     },
     handleCardClick() {
-      this.$store
-        .dispatch("setCurrentApartment", { apartment: this.apartment })
+      this.$store.dispatch("setCurrentApartment", {
+        apartment: this.apartment,
+      });
       let route = this.$router.resolve({
-            path: "/details?apartment=" + this.apartment.uuid,
-            query: { ...this.apartment, ...this.$route.query },
-          });
-      window.open(route.href, '_blank')
+        path: "/details?apartment=" + this.apartment.uuid,
+        query: { ...this.apartment, ...this.$route.query },
+      });
+      window.open(route.href, "_blank");
     },
     getThumbnail(img) {
       try {
@@ -84,6 +85,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  .details {
+    height: auto;
+  }
+}
+
 a {
   text-decoration: none;
 }
@@ -107,6 +114,7 @@ a {
     width: 100%;
     height: 30%;
     margin-top: 10px;
+
     .location {
       font-style: normal;
       font-weight: normal;
@@ -114,6 +122,7 @@ a {
       line-height: 17px;
       color: #6a6a6a;
       margin-bottom: 7px;
+
       i {
         margin-right: 5px;
       }
@@ -125,12 +134,10 @@ a {
 
     .title {
       font-style: normal;
-      // font-weight: bold;
       font-size: 17px;
       line-height: 20px;
       display: flex;
       align-items: center;
-
       color: #404040;
     }
 

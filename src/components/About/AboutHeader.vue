@@ -6,7 +6,7 @@
       </a>
 
       <div>
-        <img src="../../assets/images/mobile-nav-shape.png" alt />
+        <img class="about-logo" src="../../assets/images/home-logo.png" alt />
       </div>
 
       <NavLink :isDark="false"></NavLink>
@@ -32,6 +32,9 @@ export default {
 
     img {
       margin: 30px 0 0 0 !important;
+    }
+    .about-logo {
+      // max-width: 100% !important;
     }
   }
 }

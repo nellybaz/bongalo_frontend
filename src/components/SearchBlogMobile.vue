@@ -1,7 +1,4 @@
 <template>
-  <!-- <div>
-  <h1>Nak</h1>
-</div> -->
   <div
     @click="showOutline = true"
     @mouseleave="showOutline = true"
@@ -22,7 +19,6 @@
 
 <script>
 export default {
-  //   name: "app_footer",
   data: function () {
     return {
       showOutline: false,
@@ -35,10 +31,6 @@ export default {
 
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
-  .search-div {
-    // border: 1px solid red !important;
-    // display: none !important;
-  }
   .search-input {
     border: 1px solid red !important;
   }

@@ -22,6 +22,7 @@
       </p>
 
       <ApplySection />
+      <br /><br />
     </div>
   </div>
 </template>
@@ -47,7 +48,10 @@ export default {
     border: transparent !important;
   }
   p {
-    text-align: justify;
+    text-align: left;
+    color: gray !important;
+    line-height: 22px !important;
+    font-size: 15px !important;
   }
   .content {
     padding: 15px 25px !important;

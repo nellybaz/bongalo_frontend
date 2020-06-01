@@ -40,8 +40,13 @@ export default {
 
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
-  *{
+  * {
     // border: 1px solid red;
+  }
+  p {
+    color: gray !important;
+    // border: 1px solid red !important;
+    // text-align: left;
   }
 }
 

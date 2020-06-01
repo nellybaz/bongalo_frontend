@@ -81,6 +81,11 @@ export default {
   * {
     width: 100% !important;
     border: transparent !important;
+    font-weight: normal;
+  }
+  
+  p {
+    color: rgb(107, 106, 106) !important;
   }
   .content {
     padding: 20px !important;
@@ -104,7 +109,9 @@ export default {
     display: block !important;
     p {
       line-height: 20px !important;
-      text-align: justify;
+      text-align: left;
+
+      // border: 1px solid red !important;
     }
   }
 }

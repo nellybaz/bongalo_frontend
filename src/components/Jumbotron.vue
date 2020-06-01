@@ -9,7 +9,7 @@
         <img
           @click="$modal.show('mobile-booking')"
           class="nav-modal"
-          src="../assets/images/mobile-nav-shape.png"
+          src="../assets/images/home-logo.png"
           alt
         />
       </div>
@@ -18,7 +18,7 @@
     </header>
 
     <h3 v-if="isMobile()">
-      Trip for Business or Pleasure? <br />
+      Traveling Africa, Trip for Business or Pleasure? <br />
       Book your stay with us.
     </h3>
 

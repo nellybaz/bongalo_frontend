@@ -32,6 +32,7 @@
       <h3 class="h3">
         Places to stay in Kigali
       </h3>
+
       <div class="inner-content">
         <HorizontalCard
           v-for="apartment in getSearchedApartment"
@@ -56,6 +57,7 @@ export default {
   },
 
   methods: {
+    ...mapGetters(["isMobile", "getFeatured", "isLoggedIn"]),
     filterCodeHandler(intent) {
       if (intent == 0) {
         this.filterCode = 0;
@@ -94,6 +96,12 @@ export default {
     margin: auto !important;
     padding: 10px !important;
     width: 100% !important;
+  }
+
+  .apartment-section {
+    .inner-content {
+      display: block !important;
+    }
   }
 
   .filter {

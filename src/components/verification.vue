@@ -4,7 +4,6 @@
       <br />
       <h2>
         {{ title }}
-        <!-- Verifications -->
       </h2>
       <br />
 

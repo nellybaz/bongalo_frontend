@@ -660,8 +660,10 @@ export default {
             text-align: left !important;
         }
         p{
-               padding: 0 !important;
-             font-size: 15px !important;
+        padding: 0 !important;
+        color: gray !important;
+        text-align: left !important;
+        font-size: 15px !important;
         }
 
     h2, h4{
@@ -675,6 +677,9 @@ export default {
 
     ul, li{
         margin: 10px !important;
+        font-size: 15px !important;
+        color: gray !important;
+        text-align: left !important;
         font-size: 15px !important;
     }
       .side-nav, h1{

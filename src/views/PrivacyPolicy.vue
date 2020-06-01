@@ -744,7 +744,10 @@ export default {
   .content {
     padding: 0 20px !important;
   }
-
+  // p {
+  //   border: 1px solid red !important;
+  //   text-align: left !important;
+  // }
   .side-nav {
     a {
       text-align: start !important;
@@ -770,13 +773,17 @@ export default {
   ul,
   li {
     width: auto !important;
-    text-align: justify !important;
+    text-align: left !important;
     font-size: 15px !important;
     margin: 8px 0 !important;
+    color: gray !important;
+    line-height: 22px !important;
   }
   p {
-    text-align: justify !important;
+    text-align: left !important;
     font-size: 15px !important;
+    color: gray !important;
+    line-height: 22px !important;
   }
 }
 a {

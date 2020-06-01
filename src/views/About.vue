@@ -2,6 +2,7 @@
   <div class="about">
     <AboutHeader />
     <HeadCard />
+
     <section class="event-section">
       <EventCard
         v-if="!isMobile()"
@@ -9,28 +10,32 @@
         label="Wha's Trending"
         link="/event-details"
       ></EventCard>
+
       <MobileEventCard
         v-else
         :events="events"
         label="What's trending"
       ></MobileEventCard>
     </section>
-    <section class="event-section">
+
+    <!-- <section class="event-section">
       <EventCard
         v-if="!isMobile()"
         :events="events"
         label="Wha's Trending"
         link="/event-details"
       ></EventCard>
-      <MobileEventCard v-else :events="events"></MobileEventCard>
-    </section>
+
+      <MobileEventCard v-else :events="events"> </MobileEventCard>
+    </section> -->
 
     <ListProperity />
 
     <section class="powered-section">
-      <h3 class="h3">Powered By</h3>
+     
 
-      <div class="content">
+      <div  v-if="isMobile()" class="content">
+         <h3 class="h3">Powered By</h3>
         <img
           v-for="item in powered"
           :key="item.id"
@@ -167,7 +172,6 @@ export default {
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
   .event-section {
-    // border: 1px solid red;
     height: auto !important;
     max-width: 100% !important;
     margin: auto !important;

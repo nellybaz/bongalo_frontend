@@ -7,12 +7,14 @@
         :src="image1"
         alt=""
       />
+
       <img
         v-on:click="$emit('updateImageShow', 1)"
         class="img2 img-item"
         :src="image2"
         alt=""
       />
+
       <img
         v-on:click="$emit('updateImageShow', 1)"
         class="img3 img-item"
@@ -39,18 +41,18 @@ export default {
       type: Boolean,
     },
   },
+
   methods: {
     handleImageLoad(id) {
-      if(id == 1){
-        this.image1 = this.getCurrentApartment.main_image
+      if (id == 1) {
+        this.image1 = this.getCurrentApartment.main_image;
+      } else {
+        this.image2 = this.getImages(2);
+        this.image3 = this.getImages(3);
+        this.image4 = this.getImages(4);
       }
-      else{
-        this.image2 = this.getImages(2)
-        this.image3 = this.getImages(3)
-        this.image4 = this.getImages(4)
-      }
-      
     },
+
     getImages(index) {
       if (this.getApartmentImages.length - 1 >= index) {
         return this.getApartmentImages[index].image;
@@ -59,7 +61,8 @@ export default {
       }
     },
   },
-  data: function() {
+
+  data: function () {
     return {
       image1: require("../assets/images/no-image2.png"),
       image2: require("../assets/images/no-image2.png"),
@@ -68,24 +71,38 @@ export default {
       apartment: {},
     };
   },
+
   watch: {
-    getApartmentImages: function(newValue, oldValue) {
-      this.handleImageLoad(2)
+    getApartmentImages: function (newValue, oldValue) {
+      this.handleImageLoad(2);
     },
-    getCurrentApartment: function(newValue, oldValue) {
-      this.handleImageLoad(1)
-    }
+    getCurrentApartment: function (newValue, oldValue) {
+      this.handleImageLoad(1);
+    },
   },
   computed: mapGetters(["getApartmentImages", "getCurrentApartment"]),
   created() {
     this.apartment = this.getCurrentApartment;
-    this.handleImageLoad(1)
-    this.handleImageLoad(2)
+    this.handleImageLoad(1);
+    this.handleImageLoad(2);
   },
 };
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 900px) {
+  .image_grid {
+    height: auto !important;
+  }
+  .image-div {
+    display: none !important;
+  }
+  .img-item {
+    height: auto !important;
+    width: 100% !important;
+    display: block !important;
+  }
+}
 .image_grid {
   height: 400px;
   width: 100%;
@@ -125,8 +142,8 @@ export default {
     .img4 {
       grid-column: 7/-1;
       grid-row: 1/-1;
-      
-      img{
+
+      img {
         height: 400px;
       }
 

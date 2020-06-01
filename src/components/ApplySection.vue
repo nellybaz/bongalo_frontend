@@ -17,7 +17,6 @@
     />
 
     <br />
-
     <div class="file-select">
       <label for="select-below">UPLOAD YOUR RESUME</label>
       <br />
@@ -61,7 +60,7 @@ export default {
 @media only screen and (max-width: 900px) {
   .file-select {
     margin-top: 60px !important;
-
+    font-size: 12px !important;
     label {
       border: 1px dashed #918f8f;
       font-style: normal;
@@ -81,6 +80,9 @@ export default {
   .btn-div {
     button {
       float: left !important;
+      // border: 1px solid red !important;
+      // margin-bottom: 20px !important;
+      // font-size: 10px !important;
     }
   }
 }

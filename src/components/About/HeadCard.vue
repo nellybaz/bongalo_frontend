@@ -95,7 +95,8 @@ export default {
 
     p {
       font-size: 15px !important;
-      line-height: 25px !important;
+      // line-height: 25px !important;
+      text-align: left;
     }
 
     .inner-content {

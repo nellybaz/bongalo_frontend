@@ -23,7 +23,10 @@
           </p>
         </div>
       </router-link>
-      <!-- <VerticalCard class="vertical-card" v-for="event in events" :key=event.id :event=event></VerticalCard> -->
+      <!-- <VerticalCard class="vertical-card" 
+      v-for="event in events" 
+      :key=event.id 
+      :event=event></VerticalCard> -->
     </div>
   </div>
 </template>

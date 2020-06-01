@@ -13,7 +13,7 @@
         :style="getClass()"
         type="text"
         v-model="email"
-        placeholder=""
+        placeholder="Enter your email"
       />
 
       <div class="payment-text-sub-btn">
@@ -127,7 +127,9 @@ export default {
   * {
     max-width: 100% !important;
   }
+  
   .footer {
+    margin-top: 1rem !important;
     text-align: center;
     padding: 40px 10px !important;
     height: auto !important;
@@ -151,14 +153,15 @@ export default {
         color: #404040;
       }
       input {
-        width: auto !important;
+        width: 84% !important;
         border: 1px solid #686868;
-        box-sizing: border-box;
-        background-color: #f6faff;
-        padding: 1rem 7rem !important;
-        margin: 10px 0 !important;
+        text-align: left !important;
+        background-color: #ffffff;
+        padding: 1rem !important;
+        margin: 15px 0 !important;
         border-radius: 5px;
       }
+
       button {
         padding: 0.5rem 2rem !important;
         border: transparent;

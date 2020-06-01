@@ -123,6 +123,11 @@ export default {
     margin: auto !important;
     display: block !important;
   }
+  p{
+    font-size: 15px !important;
+    margin-top: 10px !important;
+    text-align: left !important;
+  }
   input {
     display: none !important;
   }

@@ -56,7 +56,7 @@
 
       <div class="subscribe-section">
         <p>Enter your email below to recieve updates on our Newsletter</p>
-        <small style="color:red">
+        <small style="color: red;">
           {{ emailErrorMessage }}
         </small>
 
@@ -100,7 +100,7 @@
 <script>
 export default {
   name: "app_footer",
-  data: function() {
+  data: function () {
     return {
       showOutline: false,
       email: "",
@@ -110,7 +110,6 @@ export default {
   methods: {
     handleSubscribe() {
       if (!this.email.includes("@") || !this.email.includes(".")) {
-        // wrong email
         this.$notify({
           group: "general",
           title: "Info !!",
@@ -125,14 +124,13 @@ export default {
           .dispatch("subscribe", data)
           .then((res) => {
             if (res == 1) {
-              this.email = ""
+              this.email = "";
               this.$notify({
                 group: "general",
                 title: "Info !!",
                 text: "Subscribed Successfully. Thanks!!",
                 type: "success",
               });
-              
             }
           })
           .catch((err) => {
@@ -167,6 +165,7 @@ export default {
     padding: 40px 10px !important;
     height: auto !important;
     background-color: #f6faff;
+
     .content {
       margin-bottom: 40px;
       height: auto !important;
