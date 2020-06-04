@@ -817,6 +817,25 @@ export default {
       color: gray !important;
     }
   }
+  .details-img-show {
+    width: 100vw !important;
+    height: auto !important;
+
+    i {
+      position: relative;
+      z-index: 1 !important;
+    }
+  }
+
+  .img-showing-div {
+    width: 100vw !important;
+    height: 100% !important;
+
+    img {
+      width: 100vw !important;
+      height: 100% !important;
+    }
+  }
 
   .apartment-title-mobile {
     padding-bottom: 50px !important;
@@ -872,10 +891,6 @@ export default {
     }
   }
 
-  .google-map-mobile {
-    display: block !important;
-  }
-
   .amenities {
     * {
       display: block !important;
@@ -896,9 +911,6 @@ export default {
   }
 }
 
-.google-map-mobile {
-  display: none !important;
-}
 .apd-loader-div,
 .loader-div {
   width: 100%;
@@ -1029,6 +1041,7 @@ export default {
     }
 
     .img-item {
+      // border: 1px solid red !important;
       width: 100%;
       min-height: 100%;
       object-fit: cover;

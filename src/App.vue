@@ -1,9 +1,21 @@
 <template>
   <div id="app">
     <modal
+      name="profile-nav-mob"
+      height="100%"
+      :width="getModalWidth()"
+      @before-close="beforeClose"
+      :clickToClose="true"
+    >
+      <div class="mobile-profile-nav-content">
+        <ProfileCardMobile />
+      </div>
+    </modal>
+
+    <modal
       name="mobile-booking"
       height="100%"
-      width="100%"
+      :width="getModalWidth()"
       @before-close="beforeClose"
       :clickToClose="true"
     >
@@ -29,16 +41,11 @@
             </li>
             <li class="profile-li">
               <a href="/profile">
-                <!-- <img :src="getProfile()" /> -->
-                Welcome {{ getFirstName }}
+                <!-- <img :src="getProfile()" />  -->
+                My Account {{ getFirstName }}
               </a>
             </li>
 
-            <li>
-              <a v-if="!isLoggedIn" v-on:click="$modal.show('register')">
-                Sign up
-              </a>
-            </li>
             <li v-if="!isLoggedIn" v-on:click="$modal.show('login')">
               Login
             </li>
@@ -50,14 +57,15 @@
     <modal
       name="login"
       height="570"
-      width="100%"
+      :width="getModalWidth()"
       @before-close="beforeClose"
-      :clickToClose="false"
+      :clickToClose="true"
     >
       <div class="modal-content">
         <div class="i-div">
-          <i v-on:click="$modal.hide('login')" class="far fa-times-circle"></i>
+          <i @click="handleModalClose()" class="far fa-times-circle"></i>
         </div>
+
         <div class="login-div">
           <p class="login-error" v-if="signInError">{{ signInError }}</p>
           <Input
@@ -436,6 +444,8 @@ import Login from "./components/SignInModal";
 import FooterMobile from "./components/FooterMobile";
 import Input from "./components/TextInput";
 import Button from "./components/Button";
+import Profile from "./views/Profile";
+import ProfileCardMobile from "./components/ProfileCardMobile";
 import SocialSignin from "./components/SocialSignin";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
@@ -449,6 +459,8 @@ export default {
     SocialSignin,
     PulseLoader,
     FooterMobile,
+    // Profile,
+    ProfileCardMobile,
   },
 
   data: function () {
@@ -473,10 +485,19 @@ export default {
       pinModel: "",
       signInError: "",
     };
+    // mobile - booking;
   },
 
   computed: mapGetters(["getModalState", "isMobile"]),
   methods: {
+    getModalWidth() {
+      return this.isMobile ? "100%" : "30%";
+    },
+
+    handleModalClose() {
+      this.$modal.hide("login");
+    },
+
     beforeClose(event) {
       this.emailErrorMessage = "";
       this.emailErrorMessage = "";
@@ -858,6 +879,7 @@ small {
   margin: 0 !important;
 
   .i-div {
+    // border: 1px solid red;
     width: 100%;
     display: flex;
     align-items: flex-end;
@@ -993,14 +1015,12 @@ small {
     height: 30px !important;
   }
   .i-div {
-    background: #3a85fc;
-    width: 90% !important;
-    padding: 10px !important;
+    border: 1px solid red;
     margin: 40px 18px !important;
-    border-radius: 5px !important;
     i {
-      color: #ffffff !important;
-      font-size: 20px !important;
+      margin-left: -0px !important;
+      color: #3a85fc !important;
+      font-size: 25px !important;
     }
   }
 
@@ -1008,12 +1028,21 @@ small {
     width: 100%;
     margin: 0 !important;
 
+    li:hover {
+      background: #3a85fc;
+
+      a {
+        color: #ffffff;
+      }
+    }
+
     ul {
       margin: 40px 0 !important;
 
       li {
         width: auto !important;
-        margin: 20px !important;
+        border-radius: 5px !important;
+        padding: 10px 5px !important;
         font-size: 20px !important;
         list-style: none;
         font-weight: normal !important;

@@ -6,7 +6,13 @@
       </a>
 
       <div>
-        <img class="about-logo" src="../../assets/images/home-logo.png" alt />
+        <img
+          style="height: 20px !important;"
+          @click="$modal.show('mobile-booking')"
+          class="about-logo"
+          src="../../assets/images/home-logo.png"
+          alt
+        />
       </div>
 
       <NavLink :isDark="false"></NavLink>
@@ -33,9 +39,15 @@ export default {
     img {
       margin: 30px 0 0 0 !important;
     }
-    .about-logo {
-      // max-width: 100% !important;
-    }
+    // .about-logo {
+    //   max-width: 100% !important;
+    //   height: 20px !important;
+    // }
+  }
+  .header {
+    border: 1px solid red !important;
+    object-fit: contain !important;
+    width: 100% !important;
   }
 }
 .header {

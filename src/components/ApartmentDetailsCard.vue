@@ -7,6 +7,15 @@
         :src="image1"
         alt=""
       />
+      <div v-on:click="$emit('updateImageShow', 1)" class="img4 img-item">
+        <p
+          class="show-more-img-btn"
+          v-if="showMoreImages"
+          v-on:click="$emit('updateImageShow', 1)"
+        >
+          View more
+        </p>
+      </div>
     </div>
     <div class="host-section-cover">
       <div @click="getUserUrl()" class="host-details">
@@ -88,11 +97,11 @@
         </h4>
         <button>Book</button>
       </div>
-      <img
+      <!-- <img
         class="google-map-mobile"
         src="../assets/images/google-map.png"
         alt=""
-      />
+      /> -->
     </div>
   </div>
 </template>
@@ -106,6 +115,7 @@ export default {
       type: Boolean,
     },
   },
+
   methods: {
     handleImageLoad(id) {
       if (id == 1) {
@@ -116,6 +126,7 @@ export default {
         this.image4 = this.getImages(4);
       }
     },
+
     getImages(index) {
       if (this.getApartmentImages.length - 1 >= index) {
         return this.getApartmentImages[index].image;
@@ -124,6 +135,7 @@ export default {
       }
     },
   },
+
   data: function () {
     return {
       image1: require("../assets/images/no-image2.png"),
@@ -228,6 +240,18 @@ export default {
         object-fit: cover;
       }
     }
+  }
+
+  .show-more-img-btn {
+    top: auto !important;
+    float: right;
+    margin: 0 20px !important;
+    color: #ffffff;
+    background: black;
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 5px 7px;
+    z-index: 9999;
   }
 }
 </style>

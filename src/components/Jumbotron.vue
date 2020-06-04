@@ -7,9 +7,10 @@
 
       <div>
         <img
+          style="height: 20px !important;"
           @click="$modal.show('mobile-booking')"
-          class="nav-modal"
-          src="../assets/images/home-logo.png"
+          class="about-logo"
+          src="../assets/images/home-vector.png"
           alt
         />
       </div>
@@ -18,8 +19,7 @@
     </header>
 
     <h3 v-if="isMobile()">
-      Traveling Africa, Trip for Business or Pleasure? <br />
-      Book your stay with us.
+      Traveling Africa, Trip for Business or Pleasure? Book your stay with us.
     </h3>
 
     <div class="book-card-div">
@@ -32,7 +32,6 @@
 import BookCard from "../components/HomePageBookCard";
 import { mapGetters, mapActions } from "vuex";
 import NavLink from "../components/NavLink";
-// import FooterMobile from '../components/FooterMobile';
 
 export default {
   name: "jumbotron",

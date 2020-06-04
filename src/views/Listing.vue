@@ -41,7 +41,7 @@
       <div class="progress-box-wrapper">
         <div :style="style()" class="box-paint"></div>
 
-        <div v-if="step == 3" class="box-content">
+        <div v-if="step == 1" class="box-content">
           <div v-if="flow == 1">
             <Paragraph
               text="What kind of place are you listing ?"
@@ -720,7 +720,7 @@
           </div>
         </div>
 
-        <div v-else-if="step == 1" class="box-content">
+        <div v-else-if="step == 3" class="box-content">
           <div v-if="flow == 1">
             <Paragraph
               text="Successful hosting starts with an accurate calendar"
@@ -1122,7 +1122,7 @@ export default {
         "2": "Set the scene",
         "3": "Get ready for guests",
       },
-      step: 3,
+      step: 1,
 
       flow: 1,
       steps: {

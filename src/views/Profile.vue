@@ -2,88 +2,98 @@
   <div class="profile">
     <Navigation :showSearch="false" />
     <div class="content">
-      <div class="left">
-        <div class="d2 d" @click="handleWhatShows(1)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Profile</p>
-          </a>
-        </div>
+      <div>
+        <!-- <img
+       
+          @click="$modal.show('profile-nav-mob')"
+          class="nav-modal"
+          src="../assets/images/vector.png"
+          alt
+        /> -->
 
-        <div class="d3 d" @click="handleWhatShows(2)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Listings</p>
-          </a>
-        </div>
-        <div class="d2 d" @click="handleWhatShows(3)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Verifications</p>
-          </a>
-        </div>
+        <div class="left">
+          <div class="d2 d" @click="handleWhatShows(1)">
+            <a href="#">
+              <div>
+                <img
+                  class="profile-icons-mobile"
+                  style="margin: 0.7rem 0.8rem;"
+                  src="../assets/images/vector.png"
+                  alt="bongalo-careers"
+                />
+              </div>
+              <p class="p-item">Profile</p>
+            </a>
+          </div>
 
-        <div class="d3 d" @click="handleWhatShows(4)">
-          <a href="#favourite-section">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Security</p>
-          </a>
-        </div>
+          <div class="d3 d" @click="handleWhatShows(2)">
+            <a href="#">
+              <div>
+                <img
+                  class="profile-icons-mobile"
+                  style="margin: 0.7rem 0.8rem;"
+                  src="../assets/images/vector.png"
+                  alt="bongalo-careers"
+                />
+              </div>
+              <p class="p-item">Listings</p>
+            </a>
+          </div>
+          <div class="d2 d" @click="handleWhatShows(3)">
+            <a href="#">
+              <div>
+                <img
+                  class="profile-icons-mobile"
+                  style="margin: 0.7rem 0.8rem;"
+                  src="../assets/images/vector.png"
+                  alt="bongalo-careers"
+                />
+              </div>
+              <p class="p-item">Verifications</p>
+            </a>
+          </div>
 
-        <div class="d3 d" @click="handleWhatShows(5)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Payout Methods</p>
-          </a>
-        </div>
+          <div class="d3 d" @click="handleWhatShows(4)">
+            <a href="#favourite-section">
+              <div>
+                <img
+                  class="profile-icons-mobile"
+                  style="margin: 0.7rem 0.8rem;"
+                  src="../assets/images/vector.png"
+                  alt="bongalo-careers"
+                />
+              </div>
+              <p class="p-item">Security</p>
+            </a>
+          </div>
 
-        <div class="d3 d" @click="handleWhatShows(6)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Reviews</p>
-          </a>
+          <div class="d3 d" @click="handleWhatShows(5)">
+            <a href="#">
+              <div>
+                <img
+                  class="profile-icons-mobile"
+                  style="margin: 0.7rem 0.8rem;"
+                  src="../assets/images/vector.png"
+                  alt="bongalo-careers"
+                />
+              </div>
+              <p class="p-item">Payout Methods</p>
+            </a>
+          </div>
+
+          <div class="d3 d" @click="handleWhatShows(6)">
+            <a href="#">
+              <div>
+                <img
+                  class="profile-icons-mobile"
+                  style="margin: 0.7rem 0.8rem;"
+                  src="../assets/images/vector.png"
+                  alt="bongalo-careers"
+                />
+              </div>
+              <p class="p-item">Reviews</p>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -427,7 +437,7 @@
           <hr />
           <br />
 
-          <div class="payout-bank-sec">
+          <div v-if="!isMobile()" class="payout-bank-sec">
             <p
               class="p-bank"
               @click="showBankPayoutMethod = true"
@@ -441,6 +451,32 @@
             >
               Mobile Money
             </p>
+          </div>
+
+          <div v-else class="dropdown-details">
+            <div class="dropdown">
+              <button class="dropbtn">Select a Payout Method</button>
+              <div class="dropdown-content">
+                <a href="#">
+                  <p
+                    class="p-bank"
+                    @click="showBankPayoutMethod = true"
+                    :style="getActiveBorder(2, true)"
+                  >
+                    Bank
+                  </p></a
+                >
+                <br />
+                <a href="#">
+                  <p
+                    @click="showBankPayoutMethod = false"
+                    :style="getActiveBorder(2, false)"
+                  >
+                    Mobile Money
+                  </p></a
+                >
+              </div>
+            </div>
           </div>
 
           <div>
@@ -514,7 +550,7 @@
           <h2>Review</h2>
           <br />
 
-          <div class="rev-title">
+          <div v-if="!isMobile" class="rev-title">
             <p
               @click="showReviewedContent = true"
               :style="getActiveBorder(1, true)"
@@ -530,6 +566,35 @@
               Reviews you’ve left
             </p>
           </div>
+
+          <div v-else class="dropdown-details">
+            <div class="dropdown">
+              <button style="" class="dropbtn">
+                <p class="select-a-review">Select a review type</p>
+              </button>
+              <div class="dropdown-content">
+                <a href="#">
+                  <p
+                    @click="showReviewedContent = true"
+                    :style="getActiveBorder(1, true)"
+                  >
+                    Reviews about you
+                  </p></a
+                >
+                <br />
+                <a href="#">
+                  <p
+                    @click="showReviewedContent = false"
+                    :style="getActiveBorder(1, false)"
+                    class="p-review"
+                  >
+                    Reviews you’ve left
+                  </p></a
+                >
+              </div>
+            </div>
+          </div>
+
           <hr />
           <br />
 
@@ -594,6 +659,7 @@ import Button from "../components/Button";
 import { mapActions, mapGetters } from "vuex";
 import Select from "../components/Select";
 import Verification from "../components/verification";
+import ProfileCardMobile from "../components/ProfileCardMobile";
 
 export default {
   name: "",
@@ -977,6 +1043,63 @@ export default {
     margin: 0 !important;
     max-width: 100% !important;
   }
+
+  .select-a-review {
+    margin: 10px 0 !important;
+    color: #ffffff !important;
+  }
+
+  .dropdown-details {
+    hr {
+      display: none !important;
+    }
+    * {
+      height: auto !important;
+    }
+    .dropbtn {
+      width: 100% !important;
+      padding: 16px !important;
+      border-radius: 5px !important;
+      background-color: #3a85fc;
+      color: white;
+      font-size: 16px !important;
+      border: none;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      position: relative;
+      height: auto !important;
+    }
+
+    .dropdown-content {
+      height: auto !important;
+      display: none;
+      position: relative;
+      min-width: 160px;
+      box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px !important;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+      background-color: #3a85fc;
+    }
+  }
+
   .content {
     padding: 20px !important;
   }
@@ -990,6 +1113,10 @@ export default {
 
     .listing-container {
       width: 100% !important;
+
+      * {
+        display: block !important;
+      }
 
       .no-lising-card {
         width: 100% !important;
@@ -1029,7 +1156,6 @@ export default {
     .verifications {
       * {
         display: block !important;
-        margin: 10px 0 !important;
         padding: 15px 15px 10px 0 !important;
       }
       .upload {

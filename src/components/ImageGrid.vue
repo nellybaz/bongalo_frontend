@@ -93,7 +93,13 @@ export default {
 @media only screen and (max-width: 900px) {
   .image_grid {
     height: auto !important;
+    border: 1px solid red !important;
   }
+
+  .updateImageShow {
+    border: 1px solid red !important;
+  }
+
   .image-div {
     display: none !important;
   }
@@ -101,6 +107,10 @@ export default {
     height: auto !important;
     width: 100% !important;
     display: block !important;
+  }
+
+  .img1 {
+    border: 1px solid red !important;
   }
 }
 .image_grid {
@@ -156,14 +166,12 @@ export default {
         position: relative;
         float: right;
         bottom: 10%;
-        // width: 100px;
         margin-right: 20px;
         z-index: 9999;
       }
     }
 
     .img-item {
-      // border:1px solid red;
       width: 100%;
       object-fit: cover;
       transition: all 0.4s ease-in-out;

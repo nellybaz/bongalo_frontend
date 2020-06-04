@@ -103,10 +103,10 @@ export default {
   .tm-header {
     max-width: 100% !important;
     padding: 0 15px !important;
-img{
+    img {
       // border: 1px solid red !important;
       padding: 10px !important;
-}
+    }
     .blog-logo {
       margin: 0 60% !important;
       position: absolute;
@@ -114,7 +114,6 @@ img{
 
     .blg {
       color: #6a6a6a;
-      
     }
   }
 

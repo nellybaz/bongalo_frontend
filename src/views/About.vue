@@ -3,6 +3,7 @@
     <AboutHeader />
     <HeadCard />
 
+    <!-- <br> -->
     <section class="event-section">
       <EventCard
         v-if="!isMobile()"
@@ -18,7 +19,7 @@
       ></MobileEventCard>
     </section>
 
-    <!-- <section class="event-section">
+    <section class="event-section">
       <EventCard
         v-if="!isMobile()"
         :events="events"
@@ -27,15 +28,13 @@
       ></EventCard>
 
       <MobileEventCard v-else :events="events"> </MobileEventCard>
-    </section> -->
+    </section>
 
     <ListProperity />
 
     <section class="powered-section">
-     
-
-      <div  v-if="isMobile()" class="content">
-         <h3 class="h3">Powered By</h3>
+      <div v-if="isMobile()" class="content">
+        <h3 class="h3">Powered By</h3>
         <img
           v-for="item in powered"
           :key="item.id"
@@ -176,6 +175,7 @@ export default {
     max-width: 100% !important;
     margin: auto !important;
   }
+
   .powered-section {
     h3 {
       font-size: 20px !important;
@@ -183,6 +183,7 @@ export default {
       margin: 30px 20px !important;
       color: #303030 !important;
     }
+
     height: auto !important;
     .content {
       display: grid !important;
@@ -190,6 +191,7 @@ export default {
       grid-column-gap: 10px !important;
       grid-row-gap: 0px !important;
       padding: 1rem;
+
       img {
         margin: 0 2rem;
         width: 50% !important;
