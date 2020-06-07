@@ -113,6 +113,7 @@ export default {
     border: 1px solid red !important;
   }
 }
+
 .image_grid {
   height: 400px;
   width: 100%;

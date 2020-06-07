@@ -7,7 +7,7 @@
 
       <div>
         <img
-          style="height: 20px !important;"
+          style="height: 14px !important; margin-left: -5px !important;"
           @click="$modal.show('mobile-booking')"
           class="about-logo"
           src="../assets/images/home-vector.png"

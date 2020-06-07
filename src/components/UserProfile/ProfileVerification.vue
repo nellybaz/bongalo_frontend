@@ -1,97 +1,66 @@
 <template>
-  <div v-if="isMobile" class="profile">
+  <div class="profile">
     <Navigation :showSearch="false" />
-      <MainProfileMobile></MainProfileMobile>
-    <!-- <div class="content"> -->
-
-
-      <div class="left">
-        <div class="d2 d" @click="handleWhatShows(1)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Profile</p>
-          </a>
+    <div class="content">
+      <div
+        style="
+          background: #3a85fc !important;
+          display: flex !important;
+          justify-content: space-between !important;
+        "
+      >
+        <img
+          @click="$modal.show('verfication-sec')"
+          class="nav-modal"
+          src="../../assets/images/home-vector.png"
+          alt
+          width="30px"
+          style="margin: 10px !important;"
+        />
+        <div class="i-div">
+          <i
+            style="
+              color: white !important;
+              font-size: 20px !important;
+              margin: 10px !important;
+            "
+            v-on:click="$modal.hide('verfication-sec')"
+            class="far fa-times-circle"
+          ></i>
         </div>
+      </div>
 
-        <div class="d3 d" @click="handleWhatShows(2)">
+      <div v-if="isMobile" class="left">
+        <!-- <div class="d3 d" @click="handleWhatShows(2)">
           <a href="#">
             <div>
               <img
                 class="profile-icons-mobile"
                 style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
+                src="../../assets/images/v-mobile.png"
                 alt="bongalo-careers"
               />
             </div>
             <p class="p-item">Listings</p>
           </a>
-        </div>
-        <div class="d2 d" @click="handleWhatShows(3)">
+        </div> -->
+         <div class="d2 d" @click="handleWhatShows(3)">
           <a href="#">
             <div>
               <img
                 class="profile-icons-mobile"
                 style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
+                src="../../assets/images/vector.png"
                 alt="bongalo-careers"
               />
             </div>
             <p class="p-item">Verifications</p>
           </a>
         </div>
-
-        <div class="d3 d" @click="handleWhatShows(4)">
-          <a href="#favourite-section">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Security</p>
-          </a>
-        </div>
-
-        <div class="d3 d" @click="handleWhatShows(5)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Payout Methods</p>
-          </a>
-        </div>
-
-        <div class="d3 d" @click="handleWhatShows(6)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Reviews</p>
-          </a>
-        </div>
       </div>
 
       <div v-if="isMobile" class="right">
-        <div v-if="showId == 1">
+        <!-- <div v-if="showId == 1">
           <h2 id="dashboard">Hi, I am {{ firstName }}</h2>
           <div class="top">
             <div :style="getProfileImage()" class="icon-div">
@@ -200,9 +169,9 @@
               Works as {{ "Software Engineer" }}
             </p>
           </div>
-        </div>
+        </div> -->
 
-        <div v-else-if="showId == 2" class="listing-container">
+        <!-- <div v-if="showId == 2" class="listing-container">
           <h2>Listings</h2>
           <br />
 
@@ -239,16 +208,16 @@
               You haven't added any listing. Add a listing to update a Payout
               Method
             </h4>
-            <img src="../assets/images/pic.png" alt="bongalo-careers" />
+            <img src="../../assets/images/pic.png" alt="bongalo-careers" />
             <Button
               @handleClick="handleOpeningHostPage"
               :isFullWidth="false"
               label="Add a Listing"
             />
           </div>
-        </div>
+        </div> -->
 
-        <div v-else-if="showId == 3" class="verifications">
+        <div v-if="showId == 3" class="verifications">
           <div class="veri-sec-1">
             <h2>Verifications</h2>
           </div>
@@ -323,7 +292,7 @@
           </div>
         </div>
 
-        <div v-else-if="showId == 4" class="Security">
+        <!-- <div v-else-if="showId == 4" class="Security">
           <h2>Security</h2>
           <br />
           <div v-if="!changePasswordIsSuccessful">
@@ -379,8 +348,8 @@
               width="80%"
             />
           </div>
-        </div>
-
+        </div> -->
+<!-- 
         <div v-else-if="showId == 5" class="payout-details">
           <h2>Payout Methods</h2>
           <br />
@@ -401,7 +370,7 @@
           <h3>Mobile Wallet</h3>
           <img
             style="width: 10%; margin: 10px 0px;"
-            src="../assets/images/mtn.png"
+            src="../../assets/images/mtn.png"
             alt="bongalo-careers"
           />
           <p>
@@ -413,12 +382,7 @@
           <br />
 
           <br />
-          <!-- <Button
-            @handleClick="addPaymentMethod"
-            :isFullWidth="false"
-            label="Save"
-            style="width:25%; margin-top:20px0"
-          /> -->
+
           <br /><br />
           <hr />
           <br />
@@ -530,9 +494,9 @@
             width="250px"
             label="Update Payout Method"
           />
-        </div>
+        </div> -->
 
-        <div v-else-if="showId == 6" class="review">
+        <!-- <div v-else-if="showId == 6" class="review">
           <h2>Review</h2>
           <br />
 
@@ -632,21 +596,20 @@
               </p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
-    <!-- </div> -->
+    </div>
   </div>
 </template>
 
 <script>
+import Navigation from "../../components/Blog/Navigation";
+import StyledInput from "../../components/StyledInput";
+import Button from "../../components/Button";
 import { mapActions, mapGetters } from "vuex";
-import Navigation from "../components/Blog/Navigation";
-import StyledInput from "../components/StyledInput";
-import Button from "../components/Button";
-import Select from "../components/Select";
-import Verification from "../components/verification";
-// import ProfileCardMobile from "../components/ProfileCardMobile";
-import MainProfileMobile from "../components/UserProfile/MainProfileMobile";
+import Select from "../../components/Select";
+import Verification from "../../components/verification";
+import ProfileCardMobile from "../../components/ProfileCardMobile";
 
 export default {
   name: "",
@@ -697,8 +660,6 @@ export default {
       backgroundFile: null,
     };
   },
-
-  computed: mapGetters(["getModalState", "isMobile", "isLoggedIn"]),
   methods: {
     modalControl() {},
 
@@ -1004,11 +965,10 @@ export default {
 
   components: {
     Navigation,
-    StyledInput,
+    // StyledInput,
     Button,
-    Verification,
-    MainProfileMobile,
-    Select,
+    // Verification,
+    // Select,
   },
 
   created() {

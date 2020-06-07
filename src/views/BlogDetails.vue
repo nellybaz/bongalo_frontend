@@ -123,31 +123,45 @@ export default {
     margin: auto !important;
     display: block !important;
   }
-  p{
+
+  p {
     font-size: 15px !important;
     margin-top: 10px !important;
     text-align: left !important;
   }
+
   input {
     display: none !important;
   }
+
   .details {
     padding: 20px !important;
     margin: 30px 0 !important;
+
     img {
       max-width: 100% !important;
-      border-radius: 20px !important;
+      border-radius: 5px !important;
     }
     .left {
-      margin: 30px 5px 0 0 !important;
+      margin: 20px 0 20px 0 !important;
+      h4 {
+        margin: 20px 0 -5px 0 !important;
+      }
     }
 
     .social-media,
     .social-media-share {
+      p,
+      i {
+        display: flex !important;
+        font-size: 15px !important;
+        padding: 0 5px !important;
+      }
+      width: 100% !important;
       display: flex !important;
-      margin: 20px 0 !important;
+      margin: 8px 0 !important;
       border: 1px solid rgba(128, 128, 128, 0.39);
-      padding: 10px !important;
+      padding: 5px !important;
       border-radius: 5px;
     }
   }

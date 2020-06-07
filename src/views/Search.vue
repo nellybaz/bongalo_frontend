@@ -94,20 +94,25 @@ export default {
 @media only screen and(max-width: 900px) {
   * {
     margin: auto !important;
-    padding: 10px !important;
-    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .apartment-section {
+ 
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 15px !important;
+
     .inner-content {
       display: block !important;
     }
   }
 
   .filter {
-    border: transparent !important;
+    width: 100% !important;
+    padding: 10px !important;
+
     p {
-      margin: 0 5px !important;
       font-size: 10px !important;
     }
   }

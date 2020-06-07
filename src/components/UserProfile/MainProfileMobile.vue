@@ -1,18 +1,26 @@
 <template>
   <div v-if="isMobile" class="profile">
-    <Navigation :showSearch="false" />
-      <MainProfileMobile></MainProfileMobile>
-    <!-- <div class="content"> -->
+    <!-- <Profile v-if="!isMobile"/> -->
+    <!-- <Navigation :showSearch="false" /> -->
+    <div class="content">
+      <div style="background: #3a85fc !important;">
+        <img
+          @click="$modal.show('profile-nav-mob')"
+          class="nav-modal"
+          src="../../assets/images/home-vector.png"
+          width="30px"
+          style="margin: 10px !important;"
+        />
+      </div>
 
-
-      <div class="left">
+      <div v-if="isMobile" class="left">
         <div class="d2 d" @click="handleWhatShows(1)">
           <a href="#">
             <div>
               <img
                 class="profile-icons-mobile"
                 style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
+                src="../../assets/images/vector.png"
                 alt="bongalo-careers"
               />
             </div>
@@ -20,7 +28,7 @@
           </a>
         </div>
 
-        <div class="d3 d" @click="handleWhatShows(2)">
+        <!-- <div class="d3 d" @click="handleWhatShows(2)">
           <a href="#">
             <div>
               <img
@@ -32,8 +40,8 @@
             </div>
             <p class="p-item">Listings</p>
           </a>
-        </div>
-        <div class="d2 d" @click="handleWhatShows(3)">
+        </div> -->
+        <!-- <div class="d2 d" @click="handleWhatShows(3)">
           <a href="#">
             <div>
               <img
@@ -45,8 +53,8 @@
             </div>
             <p class="p-item">Verifications</p>
           </a>
-        </div>
-
+        </div> -->
+        <!-- 
         <div class="d3 d" @click="handleWhatShows(4)">
           <a href="#favourite-section">
             <div>
@@ -59,9 +67,9 @@
             </div>
             <p class="p-item">Security</p>
           </a>
-        </div>
+        </div> -->
 
-        <div class="d3 d" @click="handleWhatShows(5)">
+        <!-- <div class="d3 d" @click="handleWhatShows(5)">
           <a href="#">
             <div>
               <img
@@ -73,9 +81,9 @@
             </div>
             <p class="p-item">Payout Methods</p>
           </a>
-        </div>
+        </div> -->
 
-        <div class="d3 d" @click="handleWhatShows(6)">
+        <!-- <div class="d3 d" @click="handleWhatShows(6)">
           <a href="#">
             <div>
               <img
@@ -87,7 +95,7 @@
             </div>
             <p class="p-item">Reviews</p>
           </a>
-        </div>
+        </div> -->
       </div>
 
       <div v-if="isMobile" class="right">
@@ -239,7 +247,7 @@
               You haven't added any listing. Add a listing to update a Payout
               Method
             </h4>
-            <img src="../assets/images/pic.png" alt="bongalo-careers" />
+            <img src="../../assets/images/pic.png" alt="bongalo-careers" />
             <Button
               @handleClick="handleOpeningHostPage"
               :isFullWidth="false"
@@ -251,6 +259,13 @@
         <div v-else-if="showId == 3" class="verifications">
           <div class="veri-sec-1">
             <h2>Verifications</h2>
+
+            <!-- <p
+              v-if="verificationStatus == '' || verificationStatus == 'U'"
+              class="upload"
+            >
+              UPLOAD VERFICATION
+            </p> -->
           </div>
 
           <div v-if="verificationStatus == '' || verificationStatus == 'U'">
@@ -401,7 +416,7 @@
           <h3>Mobile Wallet</h3>
           <img
             style="width: 10%; margin: 10px 0px;"
-            src="../assets/images/mtn.png"
+            src="../../assets/images/mtn.png"
             alt="bongalo-careers"
           />
           <p>
@@ -634,19 +649,19 @@
           </div>
         </div>
       </div>
-    <!-- </div> -->
+    </div>
   </div>
 </template>
 
 <script>
+// import Navigation from "../../components/Blog/Navigation";
+import StyledInput from "../../components/StyledInput";
+import Button from "../../components/Button";
 import { mapActions, mapGetters } from "vuex";
-import Navigation from "../components/Blog/Navigation";
-import StyledInput from "../components/StyledInput";
-import Button from "../components/Button";
-import Select from "../components/Select";
-import Verification from "../components/verification";
-// import ProfileCardMobile from "../components/ProfileCardMobile";
-import MainProfileMobile from "../components/UserProfile/MainProfileMobile";
+import Select from "../../components/Select";
+import Verification from "../../components/verification";
+// import ProfileCardMobile from "../../components/ProfileCardMobile";
+// import Profile from "../../views/Profile";
 
 export default {
   name: "",
@@ -697,8 +712,6 @@ export default {
       backgroundFile: null,
     };
   },
-
-  computed: mapGetters(["getModalState", "isMobile", "isLoggedIn"]),
   methods: {
     modalControl() {},
 
@@ -1003,11 +1016,11 @@ export default {
   },
 
   components: {
-    Navigation,
+    // Navigation,
     StyledInput,
     Button,
+    // Profile,
     Verification,
-    MainProfileMobile,
     Select,
   },
 

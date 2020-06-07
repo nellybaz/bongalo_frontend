@@ -24,7 +24,6 @@
       v-else
       v-model="model"
     >
-
     </textarea>
   </div>
 </template>

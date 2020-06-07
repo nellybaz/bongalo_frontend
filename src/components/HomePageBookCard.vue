@@ -51,7 +51,7 @@
           {{ this.guestNumber }}
           guest(s)
         </p>
-        
+
         <div class="btn-container">
           <button v-on:click="handleGuestClick(0)">
             <i class="fas fa-minus"></i>

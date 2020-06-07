@@ -19,6 +19,7 @@
             placeholder="Enter PIN"
           />
         </div>
+        
         <small v-if="pinErrorMessage">
           {{ pinErrorMessage }}
         </small>
@@ -376,9 +377,6 @@ export default {
           this.passwordErrorMessage = "";
         }
       }
-      // else if(intent == 3){
-
-      // }
 
       return res;
     },

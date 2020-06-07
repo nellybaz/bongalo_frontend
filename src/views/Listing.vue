@@ -1750,8 +1750,10 @@ export default {
   }
 
   .listing-content-wrapper {
+
     padding: 12px !important;
     * {
+      
       padding: 12px !important;
     }
 
@@ -1839,7 +1841,6 @@ export default {
 }
 .listing {
   width: 100%;
-
   .listing-content-wrapper {
     margin-top: 80px;
     width: 100%;

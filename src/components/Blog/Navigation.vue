@@ -104,11 +104,11 @@ export default {
     max-width: 100% !important;
     padding: 0 15px !important;
     img {
-      // border: 1px solid red !important;
       padding: 10px !important;
     }
     .blog-logo {
-      margin: 0 60% !important;
+      margin: 0 54% !important;
+      width: 42px !important;
       position: absolute;
     }
 

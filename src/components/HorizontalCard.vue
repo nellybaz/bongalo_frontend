@@ -87,7 +87,6 @@ export default {
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
   .details {
-    height: auto;
   }
 }
 
@@ -113,6 +112,7 @@ a {
   .details {
     width: 100%;
     height: 30%;
+    // border: 1px solid red;
     margin-top: 10px;
 
     .location {

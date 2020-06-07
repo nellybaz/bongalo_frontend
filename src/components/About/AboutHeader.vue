@@ -7,10 +7,10 @@
 
       <div>
         <img
-          style="height: 20px !important;"
+          style="height: 14px !important; margin-left: -5px !important;"
           @click="$modal.show('mobile-booking')"
           class="about-logo"
-          src="../../assets/images/home-logo.png"
+          src="../../assets/images/home-vector.png"
           alt
         />
       </div>
@@ -39,15 +39,15 @@ export default {
     img {
       margin: 30px 0 0 0 !important;
     }
-    // .about-logo {
-    //   max-width: 100% !important;
-    //   height: 20px !important;
-    // }
   }
   .header {
-    border: 1px solid red !important;
-    object-fit: contain !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    object-fit: cover !important;
+    height: 350px !important;
     width: 100% !important;
+    background-repeat: no-repeat !important;
+    background-size: 450px 350px !important;
   }
 }
 .header {

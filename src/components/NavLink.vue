@@ -78,7 +78,7 @@ export default {
 <style lang="scss" scoped>
 .nav-link {
   width: 100%;
-  
+
   nav {
     width: 100%;
     margin-right: 2%;

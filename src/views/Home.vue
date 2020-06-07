@@ -4,7 +4,7 @@
 
     <section class="event-section">
       <EventCard
-        v-if="!isMobile()"
+        v-if="!isMobile"
         :events="events"
         label="Things to look out for"
         link="/event-details"

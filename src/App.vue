@@ -13,6 +13,66 @@
     </modal>
 
     <modal
+      name="listing-sec"
+      height="100%"
+      :width="getModalWidth()"
+      @before-close="beforeClose"
+      :clickToClose="true"
+    >
+      <div class="mobile-profile-nav-content">
+        <ProfileListing />
+      </div>
+    </modal>
+
+    <modal
+      name="verfication-sec"
+      height="100%"
+      :width="getModalWidth()"
+      @before-close="beforeClose"
+      :clickToClose="true"
+    >
+      <div class="mobile-profile-nav-content">
+        <ProfileVerification />
+      </div>
+    </modal>
+
+    <modal
+      name="security-sec"
+      height="100%"
+      :width="getModalWidth()"
+      @before-close="beforeClose"
+      :clickToClose="true"
+    >
+      <div class="mobile-profile-nav-content">
+        <ProfileSecurity />
+      </div>
+    </modal>
+
+    <modal
+      name="payout-sec"
+      height="100%"
+      :width="getModalWidth()"
+      @before-close="beforeClose"
+      :clickToClose="true"
+    >
+      <div class="mobile-profile-nav-content">
+        <ProfilePayOut />
+      </div>
+    </modal>
+
+    <modal
+      name="reviews-sec"
+      height="100%"
+      :width="getModalWidth()"
+      @before-close="beforeClose"
+      :clickToClose="true"
+    >
+      <div class="mobile-profile-nav-content">
+        <ProfileReviews />
+      </div>
+    </modal>
+
+    <modal
       name="mobile-booking"
       height="100%"
       :width="getModalWidth()"
@@ -46,7 +106,15 @@
               </a>
             </li>
 
-            <li v-if="!isLoggedIn" v-on:click="$modal.show('login')">
+            <li
+              v-if="!isLoggedIn"
+              v-on:click="
+                () => {
+                  $modal.hide('mobile-booking');
+                  $modal.show('login');
+                }
+              "
+            >
               Login
             </li>
             <li v-else v-on:click="logout">Logout</li>
@@ -56,7 +124,7 @@
     </modal>
     <modal
       name="login"
-      height="570"
+      :height="getModalHeight()"
       :width="getModalWidth()"
       @before-close="beforeClose"
       :clickToClose="true"
@@ -241,8 +309,8 @@
     </modal>
     <modal
       name="forgot-password"
-      height="450"
-      width="30%"
+      :height="getModalHeight()"
+      :width="getModalWidth()"
       @before-close="beforeClose"
       :clickToClose="false"
     >
@@ -448,6 +516,11 @@ import Profile from "./views/Profile";
 import ProfileCardMobile from "./components/ProfileCardMobile";
 import SocialSignin from "./components/SocialSignin";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import ProfileListing from "../src/components/UserProfile/ProfileListing";
+import ProfileVerification from "../src/components/UserProfile/ProfileVerification";
+import ProfileSecurity from "../src/components/UserProfile/ProfileSecurity";
+import ProfilePayOut from "../src/components/UserProfile/ProfilePayOut";
+import ProfileReviews from "../src/components/UserProfile/ProfileReviews";
 
 export default {
   name: "main_app",
@@ -456,11 +529,15 @@ export default {
     Login,
     Input,
     Button,
-    SocialSignin,
     PulseLoader,
     FooterMobile,
-    // Profile,
+    ProfileListing,
+    SocialSignin,
+    ProfileSecurity,
+    ProfilePayOut,
+    ProfileReviews,
     ProfileCardMobile,
+    ProfileVerification,
   },
 
   data: function () {
@@ -488,12 +565,22 @@ export default {
     // mobile - booking;
   },
 
-  computed: mapGetters(["getModalState", "isMobile"]),
+  computed: mapGetters(["getModalState", "isMobile", "isLoggedIn"]),
+
   methods: {
+    logout() {
+      this.$store.dispatch("logout").then((res) => {
+        window.location.reload();
+      });
+    },
+
     getModalWidth() {
       return this.isMobile ? "100%" : "30%";
     },
 
+    getModalHeight() {
+      return this.isMobile ? "80%" : "570";
+    },
     handleModalClose() {
       this.$modal.hide("login");
     },
@@ -761,6 +848,15 @@ export default {
 <style lang="scss">
 @import url("https://rsms.me/inter/inter.css");
 
+@media only screen and (max-width: 900px) {
+  .modal-content {
+    padding: 0 !important;
+    margin: 0 !important;
+    min-width: 100% !important;
+    padding: 10px !important;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -879,7 +975,6 @@ small {
   margin: 0 !important;
 
   .i-div {
-    // border: 1px solid red;
     width: 100%;
     display: flex;
     align-items: flex-end;
@@ -1015,7 +1110,6 @@ small {
     height: 30px !important;
   }
   .i-div {
-    border: 1px solid red;
     margin: 40px 18px !important;
     i {
       margin-left: -0px !important;

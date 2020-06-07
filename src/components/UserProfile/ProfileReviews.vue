@@ -1,87 +1,43 @@
 <template>
-  <div v-if="isMobile" class="profile">
+  <div class="profile">
     <Navigation :showSearch="false" />
-      <MainProfileMobile></MainProfileMobile>
-    <!-- <div class="content"> -->
-
-
-      <div class="left">
-        <div class="d2 d" @click="handleWhatShows(1)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Profile</p>
-          </a>
+    <div class="content">
+      <div
+        style="
+          background: #3a85fc !important;
+          display: flex !important;
+          justify-content: space-between !important;
+        "
+      >
+        <img
+          @click="$modal.show('reviews-sec')"
+          class="nav-modal"
+          src="../../assets/images/home-vector.png"
+          alt
+          width="30px"
+          style="margin: 10px !important;"
+        />
+        <div class="i-div">
+          <i
+            style="
+              color: white !important;
+              font-size: 20px !important;
+              margin: 10px !important;
+            "
+            v-on:click="$modal.hide('reviews-sec')"
+            class="far fa-times-circle"
+          ></i>
         </div>
+      </div>
 
-        <div class="d3 d" @click="handleWhatShows(2)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Listings</p>
-          </a>
-        </div>
-        <div class="d2 d" @click="handleWhatShows(3)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Verifications</p>
-          </a>
-        </div>
-
-        <div class="d3 d" @click="handleWhatShows(4)">
-          <a href="#favourite-section">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Security</p>
-          </a>
-        </div>
-
-        <div class="d3 d" @click="handleWhatShows(5)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Payout Methods</p>
-          </a>
-        </div>
-
+      <div v-if="isMobile" class="left">
         <div class="d3 d" @click="handleWhatShows(6)">
           <a href="#">
             <div>
               <img
                 class="profile-icons-mobile"
                 style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
+                src="../../assets/images/vector.png"
                 alt="bongalo-careers"
               />
             </div>
@@ -91,448 +47,7 @@
       </div>
 
       <div v-if="isMobile" class="right">
-        <div v-if="showId == 1">
-          <h2 id="dashboard">Hi, I am {{ firstName }}</h2>
-          <div class="top">
-            <div :style="getProfileImage()" class="icon-div">
-              <input
-                @change="handleProfileSelect"
-                :v-model="backgroundFile"
-                id="p-pic"
-                type="file"
-              />
-              <label for="p-pic">
-                <i class="fas fa-camera" title="Update profile image"></i>
-              </label>
-            </div>
-
-            <button
-              class="p-primary-edit-profile"
-              v-if="!editProfileBtnClicked"
-              @click="editProfileBtnClicked = true"
-            >
-              Edit Profile
-            </button>
-          </div>
-
-          <div v-if="editProfileBtnClicked" class="update-div">
-            <h3>Tell us the basics</h3>
-            <div class="mid">
-              <StyledInput
-                @sendInput="(v) => (firstName = v)"
-                :value="firstName"
-                type="text"
-                placeholder="First name"
-                label="FULL NAME"
-              />
-              <StyledInput
-                @sendInput="(v) => (lastName = v)"
-                :value="lastName"
-                type="text"
-                placeholder="Last name"
-                label="LAST NAME"
-              />
-            </div>
-
-            <br />
-            <div class="bottom">
-              <StyledInput
-                @sendInput="(v) => (userDescription = v)"
-                :value="userDescription"
-                :isTextArea="true"
-                type="text"
-                placeholder
-                label="DESCRIPTION"
-              />
-            </div>
-
-            <h3>Where are you located?</h3>
-            <div class="mid">
-              <StyledInput
-                @sendInput="(v) => (userCity = v)"
-                :value="userCity"
-                type="text"
-                placeholder="City"
-                label="CITY, STATE"
-              />
-              <StyledInput
-                @sendInput="(v) => (userCountry = v)"
-                :value="userCountry"
-                type="text"
-                placeholder="Country"
-                label="NATIONALITY"
-              />
-            </div>
-
-            <h3>How can we contact you?</h3>
-            <div class="mid">
-              <StyledInput
-                @sendInput="(v) => (phoneNumber = v)"
-                :value="phoneNumber"
-                type="text"
-                placeholder="Enter phone"
-                label="PHONE NUMBER"
-              />
-            </div>
-
-            <br />
-            <br />
-            <div class="btn-div">
-              <Button
-                @handleClick="updateUser"
-                :isFullWidth="false"
-                label="Update Profile"
-              />
-            </div>
-          </div>
-
-          <div v-else class="profile-show">
-            <p class="p-desc">
-              {{ userDescription }}
-            </p>
-            <hr />
-            <p class="p-lives">
-              <i class="fas fa-home"></i>
-              Lives in {{ userCity }} {{ userCountry }}
-            </p>
-            <p class="p-work">
-              <i class="fas fa-briefcase"></i>
-              Works as {{ "Software Engineer" }}
-            </p>
-          </div>
-        </div>
-
-        <div v-else-if="showId == 2" class="listing-container">
-          <h2>Listings</h2>
-          <br />
-
-          <div v-if="getUserListing().length > 0" class="listing-card-holder">
-            <div
-              v-for="listing in getUserListing()"
-              :key="listing.title"
-              class="listing-card"
-            >
-              <img :src="listing.main_image" alt />
-              <div class="listing-title">
-                <h3>
-                  {{ listing.title }}
-                  <span> ${{ listing.price }} </span>
-                </h3>
-                <br />
-                <section class="action-section">
-                  <button @click="updateListing(listing)" class="btn-update">
-                    Update
-                  </button>
-                  <button
-                    @click="deleteListing(listing.uuid)"
-                    class="btn-remove"
-                  >
-                    Remove
-                  </button>
-                </section>
-              </div>
-            </div>
-          </div>
-
-          <div v-else class="no-lising-card">
-            <h4 class="add-listing">
-              You haven't added any listing. Add a listing to update a Payout
-              Method
-            </h4>
-            <img src="../assets/images/pic.png" alt="bongalo-careers" />
-            <Button
-              @handleClick="handleOpeningHostPage"
-              :isFullWidth="false"
-              label="Add a Listing"
-            />
-          </div>
-        </div>
-
-        <div v-else-if="showId == 3" class="verifications">
-          <div class="veri-sec-1">
-            <h2>Verifications</h2>
-          </div>
-
-          <div v-if="verificationStatus == '' || verificationStatus == 'U'">
-            <br />
-            <br />
-
-            <div class="veri-sec-1">
-              <div class="">
-                <p>Choose Verification Type</p>
-                <br />
-                <Select
-                  v-on:selectChangeHandler="
-                    (v) => (verificationTypeValue = v.data)
-                  "
-                  step="verification_type"
-                  :options="verificationType"
-                  width="300px"
-                  :model="''"
-                ></Select>
-              </div>
-
-              <div class="veri-sec-3">
-                <br />
-                <br />
-                <label for="upload-photo">Choose file</label>
-                <input
-                  @change="(e) => (verificationFile = e.target.files[0])"
-                  type="file"
-                  name="photo"
-                  id="upload-photo"
-                />
-                <span>No file selected.</span>
-              </div>
-            </div>
-
-            <br />
-            <br />
-            <br />
-            <Button
-              v-if="!verificationButtonClicked"
-              @handleClick="handleVerification"
-              :isFullWidth="false"
-              width="20%"
-              label="Verify"
-            />
-
-            <p v-else>
-              Uploading verification, please wait ...
-            </p>
-          </div>
-
-          <div v-else-if="verificationStatus == 'P'">
-            <Verification
-              title="Verification"
-              text1="Your file has been recieved, sit back while we verify it. This
-                  process may take between 3 - 5 days, and we will "
-              text2="Thank you"
-              strongText="send you an email once confirmed."
-              width="80%"
-            />
-          </div>
-          <div v-else>
-            <Verification
-              title="Verification"
-              text1=""
-              text2="Thank you"
-              strongText="Verified Bongalo User"
-              width="80%"
-            />
-          </div>
-        </div>
-
-        <div v-else-if="showId == 4" class="Security">
-          <h2>Security</h2>
-          <br />
-          <div v-if="!changePasswordIsSuccessful">
-            <h3>Change your password</h3>
-
-            <div class="mid">
-              <StyledInput
-                @sendInput="(v) => (oldPassword = v)"
-                :value="''"
-                type="password"
-                placeholder="Enter old password"
-                label="OLD PASSWORD"
-              />
-
-              <br />
-              <StyledInput
-                @sendInput="(v) => (newPassword = v)"
-                :value="''"
-                type="password"
-                placeholder="Enter new password"
-                label="NEW PASSWORD"
-              />
-              <br />
-
-              <StyledInput
-                @sendInput="(v) => (newPasswordConfirm = v)"
-                :value="''"
-                type="password"
-                placeholder="Confirm new password"
-                label="CONFIRM PASSWORD"
-              />
-
-              <Button
-                v-if="!changePasswordButtonClicked"
-                @handleClick="changePassword"
-                :isFullWidth="false"
-                style="margin-top: 20px; height: 45px;"
-                label="Update Password"
-              />
-
-              <p v-else>
-                <br />
-                Changing your password, please wait...
-              </p>
-            </div>
-          </div>
-          <div v-else>
-            <Verification
-              title="Successful"
-              text1="Your password has been changed successfully"
-              text2="Thank you"
-              strongText=""
-              width="80%"
-            />
-          </div>
-        </div>
-
-        <div v-else-if="showId == 5" class="payout-details">
-          <h2>Payout Methods</h2>
-          <br />
-          <h3>Bank</h3>
-
-          <p>
-            Bank Name: <span>{{ bankName }}</span>
-          </p>
-          <p>
-            Accouunt Details:
-            <span>{{ accountName }} - {{ accountNumber }}</span>
-          </p>
-          <p>
-            SWIFT Code: <span>{{ swiftCode }}</span>
-          </p>
-          <hr />
-          <br />
-          <h3>Mobile Wallet</h3>
-          <img
-            style="width: 10%; margin: 10px 0px;"
-            src="../assets/images/mtn.png"
-            alt="bongalo-careers"
-          />
-          <p>
-            Account Name: <span>{{ momoName }}</span>
-          </p>
-          <p>
-            Account Number: <span>{{ momoNumber }}</span>
-          </p>
-          <br />
-
-          <br />
-          <!-- <Button
-            @handleClick="addPaymentMethod"
-            :isFullWidth="false"
-            label="Save"
-            style="width:25%; margin-top:20px0"
-          /> -->
-          <br /><br />
-          <hr />
-          <br />
-
-          <div v-if="!isMobile()" class="payout-bank-sec">
-            <p
-              class="p-bank"
-              @click="showBankPayoutMethod = true"
-              :style="getActiveBorder(2, true)"
-            >
-              Bank
-            </p>
-            <p
-              @click="showBankPayoutMethod = false"
-              :style="getActiveBorder(2, false)"
-            >
-              Mobile Money
-            </p>
-          </div>
-
-          <div v-else class="dropdown-details">
-            <div class="dropdown">
-              <button class="dropbtn">Select a Payout Method</button>
-              <div class="dropdown-content">
-                <a href="#">
-                  <p
-                    class="p-bank"
-                    @click="showBankPayoutMethod = true"
-                    :style="getActiveBorder(2, true)"
-                  >
-                    Bank
-                  </p></a
-                >
-                <br />
-                <a href="#">
-                  <p
-                    @click="showBankPayoutMethod = false"
-                    :style="getActiveBorder(2, false)"
-                  >
-                    Mobile Money
-                  </p></a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div v-if="showBankPayoutMethod" class="mid-payout">
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (bankName = v)"
-                :value="bankName"
-                type="text"
-                placeholder="Enter your bank name"
-                label="BANK NAME"
-              />
-
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (accountName = v)"
-                :value="accountName"
-                type="text"
-                placeholder="Enter your account name"
-                label="ACCOUNT NAME"
-              />
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (accountNumber = v)"
-                :value="accountNumber"
-                type="text"
-                placeholder="Enter your bank account number"
-                label="ACCOUNT NUMBER"
-              />
-
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (swiftCode = v)"
-                :value="swiftCode"
-                type="text"
-                placeholder="Optional: Enter swift code"
-                label="SWIFT CODE"
-              />
-            </div>
-
-            <div v-else class="mid-payout">
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (momoNumber = v)"
-                :value="momoNumber"
-                type="text"
-                placeholder="Enter your Mobile Number"
-                label="MOBILE MOENY NUMBER"
-              />
-
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (momoName = v)"
-                :value="momoName"
-                type="text"
-                placeholder="Enter your mobile money name"
-                label="MOBILE MONEY NAME"
-              />
-            </div>
-          </div>
-
-          <br /><br />
-          <Button
-            @handleClick="addPaymentMethod"
-            width="250px"
-            label="Update Payout Method"
-          />
-        </div>
-
-        <div v-else-if="showId == 6" class="review">
+        <div v-if="showId == 6" class="review">
           <h2>Review</h2>
           <br />
 
@@ -634,19 +149,18 @@
           </div>
         </div>
       </div>
-    <!-- </div> -->
+    </div>
   </div>
 </template>
 
 <script>
+import Navigation from "../../components/Blog/Navigation";
+import StyledInput from "../../components/StyledInput";
+import Button from "../../components/Button";
 import { mapActions, mapGetters } from "vuex";
-import Navigation from "../components/Blog/Navigation";
-import StyledInput from "../components/StyledInput";
-import Button from "../components/Button";
-import Select from "../components/Select";
-import Verification from "../components/verification";
-// import ProfileCardMobile from "../components/ProfileCardMobile";
-import MainProfileMobile from "../components/UserProfile/MainProfileMobile";
+import Select from "../../components/Select";
+import Verification from "../../components/verification";
+import ProfileCardMobile from "../../components/ProfileCardMobile";
 
 export default {
   name: "",
@@ -697,8 +211,6 @@ export default {
       backgroundFile: null,
     };
   },
-
-  computed: mapGetters(["getModalState", "isMobile", "isLoggedIn"]),
   methods: {
     modalControl() {},
 
@@ -1004,11 +516,6 @@ export default {
 
   components: {
     Navigation,
-    StyledInput,
-    Button,
-    Verification,
-    MainProfileMobile,
-    Select,
   },
 
   created() {
@@ -1145,74 +652,6 @@ export default {
       }
     }
 
-    .verifications {
-      * {
-        display: block !important;
-        padding: 15px 15px 10px 0 !important;
-      }
-      .upload {
-        margin: -30px 0 -30px !important;
-      }
-      .choose-file {
-        text-align: center !important;
-      }
-
-      .veri-sec-1-mobile {
-        margin: 0px 0 -30px !important;
-      }
-
-      br {
-        display: none !important;
-      }
-
-      .veri-sec-3 {
-        label {
-          height: 100% !important;
-        }
-      }
-
-      button {
-        width: 50% !important;
-      }
-    }
-
-    .Security {
-      * {
-        display: block !important;
-        padding: 0 !important;
-      }
-      h3 {
-        margin: 0 0px 10px 0 !important;
-      }
-      button {
-        margin: 30px 10px 0 0 !important;
-      }
-    }
-
-    .payout-details {
-      * {
-        width: 100% !important;
-      }
-
-      img {
-        width: auto !important;
-      }
-      h3 {
-        font-size: 24px !important;
-      }
-      p {
-        font-size: 15px !important;
-      }
-
-      hr {
-        display: none !important;
-      }
-
-      .mid-payout {
-        display: block !important;
-      }
-    }
-
     .review {
       * {
         max-width: 100% !important;
@@ -1341,75 +780,6 @@ export default {
   }
 }
 
-.verifications {
-  label {
-    cursor: pointer;
-    margin-left: 40px;
-    font-size: 15px;
-    padding: 6px 20px;
-    background: #fdfdfd;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-  }
-
-  #upload-photo {
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
-  }
-
-  .veri-sec-1 {
-    p {
-      margin-top: 5px;
-    }
-    display: flex;
-    color: #404040;
-  }
-
-  .veri-sec-3 {
-    margin-top: 5px;
-    span {
-      margin-left: 33px;
-      font-size: 14px;
-      align-items: center;
-      color: #6a6a6a;
-    }
-  }
-
-  .upload {
-    cursor: pointer;
-    font-size: 14px;
-    margin-top: 14px;
-    margin-left: 200px;
-    color: #3a85fc;
-  }
-}
-
-.update-div {
-  width: 80%;
-  margin-bottom: 20px;
-
-  h3 {
-    font-weight: bold;
-    margin-top: 34px;
-    margin-bottom: 5px;
-    width: 100%;
-    font-size: 18px;
-    color: #404040;
-  }
-
-  .btn-div {
-    button {
-      padding: 13px 45px;
-      width: 35%;
-      height: 44px;
-      font-size: 15px;
-      background: #3a85fc;
-      border-radius: 5px;
-    }
-  }
-}
-
 .action-section {
   .btn-update {
     border: transparent;
@@ -1430,88 +800,6 @@ export default {
 .special-hts {
   color: #404040;
   font-size: 18px;
-}
-
-.payout-details {
-  .payout-bank-sec {
-    margin-bottom: 10px;
-    cursor: pointer;
-    display: flex;
-    justify-content: flex-start;
-
-    .p-bank {
-      margin-right: 150px !important;
-    }
-
-    p {
-      text-align: center;
-      padding-bottom: 5px;
-      width: 150px;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 18px;
-      line-height: 22px;
-      color: #333333;
-    }
-  }
-
-  .num-placeholder {
-    width: 250px;
-  }
-
-  hr {
-    width: 500px;
-    margin-top: 15px;
-    border: 0.5px solid rgba(128, 128, 128, 0.26);
-  }
-
-  span {
-    margin-left: 10px;
-  }
-
-  p {
-    font-size: 14px;
-    line-height: 28px;
-    color: rgba(64, 64, 64, 0.75);
-  }
-
-  h3 {
-    font-size: 18px;
-    line-height: 22px;
-    color: rgba(64, 64, 64, 0.75);
-  }
-}
-
-.profile-show {
-  hr {
-    width: 490px;
-    border: 1px solid rgba(51, 51, 51, 0.1);
-    margin-bottom: 30px;
-  }
-
-  .p-desc {
-    color: grey;
-    margin-top: 30px;
-    margin-bottom: 12px;
-    width: 500px;
-    font-size: 14px;
-    line-height: 18px;
-    color: rgba(51, 51, 51, 0.75);
-  }
-
-  .p-work,
-  .p-lives {
-    color: grey;
-    margin-top: 20px;
-    height: 18px;
-    left: 534px;
-    font-size: 14px;
-    color: rgba(51, 51, 51, 0.75);
-    i {
-      margin-right: 15px;
-      font-size: 20px;
-    }
-  }
 }
 
 .profile {
@@ -1630,62 +918,67 @@ export default {
         }
       }
 
-      .listing-card-holder {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-      }
+      //   .listing-card-holder {
+      //     display: grid;
+      //     grid-template-columns: repeat(2, 1fr);
+      //   }
 
-      .listing-card {
-        margin-right: 20px;
-        .action-section {
-          button {
-            margin: 0 10px 0 0 !important;
-            padding: 0.9em 2.5em;
-            cursor: pointer;
-          }
-        }
+      //   .listing-card {
+      //     margin-right: 20px;
+      //     .action-section {
+      //       button {
+      //         margin: 0 10px 0 0 !important;
+      //         padding: 0.9em 2.5em;
+      //         cursor: pointer;
+      //       }
+      //     }
 
-        margin-bottom: 20px;
-        width: 400px;
-        height: 350px;
-        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
-        background-color: #ffffff;
-        border-radius: 5px;
-        cursor: pointer;
+      //     margin-bottom: 20px;
+      //     width: 400px;
+      //     height: 350px;
+      //     box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
+      //     background-color: #ffffff;
+      //     border-radius: 5px;
+      //     cursor: pointer;
 
-        img {
-          margin: 0 !important;
-          width: 100%;
-          border-radius: 5px;
-          height: 55%;
-          object-fit: cover;
-        }
+      //     img {
+      //       margin: 0 !important;
+      //       width: 100%;
+      //       border-radius: 5px;
+      //       height: 55%;
+      //       object-fit: cover;
+      //     }
 
-        div {
-          height: 100%;
-          padding: 20px;
-          h3 {
-            font-size: 18px;
-            color: #404040;
-            span {
-              margin-left: 10px;
-              padding: 0.1em 0.2em;
-              color: #3a85fc;
-              padding: 0.2em 1em;
-              font-size: 14px;
-              background: rgba(58, 133, 252, 0.1);
-              border-radius: 1px;
-            }
-          }
-          p {
-            color: #777777;
-          }
-          .price-p {
-            font-size: 20px;
-            font-weight: bold;
-          }
-        }
-      }
+      //     div {
+      //       height: 100%;
+      //       padding: 20px;
+
+      //       h3 {
+      //         font-size: 18px;
+      //         color: #404040;
+
+      //         span {
+      //           margin-left: 10px;
+      //           padding: 0.1em 0.2em;
+      //           color: #3a85fc;
+      //           padding: 0.2em 1em;
+      //           font-size: 14px;
+      //           background: rgba(58, 133, 252, 0.1);
+      //           border-radius: 1px;
+      //         }
+      //       }
+
+      //       p {
+      //         color: #777777;
+      //       }
+
+      //       .price-p {
+      //         font-size: 20px;
+      //         font-weight: bold;
+      //       }
+      //     }
+      //   }
+
       h2 {
         font-style: normal;
         font-weight: bold;
