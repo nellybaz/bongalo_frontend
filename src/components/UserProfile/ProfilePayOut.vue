@@ -26,7 +26,6 @@
             "
             v-on:click="$modal.hide('payout-sec')"
             class="far fa-times-circle"
-        
           ></i>
         </div>
       </div>
@@ -45,7 +44,7 @@
             <p class="p-item">Listings</p>
           </a>
         </div> -->
-         <!-- <div class="d3 d" @click="handleWhatShows(4)">
+        <!-- <div class="d3 d" @click="handleWhatShows(4)">
           <a href="#favourite-section">
             <div>
               <img

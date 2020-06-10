@@ -1,102 +1,44 @@
 <template>
   <div v-if="isMobile" class="profile">
-    <!-- <Profile v-if="!isMobile"/> -->
     <!-- <Navigation :showSearch="false" /> -->
     <div class="content">
-      <div style="background: #3a85fc !important;">
+      <!-- <div
+        style="
+          background: #3a85fc !important;
+          display: flex !important;
+          justify-content: space-between !important;
+        "
+      >
+        <div class="i-div">
+          <i
+            style="
+              color: white !important;
+              font-size: 20px !important;
+              margin: 10px !important;
+            "
+            v-on:click="$modal.hide('profile-nav-mob')"
+            class="far fa-times-circle"
+          ></i>
+        </div>
         <img
           @click="$modal.show('profile-nav-mob')"
           class="nav-modal"
-          src="../../assets/images/home-vector.png"
+          src="../assets/images/home-vector.png"
+          alt
           width="30px"
           style="margin: 10px !important;"
         />
-      </div>
+      </div> -->
 
-      <div v-if="isMobile" class="left">
-        <div class="d2 d" @click="handleWhatShows(1)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Profile</p>
-          </a>
-        </div>
-
-        <!-- <div class="d3 d" @click="handleWhatShows(2)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Listings</p>
-          </a>
-        </div> -->
-        <!-- <div class="d2 d" @click="handleWhatShows(3)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Verifications</p>
-          </a>
-        </div> -->
-        <!-- 
-        <div class="d3 d" @click="handleWhatShows(4)">
-          <a href="#favourite-section">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Security</p>
-          </a>
-        </div> -->
-
-        <!-- <div class="d3 d" @click="handleWhatShows(5)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Payout Methods</p>
-          </a>
-        </div> -->
-
-        <!-- <div class="d3 d" @click="handleWhatShows(6)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Reviews</p>
-          </a>
-        </div> -->
-      </div>
+      <Select
+        v-on:selectChangeHandler="(v) => (showId = v.data)"
+        step="verification_type"
+        :options="profileOptions"
+        width="300px"
+        :model="''"
+        class="profile-dropdown"
+      >
+      </Select>
 
       <div v-if="isMobile" class="right">
         <div v-if="showId == 1">
@@ -247,7 +189,7 @@
               You haven't added any listing. Add a listing to update a Payout
               Method
             </h4>
-            <img src="../../assets/images/pic.png" alt="bongalo-careers" />
+            <img src="../assets/images/pic.png" alt="bongalo-careers" />
             <Button
               @handleClick="handleOpeningHostPage"
               :isFullWidth="false"
@@ -259,13 +201,6 @@
         <div v-else-if="showId == 3" class="verifications">
           <div class="veri-sec-1">
             <h2>Verifications</h2>
-
-            <!-- <p
-              v-if="verificationStatus == '' || verificationStatus == 'U'"
-              class="upload"
-            >
-              UPLOAD VERFICATION
-            </p> -->
           </div>
 
           <div v-if="verificationStatus == '' || verificationStatus == 'U'">
@@ -416,7 +351,7 @@
           <h3>Mobile Wallet</h3>
           <img
             style="width: 10%; margin: 10px 0px;"
-            src="../../assets/images/mtn.png"
+            src="../assets/images/mtn.png"
             alt="bongalo-careers"
           />
           <p>
@@ -428,12 +363,6 @@
           <br />
 
           <br />
-          <!-- <Button
-            @handleClick="addPaymentMethod"
-            :isFullWidth="false"
-            label="Save"
-            style="width:25%; margin-top:20px0"
-          /> -->
           <br /><br />
           <hr />
           <br />
@@ -654,19 +583,45 @@
 </template>
 
 <script>
-// import Navigation from "../../components/Blog/Navigation";
-import StyledInput from "../../components/StyledInput";
-import Button from "../../components/Button";
+// import Navigation from "../components/Blog/Navigation";
+import StyledInput from "../components/StyledInput";
+import Button from "../components/Button";
 import { mapActions, mapGetters } from "vuex";
-import Select from "../../components/Select";
-import Verification from "../../components/verification";
-// import ProfileCardMobile from "../../components/ProfileCardMobile";
-// import Profile from "../../views/Profile";
+import Select from "../components/Select";
+import Verification from "../components/verification";
 
 export default {
   name: "",
   data: function () {
     return {
+      profileTypeValue: "",
+      profileOptions: [
+        {
+          text: "Profile",
+          value: "1",
+        },
+        {
+          text: "Listing",
+          value: "2",
+        },
+        {
+          text: "Verification",
+          value: "3",
+        },
+        {
+          text: "Security",
+          value: "4",
+        },
+        {
+          text: "Payout Method",
+          value: "5",
+        },
+        {
+          text: "Reviews",
+          value: "6",
+        },
+      ],
+
       verificationTypeValue: "",
       verificationType: [
         {
@@ -694,6 +649,7 @@ export default {
       editProfileBtnClicked: false,
       showBankPayoutMethod: true,
       showReviewedContent: true,
+      showProfiletContent: true,
       userDescription: "",
       firstName: "",
       lastName: "",
@@ -708,13 +664,12 @@ export default {
       },
 
       showId: 1,
+      activeId: 1,
       backgroundUrl: "https://freesvg.org/img/abstract-user-flat-3.png",
       backgroundFile: null,
     };
   },
   methods: {
-    modalControl() {},
-
     changePassword() {
       if (
         this.newPassword.length < 1 ||
@@ -828,6 +783,16 @@ export default {
         return " border-bottom: 3px solid #3a85fc !important;";
       }
       return "";
+    },
+
+    getActiveContent(select, intent) {
+      let selectDropItem =
+        select == 1
+          ? this.showProfiletContent
+          : this.showProfiletContent == false;
+      if (selectDropItem) {
+        return true;
+      }
     },
     getUserValue(intent) {
       return "ne";
@@ -966,9 +931,15 @@ export default {
       }
       this.$router.push({ path: "/become-a-host" });
     },
+
     handleWhatShows(intent) {
       this.showId = intent;
     },
+
+    showActiveClick(intent) {
+      this.activeId = intent;
+    },
+
     handleProfileSelect(e) {
       this.backgroundUrl = URL.createObjectURL(e.target.files[0]);
       // TODO: Dispatch action to update profile picture
@@ -1047,6 +1018,12 @@ export default {
   * {
     margin: 0 !important;
     max-width: 100% !important;
+  }
+
+  .profile-dropdown {
+    // border: 1px solid red !important;
+    min-width: 100% !important;
+    border-radius: 0 !important;
   }
 
   .select-a-review {

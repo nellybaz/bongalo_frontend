@@ -44,7 +44,7 @@
             <p class="p-item">Listings</p>
           </a>
         </div> -->
-         <div class="d2 d" @click="handleWhatShows(3)">
+        <div class="d2 d" @click="handleWhatShows(3)">
           <a href="#">
             <div>
               <img
@@ -349,7 +349,7 @@
             />
           </div>
         </div> -->
-<!-- 
+        <!-- 
         <div v-else-if="showId == 5" class="payout-details">
           <h2>Payout Methods</h2>
           <br />

@@ -46,7 +46,7 @@
         </div>
 
         <div class="d3 d tryso" @click="handleWhatShows(2)">
-          <a @click="$modal.show('listing-sec')" href="#">
+          <a href="#">
             <div>
               <img
                 class="profile-icons-mobile"
@@ -58,8 +58,10 @@
             <p class="p-item">Listings</p>
           </a>
         </div>
+
         <div class="d2 d" @click="handleWhatShows(3)">
-          <a @click="$modal.show('verfication-sec')" href="#">
+          <!-- @click="$modal.show('verfication-sec')" -->
+          <a href="#">
             <div>
               <img
                 class="profile-icons-mobile"
@@ -73,7 +75,8 @@
         </div>
 
         <div class="d3 d" @click="handleWhatShows(4)">
-          <a @click="$modal.show('security-sec')" href="#favourite-section">
+          <!-- @click="$modal.show('security-sec')" -->
+          <a href="#favourite-section">
             <div>
               <img
                 class="profile-icons-mobile"
@@ -87,7 +90,8 @@
         </div>
 
         <div class="d3 d" @click="handleWhatShows(5)">
-          <a @click="$modal.show('payout-sec')" href="#">
+          <!-- @click="$modal.show('payout-sec')" -->
+          <a href="#">
             <div>
               <img
                 class="profile-icons-mobile"
@@ -101,7 +105,8 @@
         </div>
 
         <div class="d3 d" @click="handleWhatShows(6)">
-          <a @click="$modal.show('reviews-sec')" href="#">
+          <!-- @click="$modal.show('reviews-sec')" -->
+          <a href="#">
             <div>
               <img
                 class="profile-icons-mobile"

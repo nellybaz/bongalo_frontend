@@ -10,7 +10,7 @@
         "
       >
         <img
-          @click="$modal.show('profile-nav-mob')"
+          
           class="nav-modal"
           src="../../assets/images/home-vector.png"
           alt
@@ -26,7 +26,6 @@
             "
             v-on:click="$modal.hide('listing-sec')"
             class="far fa-times-circle"
-        
           ></i>
         </div>
       </div>

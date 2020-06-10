@@ -1,639 +1,635 @@
 <template>
   <div v-if="isMobile" class="profile">
     <Navigation :showSearch="false" />
-      <MainProfileMobile></MainProfileMobile>
+    <MainProfileMobile></MainProfileMobile>
     <!-- <div class="content"> -->
 
+    <div class="left">
+      <div class="d2 d" @click="handleWhatShows(1)">
+        <a href="#">
+          <div>
+            <img
+              class="profile-icons-mobile"
+              style="margin: 0.7rem 0.8rem;"
+              src="../assets/images/vector.png"
+              alt="bongalo-careers"
+            />
+          </div>
+          <p class="p-item">Profile</p>
+        </a>
+      </div>
 
-      <div class="left">
-        <div class="d2 d" @click="handleWhatShows(1)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Profile</p>
-          </a>
+      <div class="d3 d" @click="handleWhatShows(2)">
+        <a href="#">
+          <div>
+            <img
+              class="profile-icons-mobile"
+              style="margin: 0.7rem 0.8rem;"
+              src="../assets/images/vector.png"
+              alt="bongalo-careers"
+            />
+          </div>
+          <p class="p-item">Listings</p>
+        </a>
+      </div>
+      <div class="d2 d" @click="handleWhatShows(3)">
+        <a href="#">
+          <div>
+            <img
+              class="profile-icons-mobile"
+              style="margin: 0.7rem 0.8rem;"
+              src="../assets/images/vector.png"
+              alt="bongalo-careers"
+            />
+          </div>
+          <p class="p-item">Verifications</p>
+        </a>
+      </div>
+
+      <div class="d3 d" @click="handleWhatShows(4)">
+        <a href="#favourite-section">
+          <div>
+            <img
+              class="profile-icons-mobile"
+              style="margin: 0.7rem 0.8rem;"
+              src="../assets/images/vector.png"
+              alt="bongalo-careers"
+            />
+          </div>
+          <p class="p-item">Security</p>
+        </a>
+      </div>
+
+      <div class="d3 d" @click="handleWhatShows(5)">
+        <a href="#">
+          <div>
+            <img
+              class="profile-icons-mobile"
+              style="margin: 0.7rem 0.8rem;"
+              src="../assets/images/vector.png"
+              alt="bongalo-careers"
+            />
+          </div>
+          <p class="p-item">Payout Methods</p>
+        </a>
+      </div>
+
+      <div class="d3 d" @click="handleWhatShows(6)">
+        <a href="#">
+          <div>
+            <img
+              class="profile-icons-mobile"
+              style="margin: 0.7rem 0.8rem;"
+              src="../assets/images/vector.png"
+              alt="bongalo-careers"
+            />
+          </div>
+          <p class="p-item">Reviews</p>
+        </a>
+      </div>
+    </div>
+
+    <div v-if="isMobile" class="right">
+      <div v-if="showId == 1">
+        <h2 id="dashboard">Hi, I am {{ firstName }}</h2>
+        <div class="top">
+          <div :style="getProfileImage()" class="icon-div">
+            <input
+              @change="handleProfileSelect"
+              :v-model="backgroundFile"
+              id="p-pic"
+              type="file"
+            />
+            <label for="p-pic">
+              <i class="fas fa-camera" title="Update profile image"></i>
+            </label>
+          </div>
+
+          <button
+            class="p-primary-edit-profile"
+            v-if="!editProfileBtnClicked"
+            @click="editProfileBtnClicked = true"
+          >
+            Edit Profile
+          </button>
         </div>
 
-        <div class="d3 d" @click="handleWhatShows(2)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Listings</p>
-          </a>
-        </div>
-        <div class="d2 d" @click="handleWhatShows(3)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Verifications</p>
-          </a>
+        <div v-if="editProfileBtnClicked" class="update-div">
+          <h3>Tell us the basics</h3>
+          <div class="mid">
+            <StyledInput
+              @sendInput="(v) => (firstName = v)"
+              :value="firstName"
+              type="text"
+              placeholder="First name"
+              label="FULL NAME"
+            />
+            <StyledInput
+              @sendInput="(v) => (lastName = v)"
+              :value="lastName"
+              type="text"
+              placeholder="Last name"
+              label="LAST NAME"
+            />
+          </div>
+
+          <br />
+          <div class="bottom">
+            <StyledInput
+              @sendInput="(v) => (userDescription = v)"
+              :value="userDescription"
+              :isTextArea="true"
+              type="text"
+              placeholder
+              label="DESCRIPTION"
+            />
+          </div>
+
+          <h3>Where are you located?</h3>
+          <div class="mid">
+            <StyledInput
+              @sendInput="(v) => (userCity = v)"
+              :value="userCity"
+              type="text"
+              placeholder="City"
+              label="CITY, STATE"
+            />
+            <StyledInput
+              @sendInput="(v) => (userCountry = v)"
+              :value="userCountry"
+              type="text"
+              placeholder="Country"
+              label="NATIONALITY"
+            />
+          </div>
+
+          <h3>How can we contact you?</h3>
+          <div class="mid">
+            <StyledInput
+              @sendInput="(v) => (phoneNumber = v)"
+              :value="phoneNumber"
+              type="text"
+              placeholder="Enter phone"
+              label="PHONE NUMBER"
+            />
+          </div>
+
+          <br />
+          <br />
+          <div class="btn-div">
+            <Button
+              @handleClick="updateUser"
+              :isFullWidth="false"
+              label="Update Profile"
+            />
+          </div>
         </div>
 
-        <div class="d3 d" @click="handleWhatShows(4)">
-          <a href="#favourite-section">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Security</p>
-          </a>
-        </div>
-
-        <div class="d3 d" @click="handleWhatShows(5)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Payout Methods</p>
-          </a>
-        </div>
-
-        <div class="d3 d" @click="handleWhatShows(6)">
-          <a href="#">
-            <div>
-              <img
-                class="profile-icons-mobile"
-                style="margin: 0.7rem 0.8rem;"
-                src="../assets/images/vector.png"
-                alt="bongalo-careers"
-              />
-            </div>
-            <p class="p-item">Reviews</p>
-          </a>
+        <div v-else class="profile-show">
+          <p class="p-desc">
+            {{ userDescription }}
+          </p>
+          <hr />
+          <p class="p-lives">
+            <i class="fas fa-home"></i>
+            Lives in {{ userCity }} {{ userCountry }}
+          </p>
+          <p class="p-work">
+            <i class="fas fa-briefcase"></i>
+            Works as {{ "Software Engineer" }}
+          </p>
         </div>
       </div>
 
-      <div v-if="isMobile" class="right">
-        <div v-if="showId == 1">
-          <h2 id="dashboard">Hi, I am {{ firstName }}</h2>
-          <div class="top">
-            <div :style="getProfileImage()" class="icon-div">
-              <input
-                @change="handleProfileSelect"
-                :v-model="backgroundFile"
-                id="p-pic"
-                type="file"
-              />
-              <label for="p-pic">
-                <i class="fas fa-camera" title="Update profile image"></i>
-              </label>
+      <div v-else-if="showId == 2" class="listing-container">
+        <h2>Listings</h2>
+        <br />
+
+        <div v-if="getUserListing().length > 0" class="listing-card-holder">
+          <div
+            v-for="listing in getUserListing()"
+            :key="listing.title"
+            class="listing-card"
+          >
+            <img :src="listing.main_image" alt />
+            <div class="listing-title">
+              <h3>
+                {{ listing.title }}
+                <span> ${{ listing.price }} </span>
+              </h3>
+              <br />
+              <section class="action-section">
+                <button @click="updateListing(listing)" class="btn-update">
+                  Update
+                </button>
+                <button @click="deleteListing(listing.uuid)" class="btn-remove">
+                  Remove
+                </button>
+              </section>
             </div>
-
-            <button
-              class="p-primary-edit-profile"
-              v-if="!editProfileBtnClicked"
-              @click="editProfileBtnClicked = true"
-            >
-              Edit Profile
-            </button>
-          </div>
-
-          <div v-if="editProfileBtnClicked" class="update-div">
-            <h3>Tell us the basics</h3>
-            <div class="mid">
-              <StyledInput
-                @sendInput="(v) => (firstName = v)"
-                :value="firstName"
-                type="text"
-                placeholder="First name"
-                label="FULL NAME"
-              />
-              <StyledInput
-                @sendInput="(v) => (lastName = v)"
-                :value="lastName"
-                type="text"
-                placeholder="Last name"
-                label="LAST NAME"
-              />
-            </div>
-
-            <br />
-            <div class="bottom">
-              <StyledInput
-                @sendInput="(v) => (userDescription = v)"
-                :value="userDescription"
-                :isTextArea="true"
-                type="text"
-                placeholder
-                label="DESCRIPTION"
-              />
-            </div>
-
-            <h3>Where are you located?</h3>
-            <div class="mid">
-              <StyledInput
-                @sendInput="(v) => (userCity = v)"
-                :value="userCity"
-                type="text"
-                placeholder="City"
-                label="CITY, STATE"
-              />
-              <StyledInput
-                @sendInput="(v) => (userCountry = v)"
-                :value="userCountry"
-                type="text"
-                placeholder="Country"
-                label="NATIONALITY"
-              />
-            </div>
-
-            <h3>How can we contact you?</h3>
-            <div class="mid">
-              <StyledInput
-                @sendInput="(v) => (phoneNumber = v)"
-                :value="phoneNumber"
-                type="text"
-                placeholder="Enter phone"
-                label="PHONE NUMBER"
-              />
-            </div>
-
-            <br />
-            <br />
-            <div class="btn-div">
-              <Button
-                @handleClick="updateUser"
-                :isFullWidth="false"
-                label="Update Profile"
-              />
-            </div>
-          </div>
-
-          <div v-else class="profile-show">
-            <p class="p-desc">
-              {{ userDescription }}
-            </p>
-            <hr />
-            <p class="p-lives">
-              <i class="fas fa-home"></i>
-              Lives in {{ userCity }} {{ userCountry }}
-            </p>
-            <p class="p-work">
-              <i class="fas fa-briefcase"></i>
-              Works as {{ "Software Engineer" }}
-            </p>
           </div>
         </div>
 
-        <div v-else-if="showId == 2" class="listing-container">
-          <h2>Listings</h2>
+        <div v-else class="no-lising-card">
+          <h4 class="add-listing">
+            You haven't added any listing. Add a listing to update a Payout
+            Method
+          </h4>
+          <img src="../assets/images/pic.png" alt="bongalo-careers" />
+          <Button
+            @handleClick="handleOpeningHostPage"
+            :isFullWidth="false"
+            label="Add a Listing"
+          />
+        </div>
+      </div>
+
+      <div v-else-if="showId == 3" class="verifications">
+        <div class="veri-sec-1">
+          <h2>Verifications</h2>
+        </div>
+
+        <div v-if="verificationStatus == '' || verificationStatus == 'U'">
+          <br />
           <br />
 
-          <div v-if="getUserListing().length > 0" class="listing-card-holder">
-            <div
-              v-for="listing in getUserListing()"
-              :key="listing.title"
-              class="listing-card"
-            >
-              <img :src="listing.main_image" alt />
-              <div class="listing-title">
-                <h3>
-                  {{ listing.title }}
-                  <span> ${{ listing.price }} </span>
-                </h3>
-                <br />
-                <section class="action-section">
-                  <button @click="updateListing(listing)" class="btn-update">
-                    Update
-                  </button>
-                  <button
-                    @click="deleteListing(listing.uuid)"
-                    class="btn-remove"
-                  >
-                    Remove
-                  </button>
-                </section>
-              </div>
+          <div class="veri-sec-1">
+            <div class="">
+              <p>Choose Verification Type</p>
+              <br />
+              <Select
+                v-on:selectChangeHandler="
+                  (v) => (verificationTypeValue = v.data)
+                "
+                step="verification_type"
+                :options="verificationType"
+                width="300px"
+                :model="''"
+              ></Select>
+            </div>
+
+            <div class="veri-sec-3">
+              <br />
+              <br />
+              <label for="upload-photo">Choose file</label>
+              <input
+                @change="(e) => (verificationFile = e.target.files[0])"
+                type="file"
+                name="photo"
+                id="upload-photo"
+              />
+              <span>No file selected.</span>
             </div>
           </div>
 
-          <div v-else class="no-lising-card">
-            <h4 class="add-listing">
-              You haven't added any listing. Add a listing to update a Payout
-              Method
-            </h4>
-            <img src="../assets/images/pic.png" alt="bongalo-careers" />
-            <Button
-              @handleClick="handleOpeningHostPage"
-              :isFullWidth="false"
-              label="Add a Listing"
-            />
-          </div>
+          <br />
+          <br />
+          <br />
+          <Button
+            v-if="!verificationButtonClicked"
+            @handleClick="handleVerification"
+            :isFullWidth="false"
+            width="20%"
+            label="Verify"
+          />
+
+          <p v-else>
+            Uploading verification, please wait ...
+          </p>
         </div>
 
-        <div v-else-if="showId == 3" class="verifications">
-          <div class="veri-sec-1">
-            <h2>Verifications</h2>
-          </div>
+        <div v-else-if="verificationStatus == 'P'">
+          <Verification
+            title="Verification"
+            text1="Your file has been recieved, sit back while we verify it. This
+                  process may take between 3 - 5 days, and we will "
+            text2="Thank you"
+            strongText="send you an email once confirmed."
+            width="80%"
+          />
+        </div>
+        <div v-else>
+          <Verification
+            title="Verification"
+            text1=""
+            text2="Thank you"
+            strongText="Verified Bongalo User"
+            width="80%"
+          />
+        </div>
+      </div>
 
-          <div v-if="verificationStatus == '' || verificationStatus == 'U'">
-            <br />
-            <br />
+      <div v-else-if="showId == 4" class="Security">
+        <h2>Security</h2>
+        <br />
+        <div v-if="!changePasswordIsSuccessful">
+          <h3>Change your password</h3>
 
-            <div class="veri-sec-1">
-              <div class="">
-                <p>Choose Verification Type</p>
-                <br />
-                <Select
-                  v-on:selectChangeHandler="
-                    (v) => (verificationTypeValue = v.data)
-                  "
-                  step="verification_type"
-                  :options="verificationType"
-                  width="300px"
-                  :model="''"
-                ></Select>
-              </div>
-
-              <div class="veri-sec-3">
-                <br />
-                <br />
-                <label for="upload-photo">Choose file</label>
-                <input
-                  @change="(e) => (verificationFile = e.target.files[0])"
-                  type="file"
-                  name="photo"
-                  id="upload-photo"
-                />
-                <span>No file selected.</span>
-              </div>
-            </div>
+          <div class="mid">
+            <StyledInput
+              @sendInput="(v) => (oldPassword = v)"
+              :value="''"
+              type="password"
+              placeholder="Enter old password"
+              label="OLD PASSWORD"
+            />
 
             <br />
+            <StyledInput
+              @sendInput="(v) => (newPassword = v)"
+              :value="''"
+              type="password"
+              placeholder="Enter new password"
+              label="NEW PASSWORD"
+            />
             <br />
-            <br />
+
+            <StyledInput
+              @sendInput="(v) => (newPasswordConfirm = v)"
+              :value="''"
+              type="password"
+              placeholder="Confirm new password"
+              label="CONFIRM PASSWORD"
+            />
+
             <Button
-              v-if="!verificationButtonClicked"
-              @handleClick="handleVerification"
+              v-if="!changePasswordButtonClicked"
+              @handleClick="changePassword"
               :isFullWidth="false"
-              width="20%"
-              label="Verify"
+              style="margin-top: 20px; height: 45px;"
+              label="Update Password"
             />
 
             <p v-else>
-              Uploading verification, please wait ...
+              <br />
+              Changing your password, please wait...
             </p>
           </div>
-
-          <div v-else-if="verificationStatus == 'P'">
-            <Verification
-              title="Verification"
-              text1="Your file has been recieved, sit back while we verify it. This
-                  process may take between 3 - 5 days, and we will "
-              text2="Thank you"
-              strongText="send you an email once confirmed."
-              width="80%"
-            />
-          </div>
-          <div v-else>
-            <Verification
-              title="Verification"
-              text1=""
-              text2="Thank you"
-              strongText="Verified Bongalo User"
-              width="80%"
-            />
-          </div>
         </div>
-
-        <div v-else-if="showId == 4" class="Security">
-          <h2>Security</h2>
-          <br />
-          <div v-if="!changePasswordIsSuccessful">
-            <h3>Change your password</h3>
-
-            <div class="mid">
-              <StyledInput
-                @sendInput="(v) => (oldPassword = v)"
-                :value="''"
-                type="password"
-                placeholder="Enter old password"
-                label="OLD PASSWORD"
-              />
-
-              <br />
-              <StyledInput
-                @sendInput="(v) => (newPassword = v)"
-                :value="''"
-                type="password"
-                placeholder="Enter new password"
-                label="NEW PASSWORD"
-              />
-              <br />
-
-              <StyledInput
-                @sendInput="(v) => (newPasswordConfirm = v)"
-                :value="''"
-                type="password"
-                placeholder="Confirm new password"
-                label="CONFIRM PASSWORD"
-              />
-
-              <Button
-                v-if="!changePasswordButtonClicked"
-                @handleClick="changePassword"
-                :isFullWidth="false"
-                style="margin-top: 20px; height: 45px;"
-                label="Update Password"
-              />
-
-              <p v-else>
-                <br />
-                Changing your password, please wait...
-              </p>
-            </div>
-          </div>
-          <div v-else>
-            <Verification
-              title="Successful"
-              text1="Your password has been changed successfully"
-              text2="Thank you"
-              strongText=""
-              width="80%"
-            />
-          </div>
-        </div>
-
-        <div v-else-if="showId == 5" class="payout-details">
-          <h2>Payout Methods</h2>
-          <br />
-          <h3>Bank</h3>
-
-          <p>
-            Bank Name: <span>{{ bankName }}</span>
-          </p>
-          <p>
-            Accouunt Details:
-            <span>{{ accountName }} - {{ accountNumber }}</span>
-          </p>
-          <p>
-            SWIFT Code: <span>{{ swiftCode }}</span>
-          </p>
-          <hr />
-          <br />
-          <h3>Mobile Wallet</h3>
-          <img
-            style="width: 10%; margin: 10px 0px;"
-            src="../assets/images/mtn.png"
-            alt="bongalo-careers"
+        <div v-else>
+          <Verification
+            title="Successful"
+            text1="Your password has been changed successfully"
+            text2="Thank you"
+            strongText=""
+            width="80%"
           />
-          <p>
-            Account Name: <span>{{ momoName }}</span>
-          </p>
-          <p>
-            Account Number: <span>{{ momoNumber }}</span>
-          </p>
-          <br />
+        </div>
+      </div>
 
-          <br />
-          <!-- <Button
+      <div v-else-if="showId == 5" class="payout-details">
+        <h2>Payout Methods</h2>
+        <br />
+        <h3>Bank</h3>
+
+        <p>
+          Bank Name: <span>{{ bankName }}</span>
+        </p>
+        <p>
+          Accouunt Details:
+          <span>{{ accountName }} - {{ accountNumber }}</span>
+        </p>
+        <p>
+          SWIFT Code: <span>{{ swiftCode }}</span>
+        </p>
+        <hr />
+        <br />
+        <h3>Mobile Wallet</h3>
+        <img
+          style="width: 10%; margin: 10px 0px;"
+          src="../assets/images/mtn.png"
+          alt="bongalo-careers"
+        />
+        <p>
+          Account Name: <span>{{ momoName }}</span>
+        </p>
+        <p>
+          Account Number: <span>{{ momoNumber }}</span>
+        </p>
+        <br />
+
+        <br />
+        <!-- <Button
             @handleClick="addPaymentMethod"
             :isFullWidth="false"
             label="Save"
             style="width:25%; margin-top:20px0"
           /> -->
-          <br /><br />
-          <hr />
-          <br />
+        <br /><br />
+        <hr />
+        <br />
 
-          <div v-if="!isMobile()" class="payout-bank-sec">
-            <p
-              class="p-bank"
-              @click="showBankPayoutMethod = true"
-              :style="getActiveBorder(2, true)"
-            >
-              Bank
-            </p>
-            <p
-              @click="showBankPayoutMethod = false"
-              :style="getActiveBorder(2, false)"
-            >
-              Mobile Money
-            </p>
-          </div>
-
-          <div v-else class="dropdown-details">
-            <div class="dropdown">
-              <button class="dropbtn">Select a Payout Method</button>
-              <div class="dropdown-content">
-                <a href="#">
-                  <p
-                    class="p-bank"
-                    @click="showBankPayoutMethod = true"
-                    :style="getActiveBorder(2, true)"
-                  >
-                    Bank
-                  </p></a
-                >
-                <br />
-                <a href="#">
-                  <p
-                    @click="showBankPayoutMethod = false"
-                    :style="getActiveBorder(2, false)"
-                  >
-                    Mobile Money
-                  </p></a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div v-if="showBankPayoutMethod" class="mid-payout">
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (bankName = v)"
-                :value="bankName"
-                type="text"
-                placeholder="Enter your bank name"
-                label="BANK NAME"
-              />
-
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (accountName = v)"
-                :value="accountName"
-                type="text"
-                placeholder="Enter your account name"
-                label="ACCOUNT NAME"
-              />
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (accountNumber = v)"
-                :value="accountNumber"
-                type="text"
-                placeholder="Enter your bank account number"
-                label="ACCOUNT NUMBER"
-              />
-
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (swiftCode = v)"
-                :value="swiftCode"
-                type="text"
-                placeholder="Optional: Enter swift code"
-                label="SWIFT CODE"
-              />
-            </div>
-
-            <div v-else class="mid-payout">
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (momoNumber = v)"
-                :value="momoNumber"
-                type="text"
-                placeholder="Enter your Mobile Number"
-                label="MOBILE MOENY NUMBER"
-              />
-
-              <StyledInput
-                class="num-placeholder"
-                @sendInput="(v) => (momoName = v)"
-                :value="momoName"
-                type="text"
-                placeholder="Enter your mobile money name"
-                label="MOBILE MONEY NAME"
-              />
-            </div>
-          </div>
-
-          <br /><br />
-          <Button
-            @handleClick="addPaymentMethod"
-            width="250px"
-            label="Update Payout Method"
-          />
+        <div v-if="!isMobile()" class="payout-bank-sec">
+          <p
+            class="p-bank"
+            @click="showBankPayoutMethod = true"
+            :style="getActiveBorder(2, true)"
+          >
+            Bank
+          </p>
+          <p
+            @click="showBankPayoutMethod = false"
+            :style="getActiveBorder(2, false)"
+          >
+            Mobile Money
+          </p>
         </div>
 
-        <div v-else-if="showId == 6" class="review">
-          <h2>Review</h2>
-          <br />
-
-          <div v-if="!isMobile" class="rev-title">
-            <p
-              @click="showReviewedContent = true"
-              :style="getActiveBorder(1, true)"
-            >
-              Reviews about you
-            </p>
-
-            <p
-              @click="showReviewedContent = false"
-              :style="getActiveBorder(1, false)"
-              class="p-review"
-            >
-              Reviews you’ve left
-            </p>
-          </div>
-
-          <div v-else class="dropdown-details">
-            <div class="dropdown">
-              <button style="" class="dropbtn">
-                <p class="select-a-review">Select a review type</p>
-              </button>
-              <div class="dropdown-content">
-                <a href="#">
-                  <p
-                    @click="showReviewedContent = true"
-                    :style="getActiveBorder(1, true)"
-                  >
-                    Reviews about you
-                  </p></a
+        <div v-else class="dropdown-details">
+          <div class="dropdown">
+            <button class="dropbtn">Select a Payout Method</button>
+            <div class="dropdown-content">
+              <a href="#">
+                <p
+                  class="p-bank"
+                  @click="showBankPayoutMethod = true"
+                  :style="getActiveBorder(2, true)"
                 >
-                <br />
-                <a href="#">
-                  <p
-                    @click="showReviewedContent = false"
-                    :style="getActiveBorder(1, false)"
-                    class="p-review"
-                  >
-                    Reviews you’ve left
-                  </p></a
+                  Bank
+                </p></a
+              >
+              <br />
+              <a href="#">
+                <p
+                  @click="showBankPayoutMethod = false"
+                  :style="getActiveBorder(2, false)"
                 >
-              </div>
+                  Mobile Money
+                </p></a
+              >
             </div>
           </div>
+        </div>
 
+        <div>
+          <div v-if="showBankPayoutMethod" class="mid-payout">
+            <StyledInput
+              class="num-placeholder"
+              @sendInput="(v) => (bankName = v)"
+              :value="bankName"
+              type="text"
+              placeholder="Enter your bank name"
+              label="BANK NAME"
+            />
+
+            <StyledInput
+              class="num-placeholder"
+              @sendInput="(v) => (accountName = v)"
+              :value="accountName"
+              type="text"
+              placeholder="Enter your account name"
+              label="ACCOUNT NAME"
+            />
+            <StyledInput
+              class="num-placeholder"
+              @sendInput="(v) => (accountNumber = v)"
+              :value="accountNumber"
+              type="text"
+              placeholder="Enter your bank account number"
+              label="ACCOUNT NUMBER"
+            />
+
+            <StyledInput
+              class="num-placeholder"
+              @sendInput="(v) => (swiftCode = v)"
+              :value="swiftCode"
+              type="text"
+              placeholder="Optional: Enter swift code"
+              label="SWIFT CODE"
+            />
+          </div>
+
+          <div v-else class="mid-payout">
+            <StyledInput
+              class="num-placeholder"
+              @sendInput="(v) => (momoNumber = v)"
+              :value="momoNumber"
+              type="text"
+              placeholder="Enter your Mobile Number"
+              label="MOBILE MOENY NUMBER"
+            />
+
+            <StyledInput
+              class="num-placeholder"
+              @sendInput="(v) => (momoName = v)"
+              :value="momoName"
+              type="text"
+              placeholder="Enter your mobile money name"
+              label="MOBILE MONEY NAME"
+            />
+          </div>
+        </div>
+
+        <br /><br />
+        <Button
+          @handleClick="addPaymentMethod"
+          width="250px"
+          label="Update Payout Method"
+        />
+      </div>
+
+      <div v-else-if="showId == 6" class="review">
+        <h2>Review</h2>
+        <br />
+
+        <div v-if="!isMobile" class="rev-title">
+          <p
+            @click="showReviewedContent = true"
+            :style="getActiveBorder(1, true)"
+          >
+            Reviews about you
+          </p>
+
+          <p
+            @click="showReviewedContent = false"
+            :style="getActiveBorder(1, false)"
+            class="p-review"
+          >
+            Reviews you’ve left
+          </p>
+        </div>
+
+        <div v-else class="dropdown-details">
+          <div class="dropdown">
+            <button style="" class="dropbtn">
+              <p class="select-a-review">Select a review type</p>
+            </button>
+            <div class="dropdown-content">
+              <a href="#">
+                <p
+                  @click="showReviewedContent = true"
+                  :style="getActiveBorder(1, true)"
+                >
+                  Reviews about you
+                </p></a
+              >
+              <br />
+              <a href="#">
+                <p
+                  @click="showReviewedContent = false"
+                  :style="getActiveBorder(1, false)"
+                  class="p-review"
+                >
+                  Reviews you’ve left
+                </p></a
+              >
+            </div>
+          </div>
+        </div>
+
+        <hr />
+        <br />
+
+        <div v-if="showReviewedContent">
+          <div v-for="item in getReviewForMe()" :key="item.id">
+            <a href="#">
+              <div class="rev-div"></div>
+              <p>
+                <strong>Benjamin</strong> |
+                <span class="rev-date">February 2020</span>
+                <br />
+                <span
+                  ><i class="fas fa-star" title="Update profile image"></i>
+                  <i class="fas fa-star" title="Update profile image"></i>
+                  <i class="fas fa-star" title="Update profile image"></i
+                  ><i class="fas fa-star" title="Update profile image"></i>
+                </span>
+              </p>
+            </a>
+            <p>
+              {{ item.review }}
+            </p>
+          </div>
+          <br />
           <hr />
           <br />
+        </div>
 
-          <div v-if="showReviewedContent">
-            <div v-for="item in getReviewForMe()" :key="item.id">
-              <a href="#">
-                <div class="rev-div"></div>
-                <p>
-                  <strong>Benjamin</strong> |
-                  <span class="rev-date">February 2020</span>
-                  <br />
-                  <span
-                    ><i class="fas fa-star" title="Update profile image"></i>
-                    <i class="fas fa-star" title="Update profile image"></i>
-                    <i class="fas fa-star" title="Update profile image"></i
-                    ><i class="fas fa-star" title="Update profile image"></i>
-                  </span>
-                </p>
-              </a>
+        <div v-else>
+          <h1 v-if="getReviewFromMe().length < 1">Nothing to show</h1>
+
+          <div v-else v-for="item in getReviewFromMe()" :key="item.id">
+            <a href="#">
+              <div class="rev-div"></div>
               <p>
-                {{ item.review }}
+                <strong>Benjamin</strong> |
+                <span class="rev-date">February 2020</span>
+                <br />
+                <span
+                  ><i class="fas fa-star" title="Update profile image"></i>
+                  <i class="fas fa-star" title="Update profile image"></i>
+                  <i class="fas fa-star" title="Update profile image"></i
+                  ><i class="fas fa-star" title="Update profile image"></i>
+                </span>
               </p>
-            </div>
-            <br />
-            <hr />
-            <br />
-          </div>
-
-          <div v-else>
-            <h1 v-if="getReviewFromMe().length < 1">Nothing to show</h1>
-
-            <div v-else v-for="item in getReviewFromMe()" :key="item.id">
-              <a href="#">
-                <div class="rev-div"></div>
-                <p>
-                  <strong>Benjamin</strong> |
-                  <span class="rev-date">February 2020</span>
-                  <br />
-                  <span
-                    ><i class="fas fa-star" title="Update profile image"></i>
-                    <i class="fas fa-star" title="Update profile image"></i>
-                    <i class="fas fa-star" title="Update profile image"></i
-                    ><i class="fas fa-star" title="Update profile image"></i>
-                  </span>
-                </p>
-              </a>
-              <p>
-                {{ item.review }}
-              </p>
-            </div>
+            </a>
+            <p>
+              {{ item.review }}
+            </p>
           </div>
         </div>
       </div>
+    </div>
     <!-- </div> -->
   </div>
 </template>
@@ -645,8 +641,7 @@ import StyledInput from "../components/StyledInput";
 import Button from "../components/Button";
 import Select from "../components/Select";
 import Verification from "../components/verification";
-// import ProfileCardMobile from "../components/ProfileCardMobile";
-import MainProfileMobile from "../components/UserProfile/MainProfileMobile";
+import MainProfileMobile from "../components/MainProfileMobile";
 
 export default {
   name: "",
@@ -700,8 +695,6 @@ export default {
 
   computed: mapGetters(["getModalState", "isMobile", "isLoggedIn"]),
   methods: {
-    modalControl() {},
-
     changePassword() {
       if (
         this.newPassword.length < 1 ||

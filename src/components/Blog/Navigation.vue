@@ -56,6 +56,7 @@ export default {
       type: Boolean,
     },
   },
+  
   data: function () {
     return {
       showOutline: false,
@@ -103,11 +104,13 @@ export default {
   .tm-header {
     max-width: 100% !important;
     padding: 0 15px !important;
+
     img {
       padding: 10px !important;
     }
+
     .blog-logo {
-      margin: 0 54% !important;
+      margin: 0 63% !important;
       width: 42px !important;
       position: absolute;
     }
@@ -138,12 +141,14 @@ export default {
   justify-content: flex-start;
   flex-direction: row;
 }
+
 .blg {
   width: 20px;
   color: #404040;
   font-size: 14px;
   margin-left: 10px;
 }
+
 header {
   margin-top: 5px;
   height: 64px;
@@ -197,11 +202,13 @@ li {
   margin-right: -20px;
   display: flex;
   align-items: center;
+
   i {
     margin-right: 15px;
     color: #686868;
     font-size: 15px;
   }
+
   input {
     border: none;
     height: 100%;
@@ -213,6 +220,7 @@ li {
     color: #6a6a6a;
     font-family: "Inter", sans-serif;
   }
+
   input::placeholder {
     font-style: normal;
     font-weight: normal;
@@ -221,6 +229,7 @@ li {
     color: #6a6a6a;
     font-family: "Inter", sans-serif;
   }
+
   input:focus {
     outline: none;
   }
