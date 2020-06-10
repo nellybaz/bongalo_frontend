@@ -990,6 +990,10 @@ export default {
   .profile-dropdown {
     min-width: 100% !important;
     border-radius: 0 !important;
+
+    div{
+      border: 1px solid red !important;
+    }
   }
 
   .select-a-review {
