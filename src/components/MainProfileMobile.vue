@@ -2,37 +2,9 @@
   <div v-if="isMobile" class="profile">
     <!-- <Navigation :showSearch="false" /> -->
     <div class="content">
-      <!-- <div
-        style="
-          background: #3a85fc !important;
-          display: flex !important;
-          justify-content: space-between !important;
-        "
-      >
-        <div class="i-div">
-          <i
-            style="
-              color: white !important;
-              font-size: 20px !important;
-              margin: 10px !important;
-            "
-            v-on:click="$modal.hide('profile-nav-mob')"
-            class="far fa-times-circle"
-          ></i>
-        </div>
-        <img
-          @click="$modal.show('profile-nav-mob')"
-          class="nav-modal"
-          src="../assets/images/home-vector.png"
-          alt
-          width="30px"
-          style="margin: 10px !important;"
-        />
-      </div> -->
-
       <Select
         v-on:selectChangeHandler="(v) => (showId = v.data)"
-        step="verification_type"
+        step=""
         :options="profileOptions"
         width="300px"
         :model="''"
@@ -796,10 +768,6 @@ export default {
     },
     getUserValue(intent) {
       return "ne";
-      // if(intent == 1){
-      //   this.phoneNumber = this.getUserInfo().phone_number
-      //   return this.phoneNumber
-      // }
     },
     updateUser() {
       const updateInfo = {
@@ -990,7 +958,6 @@ export default {
     // Navigation,
     StyledInput,
     Button,
-    // Profile,
     Verification,
     Select,
   },
@@ -1021,7 +988,6 @@ export default {
   }
 
   .profile-dropdown {
-    // border: 1px solid red !important;
     min-width: 100% !important;
     border-radius: 0 !important;
   }
@@ -1112,6 +1078,7 @@ export default {
         width: 100% !important;
       }
     }
+
     .right {
       margin-top: 20px !important;
       padding: 20px !important;
