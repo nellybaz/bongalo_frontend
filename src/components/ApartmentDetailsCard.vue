@@ -1,12 +1,39 @@
 <template>
   <div class="">
     <div class="mobile-img-slider">
-      <img
+      <div class="details-img-show">
+        <!-- <p style="color: red;"> -->
+        <!-- {{ Math.abs(galleryIndex) + 1 }}/{{ imagesArr.length }} -->
+
+        <!-- <span v-on:click="updateImageShowHandler(0)">X</span> -->
+
+        <!-- <div class="img-showing-div"> -->
+        <!-- <div class="img-big"> -->
+        <i
+          @click="handleGalleryIndex(0)"
+          class="fas fa-chevron-left"
+          id="gallery-icon-left"
+        ></i>
+
+        <img
+          v-on:click="$emit('updateImageShow', 1)"
+          :src="galleryCurrentImage"
+          alt=""
+        />
+        <i
+          @click="handleGalleryIndex(1)"
+          class="fas fa-chevron-right"
+          id="galleryIcon-right"
+        ></i>
+      </div>
+
+      <!-- <img
         v-on:click="$emit('updateImageShow', 1)"
         class="img1 img-item"
         :src="image1"
         alt=""
-      />
+      /> -->
+
       <div v-on:click="$emit('updateImageShow', 1)" class="img4 img-item">
         <p
           class="show-more-img-btn"
@@ -17,6 +44,7 @@
         </p>
       </div>
     </div>
+
     <div class="host-section-cover">
       <div @click="getUserUrl()" class="host-details">
         <div class="apartment-title">
@@ -97,11 +125,6 @@
         </h4>
         <button>Book</button>
       </div>
-      <!-- <img
-        class="google-map-mobile"
-        src="../assets/images/google-map.png"
-        alt=""
-      /> -->
     </div>
   </div>
 </template>
@@ -134,6 +157,23 @@ export default {
         return require("../assets/images/no-image2.png");
       }
     },
+
+    handleImageChange(index) {
+      this.galleryIndex = index;
+      this.galleryCurrentImage = this.getApartmentImages[
+        this.galleryIndex
+      ].image;
+    },
+
+    handleGalleryIndex(intent) {
+      if (intent == 1 && this.galleryIndex < this.imagesArr.length - 1) {
+        this.galleryIndex += 1;
+      } else if (intent == 0 && this.galleryIndex > 0) {
+        this.galleryIndex -= 1;
+      }
+
+      this.galleryCurrentImage = this.imagesArr[this.galleryIndex].image;
+    },
   },
 
   data: function () {
@@ -143,6 +183,9 @@ export default {
       image3: require("../assets/images/no-image2.png"),
       image4: require("../assets/images/no-image2.png"),
       apartment: {},
+      imagesArr: [],
+      galleryIndex: 0,
+      galleryCurrentImage: "",
     };
   },
 
@@ -160,12 +203,56 @@ export default {
     this.apartment = this.getCurrentApartment;
     this.handleImageLoad(1);
     this.handleImageLoad(2);
+
+    this.$store
+      .dispatch("fetchApartmentImages", {
+        token: "",
+        apartmentUuid: this.$route.query.apartment,
+      })
+
+      .then((res) => {
+        if (res == 1) {
+          this.apartmentIsAvailable = 1;
+          this.galleryCurrentImage = this.getCurrentApartment.main_image;
+          this.images = this.getApartmentImages;
+          this.imagesArr = this.getApartmentImages;
+          this.imagesArr.unshift({
+            image: this.getCurrentApartment.main_image,
+          });
+        }
+      });
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @media only screen and (max-width: 900px) {
+  .details-img-show {
+    img {
+      border-radius: 0 !important;
+      min-width: 100% !important;
+      max-width: 100% !important;
+    }
+  }
+
+  #gallery-icon-left {
+    position: absolute;
+    left: 20px !important;
+    top: 200px !important;
+    background: wheat;
+    padding: 4px 7px;
+    border-radius: 50px;
+  }
+
+  #galleryIcon-right {
+    position: absolute;
+    right: 20px !important;
+    top: 200px !important;
+    background: wheat;
+    padding: 4px 7px;
+    border-radius: 50px;
+  }
+
   .img-item {
     height: auto !important;
     width: 100% !important;
@@ -208,7 +295,7 @@ export default {
       }
 
       p {
-        font-size: 18px !important;
+        font-size: 15px !important;
         margin: 10px 0 !important;
       }
     }
@@ -232,10 +319,11 @@ export default {
     .name {
       display: flex !important;
       justify-content: space-between;
-
       margin: 10px 0;
+
       .profile-img {
-        height: 60px;
+        height: 50px !important;
+        width: 50px !important;
         border-radius: 50%;
         object-fit: cover;
       }

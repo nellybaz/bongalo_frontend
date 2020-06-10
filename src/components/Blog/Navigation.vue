@@ -5,7 +5,7 @@
         <a href="/">
           <img src="../../assets/images/bongalo-logo.png" alt />
         </a>
-        <div>
+        <div v-if="isMobile()">
           <img
             @click="$modal.show('mobile-booking')"
             class="blog-logo"
@@ -23,6 +23,7 @@
         class="search-div"
       >
         <i class="fa fa-search" aria-hidden="true"></i>
+
         <input
           @keyup="searchBlog"
           placeholder="Type for anything to search for tag or topics"
@@ -56,7 +57,7 @@ export default {
       type: Boolean,
     },
   },
-  
+
   data: function () {
     return {
       showOutline: false,

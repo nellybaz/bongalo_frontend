@@ -5,7 +5,7 @@
         <img src="../assets/images/bongalo-logo-white.png" alt />
       </div>
 
-      <div>
+      <div v-if="isMobile()">
         <img
           style="height: 14px !important; margin-left: -5px !important;"
           @click="$modal.show('mobile-booking')"

@@ -694,6 +694,7 @@ export default {
           });
       }
     },
+    
     handleVerification() {
       this.verificationButtonClicked = true;
       const data = {
@@ -748,6 +749,7 @@ export default {
           }
         });
     },
+
     getActiveBorder(section, intent) {
       var flip =
         section == 1 ? this.showReviewedContent : this.showBankPayoutMethod;
@@ -990,6 +992,11 @@ export default {
   .profile-dropdown {
     min-width: 100% !important;
     border-radius: 0 !important;
+
+    option {
+      border: 1px solid red !important;
+      background: red !important;
+    }
   }
 
   .select-a-review {

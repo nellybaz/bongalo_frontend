@@ -47,6 +47,7 @@ export default {
       if (id == 1) {
         this.image1 = this.getCurrentApartment.main_image;
       } else {
+        this.image2 = this.getImages(1);
         this.image2 = this.getImages(2);
         this.image3 = this.getImages(3);
         this.image4 = this.getImages(4);
@@ -80,6 +81,7 @@ export default {
       this.handleImageLoad(1);
     },
   },
+
   computed: mapGetters(["getApartmentImages", "getCurrentApartment"]),
   created() {
     this.apartment = this.getCurrentApartment;
@@ -93,11 +95,6 @@ export default {
 @media only screen and (max-width: 900px) {
   .image_grid {
     height: auto !important;
-    border: 1px solid red !important;
-  }
-
-  .updateImageShow {
-    border: 1px solid red !important;
   }
 
   .image-div {
@@ -110,7 +107,7 @@ export default {
   }
 
   .img1 {
-    border: 1px solid red !important;
+    // border: 1px solid red !important;
   }
 }
 
@@ -133,6 +130,7 @@ export default {
     }
 
     .img1 {
+      // border: 1px solid red !important;
       grid-column: 1/5;
       grid-row: 1/-1;
       height: 400px;

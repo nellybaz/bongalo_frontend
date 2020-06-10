@@ -7,7 +7,7 @@
         v-if="!isMobile()"
         class="apartment_details-img-sec"
         v-on:updateImageShow="updateImageShowHandler"
-        :showMoreImages="true"
+        :showMoreImages="false"
       ></ImageGrid>
 
       <ApartmentDetailsCard
@@ -377,6 +377,7 @@
         </div>
       </div>
     </div>
+
     <div v-else class="details-img-show">
       <p style="color: white;">
         {{ Math.abs(galleryIndex) + 1 }}/{{ imagesArr.length }}
@@ -471,7 +472,7 @@ export default {
     reverseString(str) {
       let tmp = str.split("/");
       // '23/12/2020' => [23, 12, 2020] => 2020/12/23
-
+      
       let newString = "";
       for (let i = tmp.length - 1; i >= 0; i--) {
         newString += tmp[i];
@@ -479,7 +480,6 @@ export default {
           newString += "/";
         }
       }
-
       return newString;
     },
 
@@ -563,6 +563,7 @@ export default {
       } else if (intent == 0 && this.galleryIndex > 0) {
         this.galleryIndex -= 1;
       }
+
       this.galleryCurrentImage = this.imagesArr[this.galleryIndex].image;
     },
 
@@ -751,7 +752,6 @@ export default {
           this.imagesArr.unshift({
             image: this.getCurrentApartment.main_image,
           });
-          // End
         }
       });
 
@@ -818,12 +818,17 @@ export default {
     }
   }
   .details-img-show {
-    width: 100vw !important;
+    border: 1px solid red;
     height: auto !important;
 
+    img {
+      border: 1px solid red;
+      min-width: 100% !important;
+    }
     i {
       position: relative;
-      z-index: 1 !important;
+      border: 1px solid red;
+      left: 5px !important;
     }
   }
 
@@ -901,10 +906,10 @@ export default {
 
     p {
       display: flex !important;
-      font-size: 18px !important;
+      font-size: 15px !important;
       i {
-        font-size: 20px !important;
-        margin-right: 10px !important;
+        font-size: 18px !important;
+        margin-right: 5px !important;
         margin-left: -10px !important;
       }
     }
@@ -1041,7 +1046,7 @@ export default {
     }
 
     .img-item {
-      // border: 1px solid red !important;
+      border: 1px solid red !important;
       width: 100%;
       min-height: 100%;
       object-fit: cover;

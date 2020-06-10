@@ -951,6 +951,7 @@ export default {
     handleWhatShows(intent) {
       this.showId = intent;
     },
+
     handleProfileSelect(e) {
       this.backgroundUrl = URL.createObjectURL(e.target.files[0]);
       // TODO: Dispatch action to update profile picture
@@ -1056,7 +1057,6 @@ export default {
 
     .dropdown {
       position: relative;
-          // border: 1px solid red !important;
       height: auto !important;
     }
 
@@ -1130,7 +1130,7 @@ export default {
       }
 
       .profile-show {
-            // border: 1px solid red !important;
+        // border: 1px solid red !important;
         p {
           padding: 0 !important;
           margin: 10px 0 !important;
@@ -1248,13 +1248,11 @@ export default {
 
   .content {
     display: block !important;
-    
   }
 
   .left {
     height: auto !important;
     display: fixed !important;
-    
   }
 }
 
