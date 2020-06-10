@@ -1056,6 +1056,7 @@ export default {
 
     .dropdown {
       position: relative;
+          // border: 1px solid red !important;
       height: auto !important;
     }
 
@@ -1071,6 +1072,7 @@ export default {
       color: black;
       padding: 12px 16px !important;
       text-decoration: none;
+
       display: block;
     }
 
@@ -1092,7 +1094,6 @@ export default {
   }
   .profile {
     max-width: 100% !important;
-
     .profile-icons-mobile {
       margin: 0.8rem !important;
       padding: 0 !important;
@@ -1129,6 +1130,7 @@ export default {
       }
 
       .profile-show {
+            // border: 1px solid red !important;
         p {
           padding: 0 !important;
           margin: 10px 0 !important;
@@ -1246,11 +1248,13 @@ export default {
 
   .content {
     display: block !important;
+    
   }
 
   .left {
     height: auto !important;
     display: fixed !important;
+    
   }
 }
 

@@ -504,7 +504,7 @@
             <div v-for="item in getReviewForMe()" :key="item.id">
               <a href="#">
                 <div class="rev-div"></div>
-                <p>
+                <p class="rev-cover">
                   <strong>Benjamin</strong> |
                   <span class="rev-date">February 2020</span>
                   <br />
@@ -990,10 +990,6 @@ export default {
   .profile-dropdown {
     min-width: 100% !important;
     border-radius: 0 !important;
-
-    div{
-      border: 1px solid red !important;
-    }
   }
 
   .select-a-review {
@@ -1002,6 +998,8 @@ export default {
   }
 
   .dropdown-details {
+    margin-top: -60px !important;
+
     hr {
       display: none !important;
     }
@@ -1056,8 +1054,10 @@ export default {
     padding: 20px !important;
   }
   .profile {
+    h2 {
+      margin-bottom: 10px !important;
+    }
     max-width: 100% !important;
-
     .profile-icons-mobile {
       margin: 0.8rem !important;
       padding: 0 !important;
@@ -1066,27 +1066,23 @@ export default {
     .listing-container {
       width: 100% !important;
 
-      * {
-        display: block !important;
-      }
-
       .no-lising-card {
-        width: 100% !important;
+        min-width: 100% !important;
       }
 
       img {
         margin: 3rem 6rem !important;
+        width: 50% !important;
       }
 
       button {
-        width: 100% !important;
+        width: 50% !important;
       }
     }
 
     .right {
       margin-top: 20px !important;
       padding: 20px !important;
-
       .top {
         .p-primary-edit-profile {
           width: 50% !important;
@@ -1095,27 +1091,26 @@ export default {
       }
 
       .profile-show {
+        margin-top: 25px !important;
         p {
           padding: 0 !important;
           margin: 10px 0 !important;
         }
         height: auto !important;
-        hr {
-          display: none !important;
-        }
       }
     }
 
     .verifications {
+      min-width: 100% !important;
       * {
         display: block !important;
-        padding: 15px 15px 10px 0 !important;
+        padding: 0 10px 10px 0 !important;
       }
       .upload {
         margin: -30px 0 -30px !important;
       }
       .choose-file {
-        text-align: center !important;
+        text-align: right !important;
       }
 
       .veri-sec-1-mobile {
@@ -1127,6 +1122,7 @@ export default {
       }
 
       .veri-sec-3 {
+        margin-top: 5px !important;
         label {
           height: 100% !important;
         }
@@ -1159,7 +1155,7 @@ export default {
         width: auto !important;
       }
       h3 {
-        font-size: 24px !important;
+        font-size: 20px !important;
       }
       p {
         font-size: 15px !important;
@@ -1185,8 +1181,9 @@ export default {
         margin: 10px 0 0 0 !important;
       }
 
-      .rev-div {
-        margin: 0 10px 0 0 !important;
+      .rev-div,
+      .rev-cover {
+        margin: 20px 10px 0 0 !important;
       }
       .rev-div-mobile {
         margin: 0 0 30px 0 !important;
@@ -1198,6 +1195,7 @@ export default {
     width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
+
     .mid {
       padding: 0 !important;
       display: block !important;
