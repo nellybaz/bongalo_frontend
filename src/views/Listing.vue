@@ -1750,10 +1750,8 @@ export default {
   }
 
   .listing-content-wrapper {
-
     padding: 12px !important;
     * {
-      
       padding: 12px !important;
     }
 
@@ -2022,7 +2020,7 @@ export default {
           padding: 0;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          grid-gap: px;
+          // grid-gap: px;
           div {
             padding: 0;
           }

@@ -83,7 +83,7 @@ export default {
     border: transparent !important;
     font-weight: normal;
   }
-  
+
   p {
     color: rgb(107, 106, 106) !important;
   }

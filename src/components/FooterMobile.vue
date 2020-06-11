@@ -127,7 +127,7 @@ export default {
   * {
     max-width: 100% !important;
   }
-  
+
   .footer {
     margin-top: 1rem !important;
     text-align: center;

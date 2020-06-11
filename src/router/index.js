@@ -154,6 +154,13 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "detiails" */ "../views/ResetPassword.vue"),
   },
+
+  {
+    path: "/coming",
+    name: "coming_soon",
+    component: () =>
+      import(/* webpackChunkName: "detiails" */ "../views/ComingSoon.vue"),
+  },
 ];
 
 const router = new VueRouter({
