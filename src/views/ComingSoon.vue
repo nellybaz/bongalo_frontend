@@ -45,24 +45,23 @@
           </div>
         </div>
 
-        <!-- <ComingSoonCounter v-if="isMobile" /> -->
         <div class="countdown-container">
           <br />
           <div class="content">
             <div class="days">
-              <h1>35</h1>
+              <h1>{{ displayDays }}</h1>
               <span>DAYS</span>
             </div>
             <div class="days">
-              <h1>17</h1>
+              <h1>{{ displayHours }}</h1>
               <span>HOURS</span>
             </div>
             <div class="days">
-              <h1>06</h1>
+              <h1>{{ displayMinutes }}</h1>
               <span>MINUTES</span>
             </div>
             <div class="days">
-              <h1>40</h1>
+              <h1>{{ displaySeconds }}</h1>
               <span>SECONDS</span>
             </div>
             <br />
@@ -86,19 +85,53 @@ export default {
     Button,
   },
 
-  data() {
-    return {
-      countDown: 10,
-    };
+  data: () => ({
+    displayDays: 0,
+    displayHours: 0,
+    displayMinutes: 0,
+    displaySeconds: 0,
+  }),
+
+  computed: {
+    _seconds: () => 1000,
+    _minutes() {
+      return this._seconds * 60;
+    },
+    _hours() {
+      return this._minutes * 60;
+    },
+    _days() {
+      return this._hours * 24;
+    },
   },
-  method: {
-    countDownTimer() {
-      if (this.countDown > 0) {
-        setTimeout(() => {
-          this.countDown -= 1;
-          this.countDownTimer();
-        }, 1000);
-      }
+
+  mounted() {
+    this.showRemaining();
+  },
+
+  methods: {
+    showRemaining() {
+      var timer = setInterval(() => {
+        var now = new Date();
+        var end = new Date(2020, 4, 22, 10, 10, 10, 10);
+        var distance = end.getTime() - now.getTime();
+
+        if (distance < 0) {
+          clearInterval(timer);
+          return;
+        }
+
+        var days = Math.floor(distance / this.dayCount);
+        var hours = Math.floor(distance % this.dayCount) / this.hourCount;
+        var minutes =
+          Math.floor(distance % this.minuteCount) / this.minuteCount;
+        var seconds = Math.floor(distance % this._seconds) / this._seconds;
+
+        this.displayMinutes = minutes < 10 ? "0" + minutes : minutes;
+        this.displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+        this.displayHour = hours < 10 ? "0" + hours : hours;
+        this.displayDay = days < 10 ? "0" + days : days;
+      }, 1000);
     },
   },
 };
