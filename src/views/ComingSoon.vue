@@ -1,14 +1,15 @@
 <template>
   <div class="coming_soon">
     <div class="container">
+      <ComingSoonCounter v-if="isMobile" />
       <div class="coming-soon-content">
         <div class="inner-texts">
-          <a href="/">
+          <a v-if="!isMobile" href="/">
             <img class="header" src="../assets/images/bongalo-logo.png" alt />
           </a>
+
           <h3>
-            Our website is <strong>Coming Soon</strong>, follow us for update
-            now!
+            Our website is coming soon, follow us for update now!
           </h3>
 
           <div>
@@ -45,23 +46,23 @@
           </div>
         </div>
 
-        <div class="countdown-container">
+        <div v-if="!isMobile" class="countdown-container">
           <br />
           <div class="content">
             <div class="days">
-              <h1>{{ displayDays }}</h1>
+              <h1>{{ days }}</h1>
               <span>DAYS</span>
             </div>
             <div class="days">
-              <h1>{{ displayHours }}</h1>
+              <h1>{{ hours }}</h1>
               <span>HOURS</span>
             </div>
             <div class="days">
-              <h1>{{ displayMinutes }}</h1>
+              <h1>{{ minutes }}</h1>
               <span>MINUTES</span>
             </div>
             <div class="days">
-              <h1>{{ displaySeconds }}</h1>
+              <h1>{{ seconds }}</h1>
               <span>SECONDS</span>
             </div>
             <br />
@@ -74,36 +75,37 @@
 
 <script>
 import StyledInput from "../components/StyledInput";
+import Countdown from "vuejs-countdown";
 import Button from "../components/Button";
 import ComingSoonCounter from "../components/ComingSoonCounter";
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "coming_soon",
-
+  computed: mapGetters(["isMobile"]),
   components: {
     StyledInput,
     Button,
+    ComingSoonCounter,
   },
-
   data: () => ({
-    displayDays: 0,
-    displayHours: 0,
-    displayMinutes: 0,
-    displaySeconds: 0,
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   }),
 
-  computed: {
-    _seconds: () => 1000,
-    _minutes() {
-      return this._seconds * 60;
-    },
-    _hours() {
-      return this._minutes * 60;
-    },
-    _days() {
-      return this._hours * 24;
-    },
-  },
+  // computed: {
+  //   _seconds: () => 1000,
+  //   _minutes() {
+  //     return this._seconds * 60;
+  //   },
+  //   _hours() {
+  //     return this._minutes * 60;
+  //   },
+  //   _days() {
+  //     return this._hours * 24;
+  //   },
+  // },
 
   mounted() {
     this.showRemaining();
@@ -115,18 +117,15 @@ export default {
         var now = new Date();
         var end = new Date(2020, 4, 22, 10, 10, 10, 10);
         var distance = end.getTime() - now.getTime();
-
         if (distance < 0) {
           clearInterval(timer);
           return;
         }
-
         var days = Math.floor(distance / this.dayCount);
         var hours = Math.floor(distance % this.dayCount) / this.hourCount;
         var minutes =
           Math.floor(distance % this.minuteCount) / this.minuteCount;
         var seconds = Math.floor(distance % this._seconds) / this._seconds;
-
         this.displayMinutes = minutes < 10 ? "0" + minutes : minutes;
         this.displaySeconds = seconds < 10 ? "0" + seconds : seconds;
         this.displayHour = hours < 10 ? "0" + hours : hours;
@@ -156,12 +155,24 @@ export default {
         width: 30% !important;
       }
     }
+    br {
+      display: none !important;
+    }
+    button {
+      margin: 20px 0 !important;
+    }
+    span {
+      margin: 20px 0 !important;
+      text-align: center;
+    }
 
     .social-medias {
       display: flex !important;
-      justify-content: space-around !important;
+
       i {
         min-width: 60px !important;
+        line-height: 40px !important;
+        text-align: center !important;
         height: 60px !important;
       }
     }
@@ -229,16 +240,17 @@ export default {
         margin: 15% 20%;
         grid-template-columns: 1fr 1fr;
         grid-gap: 20px;
-        width: auto;
         height: auto;
       }
 
       .days {
         border: 1px solid white;
         color: white;
-        padding: 60px;
+        padding: 50px;
         border-radius: 50%;
         font-size: 24px;
+        width: 90%;
+        margin: auto;
         text-align: center;
         span {
           font-size: 10px;
