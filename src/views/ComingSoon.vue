@@ -13,11 +13,11 @@
           </h3>
 
           <div>
-            <StyledInput
+            <!-- <StyledInput
               type="text"
               placeholder="Enter your full name"
               label="Full Name"
-            />
+            /> -->
             <StyledInput
               type="text"
               placeholder="Enter your email address"
