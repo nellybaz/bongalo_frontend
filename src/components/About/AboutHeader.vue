@@ -7,6 +7,7 @@
 
       <div>
         <img
+          v-if="isMobile"
           style="height: 14px !important; margin-left: -5px !important;"
           @click="$modal.show('mobile-booking')"
           class="about-logo"
@@ -15,16 +16,18 @@
         />
       </div>
 
-      <NavLink :isDark="false"></NavLink>
+      <NavLink :isDark="true"></NavLink>
     </header>
   </div>
 </template>
 
 <script>
 import NavLink from "../../components/NavLink";
-
+import { mapActions, mapGetters } from "vuex";
 export default {
-  components: {},
+  components: {
+    NavLink,
+  },
 };
 </script>
 
