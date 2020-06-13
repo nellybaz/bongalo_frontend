@@ -105,10 +105,6 @@ export default {
     width: 100% !important;
     display: block !important;
   }
-
-  .img1 {
-    // border: 1px solid red !important;
-  }
 }
 
 .image_grid {

@@ -472,7 +472,7 @@ export default {
     reverseString(str) {
       let tmp = str.split("/");
       // '23/12/2020' => [23, 12, 2020] => 2020/12/23
-      
+
       let newString = "";
       for (let i = tmp.length - 1; i >= 0; i--) {
         newString += tmp[i];
@@ -818,17 +818,15 @@ export default {
     }
   }
   .details-img-show {
-    border: 1px solid red;
     height: auto !important;
 
     img {
-      border: 1px solid red;
       min-width: 100% !important;
     }
     i {
       position: relative;
-      border: 1px solid red;
-      left: 5px !important;
+
+      left: 0 !important;
     }
   }
 

@@ -2,6 +2,8 @@
   <div class="coming_soon">
     <div class="container">
       <ComingSoonCounter v-if="isMobile" />
+      <!-- <Countdown></Countdown> -->
+      <Countdown deadline="August 22, 2022"></Countdown>
       <div class="coming-soon-content">
         <div class="inner-texts">
           <a v-if="!isMobile" href="/">
@@ -11,6 +13,7 @@
           <h3>
             Our website is coming soon, follow us for update now!
           </h3>
+          <br />
 
           <div>
             <StyledInput
@@ -80,58 +83,65 @@ import Button from "../components/Button";
 import ComingSoonCounter from "../components/ComingSoonCounter";
 import { mapActions, mapGetters } from "vuex";
 export default {
+  props: {
+    date: {
+      seconds: 0,
+      minutes: 0,
+      hours: 0,
+      days: 0,
+    },
+  },
+
+  filters: {
+    two_digits(value) {
+      if (value.toString().length <= 1) {
+        return "0" + value.toString();
+      }
+      return value.toString();
+    },
+  },
+
   name: "coming_soon",
   computed: mapGetters(["isMobile"]),
+
   components: {
+    Countdown,
     StyledInput,
     Button,
     ComingSoonCounter,
   },
-  data: () => ({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  }),
+  data() {
+    return {
+      now: Math.trunc(new Date().getTime() / 1000),
+      event: this.date,
+    };
+  },
 
   // computed: {
-  //   _seconds: () => 1000,
-  //   _minutes() {
-  //     return this._seconds * 60;
+  //   calculatedDate() {
+  //     // this.event = Math.trunc(Date.parse(this.event) / 1000);
+  //     return this.event;
+  //     //  const minutes = Math.floor(this.totalTime / 60);
+  //     // return this.padTime(minutes);
   //   },
-  //   _hours() {
-  //     return this._minutes * 60;
+  //   seconds() {
+  //     return (this.calculatedDate - this.now) % 60;
   //   },
-  //   _days() {
-  //     return this._hours * 24;
+  //   minutes() {
+  //     return Math.trunc((this.calculatedDate - this.now) / 60) % 60;
+  //   },
+  //   hours() {
+  //     return Math.trunc((this.calculatedDate - this.now) / 60 / 60) % 24;
+  //   },
+  //   days() {
+  //     return Math.trunc((this.calculatedDate - this.now) / 60 / 60 / 24);
   //   },
   // },
 
   mounted() {
-    this.showRemaining();
-  },
-
-  methods: {
-    showRemaining() {
-      var timer = setInterval(() => {
-        var now = new Date();
-        var end = new Date(2020, 4, 22, 10, 10, 10, 10);
-        var distance = end.getTime() - now.getTime();
-        if (distance < 0) {
-          clearInterval(timer);
-          return;
-        }
-        var days = Math.floor(distance / this.dayCount);
-        var hours = Math.floor(distance % this.dayCount) / this.hourCount;
-        var minutes =
-          Math.floor(distance % this.minuteCount) / this.minuteCount;
-        var seconds = Math.floor(distance % this._seconds) / this._seconds;
-        this.displayMinutes = minutes < 10 ? "0" + minutes : minutes;
-        this.displaySeconds = seconds < 10 ? "0" + seconds : seconds;
-        this.displayHour = hours < 10 ? "0" + hours : hours;
-        this.displayDay = days < 10 ? "0" + days : days;
-      }, 1000);
-    },
+    window.setInterval(() => {
+      this.now = Math.trunc(new Date().getTime() / 1000);
+    }, 1000);
   },
 };
 </script>
