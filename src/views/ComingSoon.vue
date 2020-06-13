@@ -3,7 +3,7 @@
     <div class="container">
       <ComingSoonCounter v-if="isMobile" />
       <!-- <Countdown></Countdown> -->
-      <Countdown deadline="August 22, 2022"></Countdown>
+      <!-- <Countdown deadline="August 22, 2022"></Countdown> -->
       <div class="coming-soon-content">
         <div class="inner-texts">
           <a v-if="!isMobile" href="/">
@@ -105,7 +105,7 @@ export default {
   computed: mapGetters(["isMobile"]),
 
   components: {
-    Countdown,
+    // Countdown,
     StyledInput,
     Button,
     ComingSoonCounter,
