@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^4.3.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.4.4",
     "country-region-data": "^1.5.1",
     "express": "^4.17.1",
